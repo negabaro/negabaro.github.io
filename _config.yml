@@ -1,6 +1,7 @@
 # Site settings
-title: Home
-default_author: minjun
+title: "Negabaro`s Blog"
+subtitle: "Effort is the best way to realizing your dreams."
+default_author: negabaro
 description: "Hello World"  # used in site head
 
 # register on google analytics and replace this token
@@ -8,20 +9,20 @@ description: "Hello World"  # used in site head
 google_analytics: UA-108098306-1
 # disque comments are broken if you send http:// along with url, this url is same as the one given on disqus
 # Deleting the value would remove it from footer.
-disqus_url: disqus.com/by/devmjun
+disqus_url: disqus.com/by/negabaro
 disqus_id: minjujublog
 # register on feedburner and replace this url. Deleting the value will remove it from footer.
 feedburner_url: #https://feedburner.google.com/fb/a/mailverify?uri=programmer-wannabe&amp;loc=en_US
 
 # footer details. Deleting the value would remove it from footer.
-github_username: devmjun
-facebook_username: devmjun
-email: dev.mjun@gmail.com
+github_username: negabaro
+facebook_username: negabaro
+email: negabaro@gmail.com
 stackoverflow_username: #8601335/minjunju?tab=profile
 #twitter_username : 
 #linkedin_username : 
 #keybase_username : 
-copyright_name: Minjun Ju
+copyright_name: negabaro
 rss : true
 
 # used for portfolio on home page
