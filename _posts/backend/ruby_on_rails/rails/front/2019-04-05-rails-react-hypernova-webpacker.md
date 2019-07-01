@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "xx"
+title: "hypernova를 사용한rails,react환경 구축"
 author: negabaro kim
-categories: xx
-tags: xx
+categories: rails
+tags: rails
 ---
 
 # 프로젝트 생성
@@ -15,12 +15,16 @@ cd react-rails-hypernova-example
 
 # bundle install실행
 
+```js
 bundle install --path=vendor/bundle
+```
 
 # hypernova서버 설정
 
+```js
 npm init -y
 npm install hypernova --save
+```
 
 ```js
 var hypernova = require("hypernova/server");
@@ -56,8 +60,10 @@ module.exports = renderReact("MyComponent.js", MyComponent);
 
 node hypernova.js
 
+```
 2019-04-06T02:24:58.224Z - info: Connected
 { listen: [ 3038, '0.0.0.0' ] }
+```
 
 # hypernova 레일즈 설정
 
