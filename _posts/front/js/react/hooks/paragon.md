@@ -1,0 +1,2 @@
+react 새 버전에 도입되는 hooks(useReducer, useState, useContext, useRef, useCallback 등)는 정말 목적이 명확합니다. react v17 이전 버전까지의 문제점은 UI를 컴포넌트화 해서 UI Reusability는 (아주 당연히) 아주 잘 살렸지만 컴포넌트 내에 있는 State Reusability는 전혀 살리지 못했다는 점입니다. 그래서 이걸 살리려고 hooks가 도입된 것이라고 이해하면 됩니다. hooks 공식 문서를 보시면 useReducer, useState, useContext, useRef, useCallback 모두 UI 외에 react 앱을 만들때 필요한 기능들을 재사용할 수 있도록 만들기 위해서 이 기능들을 모두 함수로 빼낸 것을 알 수 있습니다.
+@mara hooks는 어디까지나 컴포넌트 내의 State Reusability를 위해 나온 것이기 때문에 redux나 redux-saga를 대체할 수는 없습니다.
