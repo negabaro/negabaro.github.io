@@ -27,9 +27,9 @@ button.addEventListener("click", function() {
 
 ## 이벤트 중첩이 가능 vs 불가능
 
-addEventListener는 여러 개의 이벤트를 중첩 사용가능
+addEventListener는 **여러 개의 이벤트를 중첩 사용가능**
 
-onClick은 마지막에 선언한 이벤트만 사용가능(중첩 불가능)overwrite되어버림
+onClick은 **마지막에 선언한 이벤트만 사용가능(중첩 불가능)overwrite되어버림**
 
 ```js
 let obj = document.getElementById("trigger");

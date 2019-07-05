@@ -96,7 +96,7 @@ console.log(array.dahyun); //undefined
 # 함수 오브젝트에서의 length
 
 함수 오브젝트에도 length라는 프로퍼티가 있는데
-이건 함수에 정의된 인수의 갯수를 확인할 수 있다.
+이건 **함수에 정의된 인수의 갯수**를 확인할 수 있다.
 
 ```js
 function Abc(a, b, c, d) {}
