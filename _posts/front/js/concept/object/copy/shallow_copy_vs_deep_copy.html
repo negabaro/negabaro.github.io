@@ -1,0 +1,53 @@
+<script>
+var member = 'sana';
+var member2 = member;
+
+member2 = 'dahyun';
+console.log(member) // sana
+console.log(member2) // dahyun
+console.log('------------------');
+const obj = {
+  name: "sana",
+  age: 22
+}
+
+const obj2 = obj
+obj.name = "dahyun";
+console.log(obj2.name) // dahyun
+console.log(obj.name) // dahyun
+console.log('------------------');
+
+const newObj = { ...obj }
+newObj.name = "mina"
+console.log(newObj.name) // mina
+console.log(obj.name) // dahyun
+console.log('------------------');
+
+const deep_obj = {
+  name: "jihyo",
+  age: 22,
+  families: {
+    brothers: 1,
+    sisters: 1
+  }
+}
+
+const new_deep_obj = { ...deep_obj }
+new_deep_obj.families.brothers = 5
+console.log(new_deep_obj.families.brothers) // 5
+console.log(deep_obj.families.brothers) // 5
+console.log('------------------');
+
+const person = {
+  name: "sana",
+  age: 22,
+  run: () => {console.log("run!!")} 
+}
+
+person2 = JSON.parse(JSON.stringify(person))
+console.log(person2) // {name: "sana", age: 22}
+console.log('------------------');
+
+
+console.log('------------------');
+</script>
