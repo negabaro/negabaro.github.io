@@ -6,9 +6,10 @@ categories: js
 tags: js concept
 ---
 
-# xx
 
-```
+#### 오브젝트를 만드는 예제
+
+```js
 var objectMadeByLiteral = {};
 var objectMadeByConstructor = new Object();
 ```
@@ -16,8 +17,7 @@ var objectMadeByConstructor = new Object();
 다른 객체지향언어의 관점에서 위의 코드는 Object객체의 인스턴스를 만든것에 불과하므로 상속받았다고 표현하기는 힘듬
 그러나 자바스크립트에서는 다른 개념으로 봐야한다.
 
-지금 만들어진 객체가 Object타입의 인스턴스 객체인 것도 맞지만 프로토타입을 이용한 상속을 지원하는
-자바스크립트에서는 Object생성자의 프로토타입을 상속받은 객체라고 표현하는게 저 정확한 표현이다.
+지금 만들어진 객체가 Object타입의 인스턴스 객체인 것도 맞지만 <span style="color: red">__프로토타입을 이용한 상속을 지원하는 자바스크립트에서는 Object생성자의 프로토타입을 상속받은 객체라고 표현하는게 더 정확한 표현__</span>이다.
 
 사실 상속이라는 표현도OOP의 관점에서 사용하는 단어로 표현한것일 뿐 실제로는 링크드리스트 형태의 참조를 통한
 객체끼리의 연결에 가깝고 클래스 메커니즘 처럼 정적이지 않고 매우 동적이다.
@@ -37,7 +37,7 @@ https://meetup.toast.com/posts/104
 ### 클래스가 없으면 상속도 없다.
 
 프로그래밍 세계에서 기본적으로 클래스가 없으면 상속기능도 없음.
-javascript에서는 클래스가 없으므로 이 프로토타입을 기반으로 상속을 흉내내도록 구현해 사용함
+<span style="color: red">__javascript에서는 클래스라는 개념이 없으므로 이 프로토타입을 기반으로 상속을 흉내내도록 구현해 사용함__</span>
 ※주의: ECMA6에서 Class 문법이 추가되지만 이것은 문법이 추가되었다는 것이지, 자바스크립트가 클래스 기반으로 바뀌었다는 의미는 아님
 
 # Prototype이란?
@@ -53,7 +53,7 @@ prototype도 오브젝트다.
 
 함수를 만들면 prototype이라는 프로퍼티가 자동으로 생성됨
 
-```
+```js
 function proto() {} //proto.prototype 가 자동으로 생성됨
 ```
 
@@ -64,7 +64,7 @@ prototpye property는 자신의 부모를 참조하고 있다고 생각하면됨
 
 예제를 한번 보자.
 
-```
+```js
 function Dog() {}
 
 Dog.prototype.bark = function() {
@@ -82,7 +82,7 @@ Dog도 그것을 사용할 수 있는것이다.
 
 이하 예제와 같이 Dog function안에 bark함수를 선언하는것과 뭐가 틀린겨??
 
-```
+```js
 function Dog() {
   this.bark = function() {
     console.log('멍멍!!');
@@ -96,7 +96,7 @@ dog.bark(); //'멍멍!!';
 후자 코드의 경우 매번 bark함수가 생성되어서 비효율적이기 때문인데
 이걸 이해하기 위해서는 new에 존재하는 암묵적인 룰을 알아야함
 
-```
+```js
 function Dog() {
   // var this = {};
   this.bark = function() {
@@ -115,7 +115,7 @@ prototype을 이용하면 매번 빈 오브젝트를 생성할 필요가 없음.
 
 ## prototype을 사용한 예제
 
-```
+```js
 function Dog(cry) {
   this.cry = cry;
 }
@@ -133,7 +133,7 @@ shepherd.bark(); //'컹컹!!';
 bark를 어딘가에 있는 빈 공간에 넣어놓고 shepherd과 shiba가 공유해서 사용하고 있다.
 위 처럼 코드를 짜면 new를 사용해도 이하와 같이
 
-```
+```js
 function Dog(cry) {
   // var this = {};
   this.cry = cry;
@@ -188,7 +188,7 @@ prototype 속성은 함수만 가지고 있던 것과는 달리(Dog.prototype)
 
 shiba객체가 Dog함수로부터 생성되었으니 shiba객체의 `__proto__`는 Dog함수의 `Prototype Object`를 가리키게 된다.
 
-```
+```js
 console.log(shiba);
 console.log(shepherd);
 ```

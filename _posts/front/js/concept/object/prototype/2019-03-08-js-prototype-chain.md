@@ -41,7 +41,7 @@ var objectMadeByConstructor = new Object();
 
 ### 예제)
 
-```
+```js
 var sana = {
     skill: "샤샤샤"
 }
@@ -54,7 +54,7 @@ var chang = {
 `chang`객체는 `sana`객체의 멤버변수인`skill`에 접근할 방법이 없다.
 이때`__proto__`라는 특수한 속성을 이용한다.
 
-```
+```js
 var sana = {
     skill: "샤샤샤"
 }
@@ -84,7 +84,7 @@ chang.skill // '샤샤샤'
 
 ### 예제)
 
-```
+```js
 var sana = {
     skill: "사또떨"
 }
@@ -146,7 +146,7 @@ chang은 멤버변수가 하나도 없었는데 부모객체(sana)에서 정의�
 
 물론 개발자는 알고 있겠지만 자바스크립트 엔진의 관점에서는 메서드를 실행할 때 동적으로 해당 메서드를 찾아서 실행한다는 의미다. 그래서 이미 만들어진 객체의 상속된 내용이 변경될 수 있는 것이다. `객체가 만들어 질 때가 아닌 실행할 때의 내용이 중요하니까` 말이다. 이렇게 `프로토타입 체인을 통해 객체의 메서스나 속성을 찾아가는 과정을 프로토타입 룩업`이라고 한다.
 
-```
+```js
 var jyp = {
     skill1: '공기반소리반'
 };
@@ -203,7 +203,7 @@ itzy객체에 없는 멤버변수인 `skill1`이라는 속성에 접근하려하
 
 `itzy에서 jyp의 속성은 접근할 수 있지만 jyp에서 itzy의 속성은 접근할 수 없다.`
 
-```
+```js
 var jyp = {
     skill1: '공기반소리반'
 };
@@ -224,7 +224,7 @@ jyp.skill3 // undefined  --> itzy의skill3에 접근할 수 없다!
 
 이런 점을 이용해 메서드 오버라이드를 구현할 수 있다.
 
-```
+```js
 var jyp = {
     skill: '공기반소리반'
 };
@@ -251,7 +251,7 @@ jyp까지 안올라가고 twice의 skill속성이 실행된다
 
 생성자를 이용해 객체를 생성하면 생성된 객체는 생성자의 프로토타입 객체와 프로토타입 체인으로 연결된다.
 
-```
+```js
 function Jyp(skill) {
     this.skill = skill;
 }
@@ -270,7 +270,7 @@ twice 객체가 Jyp 의 프로토타입 메서드에 접근할 수 있는 이유
 
 실제로 엔진은 아래와 같은 행동을 한다. (이해를 돕기 위한 코드이다)
 
-```
+```js
 var twice = new Jyp('공기반소리반');
 
 // 엔진 내부에서 하는 일
@@ -295,7 +295,7 @@ twice.getSkill(); // '공기반소리반'
 
 `twice.__proto__ = Jyp.prototype` 이부분이 문제다. twice객체가 Jyp객체의 prototype을 `참조`,즉 `공유`하고 있으므로
 
-```
+```js
 twice.prototype.getSkill = function() { return "없어요.." };
 ```
 
@@ -315,7 +315,7 @@ jyp는 skill이 있는데 불구하고 prototype을 공유한거 때문에 둘�
 
 성공적인 발상이고 멋진 `꼼수`였다.
 
-```
+```js
 var jyp = {
     skill: '공기반소리반'
 };
@@ -350,7 +350,7 @@ console.log(twice.skill);  //'에너지'
 
 그래서 이 `꼼수`를 착안해서 표준API가 등장했는데 그것이 `Object.create()`이다.
 
-```
+```js
 var jyp = {
     skill: '공기반소리반'
 };
@@ -375,7 +375,7 @@ console.log(twice.skill);  //'에너지'
 
 class를 이용하면 이하와 같이 쓸 수 있다.
 
-```
+```js
 class Jyp {
     constructor(name) {
         this.name = name;

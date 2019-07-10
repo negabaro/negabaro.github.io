@@ -46,7 +46,7 @@ tags: Javascript
 
 다른 포스트보면 `리터럴`만 적어 놨길래 `new Object()`로도 실험해봄
 
-```
+```js
 var sana = new Object();
 sana.skill = '샤샤샤';
 
@@ -63,7 +63,7 @@ console.log(sana.skill);  //샤샤샤
 
 ## 예제(리터럴)
 
-```
+```js
 var sana = {
   skill: "샤샤샤"
 }
@@ -82,7 +82,7 @@ console.log(sana.skill);  // '샤샤샤'
 
 완벽한 싱글톤을 만들기 위해서는 `클로저`가 필요하다
 
-나느 `클로저`를 모르므로 완벽한 싱글톤을 만들 수 없다..
+현재 `클로저`를 모르므로 완벽한 싱글톤을 만들 수 없다..
 
 ### Reference Link:
 
