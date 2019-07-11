@@ -1,0 +1,31 @@
+<script>
+/* add_maker */
+function add_maker(a) {
+  return function(b) {
+    return a + b;
+  }
+}
+//1번 액션
+var add10 = add_maker(10);
+console.log('add10:',add10);
+/*
+console.log result:
+add10: ƒ (b) {
+    return a + b;
+  }
+*/
+console.log( add10(20) );
+//결과는 30이됨
+//1번 액션에서 함수실행시 넘겨준 a파라메터가 저장되어 있다는 증거
+
+//2번 액션
+var add5 = add_maker(5);
+//3번 액션
+var add15 = add_maker(15);
+
+console.log( add5(10) ); // --> 15
+console.log( add15(10) ); // --> 25
+console.log( add10(20) ); // --> 30
+
+//https://github.com/negabaro/functional-javascript/blob/master/%EC%9D%B8%ED%94%84%EB%9F%B0-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%95%EC%9D%98-%EC%98%88%EC%A0%9C/1.%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%20%EA%B0%9C%EC%9A%94.html
+</script>

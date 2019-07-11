@@ -1,0 +1,16 @@
+<script>
+function f4(f1, f2, f3) {
+  return f3(f1() + f2());
+}
+console.log(
+  f4(
+    function() { return 2; }, //f1 파라메터에 해당하는 함수
+    function() { return 1; }, //f2 파라메터에 해당하는 함수
+    function(a) { return a * a; }));
+
+//f1,f2에 해당하는 함수가 클로저로서 일시적으로 저장됨
+//f3에 의 a인자에 f1,f2 함수의 return들을 더함 즉 3이됨
+//a인자를 받은f3함수는 a * a 를 해서 리턴하므로 3*3을 해서 9를 리턴함
+
+//https://github.com/negabaro/functional-javascript/blob/master/%EC%9D%B8%ED%94%84%EB%9F%B0-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%95%EC%9D%98-%EC%98%88%EC%A0%9C/1.%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%20%EA%B0%9C%EC%9A%94.html
+</script>

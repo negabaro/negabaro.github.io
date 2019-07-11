@@ -28,13 +28,13 @@ this가 참조하는 값을 바꿀 수 있다.
 
 ### call 함수호출 예제
 
-```
+```js
 school_meal_clubs.call(null, "다현", "쯔위", "채영");
 ```
 
 ### apply 함수호출 예제
 
-```
+```js
 school_meal_clubs.apply(null, ["다현", "쯔위", "채영"]);
 ```
 
@@ -44,7 +44,7 @@ school_meal_clubs.apply(null, ["다현", "쯔위", "채영"]);
 
 this는 기본적으로 window값을 가지는데 `call,apply,bind` 를 이용해 이 this값을 바꿔줄 수 있다.
 
-```
+```js
 var sana = {
   buzzword: '샤샤샤',
   set_buzzword : function() {
@@ -67,7 +67,7 @@ call,apply를 사용하지 않으면 "샤샤샤"가 출력되지만 사용시 �
 
 ## 예제2(함수)
 
-```
+```js
 function Drop(thing) {
   console.log(this instanceof Sana); // => true //즉 Drop을 호출한 함수(sana)의 this를 가져온것
   this.thing = thing;

@@ -1,6 +1,6 @@
 callback 함수 안에서의 this는 window를 카르킨다.
 
-```
+```js
 var o = {
     data : 'dummy',
     time : function(){
@@ -31,7 +31,7 @@ function 객체가 갖고 있는 bind() 메소드 MDN 참고
 bind() 메소드는 바로 실행되는 것이 아니라 설정을 저장하는 것
 주로 callback 함수에서 많이 쓰인다.
 
-```
+```js
 var o = {
     data : 'dummy',
     time : function(){
@@ -52,7 +52,7 @@ function 객체가 갖고 있는 bind() 메소드 MDN 참고
 bind() 메소드는 바로 실행되는 것이 아니라 설정을 저장하는 것
 주로 callback 함수에서 많이 쓰인다.
 
-```
+```js
 var o = {
     data : 'dummy',
     time : function(){
