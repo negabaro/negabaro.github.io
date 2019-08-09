@@ -84,12 +84,56 @@ console.log(sana); // { name: 'headband', dropCount: 2 }
 
 함수인 경우도 마찬가지다.
 
-Sana함수에서 Drop함수를call하면서 Sana함수의 this를 첫번째 인자에 넘겨주었다.
+Sana함수에서 Drop함수를 call하면서 Sana함수의 this를 첫번째 인자에 넘겨주었다.
 
 Drop함수에서는 instanceof를 통해 자신의 this와 Sana함수를 비교해보니 true가 출력
 즉 Sana함수의 this를 넘겨받아 Drop에서 사용가능하게 된것
 
-Sana함수와Drop함수가 this를 공유하고 있다고 말할 수 있을것 같다.(둘다 Sana함수를 가리키고 있으므로)
+Sana함수와 Drop함수가 this를 공유하고 있다고 말할 수 있을것 같다.(둘다 Sana함수를 가리키고 있으므로)
+
+## 예제3 ※2019/8/9일 추가
+`querySelectorAll`과 같이 nodeList형태의 값을 배열처럼 반복시키고 싶을때도 활용이 가능
+
+
+
+```js
+const twice = document.querySelectorAll('.twice');
+[].forEach.call(twice, (m) => {
+  console.log(m);
+});
+```
+
+`twice.foreach.xxx`이런식으로는 사용이 불가능하지만 call을 이용해
+`document.querySelectorAll('.twice');`의 결과를 배열처럼 사용이 가능
+
+이것이 가능한 이유는 call의 첫번째 파라메터에 의해서 this가 조작되고(?) 두번째 파라메터에서 조작된 this를 참조해 
+
+```js
+(m) => {
+  console.log(m);
+}
+```
+
+를 실행하기 때문
+
+this가 조작되었다는 증거로
+
+2번째 파라메터가 arrow function이 아닌 보통 함수로 바꾸고(arrow에서는 this를 사용못하니깐)
+
+```js
+function(m) {
+  console.log(twice === this);
+}
+```
+를 보면 true가 리턴됨
+
+
+
+
+
+
+
+
 
 # call,apply장점
 
