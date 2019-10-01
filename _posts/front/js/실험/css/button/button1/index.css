@@ -1,0 +1,32 @@
+.btn {
+    display: block;
+    max-width: 500px;
+    background: #e77600;
+    /*
+    background: #ff8200;
+     background-image: linear-gradient(#ff8200,40%, #e77600 60%);
+    background-image: linear-gradient(#ff8200,0%, #e77600 100%);
+     */
+    border-radius: 40px;
+    padding: 18px 0px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'ヒラギノ角ゴ ProN W3','游ゴシック',YuGothic,"Hiragino Kaku Gothic ProN","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ","Meiryo","ＭＳ Ｐゴシック","MS PGothic",Sans-Serif;
+   
+    margin: 0 auto;
+
+    text-align: center;
+    
+    position: relative;
+}
+
+.btn:after {
+    position: absolute;
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 23px;
+    background: url(https://persol-tech-s.co.jp/reason/img/rpa_seminar/btn_arrow.png) no-repeat center center;
+    right: 0;
+}
