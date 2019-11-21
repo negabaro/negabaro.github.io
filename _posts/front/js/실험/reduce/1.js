@@ -40,8 +40,9 @@ var obj22 = {
 };
 
 const res = json.reduce((obj, item) => {
-  console.log("obj", obj);
-  console.log("item.i", item.i);
+  //console.log("obj", obj);
+  //console.log("item.i", item.i);
+
   //console.log(Object.values(value).includes("i"));
   //if(Object.keys(value).includes("i"){
 
@@ -56,7 +57,17 @@ const res = json.reduce((obj, item) => {
   return obj;
 }, {});
 
-console.log("res", res);
+//console.log("res", res);
+
+const keke = json.find(el => {
+  console.log("kekek", typeof el.i);
+  el.i === "6";
+});
+
+//const targetUser = users.find(v => v.id === id);
+
+//console.log("keke", keke);
+
 /*
     for(var i=0, l=data.length; i<l; i++)
           {
@@ -71,3 +82,15 @@ console.log("res", res);
             }
           }
           */
+
+const users2 = [
+  { id: "101", name: "Alice" },
+  { id: "102", name: "Bob" },
+  { id: "103", name: "Charlie" }
+];
+
+const id = "102";
+const targetUser2 = users2.find(v => v.id === id);
+console.log(targetUser2);
+
+console.log(targetUser2.id2);
