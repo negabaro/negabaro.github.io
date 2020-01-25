@@ -1,0 +1,46 @@
+
+<html>
+    <head>
+    <style type="text/css">
+    #box{
+  width: 100px;
+  height: 100px;
+  background-color: lime;
+
+}
+.slide {
+  transform: translate(100px, 0);
+  transition: 2s ease-out;
+}
+.Back {
+  transform: translate(0, 0);
+  transition: 2s ease-out;
+}
+    </style>
+
+    </head>
+    <body>
+        <div id="box"></div>
+        <script>
+            //https://teratail.com/questions/205154
+            document.querySelector('#box').addEventListener('click',function(){
+         
+
+                const hasSlide = document.querySelector('#box').className;
+
+                //console.log('hasSlide:',hasSlide);
+                //console.log('hasSlide:',document.querySelector('#box').classList);
+                
+                document.querySelector('#box').addEventListener('click',function(){
+                const hasSlide = document.querySelector('#box').className;
+                if(hasSlide !== 'slide'){
+                  document.querySelector('#box').classList.add('slide');
+                }else{
+                  document.querySelector('#box').classList.replace('slide','Back');
+                }
+                });
+            } );
+
+        </script>
+    </body>
+</html>
