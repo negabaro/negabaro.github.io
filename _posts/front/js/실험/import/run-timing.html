@@ -1,0 +1,10 @@
+<!--
+//実行タイミング
+//また type="module" のスクリプトの実行は最後に行われます
+//head タグに書くと body 要素がないから body の最後に書く なんてことを考えなくてすみます
+//特に head/body タグを省略して body の中身がなにもない場合は head タグ中に script が書かれてると扱われて body がないケースがあります
+// http://var.blog.jp/archives/77519253.html
+-->
+<!doctype html>
+
+<script type="module">document.body.innerHTML = "1"</script>

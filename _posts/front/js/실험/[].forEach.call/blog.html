@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script>
+            //window.addEventListener('DomContentLoaded',function(e){ //철자 틀리면 안움직임
+            window.addEventListener('DOMContentLoaded', function(e){
+             //https://codeday.me/jp/qa/20181206/49902.html
+             console.log('hello?');
+            console.log(document.querySelectorAll('a'));
+            //document.body.querySelectorAll('p');
+            //blog.html:8 Uncaught TypeError: Cannot read property 'querySelectorAll' of null
+            [].forEach.call( document.body.querySelectorAll('a'), function(el) {
+            //[].forEach.call( document.querySelectorAll('a'), function(el) {
+                console.log('aaa');
+              // whatever with the current node
+            });
+
+            //document.querySelectorAll('a') --> nodeList
+            //Array.forEach -> 配列なので
+            //Function.prototype.call
+            //相手のものを自分のように使う
+            //2parameter 実行したい内容
+            //functionはcallは持ってる
+            //callを使うとthisがなくなる
+            //純粋な関数で実行できる
+            //document.querySelectorAll('a') -> [].forEach
+            //applyもある
+            [].forEach.call( document.querySelectorAll('a'), function(el){
+              console.log('xxx');
+              console.log(el); //出ないなんで？
+            })
+            })
+      
+        </script>
+    </head>
+    <body>
+       
+        <a href="xx.com">
+            xx.com
+        </a>
+        
+    </body>
+</html>
