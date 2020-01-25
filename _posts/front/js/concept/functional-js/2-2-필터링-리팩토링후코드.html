@@ -1,0 +1,58 @@
+<script>
+var idols = [
+  { id: 1, name: 'SANA', age: 22 },
+  { id: 2, name: 'WHATSUPMAN', age: 49 },
+  { id: 3, name: 'LeyyHyoRi', age: 40 },
+  { id: 4, name: 'KYU HYUN', age: 31 },
+  { id: 5, name: 'HEE CHOUL', age: 36 },
+  { id: 6, name: 'DAHYUN', age: 21 },
+  { id: 7, name: 'CHANG', age: 20 },
+  { id: 8, name: 'YOOJIN', age: 36 }
+];
+
+// 2. _filter, _map으로 리팩토링
+var over_30 = _filter(users, function(user) { return user.age >= 30; });
+console.log(over_30);
+var names = _map(over_30, function(user) {
+  return user.name;
+});
+console.log(names);
+var under_30 = _filter(users, function(user) { return user.age < 30; });
+console.log(under_30);
+var ages = _map(under_30, function(user) {
+  return user.age;
+});
+console.log(ages);
+console.log(
+  _map(
+    _filter(users, function(user) { return user.age >= 30; }),
+    function(user) { return user.name; }));
+console.log(
+  _map(
+    _filter(users, function(user) { return user.age < 30; }),
+    function(user) { return user.age; }));
+/*console.log(
+  _filter([1, 2, 3, 4], function(num) { return num % 2; }));
+console.log(
+  _filter([1, 2, 3, 4], function(num) { return !(num % 2); }));*/
+// 3. each 만들기
+  // 1. _each로 _map, _filter 중복 제거
+  // 2. 외부 다형성
+    // 1. array_like, arguments, document.querySelectorAll
+console.log(
+  [1, 2, 3, 4].map(function(val) {
+    return val * 2;
+  })
+);
+console.log(
+  [1, 2, 3, 4].filter(function(val) {
+    return val % 2;
+  })
+);
+console.log(document.querySelectorAll('*'));
+console.log(
+  _map(document.querySelectorAll('*'), function(node) {
+    return node.nodeName;
+  })
+);
+</script>

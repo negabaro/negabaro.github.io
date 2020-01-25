@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "xx"
+title: "콜스택 용어 정리"
 author: negabaro kim
-categories: xx
-tags: xx
+categories: js
+tags: js
 ---
 
 ## 스택프레임(Stack Frame)
