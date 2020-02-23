@@ -5,8 +5,40 @@ function add_maker(a) {
     return a + b;
   }
 }
+
+function add_maker2(a) {
+  return function(b) {
+    return function(c){
+      return a + b + c;
+    };
+  }
+}
+
+function add_2() {
+  return xx;
+}
+
+
+function test(add_2) {
+ return add_2 + xx; 
+}
+
+getElementById('vidoe')
+
+//curry =運ぶ
+//関数の中にあることをくろジャー
+//関数を作るための関数
 //1번 액션
 var add10 = add_maker(10);
+//curry関数ともういえる = add_maker(10)
+
+//10を足す関数を作る
+
+var b = add_maker(10)(3) 
+//これがcurry関数  b = 3
+
+var c = add_maker(10)(3)(2)
+
 console.log('add10:',add10);
 /*
 console.log result:

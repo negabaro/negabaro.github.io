@@ -6,3 +6,4 @@ Gemfile.lock
 
 deploy_keys
 deploy_keys.pub
+.DS_Store
