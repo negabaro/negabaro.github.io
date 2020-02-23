@@ -63,3 +63,11 @@ const str2obj4 = str => {
 
 console.log("ppop:", str2obj4(hoge));
 console.log("popo2:", typeof str2obj4(hoge));
+
+
+
+const hoge3 = '{login: true, university_id: 1, sports_club_id: 2, fan: true}'
+
+var keke2 = string2Object(hoge3);
+
+console.log(keke2);
