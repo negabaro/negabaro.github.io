@@ -1,4 +1,5 @@
 
+
 # proc과의 차이2 리턴 빠지는 범위
 def foo
     f = Proc.new { return :foo }#
