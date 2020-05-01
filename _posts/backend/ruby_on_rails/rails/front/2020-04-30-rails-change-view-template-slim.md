@@ -72,12 +72,12 @@ erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 
 
 ```ruby
-- if resource.errors.any?
-  #error_explanation
-    h2
-      = I18n.t("errors.messages.not_saved",
-      -                  count: resource.errors.count,
-      -                  resource: resource.class.model_name.human.downcase)
+  - if resource.errors.any?
+    #error_explanation
+      h2
+        = I18n.t("errors.messages.not_saved",
+        -                  count: resource.errors.count,
+        -                  resource: resource.class.model_name.human.downcase)
 ```
 
 ↓
