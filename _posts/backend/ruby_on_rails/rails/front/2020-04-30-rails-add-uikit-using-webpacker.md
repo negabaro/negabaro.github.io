@@ -37,6 +37,18 @@ $global-link-color: #DA7D02;
 @import "uikit/src/scss/uikit-theme.scss";
 ```
 
+#### uikit icon사용시 설정
+
+`app/javascript/packs/application.js`에 이하 설정을 추가
+
+```
+import UIkit from "uikit";
+import Icons from "uikit/dist/js/uikit-icons";
+
+// loads the Icon plugin
+UIkit.use(Icons);
+```
+
 #### uikit설정을 js에서 import
 
 `app/javascript/packs/application.js`에 이하 설정을 추가
