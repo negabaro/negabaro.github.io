@@ -66,9 +66,7 @@ for file in app/views/**/*.erb; do erb2slim $file ${file%erb}slim && rm $file; d
 erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 변경후`localhost:3000`에 억세스하면 에러가 발생
 
-```app/views/devise/shared/_error_messages.html.slim```
-
-이하 설정을
+`app/views/devise/shared/_error_messages.html.slim`이하 설정을
 
 
 ```ruby
