@@ -47,7 +47,7 @@ import "../stylesheets/application.scss";
 
 #### webpacker재기동
 
-```bin/webpack-dev-server```재실행
+`bin/webpack-dev-server`재실행
 
 localhost:3000에서 uikit이 적용된것 확인
 
@@ -66,7 +66,7 @@ localhost:3000에서 uikit이 적용된것 확인
 
 `app/view/layout/application.html.erb`에 stylesheet_link_tag를 지우고
 
-```
+```ruby
 <%= stylesheet_pack_tag 'stylesheets/application' %>
 ```
 
@@ -75,5 +75,7 @@ localhost:3000에서 uikit이 적용된것 확인
 
 #### 참고
 
+```
 https://www.tbn.co.jp/posts/technology/2018/04/05/uikit_custom_theme_sass.html
 https://blog.office-aship.info/rails-webpacker-%E3%81%A7%E3%81%AE-css-%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF/
+```
