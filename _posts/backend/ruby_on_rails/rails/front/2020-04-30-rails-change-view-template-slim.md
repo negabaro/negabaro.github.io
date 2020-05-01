@@ -24,7 +24,7 @@ erb에 비교해서 퍼포먼스가 좋다고함
 
 # 설정방법(*필수)
 
-```
+```ruby
 gem 'slim'
 bundle install
 ```
@@ -39,7 +39,7 @@ bundle install
 
 #### gem install
 
-```
+```ruby
 gem install html2slim
 ```
 
@@ -54,7 +54,7 @@ $ erb2slim -h
 
 app/views이하에 있는 파일을 일괄적으로 erb -> slim으로 바꾸는 커맨드
 
-```
+```ruby
 for file in app/views/**/*.erb; do erb2slim $file ${file%erb}slim && rm $file; done
 ```
 
@@ -67,10 +67,11 @@ erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 변경후`localhost:3000`에 억세스하면 에러가 발생
 
 ```app/views/devise/shared/_error_messages.html.slim```
+
 이하 설정을
 
 
-```
+```ruby
 - if resource.errors.any?
   #error_explanation
     h2
@@ -81,7 +82,7 @@ erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 
 ↓
 
-```
+```ruby
       = I18n.t("errors.messages.not_saved", count: resource.errors.count, resource: resource.class.model_name.human.downcase)
 ```
 
@@ -109,14 +110,14 @@ html.erb안에서 slim확장자를 render해도 정상적으로 동작함
 
 template에러를 자세히 보면 handlers에 읽어올 수 있는 확장자가 적혀있음.
 
-```
+```ruby
 Missing partial partials/_header with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
 ```
 
 `gem slim`후에 다시 확인해보니 slim이 추가되어 있는걸 확인!
 
 
-```
+```ruby
 Missing partial partials/_header with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :slim, :jbuilder]}. Searched in:
 ```
 
@@ -125,20 +126,20 @@ Missing partial partials/_header with {:locale=>[:en], :formats=>[:html], :varia
 참고한 글을 보면 slim-rails로 인스톨하고 `config/application.rb`에도 설정할 필요가 있다고 하는데
 `gem slim`하나로 문제없이 동작했다.
 
-```
+```ruby
 Rails 5.1.2
 gem 'slim-rails', '3.1.3'
 ```
 
 #### config/application.rb설정
 
-```
+```ruby
 class Application < Rails::Application
   config.generators.template_engine = :slim  
 end
 ```
 
-아무래도 rails6에서는 자동적으로 설정되는 듯?
+아무래도 rails6에서는 자동적으로 설정되는 듯?(미검증)
 
 #### 참고
 
