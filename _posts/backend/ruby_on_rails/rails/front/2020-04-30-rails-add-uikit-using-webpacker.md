@@ -18,7 +18,7 @@ yarn add uikit(npm install uikit)
 #### uikit설정
 
 `app/javascript/stylesheets/application.scss`에
-이하 설정을 추가
+이하 설정을 추가(패스는 어디든 상관없음)
 
 ```
 $global-link-color: #DA7D02;
