@@ -66,11 +66,11 @@ for file in app/views/**/*.erb; do erb2slim $file ${file%erb}slim && rm $file; d
 erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 변경후`localhost:3000`에 억세스하면 에러가 발생
 
-`app/views/devise/shared/_error_messages.html.slim`이하 설정을
-
+이하 설정을
 
 ```ruby
-  - if resource.errors.any?
+#app/views/devise/shared/_error_messages.html.slim
+- if resource.errors.any?
     #error_explanation
       h2
         = I18n.t("errors.messages.not_saved",
@@ -78,13 +78,13 @@ erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
         -                  resource: resource.class.model_name.human.downcase)
 ```
 
-↓
+아래와 같이
 
 ```ruby
       = I18n.t("errors.messages.not_saved", count: resource.errors.count, resource: resource.class.model_name.human.downcase)
 ```
 
-로 변경하면 해결
+변경하면 해결
 
 
 
