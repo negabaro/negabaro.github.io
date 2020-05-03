@@ -36,7 +36,7 @@ text_area대신 `rich_text_area`로 변경
 = form_with(model: @post, url: articles_path) do |f|
   = f.fields_for :articles do |b|
     = b.rich_text_area :content //<< 이부분을 추가
-  = f.submit '投稿'
+  = f.submit '등록'
 ```
 
 여기까지 설정하고 해당 view를 확인하면 텍스트 편집기가 추가된 text_area를 확인할 수 있었음
