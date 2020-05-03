@@ -66,7 +66,7 @@ action text로 등록한 내용을 확인할때
 
 slim은 자동으로 escape를 해버리므로 
 
-이하와 같이 `==`를 사용해 escape가 안되도록 해야한다.
+아래와 같이 `==`를 사용해 escape가 안되도록 해야한다.
 
 ```ruby
 == article.content
@@ -83,10 +83,9 @@ rails6에서는 mini_magick과ruby-vips의 wrapper인 `image_processing`를 사�
 필자의 환경에서는 `image_processing`를 추가하지 않고도 이미지 업로드는 정상적으로 동작함(using active storage)
 
 
-brew install imagema
-
 #### reference:
 
 ```
 https://www.techscore.com/blog/2019/12/19/ruby-on-rails-6-action-text/
+https://tech.mof-mof.co.jp/blog/rails6-actiontext/
 ```
