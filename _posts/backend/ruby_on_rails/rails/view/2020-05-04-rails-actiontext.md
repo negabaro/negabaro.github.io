@@ -114,9 +114,31 @@ has_rich_text :content
 이부분을 추가 안해주면 content에 직접 포스팅한 내용이 insert된다.
 위 로직이 있음으로 content는 null인 상태가 되고 `action_text_rich_texts`라는 테이블의 body컬럼에 insert됨
 
+### 메모6
+
+특정 이미지 파일은 upload안되게 한다든지 파일크기를 제한하고 싶을때는 이하 링크에 글이 도움이 될듯
+
+https://blog.saeloun.com/2019/11/12/attachments-in-action-text-rails-6.html
 
 
+### 메모7
 
+첨부파일 업로드시 디폴트로 캡션이 표시되는데
+메모4와 같이
+`app/views/active_storage/blobs/_blob.html.erb` 부분에서
+
+```ruby
+<figcaption class="attachment__caption">
+    <% if caption = blob.try(:caption) %>
+      <%= caption %>
+    <% else %>
+      <span class="attachment__name"><%= blob.filename %></span>
+      <span class="attachment__size"><%= number_to_human_size blob.byte_size %></span>
+    <% end %>
+  </figcaption>
+```
+
+이 부분을 삭제해주면 해결된다
 
 #### reference:
 
