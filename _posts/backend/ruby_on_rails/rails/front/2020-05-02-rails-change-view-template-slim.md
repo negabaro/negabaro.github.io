@@ -87,6 +87,26 @@ erb -> slim으로 변경이 100% 완벽하게 되는건 아닌 듯
 변경하면 해결
 
 
+# rails generator실행시 생성되는 파일 형식을 erb -> slim으로 바꾸는법
+
+
+### bundle install
+
+```ruby
+gem 'slim-rails'
+bundle install
+```
+
+### config설정추가 
+
+```ruby
+config/initializers/generators.rb
+Rails.application.config.generators.template_engine = :slim
+```
+
+위 설정을 해주면 `rails g controller xx method_name` 이러한 커맨드 실행시
+erb가 아닌 slim으로 생성해주게 된다.
+
 
 ## 메모1
 
