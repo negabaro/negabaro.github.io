@@ -83,9 +83,45 @@ rails6에서는 mini_magick과ruby-vips의 wrapper인 `image_processing`를 사�
 필자의 환경에서는 `image_processing`를 추가하지 않고도 이미지 업로드는 정상적으로 동작함(using active storage)
 
 
+
+### 메모4 
+
+업로드한 이미지의 사이즈를 임의적으로 줄이는 방법은 잘 모르겠다.
+
+`rails action_text:install`실행시 자동생성된
+`app/views/active_storage/blobs/_blob.html.erb`을 보면
+
+```ruby
+  <% if blob.representable? %>
+    <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
+  <% end %>
+```
+
+이란 로직이 있는데 포스팅한 내용안에 이미지 파일이 있으면 전부 이로직에 의해 실행되게 된다.
+(위 로직을 삭제하면 이미지파일은 안보여주게 됨)
+
+이 부분을 어떻게 이용하면 전체 이미지 파일을 정량적으로 관리 하거나 특정조건을 넣어줄 수 있을지도..
+
+참고로 후술할 메모5의 설정`has_rich_text :content`이 없으면 위 템플릿을 실행되지 않으므로 주의가 필요
+
+
+### 메모5
+
+```ruby
+has_rich_text :content
+```
+
+이부분을 추가 안해주면 content에 직접 포스팅한 내용이 insert된다.
+위 로직이 있음으로 content는 null인 상태가 되고 `action_text_rich_texts`라는 테이블의 body컬럼에 insert됨
+
+
+
+
+
 #### reference:
 
 ```
+https://tech.libinc.co.jp/entry/rails6_action_text
 https://www.techscore.com/blog/2019/12/19/ruby-on-rails-6-action-text/
 https://tech.mof-mof.co.jp/blog/rails6-actiontext/
 ```
