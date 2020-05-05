@@ -3,7 +3,7 @@ layout: post
 title:  "Rails active storage란"
 author: negabaro kim
 categories: rails
-tags:	rails devise
+tags:	rails
 ---
 
 # active storage란
@@ -135,5 +135,6 @@ current_user.avatar.variant(combine_options:{resize:'200x200',border:'5',borderc
 
 
 ```
+https://qiita.com/kazuomatz/items/3cdbd2c40576c2e9d89b
 https://qiita.com/hmmrjn/items/7cc5e5348755c517458a
 ```
