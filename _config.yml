@@ -45,7 +45,7 @@ paginate_path: archive/page:num
 
 
 # gem dependencies
-plugins: [jekyll-paginate, jekyll-feed, jekyll-gist]
+plugins: [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-debug]
 
 # search_google
 google-site-verification: googlee83f7bf87778e4a8.html
