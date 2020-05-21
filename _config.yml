@@ -35,7 +35,7 @@ wpm: 150
 # Build settings
 markdown: kramdown
 highlighter: rouge
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+exclude: ["vendor","less","node_modules","Gruntfile.js","package.json","README.md"]
 port: 8888
 permalink: /archive/:title
 
