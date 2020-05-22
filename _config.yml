@@ -28,6 +28,7 @@ rss : true
 # used for portfolio on home page
 collections:
   - portfolio
+  - skill
 
 # used to estimate reading time
 wpm: 150
@@ -45,7 +46,7 @@ paginate_path: archive/page:num
 
 
 # gem dependencies
-plugins: [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-debug]
+plugins: [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-debug, jekyll-watch]
 
 # search_google
 google-site-verification: googlee83f7bf87778e4a8.html
