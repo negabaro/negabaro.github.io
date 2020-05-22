@@ -6,9 +6,12 @@ categories: rails
 tags:	rails
 ---
 
-rails view template에서 자주사용하는 select,select_tag에 대해 알아보자.
+rails view template에서 자주사용하는 select form에 대해 알아보자.
 
 # select
+
+form_for,form_with에 의존해서 폼을 작성하는게 특징
+덕분에 신규와 수정화면에 같은 코드로 정의 가능해서 CRUD폼 작성시 매우용이
 
 기본문법은 이하와 같다.
 
