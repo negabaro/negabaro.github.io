@@ -8,5 +8,5 @@ group :jekyll_plugins do
   gem "jekyll-gist"
   gem "github-pages"
   gem 'jekyll-debug'
-
+  gem 'jekyll-watch'
 end
