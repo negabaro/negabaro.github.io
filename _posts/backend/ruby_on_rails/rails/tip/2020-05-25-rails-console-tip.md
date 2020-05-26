@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "rails6.0 console에서 자주사용할만한 tip"
