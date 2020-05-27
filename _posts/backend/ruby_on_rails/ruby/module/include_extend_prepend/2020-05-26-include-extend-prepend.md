@@ -6,10 +6,25 @@ categories: ruby
 tags: ruby
 ---
 
-ruby에서 모듈을 읽기 위해서는 include、prepend、extend를 사용함.
-이 포스트에서는 각각 메소드의 차이에 대해 알아보자.
+
+# include、prepend、extend의 공통점
+
+ruby에서 모듈을 import시 사용하는 include、prepend、extend를 사용함.
+
+# include,prepend 의 공통점
+
+include,prepend를 사용해서 모듈 임포트시 해당 모듈은 메소드는 인스턴스 메소드로 등록된다.
+
+# include,prepend의 차이
+
+계승관계가 반대이다.
+
+# (include,prepend)와 extend의 차이
+
+extend로 임포트시 클래스 메소드로 등록된다.
 
 ---
+
 
 # include
 
@@ -149,7 +164,7 @@ JYP.new.popular
 
 # extend
 
-include와prepend는 모듈을 계승관계에 넣었지만,
+include와 prepend는 모듈을 계승관계에 넣었지만,
 extend은 계승관계없이 클래스와 인스턴스의 관계로 사용함.
 
 ## extend 예제1)
@@ -251,6 +266,7 @@ ITZY
 ### Reference Link:
 
 ```
+https://www.techscore.com/blog/2013/03/01/rails-include%E3%81%95%E3%82%8C%E3%81%9F%E6%99%82%E3%81%AB%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%A8%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%83%A1/s
 http://qawsedrftgyhujiko.hatenablog.com/entry/2016/11/05/135008
 https://qiita.com/leon-joel/items/f7c4643023f44def5ebd
 https://ref.xaio.jp/ruby/classes/module/include
