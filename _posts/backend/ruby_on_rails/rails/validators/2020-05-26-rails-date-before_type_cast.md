@@ -175,5 +175,7 @@ end
 
 # reference:
 
+```
 https://dora.bk.tsukuba.ac.jp/~takeuchi/?%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%2Frails%2Fvalidates%E3%81%A7before_type_cast
 https://qiita.com/msky026/items/7a21203546eb50892c9f
+```
