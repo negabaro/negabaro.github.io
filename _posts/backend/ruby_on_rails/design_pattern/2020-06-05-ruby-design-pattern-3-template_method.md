@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "ruby로 배우는 디자인패턴 【Template Method】"
+title:  "ruby로 배우는 디자인패턴3 【Template Method】"
 author: negabaro kim
 categories: ruby design-pattern
 ---
