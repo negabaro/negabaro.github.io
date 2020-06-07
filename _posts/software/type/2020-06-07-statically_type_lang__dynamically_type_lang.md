@@ -64,13 +64,13 @@ haskel이나 typescript는 동적/정적타입 검사가 둘다 가능하다고 
 
 2014/8월이면 예전글이긴하네..
 
-[Static vs. Dynamic Languages: A Literature Review ]: http://danluu.com/empirical-pl/
+[Static vs. Dynamic Languages: A Literature Review ]
 
 
 
 # 정적타입언어 관련 논문
 
-ICSE(International Conference on Software Engineering) 2017에 발표 된 [“To Type or Not to Type: Quantifying Detectable Bugs in JavaScript”]: http://earlbarr.com/publications/typestudy.pdf 이란 논문에서는 
+ICSE(International Conference on Software Engineering) 2017에 발표 된 [To Type or Not to Type: Quantifying Detectable Bugs in JavaScript] 이란 논문에서는 
 js의 코드 버그중 15%가 정적 타입 시스템이 있었다면 커밋전에 해결되었을것이라고 결론을 지었다고
 
 
@@ -91,17 +91,18 @@ js의 코드 버그중 15%가 정적 타입 시스템이 있었다면 커밋전�
 
 코드의 품질보다 비지니스관점을 우선시 생각하는 개발자들이 많이 선택하는 경향이 있다.
 
+# 정적/동적타입 언어 리스트
 
-# 정적타입 언어 리스트
+## 정적타입 언어 리스트
 
 Ada, C, C++, C#, JADE, Java, Fortran, ML, Pascal, Scala
 
-# 동적타입 언어 리스트
+## 동적타입 언어 리스트
 
 Groovy, JavaScript, Lisp, Lua, Objective-C, PHP, Prolog, Python, Ruby, Smalltalk, Tcl
 
 
-# 정적/동적타입이 둘다 가능한 언어 리스트
+## 정적/동적타입이 둘다 가능한 언어 리스트
 
 Haskell,typescript(라고 들음..)
 
@@ -116,3 +117,6 @@ Haskell,typescript(라고 들음..)
 https://ahnheejong.name/articles/types-basic-concepts/?fbclid=IwAR1acV23XLHxDu60-hzQW-k4V02QLMHxr6kFwrNCtT_ZI1Zi-1pJkOntmXM
 https://okky.kr/article/304342
 ```
+
+[To Type or Not to Type: Quantifying Detectable Bugs in JavaScript]: http://earlbarr.com/publications/typestudy.pdf 
+[Static vs. Dynamic Languages: A Literature Review ]: http://danluu.com/empirical-pl/
