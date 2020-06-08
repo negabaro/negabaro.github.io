@@ -1,8 +1,9 @@
+
 ---
 layout: post
 title:  "terraform backend 기능"
 author: negabaro kim
-categories: terraform
+tags: terraform
 ---
 
 # backend란

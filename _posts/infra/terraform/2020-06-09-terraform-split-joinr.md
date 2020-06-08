@@ -2,7 +2,7 @@
 layout: post
 title:  "Terraform의join,split메소드에 대해서"
 author: negabaro kim
-categories: terraform
+tags: terraform
 ---
 
 테라폼에서 자주 사용되는 메소드중 join과split이 있습니다.

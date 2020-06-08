@@ -2,7 +2,7 @@
 layout: post
 title:  "Terraform IF문안에 IF문 넣기"
 author: negabaro kim
-categories: terraform
+tags: terraform
 ---
 
 

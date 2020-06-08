@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Terraform실행한 환경의 public ip를 변수화 시켜서 세큐리티그룹에 설정하는 방법"
-categories: terraform
+tags: terraform
 ---
 
 terraform으로 ec2를 만들고 해당 액션을 실행한 환경(예를 들면 우리집)에서는 해당 ec2에 접근이 가능하게 하고 싶었는데
