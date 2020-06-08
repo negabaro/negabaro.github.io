@@ -33,9 +33,9 @@ layout: default
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 {{ content }}
                 <br>
-                {% include gitalk-comment.html %}
                 {% include utterances-comment.html %}
                 {% if page.comments %}
+                    {% include gitalk-comment.html %}
                     {% include disqus_comments.html %}
                 {% endif %}
                 <br>

@@ -32,9 +32,9 @@ layout: default
             {{ content }}
             <br>
             <!-- _layouts/page.html -->
-            {% include gitalk-comment.html %}
             {% include utterances-comment.html %}
             {% if page.comments %}
+                {% include gitalk-comment.html %}
                 {% include disqus_comments.html %}
             {% endif %}
             <br>
