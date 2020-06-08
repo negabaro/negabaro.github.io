@@ -51,3 +51,27 @@ plugins: [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-debug, jekyll-watch]
 # search_google
 google-site-verification: googlee83f7bf87778e4a8.html
 
+
+# To use Gittalk comments  https://github.com/gitalk/gitalk#Usage
+# jekyll synatx: https://jekyllrb.com/docs/liquid/
+gittalk:
+  # Note: A GitHub Application is needed for authorization, if you don't have one, going to https://github.com/settings/applications/new register a new one.
+  # You must specify the website domain url in the Authorization callback URL field.
+  clientID: f4fe7b87a2134d357f8d # GitHub Application Client ID
+  clientSecret: a6ccf5ecfb6084700bbca4668426625732fa2970  # GitHub Application Client Secret,
+  repository: blog-comments  # Storage gittalk's repository
+  owner: colynn  # GitHub repo owner,
+  admin: colynn  # GitHub repo owner and collaborators, only these guys can initialize github issues eg. 'colynn,daattali'
+
+
+# To use Utterance comments,  you can going to https://utteranc.es/ get more parameters interpretation.
+utterance:
+  # Note: Make sure the repo is public, otherwise your readers will not be able to view the issues/comments.
+  # Make sure the [utterances app](https://github.com/apps/utterances) is installed on the repo, otherwise users will not be able to post comments.
+  #  If your repo is a fork, navigate to it's settings tab and confirm the issues feature is turned on.
+  repo:  # Choose the repository utterances will connect to. eg: owner/repo
+  issue-term: title   # Choose the mapping between blog posts and GitHub issues. 
+  theme: github-light # Choose an Utterances theme that matches your blog. 'github-light' is default
+
+  ## Optional
+  label:  blog-comments # Choose the label that will be assigned to issues created by Utterances.
