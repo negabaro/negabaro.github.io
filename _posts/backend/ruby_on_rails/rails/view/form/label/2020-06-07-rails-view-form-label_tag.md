@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "Rails6.0 label_tag에 대해서"
