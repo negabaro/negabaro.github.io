@@ -59,7 +59,7 @@ gittalk:
   # You must specify the website domain url in the Authorization callback URL field.
   clientID: f4fe7b87a2134d357f8d # GitHub Application Client ID
   clientSecret: a6ccf5ecfb6084700bbca4668426625732fa2970  # GitHub Application Client Secret,
-  repository: blog-comments  # Storage gittalk's repository
+  repository: negabaro/blog-comments  # Storage gittalk's repository
   owner: negabaro  # GitHub repo owner,
   admin: negabaro  # GitHub repo owner and collaborators, only these guys can initialize github issues eg. 'colynn,daattali'
 
