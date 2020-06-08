@@ -60,8 +60,8 @@ gittalk:
   clientID: f4fe7b87a2134d357f8d # GitHub Application Client ID
   clientSecret: a6ccf5ecfb6084700bbca4668426625732fa2970  # GitHub Application Client Secret,
   repository: blog-comments  # Storage gittalk's repository
-  owner: colynn  # GitHub repo owner,
-  admin: colynn  # GitHub repo owner and collaborators, only these guys can initialize github issues eg. 'colynn,daattali'
+  owner: negabaro  # GitHub repo owner,
+  admin: negabaro  # GitHub repo owner and collaborators, only these guys can initialize github issues eg. 'colynn,daattali'
 
 
 # To use Utterance comments,  you can going to https://utteranc.es/ get more parameters interpretation.
@@ -69,7 +69,7 @@ utterance:
   # Note: Make sure the repo is public, otherwise your readers will not be able to view the issues/comments.
   # Make sure the [utterances app](https://github.com/apps/utterances) is installed on the repo, otherwise users will not be able to post comments.
   #  If your repo is a fork, navigate to it's settings tab and confirm the issues feature is turned on.
-  repo:  # Choose the repository utterances will connect to. eg: owner/repo
+  repo:  negabaro/blog-comments # Choose the repository utterances will connect to. eg: owner/repo
   issue-term: title   # Choose the mapping between blog posts and GitHub issues. 
   theme: github-light # Choose an Utterances theme that matches your blog. 'github-light' is default
 
