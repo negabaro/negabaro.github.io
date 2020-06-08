@@ -2,9 +2,7 @@
 layout: post
 title:  "webdriverIO에서 돔조작 패턴"
 author: negabaro kim
-categories: webdriverio
-tags:	webdriverio e2e
-cover:  "/assets/twice.jpg"
+categories: webdriverio e2e
 ---
 
 

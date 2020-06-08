@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Terraform의join,split메소드에 대해서"
+author: negabaro kim
 categories: terraform
 ---
 
@@ -19,19 +20,19 @@ split은 반대로 String형 데이터를 List로 바꿔줄때 자주 사용합�
 
 이럴때 바로 join을 이용해서 list형값을 string형으로 바꿔주면 output에서 값을 확인할 수 있습니다.
 
-{% highlight ruby %}
+```ruby
 output "subnet_ids" {
   value = "${join(",", aws_subnet.main.*.id)}"
 }
-{% endhighlight %}
+```
 
 
 
 ### 결과
 
-{% highlight ruby %}
+```ruby
 subnet_ids = subnet-xx,subnet-xx,subnet-xx,subnet-xx,subnet-xx,subnet-xx
-{% endhighlight %}
+```
 
 
 
@@ -44,21 +45,21 @@ subnet_ids = subnet-xx,subnet-xx,subnet-xx,subnet-xx,subnet-xx,subnet-xx
 
 #### 다른 모듈의 output결과를 list형으로 변환해주는 예)
 
-{% highlight ruby %}
+```ruby
 subnets             = "${split(",",module.network.subnet_ids)}"
-{% endhighlight %}
+```
 
 #### ec2의 subnet_id 설정예)
 
-{% highlight ruby %}
+```ruby
 subnet_id = "${element(split(",", var.subnet_ids), count.index)}"
-{% endhighlight %}
+```
 
 
 
 #### 정해진 subnet값을 변수에넣어서 적용하는 예)
 
-{% highlight ruby %}
+```ruby
 variable static_subnets {
   description = ""
   type        = "list"
@@ -68,24 +69,24 @@ variable static_subnets {
     "subnet-xx",
   ]
 }
-{% endhighlight %}
+```
 
 
-{% highlight ruby %}
+```ruby
 subnets             = "${var.static_subnets}"
-{% endhighlight %}
+```
 
 
 
 
-{% highlight ruby %}
+```ruby
 ${element(split(",", join(",", aws_db_parameter_group.main.*.id)), 0)}"
-{% endhighlight %}
+```
 
 
-{% highlight ruby %}
+```ruby
 ${element(aws_db_parameter_group.main.*.id), 0)}"
-{% endhighlight %}
+```
 
 
 ## 팁.

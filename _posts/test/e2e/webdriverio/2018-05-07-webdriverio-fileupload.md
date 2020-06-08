@@ -4,7 +4,6 @@ title:  "webdriverIO 에서의 파일업로드 방법"
 author: negabaro kim
 categories: webdriverio
 tags:	webdriverio e2e
-cover:  "/assets/twice.jpg"
 ---
 
 [webdriverIO에서 돔조작 패턴]에서 간단히 파일 업로드하는 방법을 알아봤다.

@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "electron hello world"
@@ -86,7 +85,7 @@ $ npm init -y
 
 ## index.js
 
-```
+```js
 "use strict";
 
 // 어플리케이션을 컨트롤하는 모듈

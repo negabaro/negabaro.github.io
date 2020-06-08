@@ -1,36 +1,37 @@
 ---
 layout: post
 title:  "Terraform IF문안에 IF문 넣기"
+author: negabaro kim
 categories: terraform
 ---
 
 
 Terraform안에서 IF문을 사용하려면 이하와 같은 삼항연산자를 이용하는 수 밖에 없다.
 
-{% highlight ruby %}
+```ruby
  ${var.kawaii == "" ? "dog" : "cat"}
-{% endhighlight %}
+```
 
 그렇다면 복수의 IF문 분기를 사용하려면 어떻게 해야할까.
 찾아본 결과, 삼항연산자안에 삼항연산자를 넣는식으로 구현하는 방법외엔 없는듯하다.
 
 # 구현 예1)
 
-{% highlight ruby %}
+```ruby
 output "test" {
   value = "${var.static_vpc == "" ? join(",", aws_subnet.main.*.id) : var.static_vpc == "vpc-xx" ? join(",",var.static_subnets) : join(",",data.aws_subnet_ids.static_vpc.ids) }"
 }
-{% endhighlight %}
+```
 
 # 구현 예2)
 
-{% highlight ruby %}
+```ruby
 provisioner "remote-exec" {
     inline = [
       "docker stack deploy --compose-file ${var.environment}${var.reservation_mode == 1 ? "-reservation" : ""}-${var.mount_status == 1 ? "mount" : "default"}.yml blue --with-registry-auth",
     ]
 }
-{% endhighlight %}
+```
 
 
 참고로 output안에서는 String형 데이터 밖에 넣을 수 없다.
@@ -40,11 +41,11 @@ provisioner "remote-exec" {
 
 # 잘못된 예)
 
-{% highlight ruby %}
+```ruby
 output "test" {
   value = "${var.static_vpc == "" ? aws_subnet.main.*.id : var.static_vpc == "vpc-xx" ? join(",",var.static_subnets) : join(",",data.aws_subnet_ids.static_vpc.ids) }"
 }
-{% endhighlight %}
+```
 
 
 

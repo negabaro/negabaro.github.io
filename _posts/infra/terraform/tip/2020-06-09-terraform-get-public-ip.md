@@ -14,14 +14,14 @@ stack overflow에 질문해서 이방법을 자동화 시키는 방법을 찾게
 
 #### scripts/get_my_public_ip.sh
 
-```
+```sh
 #!/bin/bash -xe
 echo {\"ip\":\""`curl ipinfo.io/ip`"\"}
 ```
 
 #### main.tf
 
-```
+```sh
 data "external" "get_my_public_ip" {
   program = ["sh", "scripts/get_my_public_ip.sh"]
 }
@@ -42,7 +42,7 @@ module "security-group" {
 
 #### main.tf
 
-```
+```ruby
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
@@ -50,7 +50,7 @@ data "http" "myip" {
 
 And whenever you want to place your IP just use data.http.myip.body, example:
 
-```
+```ruby
 ingress {
   from_port = 5432
   to_port = 5432

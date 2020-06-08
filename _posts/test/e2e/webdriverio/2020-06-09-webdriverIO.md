@@ -4,7 +4,6 @@ title:  "WebdriverIO란"
 author: negabaro kim
 categories: webdriverio
 tags:	webdriverio node e2e
-cover:  "/assets/twice3.jpg"
 ---
 
 
