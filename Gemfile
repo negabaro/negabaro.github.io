@@ -9,4 +9,5 @@ group :jekyll_plugins do
   gem "github-pages"
   gem 'jekyll-debug'
   gem 'jekyll-watch'
+  gem 'jekyll-sitemap'
 end
