@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://devmjun.github.io/sitemap.xml
+Sitemap: https://negabaro.github.io/sitemap.xml
