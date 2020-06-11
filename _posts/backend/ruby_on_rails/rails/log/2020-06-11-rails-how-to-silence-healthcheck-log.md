@@ -57,6 +57,8 @@ Rails.application.config.middleware.swap Rails::Rack::Logger, CustomLogger
 ```
 
 
+여기까지하고 레일즈를 재기동하면 /okcomputer/all에 억세스한 로그가 제외되는걸 확인할 수 있었다.
+
 
 불필요한 로그가 사라져서 쾌적하게 로그분석이 가능해졌다.
 오늘은 기분좋게 잠들 수 있을거 같다.
