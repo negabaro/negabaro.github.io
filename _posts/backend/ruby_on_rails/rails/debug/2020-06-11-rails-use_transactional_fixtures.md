@@ -1,8 +1,7 @@
-
 ---
 layout: post
 title:  "RSPEC실행시 DB에 데이터가 저장되지 않는 이유(feat. use_transactional_fixtures)"
-tags: rails/debug
+tags: rails rails/debug
 ---
 
 # 결론
