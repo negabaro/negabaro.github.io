@@ -50,7 +50,7 @@ paginate_path: archive/page:num
 plugins: [jekyll-sitemap,jekyll-seo-tag, jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-debug, jekyll-watch]
 
 # search_google
-google-site-verification: googlee83f7bf87778e4a8.html
+google-site-verification: googled037258ba116d617.html
 
 
 # To use Gittalk comments  https://github.com/gitalk/gitalk#Usage
