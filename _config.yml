@@ -3,7 +3,8 @@ title: "Negabaro`s Blog"
 subtitle: "Effort is the best way to realizing your dreams."
 default_author: negabaro
 description: "Hello World"  # used in site head
-url: https://negabaro.github.io
+baseurl: "https://negabaro.github.io/"
+url: "https://negabaro.github.io/"
 # register on google analytics and replace this token
 # google track ID 추가 
 google_analytics: UA-57217281-1
