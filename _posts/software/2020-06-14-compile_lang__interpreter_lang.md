@@ -2,7 +2,7 @@
 layout: post
 title:  "컴파일언어와 인터프리터언어의 차이"
 author: negabaro kim
-categories: software
+tags:	software
 ---
 
 
