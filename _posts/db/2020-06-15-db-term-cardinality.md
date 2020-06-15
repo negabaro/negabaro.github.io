@@ -1,7 +1,6 @@
-
 ---
 layout: post
-title:  "카디널리티란?"
+title:  카디널리티란?
 description: 카디널리티는 전체 행에 대한 특정 컬럼의 중복 수치를 나타내는 지표이다.
 tags: term
 ---
