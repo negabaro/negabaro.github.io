@@ -3,7 +3,7 @@ layout: post
 title:  "OOP concreate class란?"
 author: negabaro kim
 description: 추상화 클래스가 아닌 클래스는 concreate class라고 말할 수 있다.
-tags:	software
+tags: oop software
 ---
 
 # concreate class란?
