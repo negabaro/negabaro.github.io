@@ -2,6 +2,7 @@
 layout: post
 title:  "OOP 인터페이스란?"
 author: negabaro kim
+lastmod: "2020-06-17"
 description: 특정 오브젝트에 어떤 역할이 있는지 설계할때 사용. 추상화 클래스와 흡사한 역할을 한다.
 tags: oop software
 ---

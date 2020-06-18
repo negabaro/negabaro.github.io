@@ -2,6 +2,7 @@
 layout: post
 title:  "OOP 추상화 클래스란?"
 author: negabaro kim
+lastmod: "2020-06-15"
 description: 자식 클래스에 추상 메소드의 구현을 강제시키기 위해 존재
 tags: oop software
 ---
