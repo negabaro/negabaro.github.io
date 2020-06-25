@@ -79,7 +79,14 @@ puts a # 5
 ```
 
 
-# 메모1. rails에서 select문 사용후 count하면 SQL syntax에러가 발생
+# 메모1. ActiveRecord_Relation의 count
+
+ActiveRecord_Relation에도 count라는 메소드가 있는데 
+위에서 설명한 count와는 다른 친구
+
+ORM에서 간단히`select count(*)`를 넣을 수 있게 하기위한 메소드
+
+# 메모2. rails에서 select문 사용후 count하면 SQL syntax에러가 발생
 
 rails에서 `Organization::ActiveRecord_Relation`형태로 select한 결과를 count하면 에러가남
 
@@ -92,7 +99,6 @@ Caused by Mysql2::Error: You have an error in your SQL syntax; check the manual 
 ```
 
 `select count(*)`와 `select organizations.*, other_parents_organizations.name as parent_name`가 공존할 수 없으므로 당연한 에러
-
 
 
 
