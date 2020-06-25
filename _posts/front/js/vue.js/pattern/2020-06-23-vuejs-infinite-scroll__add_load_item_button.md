@@ -58,7 +58,26 @@ false일때는 아이템을 추가하는 버튼을 렌더링하고 true일때 lo
 
 [![Image from Gyazo](https://i.gyazo.com/f874fd8450629709410a3cd41e597900.gif)](https://gyazo.com/f874fd8450629709410a3cd41e597900)
 
+### 버튼 표시 
 
+예를들어 아래와 같은 요건
+
+・아이템이 6건이상일때 버튼표시 이하일때는 버튼 숨김
+・로드해서 더이상 아이템이 없을때 버튼 숨김
+
+전체 아이템의 count = maxItemsCount = 50건이라고 가정
+현재(추가된)아이템 = items
+이라면  
+
+`maxItemsCount < items.length`조건으로
+50건 보다 items가 많아질때 `showingButtonStatus: false`
+maxItemsCount가 5건 이하일 경우 `showingButtonStatus: false`해준다.
+
+```js
+showingButtonStatus(max_items_count, items) {
+  return max_items_count > 5 && items_max_count > items.length;
+}
+```
 
 
 
