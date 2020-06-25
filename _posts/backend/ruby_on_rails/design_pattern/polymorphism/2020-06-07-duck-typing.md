@@ -20,9 +20,7 @@ tags:	software
 라는 말에서 유래했다.
 
 
-GOF 디자인패턴중 
-["Program to an 'interface', not an 'implementation'."]: https://en.wikipedia.org/wiki/Design_Patterns#Introduction.2C_Chapter_1
-을 실현시키는 방법중 하나이다.
+GOF 디자인패턴중  ["Program to an 'interface', not an 'implementation'."] 을 실현시키는 방법중 하나이다.
 
 
 ## 다형성(polymorphism)이란?
@@ -144,3 +142,5 @@ C#,python,ruby,PHP,perl등등이다.
 1. 오브젝트를 판별해서 분기하는 case문
 2. kind_of,is_a?
 3. responds_to?
+
+["Program to an 'interface', not an 'implementation'."]: https://en.wikipedia.org/wiki/Design_Patterns#Introduction.2C_Chapter_1
