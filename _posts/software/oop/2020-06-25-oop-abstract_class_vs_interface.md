@@ -3,7 +3,7 @@ layout: post
 title:  "OOP 추상클래스와 인터페이스의 차이는?"
 author: negabaro kim
 lastmod: "2020-06-24"
-description: 특정 오브젝트에 어떤 역할이 있는지 설계할때 사용. 추상화 클래스와 흡사한 역할을 한다.
+description: 가장 큰차이는 추상클래스는 단일상속, 인터페이스는 다중상속이 가능하다는 것. 가독성면에서는 하이라이키가 클 우려가 있는 추상클래스보다 인터페이스가 좋음.
 tags: oop software
 ---
 
