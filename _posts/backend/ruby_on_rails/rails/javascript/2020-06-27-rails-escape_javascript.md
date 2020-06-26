@@ -7,7 +7,7 @@ tags:	rails rails/tip
 
 # escape_javascript란?
 
-rails에서 제공하느 헬퍼로
+rails에서 제공하는 헬퍼로
 javascript코드안에서 레일즈의 변수나 render메소드 사용할 수 있다.
 
 SSR에서 html돔과 js를 생성한후 클라이언트 사이드에 넘긴후 해당 js를 읽어 실행하는 방식
