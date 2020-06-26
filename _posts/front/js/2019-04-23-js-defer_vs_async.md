@@ -95,6 +95,8 @@ defer속성이 JS를 비동기로 읽어들여 실행자체는 dom을 읽어낸�
 
 ### Reference Link:
 
+```
 https://blog.asamaru.net/2017/05/04/script-async-defer/
 https://appletree.or.kr/blog/web-development/javascript/script-%ED%83%9C%EA%B7%B8%EC%9D%98-async%EC%99%80-defer-%EC%86%8D%EC%84%B1/
 https://qiita.com/FeET/items/9445b0518d7e66fa2a26
+```
