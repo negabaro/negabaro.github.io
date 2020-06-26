@@ -17,7 +17,7 @@ hasOwnProperty()은 프로토타입 체인을 확인하지 않고, 해당 객체
 
 # 예제
 
-```
+```js
 function GroupName() {
   this.twice = "Twice!";
 }
