@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "rails6 references에 null허용 하는법"
+title:  "rails6 references 컬럼에 null허용 하는법"
 author: negabaro kim
 tags:	rails gem
 ---
