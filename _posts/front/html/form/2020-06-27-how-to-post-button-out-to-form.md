@@ -1,11 +1,10 @@
 ---
 layout:     post
 title:      "html form바깥에서 submit하는 방법"
-description: "form에id를 지정해주고 form바깥에 있는 type="submit"을 가진 element에 해당 form의id를 form태그에 넣어주면 된다."
+description: "form에id를 지정해주고 form바깥에 있는 type='submit'을 가진 element에 해당 form의id를 form태그에 넣어주면 된다."
 author:     "negabaro" 
-tags: [html]
+tags: html
 ---
-
 
 
 보통 form안에 submit버튼이 있고 해당 submit을 클릭해서 어떤 액션을 실행하는 로직이 많다.
