@@ -9,7 +9,10 @@ layout: default
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
                     <h1>{{ page.title }}</h1>
-                    <hr class="small">
+                    {% unless page.title == nil %}
+                      <hr class="small">
+                    {% endunless %}
+
                     <span class="subheading">
                         {% if page.description == "!!SHOWTAGSINSTEADOFDESCRIPTION!!" %}
                             {% for tag in page.tags %}
