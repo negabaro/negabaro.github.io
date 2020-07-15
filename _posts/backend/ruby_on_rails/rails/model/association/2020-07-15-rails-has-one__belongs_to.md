@@ -158,6 +158,8 @@ Mysql2::Error: Cannot add foreign key constraint
 
 차이없음.
 
+## t.belongs_to로 작성한 테이블
+
 ```ruby
   create_table "user_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id"
@@ -165,7 +167,7 @@ Mysql2::Error: Cannot add foreign key constraint
   end
 ```
 
-references에서는 index랑 null: false옵션이 붙음.
+## t.references로 작성한 테이블
 
 ```ruby
   create_table "user_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
