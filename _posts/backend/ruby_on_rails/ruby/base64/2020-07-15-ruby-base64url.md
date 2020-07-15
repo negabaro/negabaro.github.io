@@ -20,7 +20,7 @@ url외에 파일명에 사용해도 안전하도록 설계되어있음.
 
 # Ruby에서 Base64URL encoding하는 방법
 
-## 방법1
+## 방법1(encode -> tr)
 
 ```ruby
 require 'base64'
@@ -29,14 +29,14 @@ text = Base64.encode64(binary) #<<Base64 Encoding
 base64url_text = text.tr('+/', '-_')
 ```
 
-## 방법2
+## 방법2(pack -> tr)
 
 ```ruby
 binary = "ab?cd~"
 text = [binary].pack('m')
 base64url_text = text.tr('+/', '-_')
 ```
-## 방법3
+## 방법3(urlsafe_encode64)
 
 ```ruby
 binary = "ab?cd~"
@@ -46,18 +46,28 @@ base64url_text = Base64.urlsafe_encode64(binary)
 
 # Ruby에서 Base64URL decoding하는 방법
 
-## 방법1
 
-```ruby
-Base64.urlsafe_decode64(base64url_text)
-```
 
-## 방법2
+## 방법1(tr -> decode64)
 
 ```ruby
 base64_text = base64url_text.tr('-_', '+/' )
 Base64.decode64(base64_text)  
 ```
+
+## 방법2(tr -> unpack)
+
+```ruby
+base64_text = base64url_text.tr('-_', '+/' )
+base64_text.unpack('m')[0]
+```
+
+## 방법3(urlsafe_decode64)
+
+```ruby
+Base64.urlsafe_decode64(base64url_text)
+```
+
 
 ### reference:
 
