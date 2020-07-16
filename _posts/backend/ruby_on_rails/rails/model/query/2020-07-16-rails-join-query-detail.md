@@ -152,5 +152,6 @@ Owner.joins(cats: [cat_children: :hamster])
 
 ```
 https://pikawaka.com/rails/joins
+https://qiita.com/TeruhisaFukumoto/items/007ad22cc170d297dbcc
 ```
 
