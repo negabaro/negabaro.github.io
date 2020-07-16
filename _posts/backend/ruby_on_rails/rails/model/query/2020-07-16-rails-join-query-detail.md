@@ -130,9 +130,21 @@ end
 ### 실행결과
 
 ```ruby
-rubyOwner.joins(cats: :cat_children)
+Owner.joins(cats: :cat_children)
  SELECT `owners`.* FROM `owners` INNER JOIN `cats` ON `cats`.`owner_id` = `owners`.`id` INNER JOIN `cat_children` ON `cat_children`.`cat_id` = `cats`.`id`
 ```
+
+
+## 좀 더 nested한 테이블에 join거는 법
+
+nested한 관계가 3중이상일때는 어떻게 할까?
+`집사 -> 고양이 -> 새끼고양이 -> 햄스터`와 같은 관계라고 하면 (현실적이지 않지만 새끼고양이가 햄스터를 죽이지 않고 키운다고 가정해보자..)
+아래와 같은 방식으로 레코드를 가져올 수 있다.
+
+```ruby
+Owner.joins(cats: [cat_children: :hamster])
+```
+
 
 
 
