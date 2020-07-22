@@ -9,7 +9,7 @@ tags:	rails/gem
 # bullet이란?
 
 N+1문제 검출시 사용하는 gem
-
+[bullet link]
 
 # bullet 인스톨
 
@@ -80,3 +80,4 @@ https://wonderwall.hatenablog.com/entry/2015/08/16/171622
 https://github.com/flyerhzm/bullet/
 https://github.com/flyerhzm/bullet_test
 ```
+[bullet link]: https://github.com/flyerhzm/bullet
