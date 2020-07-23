@@ -43,3 +43,26 @@ CatChild mounted
 Cat mounted
 App mounted
 ```
+
+
+# 라이프 사이클에 따른 watch타이밍
+
+라이프사이클에 따른 차이를 이해하기 위해 watch를 예로 들어보겠다.
+
+Cat컴퍼넌트가 CatChild `cat-crying`이라는 props를 넘겨주고
+CatChild는 cat-crying을 watch하면서 부모 컴퍼넌트에서 값이 변경되는걸
+감시한다고 해보자.
+
+이 때 Cat컴퍼넌트는 created,mounted 어디에서 cat-crying값을 변경하느냐에 따라 CatChild컴퍼넌트의 watch가 동작에 차이가 있다.
+
+created일 경우 변경한 값을 그대로 catChild에게 넘겨준 것이므로
+watch대상이 되지 않는다.
+
+mounted일 경우는 일단 초기의 props값을 넘긴 후 
+mounted가 실행될때 값이 바뀌는것이므로 watch가 정상적으로 동작한다.
+
+### reference:
+
+```
+https://mygumi.tistory.com/201
+```

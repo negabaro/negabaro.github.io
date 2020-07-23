@@ -51,7 +51,7 @@ props로 전달받은 값은 자식 컴퍼넌트에서 안바꾸는게 좋겠지
 
 
 
-# 변수에 담긴 값을 자식 컴퍼넌트에 props로 넘겨줄때
+# 변수에 담긴 값을 자식 컴퍼넌트에 props로 넘겨줄때(동적 props)
 
 
 ```js
@@ -65,6 +65,13 @@ catCrying이라는 변수값을 넘기기 위해서는 `:`를 props의 변수명
 ```js
 <CatChild :cat-crying="catCrying" />
 ```
+
+아래의 축약형이다.
+
+```js
+<CatChild v-bind:cat-crying="catCrying" />
+```
+
 
 
 # props로 받은 값을 template에서 그대로 사용가능
