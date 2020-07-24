@@ -124,4 +124,96 @@ export default {
 
 ```
 
+# props options
 
+
+옵션을 지정하지 않을때 props는 문자열 배열을 열거하지만
+옵션 지정시 오브젝트 배열을 이용한다.
+옵션에는 type형태,필수항목,디폴트값등 지정이 가능하다.
+
+아래에서는 몇가지 props의 옵션에 대해 알아보자.
+
+## required: true
+
+`required: true`지정시 해당 props를 넘겨받지 않으면 아래와 같은 에러를 발생시킨다.
+
+```
+[Vue warn]: Missing required prop: "catCrying"
+```
+
+### 코드 예제
+
+```js
+props: {
+  catCrying: {
+    required: true // 필수항목으로 지정
+  }
+},
+```
+
+
+
+## type
+
+`type: Number`지정하고 문자열 값을 넘기면 아래와 같은 에러가 발생한다.
+
+```
+[Vue warn]: Invalid prop: type check failed for prop "catCrying". Expected Number with value NaN, got String with value "hhhhhhhhhhh".
+```
+
+### 코드 예제
+
+```js
+props: {
+  catCrying: {
+    type: Number, // Number type지정
+  }
+},
+```
+
+### 그 외
+
+type에는 String, Number, Boolean, Array, Object, Date, Function, Symbol이 있다.
+
+type지정시 부모 컴퍼넌트는 정적인 값일때도 v-bind 해줘야함을 기억하자
+
+
+
+
+### multiple type
+
+복수의 타입을 지정하는것도 가능
+
+```js
+type: [String, Number]
+```
+
+
+## validator
+
+validator를 `"meow", "mew"`지정후 그 외 문자열을 props로 넘기면 아래와 같은 에러가 발생한다.
+
+```js
+[Vue warn]: Invalid prop: custom validator check failed for prop "catCrying".
+```
+
+### 코드 예제
+
+```js
+props: {
+  catCrying: {
+    ...
+    validator: function(value) {
+      return ["meow", "mew"].indexOf(value) !== -1;
+    }
+  }
+},
+```
+
+
+
+### reference:
+
+```
+https://www.e-loop.jp/knowledges/3/
+```
