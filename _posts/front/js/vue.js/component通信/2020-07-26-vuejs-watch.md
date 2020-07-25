@@ -40,8 +40,8 @@ watch: {
 # 감지 방법
 
 감지 방법에는 감시할 프로퍼티명으로 watch에서 프로퍼티를 만들어주는 `data를 직접매핑하는 방법`과
-data와 method를 watch에서 매핑해주는 `data를 간접매핑하는 방법` 2가지가 있다.
-편의상 직접매핑,간접매핑으로 표기하겠다.
+data와 method를 watch에서 매핑해주는 `data를 간접매핑하는 방법` 이 ㄴ있다.
+편의상 `직접매핑`,`간접매핑`으로 표기해서 설명하겠다.
 
 
 ## 직접매핑
@@ -82,13 +82,12 @@ logMessage(val, oldVal) {
 }
 ```
 
-# 복수의 감지를 watch에 넣으면 마지막에 선언한 부분만 유효함.
+# 복수의 watch 선언시 주의사항
 
+동일한 data에 복수의 watch를 선언하면 마지막에 선언한 부분만 실행된다는 것을 기억하자.
 
-동일한 data에 복수의 watch를 선언하면 마지막에 선언한 부분만 실행된다.
-
-아래 예제는 catCrying2에 logMessage,logMessage2라는 2개의 watch를 등록했는데
-실행되는것은 logMessage2 뿐이다.
+아래 예제에서는 catCrying2에 logMessage,logMessage2라는 2개의 watch를 등록했는데
+실제 실행되는것은 logMessage2 뿐이다.
 
 ```js
 watch: {
