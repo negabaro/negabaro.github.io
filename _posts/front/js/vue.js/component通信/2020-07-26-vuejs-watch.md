@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "vue.js watch에 대해 알아보자"
+description: 특정 데이터(props,data)의 변화를 감지하여 자동으로 특정 로직을 수행해주는 속성
 author: negabaro kim
 tags:	vue.js
 ---
