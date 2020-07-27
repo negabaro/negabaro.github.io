@@ -37,15 +37,11 @@ data값이 변경되었을때 양쪽 다 재호출이 일어난다.
 
 methods의 경우 함수를 의미하는 `()`붙여서 호출해야한다.
 
-```js
-<span>{{testMessage()}}</span>
-```
+`testMessage()`
 
 computed의 경우 `()`를 붙일 필요가 없이 기존 data와 같은 방식이다.
 
-```js
-<span>{{testMessage}}</span>
-```
+`testMessage`
 
 
 ## 차이2 computed에서는 인자를 넘길 수 없음
@@ -101,13 +97,14 @@ computed는 캐싱의 개념이 있다.
 ## 차이3 computed는 return이 필수이다.
 
 computed는 return이 필수이다.
+
 watch는 return이 있어도 동작안할거 같은데?(테스트는 안해봄)
 
 ## 차이4 역할이 다름
 
 computed는 변경이 있고, 그 변경으로 인한 결과가 필요할 때 사용( property라는 느낌이 강함)
 
-watch는 트리거의 역할로 사용된다.(값이 변경이 있고 그 변경의 결과에 따라 다른 메소드 등을 호출할 때 사용)
+watch는 트리거의 역할로 사용된다.(값의 변경이 있고 그 변경의 결과에 따라 다른 메소드 등을 호출할 때 사용)
 
 
 ### computed의 사용예
