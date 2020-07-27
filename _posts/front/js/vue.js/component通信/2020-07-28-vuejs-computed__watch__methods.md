@@ -100,7 +100,7 @@ computed는 캐싱의 개념이 있다.
 
 ## 차이3 computed는 return이 필수이다.
 
-computed는 return이 필수
+computed는 return이 필수이다.
 watch는 return이 있어도 동작안할거 같은데?(테스트는 안해봄)
 
 ## 차이4 역할이 다름
