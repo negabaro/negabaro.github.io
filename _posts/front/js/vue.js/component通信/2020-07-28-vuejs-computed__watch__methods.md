@@ -38,13 +38,13 @@ data값이 변경되었을때 양쪽 다 재호출이 일어난다.
 methods의 경우 함수를 의미하는 `()`붙여서 호출해야한다.
 
 ```js
-{{testMessage()}}
+<span>{{testMessage()}}</span>
 ```
 
 computed의 경우 `()`를 붙일 필요가 없이 기존 data와 같은 방식이다.
 
 ```js
-{{testMessage}}
+<span>{{testMessage}}</span>
 ```
 
 
