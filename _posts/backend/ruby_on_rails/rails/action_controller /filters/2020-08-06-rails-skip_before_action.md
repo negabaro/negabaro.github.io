@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  rails 특정 컨트롤러에서 before_action skip하는 방법
+title:  rails 특정 컨트롤러에서만 before_action skip하는 방법
 description: skip_before_action을 사용하면 skip가능
 tags: rails
 ---
