@@ -21,6 +21,8 @@ transaction이 늘어나고 퍼포먼스가 떨어진다.
 
 # 단점
 
+## 단점1 - updated_at 자동갱신 안됨.
+
 단점이라기 보다는 특징일 수 있는데
 update_all사용시 updated_at값은 자동갱신이 일어나지 않는다.
 
@@ -31,11 +33,13 @@ target.update_all(approve_status: 1, updated_at: Time.current)
 ```
 
 
-## update_all사용시 audited 레코드가 추가안되는 문제
+## 단점2 - Active Record callbacks관련 gem을 사용할 수 없음.
 
 필자는 유저의 행동로그를 남기기 위해 audited이라는 gem을 사용하는데 update_all 결과는 로그로 남기지 못한다.
-audited는 Active Record callbacks을 전제로 동작하는 라이브러리인데
-update_all자체가 Active Record callbacks을 거치지 않고 SQL를 직접발행하는 형태이기 때문이다.
+
+왜냐면 audited는 Active Record callbacks을 전제로 동작하는 라이브러리인데
+
+update_all자체가 callback을 거치지 않고 SQL를 직접발행하는 형태이기 때문이다.
 
 그러므로 audited로그를 남기기 위해서는 update_all을 사용해서는 안된다.
 
