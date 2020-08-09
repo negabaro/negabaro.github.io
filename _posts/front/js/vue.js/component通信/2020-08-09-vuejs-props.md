@@ -49,6 +49,33 @@ props로 전달받은 값은 자식 컴퍼넌트에서 안바꾸는게 좋겠지
 이러한 로직이 늘면 가독성이 매우 떨어져 보수가 힘드므로 주의해서 사용하자.
 
 
+# 부모에게 받은 props를 자식컴퍼넌트안에서 사용하는 데이터의 초기값으로 사용할 경우
+
+이 경우는 로컬 데이터 속성을 따로 선언하고, props의 값을 해당 속성의 초기값으로 대입하는것이 바람직하다.
+
+아래 예제는 prop값을 local data인 counter에 대입하는 예제이다.
+
+```js
+props: ['initialCounter'],
+data: function () {
+  return {
+    counter: this.initialCounter
+  }
+}
+```
+
+# 전달된 prop의 형태를 바꾸어야 하는 경우
+
+이 경우는 computed 속성을 사용하는 것이 가장 바람직하다.
+
+```js
+props: ['size'],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
+  }
+}
+```
 
 
 # 변수에 담긴 값을 자식 컴퍼넌트에 props로 넘겨줄때(동적 props)
@@ -78,8 +105,11 @@ catCrying이라는 변수값을 넘기기 위해서는 `:`를 props의 변수명
 
 ```js
 <template>
-  <span>Cat Child: {{crying}} </span>
+  <span>
+    Cat Child: {{{ crying }}}
+  </span>
 </template>
+
 <script>
 export default {
   props: ["crying"]
@@ -211,9 +241,29 @@ props: {
 ```
 
 
+prop은 초기값만 전달하고, 자식 컴포넌트는 그 초기값을 로컬 데이터 속성으로 활용하고 싶은 경우
+해당 경우에는 로컬 데이터 속성을 따로 선언하고 그 속성의 초기값으로써 prop을 사용하는 것이 가장 바람직합니다.
+
+props: ['initialCounter'],
+data: function () {
+  return {
+    counter: this.initialCounter
+  }
+}
+전달된 prop의 형태를 바꾸어야 하는 경우
+해당 경우에는 computed 속성을 사용하는 것이 가장 바람직합니다.
+
+props: ['size'],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
+  }
+}
+
 
 ### reference:
 
 ```
+https://kr.vuejs.org/v2/guide/components-props.html
 https://www.e-loop.jp/knowledges/3/
 ```
