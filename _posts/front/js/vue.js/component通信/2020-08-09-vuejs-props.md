@@ -142,17 +142,19 @@ kebab-case = CamelCase 자동매핑이 되어있어
 
 props값을 kebab-case로 넘겨도 CamelCase로 받아 사용할 수 있다.
 
-```js
-<template>
-  <span>Cat Child: `{`{cryingText}`}` </span>
-</template>
-<script>
-export default {
-  props: ["crying-text"]
-}
-</script>
+{% highlight liquid %}
+  {% raw %}
+    <template>
+      <span>Cat Child: `{`{cryingText}`}` </span>
+    </template>
+    <script>
+    export default {
+      props: ["crying-text"]
+    }
+    </script>
+  {% endraw %}
+{% endhighlight %}
 
-```
 
 # props options
 
