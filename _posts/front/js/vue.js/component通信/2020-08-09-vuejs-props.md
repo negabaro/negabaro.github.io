@@ -106,7 +106,7 @@ catCrying이라는 변수값을 넘기기 위해서는 `:`를 props의 변수명
 ```js
 <template>
   <span>
-    Cat Child: {{{ crying }}}
+    Cat Child: { crying }
   </span>
 </template>
 
