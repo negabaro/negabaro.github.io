@@ -106,7 +106,7 @@ catCrying이라는 변수값을 넘기기 위해서는 `:`를 props의 변수명
 ```js
 <template>
   <span>
-    Cat Child: { crying }
+    Cat Child: {`{ crying }`}
   </span>
 </template>
 
@@ -144,7 +144,7 @@ props값을 kebab-case로 넘겨도 CamelCase로 받아 사용할 수 있다.
 
 ```js
 <template>
-  <span>Cat Child: {{cryingText}} </span>
+  <span>Cat Child: `{{cryingText}}` </span>
 </template>
 <script>
 export default {
