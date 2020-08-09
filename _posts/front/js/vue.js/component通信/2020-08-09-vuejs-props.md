@@ -144,7 +144,7 @@ props값을 kebab-case로 넘겨도 CamelCase로 받아 사용할 수 있다.
 
 ```js
 <template>
-  <span>Cat Child: `{{cryingText}}` </span>
+  <span>Cat Child: `{`{cryingText}`}` </span>
 </template>
 <script>
 export default {
