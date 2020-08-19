@@ -70,7 +70,7 @@ end
 ```
 # app/models/user.rb
 
-모델은 아래와 같이추가 meta,name은 필수항목이 아니므로 삭제해도 좋다.
+모델은 아래와 같이추가 meta는 필수항목이 아니므로 삭제해도 좋다.
 
 ```ruby
 class User < ApplicationRecord
