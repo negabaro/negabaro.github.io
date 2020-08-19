@@ -22,10 +22,9 @@ gem 'omniauth-google-oauth2' #add
 
 # User의 migrate설정
 
-[Rails devise인스톨 방법] 설정후 아래의 컬럼을 추가해줘야한다.(meta,name은 필수아님)
+[Rails devise인스톨 방법] 설정후 아래의 컬럼을 추가해줘야한다.(meta는 필수아님)
 
 ```ruby
-t.string :name,
 t.string :provider,
 t.string :uid,
 t.string :token,
@@ -82,7 +81,7 @@ class User < ApplicationRecord
     user = User.find_by(email: auth.info.email)
 
     unless user
-      user = User.create(name:     auth.info.name,
+      user = User.create(email:     auth.info.email,
                          provider: auth.provider,
                          uid:      auth.uid,
                          token:    auth.credentials.token,
