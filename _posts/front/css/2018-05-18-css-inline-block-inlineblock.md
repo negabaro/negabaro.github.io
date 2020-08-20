@@ -31,7 +31,7 @@ blcok은 바로옆에 아무것도 없을때 블록이라함
 
 아무것도 지정안하면 디폴트설정이 block이다
 
-```
+```css
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +58,7 @@ blcok은 바로옆에 아무것도 없을때 블록이라함
 
 ### inline-block이란
 
-```
+```css
  display: inline-block;
 ```
 
@@ -70,7 +70,7 @@ inline-block을 설정하면 각 박스들이 서로서로 옆에 있게 됨
 
 ### inline이란?
 
-```
+```css
  display: inline;
 ```
 

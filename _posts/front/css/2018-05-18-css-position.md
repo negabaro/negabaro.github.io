@@ -5,6 +5,8 @@ author: negabaro kim
 categories: css
 tags:	css
 ---
+{% highlight html %}
+{% endhighlight %}
 
 position에는 ```static,fixed,absolute,relative```라는 4가지 종류가 있음
 relative는 독단적으로 쓰는게 아니라 absolute의 뒷바라지를 해주는 역할임
@@ -27,7 +29,7 @@ relative는 독단적으로 쓰는게 아니라 absolute의 뒷바라지를 해�
 
 
 
-```
+{% highlight html %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +68,7 @@ relative는 독단적으로 쓰는게 아니라 absolute의 뒷바라지를 해�
   </div>
 </body>
 </html>
-```
+{% endhighlight %}
 
 ##### 화면결과
 
@@ -83,7 +85,7 @@ relative가 존재할경우 해당 element를 기준으로 위치를 잡음
 
 
 
-```
+```css
     .abs-box{
       width:400px;
       height: 400px;
@@ -109,7 +111,7 @@ relative가 존재할경우 해당 element를 기준으로 위치를 잡음
 
 노란색 아버지(abs-box)에 relative속성을 줘보자
 
-```
+```css
     .abs-box{
       width:400px;
       height: 400px;
@@ -139,7 +141,7 @@ fixed를 주면 해당element의 위치가 고정된다.
 
 이하 코드와 같이 파란색 아들(abs-child) 속성에 fixed설정을 넣어봤다.
 
-```
+```css
 <!DOCTYPE html>
 <html lang="en">
 <head>
