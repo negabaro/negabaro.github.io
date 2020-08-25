@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails6 devise && omniauth && google-oauth2를 이용해 인증로직을 구현해보자"
 author: negabaro kim
-categories: rails devise
+tags: rails devise
 ---
 
 이번 포스트에서는 devise && omniauth google oauth2를 이용해 인증로직을 구현하는 방법에 대해 알아보자.
