@@ -10,6 +10,7 @@ tags: rails devise
 이 포스트에서는 rails에서 google-api-client를 이용해  YouTube Data API에 억세스하는 방법에 대해 정리해본다.
 
 devise,omniauth,google-oauth2의 설정이 끝났다는 전제로 설명한다.
+
 자세한 내용은 [Rails6 devise && omniauth && google-oauth2를 이용해 인증로직을 구현해보자] 이 부분을 참고바란다.
 
 
@@ -128,8 +129,8 @@ https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/Youtub
 
 ## accessNotConfigured: YouTube Data API v3 has not been used in project xx
 
-API유효화를 안시켜주면 아래와 같은 에러가 나온다.
-해당 에러에 있는 링크를 클릭해서 API유효화를 해주자.
+API활성화를 안시켜주면 아래와 같은 에러가 나온다.
+해당 에러에 있는 링크를 클릭해서 API활성화를 해주자.
 
 ```
 accessNotConfigured: YouTube Data API v3 has not been used in project xx before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=xx then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
