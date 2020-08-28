@@ -20,7 +20,11 @@ cookie에 있는 session값을 제3자에게 탈취당해도 서버의 secret_ke
 
 > By definition, sessions will expire after the browser is closed, they do not have timeout. If you open Chrome dev tools and look at the expiration date, it will say "Session" there instead of the date/time.
 
-https://stackoverflow.com/questions/16214800/does-rails-provide-default-session-time-out-duration-if-yes-where-is-it-specif
+[Does Rails provide default session time-out duration? If yes, where is it specified?
+]
+
+
+
 
 
 # 유효기간을 설정하는 방법
@@ -63,3 +67,6 @@ cookie_store 방식은 가성비가 좋은 인증방법이라고 생각한다.
 
 같은 도메인이고 같은 포트라면 API서버에서 따로 토큰방식으로 인증을 만들 필요없이
 cookie를 사용해 인증이 가능하기 때문이다.
+
+[Does Rails provide default session time-out duration? If yes, where is it specified?
+]: https://stackoverflow.com/questions/16214800/does-rails-provide-default-session-time-out-duration-if-yes-where-is-it-specif
