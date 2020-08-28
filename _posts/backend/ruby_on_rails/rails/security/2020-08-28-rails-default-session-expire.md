@@ -6,7 +6,7 @@ tags: rails/security
 ---
 
 
-# 개요
+# Session의 디폴트 유효기간은 브라우저 종료시
 
 rails6에서 session값은 디폴트로 cookie_store 방식을 사용해 저장한다.
 
@@ -26,6 +26,13 @@ https://stackoverflow.com/questions/16214800/does-rails-provide-default-session-
 # 유효기간을 설정하는 방법
 
 cookie에 저장된 Session정보의 유효기간을 두기 위해서는 Rails의 설정에 expire_at을 추가할 필요가 있다.
+
+아래는 유효기간을 20년으로 설정한 예
+
+```ruby
+# config/initializers/session_store.rb
+Rails.application.config.session_store :cookie_store, key: '_appname_session', expire_after: 20.years
+```
 
 # 삽질한 부분
 
