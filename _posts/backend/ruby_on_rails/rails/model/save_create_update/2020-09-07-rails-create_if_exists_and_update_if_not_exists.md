@@ -22,7 +22,14 @@ self.organization_configs.first_or_create(organization_id: org_id).update(organi
 리턴했다는것은 기존에 존재하는 레코드를 의미하는것이므로 update를 실행한다.
 
 
+# 메모
+
+테스트 해보지는 않았지만 [find_or_initialize_by+update_attributes]를 이용해도 같은 결과를 얻을 수 있다고 한다.
+
 
 [ActiveRecord: Update a record if exists else create?]: https://stackoverflow.com/questions/14599113/activerecord-update-a-record-if-exists-else-create/25497490
 
 [rails create_or_update메소드에 대해]: https://negabaro.github.io/archive/rails-create_or_update-in-save-method
+
+
+[find_or_initialize_by+update_attributes]: https://www.te-nu.com/entry/2017/02/16/233416
