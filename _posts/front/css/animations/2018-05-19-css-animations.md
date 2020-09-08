@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "css animation에 대해서"
+title:  "css animation기능"
 author: negabaro kim
 categories: css
 tags:	css

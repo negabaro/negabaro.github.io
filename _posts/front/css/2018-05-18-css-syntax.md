@@ -1,7 +1,6 @@
 ---
 layout:     post
-title:      "css문법에 대해서"
-subtitle:   "링크 참조"
+title:      "css기본문법"
 author:     "negabaro"
 comments: true 
 tags: [css]

@@ -1,10 +1,17 @@
 ---
 layout: post
-title:  "css inline,inline-block,block에 대해서"
+title:  "css inline,inline-block,block에 대해 알아보자"
 author: negabaro kim
 categories: css
 tags:	css
 ---
+
+# 3줄요약
+
+1. block은 세로나열
+2. inline-block은 가로나열
+3. inline은 가로나열(property를 삭제)
+
 
 ### inline,inline-block,block의 차이
 
