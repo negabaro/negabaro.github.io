@@ -195,3 +195,10 @@ fixed를 주면 해당element의 위치가 고정된다.
 ### 코드
 
 [Source]: https://github.com/negabaro/kakao-clone-examples/blob/master/04-position/index.html
+
+
+### reference:
+
+```
+https://www.w3schools.com/css/css_positioning.asp
+```

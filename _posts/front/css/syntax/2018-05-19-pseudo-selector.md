@@ -132,3 +132,9 @@ input > .box {
 
 input -> box가 직계 부모,자식 관계라는 뜻
 input밑에box가 아닌 다른것이 있다면 걔내들에게는 적용안됨
+
+### reference:
+
+```
+https://www.w3schools.com/css/css_pseudo_elements.asp
+```
