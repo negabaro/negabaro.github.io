@@ -19,9 +19,7 @@ javascript:
 
 정확히는 뒤로가기 버튼 자체는 눌려지는데 동작하지 않게됨.
 
-[How to disable the browser back button with java script, ruby on rails
-]에서 말하는것 처럼 유저 인터페이스를 생각하면 좋은 방법은 아니라고
+[stackoverflow]에서 말하는것 처럼 유저 인터페이스를 생각하면 좋은 방법은 아니라고
 
 
-[How to disable the browser back button with java script, ruby on rails
-]: https://stackoverflow.com/questions/29823160/how-to-disable-the-browser-back-button-with-java-script-ruby-on-rails
+[stackoverflow]: https://stackoverflow.com/questions/29823160/how-to-disable-the-browser-back-button-with-java-script-ruby-on-rails
