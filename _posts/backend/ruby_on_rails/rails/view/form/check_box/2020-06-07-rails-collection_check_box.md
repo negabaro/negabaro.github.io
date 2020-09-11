@@ -2,8 +2,7 @@
 layout: post
 title: "Rails6.0 collection_check_box란?"
 author: negabaro kim
-categories: rails
-tags: view
+tag: rails/view
 ---
 
 # collection_check_box란?
@@ -197,4 +196,5 @@ each로 loop해서 만드는 수밖에 ^^;
 ```
 https://qiita.com/tanutanu/items/b86c4adc26ae464c71fd
 https://qiita.com/RaimuEr/items/58971510735c6b906c50
+https://qiita.com/MasamotoMiyata/items/f47621606f1cd6384e15
 ```
