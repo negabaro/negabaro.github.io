@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법"
 author: negabaro kim
-categories: rails/i18n
+tags: rails/i18n
 ---
 
 # enum이란
@@ -83,6 +83,17 @@ en:
       type:
         type1: xx
         type2: yy
+```
+
+
+# config/application.rb
+
+```ruby
+    # 言語ファイルを階層ごとに設定するための記述
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    # デフォルトの言語設定
+    # config.i18n.default_locale = :en
+    config.i18n.default_locale = :ja
 ```
 
 
