@@ -88,6 +88,8 @@ en:
 
 ## config/application.rb
 
+`config/locales`설정을 위해서 아래와 같은 설정이 필요하다.(default_locale는 관계없음)
+
 ```ruby
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
