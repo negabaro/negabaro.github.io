@@ -1,9 +1,11 @@
+---
 layout: post
-title:  "Rails enum_help를 이용해 enum설정에 다국어 기능을 넣어보자"
+title:  "Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법"
 author: negabaro kim
 categories: rails/i18n
 ---
 
+# enum이란
 
 외부적으로 특정 문자열을 사용하고 내부에서는 Number의 값으로 이용할때 enum을 많이 사용한다.
 
@@ -21,7 +23,9 @@ end
 
 아래는 설정방법이다.
 
-# 설정방법
+----
+
+# enum_help 설정방법
 
 
 ## bundle install
