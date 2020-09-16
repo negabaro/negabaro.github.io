@@ -85,7 +85,9 @@ class ImageUpload extends React.Component {
           <button type="submit">Upload Image22</button>
 
         </form>
+
       </div>
+
     );
   }
 }
@@ -149,9 +151,11 @@ class ImageUpload extends React.Component {
           />
 
           <button type="submit">Upload Image22</button>
-          
+
         </form>
+
         {!$imagePreview && <img src={imagePreviewUrl} />}
+        
       </div>
     );
   }
