@@ -297,16 +297,16 @@ Module not found: Error: Can't resolve 'lodash' in '/Users/sehwakim/docker/Learn
 
 ## splitChunks 사용전 코드
 
-[URL](https://github.com/negabaro/LearnWebpack/tree/master/example2-1-problem-output-duplicated)
+[링크](https://github.com/negabaro/LearnWebpack/tree/master/example2-1-problem-output-duplicated)
 
 
 ## splitChunks 적용후 코드
 
-[URL](https://github.com/negabaro/LearnWebpack/tree/master/example2-2-SplitChunksPlugin)
+[링크](https://github.com/negabaro/LearnWebpack/tree/master/example2-2-SplitChunksPlugin)
 
 ## runtimeChunk 적용후 코드
 
-[URL](https://github.com/negabaro/LearnWebpack/tree/master/example2-3-SplitChunksPlugin-runtimeChunk)
+[링크](https://github.com/negabaro/LearnWebpack/tree/master/example2-3-SplitChunksPlugin-runtimeChunk)
 
 ### Reference Link:
 
