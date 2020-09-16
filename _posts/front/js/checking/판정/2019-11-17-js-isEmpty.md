@@ -235,7 +235,6 @@ if ( !xx )
 
 ### Reference Link:
 
-```
-http://blog.tojiru.net/article/205007468.html
-https://skibis.tistory.com/263
-```
+[Link1](http://blog.tojiru.net/article/205007468.html "Title")
+[Link2](https://skibis.tistory.com/263 "Link2")
+
