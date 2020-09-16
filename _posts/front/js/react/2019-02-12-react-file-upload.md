@@ -10,7 +10,7 @@ tags: react js
 
 ## 1. ref를 사용하는 방법
 
-```
+```js
 import * as React from "react";
 import { upateProfileImage } from "../../../../../../services/userApi";
 import cookie from "react-cookies";
@@ -43,7 +43,7 @@ export default ImageUpload;
 
 ## 2. onChange와state를 이용하는 방법
 
-```
+```js
 import * as React from "react";
 import { upateProfileImage } from "../../../../../../services/userApi";
 import cookie from "react-cookies";
@@ -98,7 +98,7 @@ Q/A사이트에 질문한 결과 state에 file오브젝트를 넣어도 문제 �
 
 imagePreview도 onChange와state를 이용해서 구현가능하다.
 
-```
+```js
 import * as React from "react";
 import { upateProfileImage } from "../../../../../../services/userApi";
 //https://gist.github.com/AshikNesin/e44b1950f6a24cfcd85330ffc1713513
@@ -162,7 +162,7 @@ FileReader 메소드의 onloadend,readAsDataURL을 이용해서 브라우저상�
 
 코드는 이하와 같다.
 
-```
+```js
 {!$imagePreview && (
   <img src={getImageUrl && !imagePreviewUrl ? getImageUrl : imagePreviewUrl } />
 )}
