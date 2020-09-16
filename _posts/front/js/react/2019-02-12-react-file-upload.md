@@ -155,7 +155,7 @@ class ImageUpload extends React.Component {
         </form>
 
         {!$imagePreview && <img src={imagePreviewUrl} />}
-        
+
       </div>
     );
   }
@@ -182,7 +182,5 @@ FileReader 메소드의 onloadend,readAsDataURL을 이용해서 브라우저상�
 
 #### Reference Link:
 
-```
-https://gist.github.com/AshikNesin/e44b1950f6a24cfcd85330ffc1713513
+[Link](https://gist.github.com/AshikNesin/e44b1950f6a24cfcd85330ffc1713513)
 
-```
