@@ -1,3 +1,4 @@
+
 ---
 layout: post
 title: "react"
@@ -52,15 +53,14 @@ let $imagePreview = null;
     return (
       <div>
         <form onSubmit={this._handleSubmit}>
-          <input
-            type="file"
-            //ref={papa => (this.papa = papa)}
-            onChange={this._handleImageChange}
-          />
+          <input type="file" onChange={this._handleImageChange} />
+  
           <button type="submit" onClick={this._handleSubmit}>
             Upload Image22
           </button>
+
         </form>
+
         {!$imagePreview && <img src={imagePreviewUrl} />}
 
 </div>
