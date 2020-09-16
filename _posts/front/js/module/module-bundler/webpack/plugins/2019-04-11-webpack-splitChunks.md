@@ -268,14 +268,13 @@ webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimiza
 
 ---
 
-The CommonsChunkPlugin has been removed in v4.
-You better open a new issue, this thread is dead.
-
-Read this and tell me if it solves your problem.
-
+> The CommonsChunkPlugin has been removed in v4.
+> You better open a new issue, this thread is dead.
+> Read this and tell me if it solves your problem.
+> [Link](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693
+)
 ---
 
-https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693
 
 ## 2. 당연한 얘기지만 npm install하지않으면 entry에 패키지 추가 안됨
 
