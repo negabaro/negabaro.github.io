@@ -32,7 +32,6 @@ class ImageUpload extends React.Component {
       <div>
       
         <form onSubmit={this._handleSubmit}>
-
           <input type="file" ref={this.upload22} />
 
           <button type="submit">Upload Image22</button>
@@ -82,7 +81,9 @@ class ImageUpload extends React.Component {
             type="file"
             onChange={this._handleImageChange}
           />
+
           <button type="submit">Upload Image22</button>
+
         </form>
       </div>
     );
@@ -146,7 +147,9 @@ class ImageUpload extends React.Component {
             type="file"
             onChange={this._handleImageChange}
           />
+
           <button type="submit">Upload Image22</button>
+          
         </form>
         {!$imagePreview && <img src={imagePreviewUrl} />}
       </div>
