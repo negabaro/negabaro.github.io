@@ -30,10 +30,15 @@ class ImageUpload extends React.Component {
   render() {
     return (
       <div>
+      
         <form onSubmit={this._handleSubmit}>
+
           <input type="file" ref={this.upload22} />
+
           <button type="submit">Upload Image22</button>
+
         </form>
+
       </div>
     );
   }
