@@ -312,4 +312,4 @@ Module not found: Error: Can't resolve 'lodash' in '/Users/sehwakim/docker/Learn
 
 [link](https://www.zerocho.com/category/Webpack/post/58ad4c9d1136440018ba44e7)
 [link2](https://qiita.com/soarflat/items/1b5aa7163c087a91877d)
-a[https://www.inflearn.com/course/webpack-%EC%9B%B9%ED%8C%A9-%EA%B0%95%EC%A2%8C/%EC%8B%A4%EC%8A%B5-libraries-codes-splitting-1-bundling-libraries/]
+(https://www.inflearn.com/course/webpack-%EC%9B%B9%ED%8C%A9-%EA%B0%95%EC%A2%8C/%EC%8B%A4%EC%8A%B5-libraries-codes-splitting-1-bundling-libraries/)
