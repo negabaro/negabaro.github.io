@@ -125,7 +125,7 @@ export default Vue.extend({
 [vue-awesome-swiper의 옵션에 대해 알아보자]
 
 
-#메모
+# 메모
 
 ## 용어정리
 

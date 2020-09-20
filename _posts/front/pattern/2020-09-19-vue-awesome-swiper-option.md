@@ -10,6 +10,7 @@ tags:	vue.js
 이 포스트에서는 `vue-awesone-swiper`의 주요옵션에 대해 알아보자.
 
 설치 방법은 아래 포스트를 참고
+
 [vue-awesome-swiper를 이용해 vue에서 swiper(Carousel)를 사용해보자]
 
 ----
