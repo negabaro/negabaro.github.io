@@ -11,6 +11,7 @@ Swiper라는 인기 라이브러리를 vue에서 간단히 사용할 수 있게 
 
 Swiper를 이용하면 아래와 같은 컴퍼넌트를 구현할 수 있다.
 
+
 [![Image from Gyazo](https://i.gyazo.com/042e259664b8867099ec30f3363cae81.gif)](https://gyazo.com/042e259664b8867099ec30f3363cae81)
 
 
@@ -119,6 +120,9 @@ export default Vue.extend({
 
 [![Image from Gyazo](https://i.gyazo.com/042e259664b8867099ec30f3363cae81.gif)](https://gyazo.com/042e259664b8867099ec30f3363cae81)
 
+자세한 옵션은 아래 포스트에서 소개
+
+[vue-awesome-swiper의 옵션에 대해 알아보자]
 
 
 #메모
@@ -150,3 +154,5 @@ swiper6 이상일때 swiper-pagination가 렌더링되지 않는 버그가 있�
 [주요 옵션들 설명2 일본어](https://qiita.com/nakanishi03/items/c12221be7645b84016c8)
 [주요 옵션들 설명3 일본어 가장김](https://www.webdesignleaves.com/pr/plugins/swiper_js.html)
 [vue-awesome-swiper example](https://github.com/surmon-china/vue-awesome-swiper)
+
+[vue-awesome-swiper의 옵션에 대해 알아보자]:https://negabaro.github.io/archive/vue-awesome-swiper-option

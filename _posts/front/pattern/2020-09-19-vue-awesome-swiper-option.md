@@ -9,6 +9,9 @@ tags:	vue.js
 
 이 포스트에서는 `vue-awesone-swiper`의 주요옵션에 대해 알아보자.
 
+설치 방법은 아래 포스트를 참고
+[vue-awesome-swiper를 이용해 vue에서 swiper(Carousel)를 사용해보자]
+
 ----
 
 # initialSlide(디폴트 0)
@@ -143,3 +146,11 @@ pagination: {
 ```html
 <div class="swiper-scrollbar"></div>
 ```
+
+### reference:
+
+[주요 옵션들 설명 일본어](https://www.kabanoki.net/4783/)
+[주요 옵션들 설명2 일본어](https://qiita.com/nakanishi03/items/c12221be7645b84016c8)
+[주요 옵션들 설명3 일본어 가장김](https://www.webdesignleaves.com/pr/plugins/swiper_js.html)
+
+[vue-awesome-swiper를 이용해 vue에서 swiper(Carousel)를 사용해보자]:https://negabaro.github.io/archive/vue-awesome-swiper
