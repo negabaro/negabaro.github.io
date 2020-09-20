@@ -22,7 +22,7 @@ collection_radio_buttons메소드의 문법은 아래와 같다.
 collection_radio_buttons(오브젝트명, 콜랙션명, 메소드명, 밸류값 [, 옵션])
 ```
 
-이때까지 콜랙션명은 레코드에 있는 정보여야 한다고 오해하고 있었는데 enum으로 가져올 수 있었다.
+이때까지 콜랙션명은 ActiveRecord를 이용한 결과(CollectionProxy)여야 한다고 오해하고 있었는데 enum으로 가져올 수 있었다.
 
 메소드명과 벨류값에는 `:first, :last`를 넣어주면 
 enum의 키값을 text에 벨류값을 그대로 value에 지정해준다. (엄청 편리)
