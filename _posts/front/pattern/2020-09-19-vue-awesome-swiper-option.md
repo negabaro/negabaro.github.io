@@ -86,6 +86,26 @@ slidesPerView를 auto로 지정하는 경우, 이 파라메터를 복제한 슬�
 
 레스폰시브한 컴퍼넌트 구현시 필수
 
+```js
+breakpoints: {
+  1024: {
+    slidesPerView: 3,
+    spaceBetween: 40
+  },
+  768: {
+    slidesPerView: 3,
+    spaceBetween: 30
+  },
+  640: {
+    slidesPerView: 2,
+    spaceBetween: 20
+  },
+  320: {
+    slidesPerView: 1,
+    spaceBetween: 10
+  }
+}
+```
 
 --------
 
