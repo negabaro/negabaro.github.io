@@ -51,7 +51,7 @@ enum item_type: {
 
 ## locale설정
 
-[Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법]에서 소개한 
+[Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법] 에서 소개한 
 `enum_help`에 의해 enum의 키값에 해당하는 값을 `config/locales/xx.yml`에 지정해주면 I18n에 의해
 국가별 언어를 가지고 온다.
 
@@ -89,4 +89,5 @@ kr:
 
 [Link](https://qiita.com/tanutanu/items/ee18ed0ab13dcbe50864)
 [Link2 도큐멘트](https://railsdoc.com/page/collection_radio_buttons)
-[Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법]:https://negabaro.github.io/archive/rails-enum-help
+
+[Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법]: https://negabaro.github.io/archive/rails-enum-help
