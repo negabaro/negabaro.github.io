@@ -91,3 +91,7 @@ kr:
 [Link2 도큐멘트](https://railsdoc.com/page/collection_radio_buttons)
 
 [Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법]: https://negabaro.github.io/archive/rails-enum-help
+
+
+[공식도큐멘트? 예제풍부](https://rubydoc.info/github/plataformatec/simple_form/master/SimpleForm%2FFormBuilder:collection_radio_buttons)
+
