@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "rails에서 vue component에 props넘길시 주의사항"
+title:  "rails template안에서 vue component에 props넘길시 코딩 컨벤션에 주의"
 tags:	rails/vue
 ---
 
