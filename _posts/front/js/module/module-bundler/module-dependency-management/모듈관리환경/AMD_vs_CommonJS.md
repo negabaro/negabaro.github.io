@@ -32,3 +32,8 @@ var module3 = require(‘module3’);
 
 //using modules
 ```
+
+
+필요한 파일이 모두 로컬 디스크에 있어 바로 불러 쓸 수 있는 상황, 즉 서버사이드에서는 CommonJS 명세가 AMD 방식보다 간결하다. 반면 필요한 파일을 네트워크를 통해 내려받아야 하는 브라우저와 같은 환경에서는 AMD가 CommonJS보다 더 유연한 방법을 제공한다.
+
+https://d2.naver.com/helloworld/12864

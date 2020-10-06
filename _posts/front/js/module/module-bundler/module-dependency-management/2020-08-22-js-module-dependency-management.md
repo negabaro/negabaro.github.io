@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "vue.js"
+author: negabaro kim
+tags:	vue.js
+---
+
 module bundler라는 말만 보면 뭔가를 하나로 합쳐주는 역할만 느껴지는데
 
 사실 의존성 문제 해결을 해준다.
