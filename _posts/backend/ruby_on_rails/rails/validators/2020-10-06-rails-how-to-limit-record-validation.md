@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "rails6 레코드 숫자를 valdation으로 제어하는 방법"
+title:  "rails6 validation설정으로 레코드 숫자를 제한하는 방법"
 author: negabaro kim
 tags:	rails/model/validation
 ---
