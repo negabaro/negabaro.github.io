@@ -28,7 +28,6 @@ rails에서 간단히 tree구조 기능을 만들 수 있는 gem이다.
 복수의 부모를 가질 수 는 없다고한다.
 
 
-
 # 설정방법
 
 ```ruby
@@ -51,6 +50,20 @@ A조직밑에 B조직을 위치 시키고 싶다면
 
 B조직 작성시 ancestry에 A조직의 id를 넣어주면 된다.
 
+# 옵션
+
+옵션은 아래와 같다.
+
+![image](https://user-images.githubusercontent.com/4640346/95549415-33e99f00-0a42-11eb-9d48-203d4ea85c3c.png)
+
+## 자주 사용하는 옵션
+
+### descendants
+
+![image](https://user-images.githubusercontent.com/4640346/95549586-84f99300-0a42-11eb-93c1-56d4a388ca21.png)
+
+
+현재 조직 하위에 존재하는 모든 조직들을 가져오고 싶을때 사용할 수 있다.
 
 ### reference:
 
