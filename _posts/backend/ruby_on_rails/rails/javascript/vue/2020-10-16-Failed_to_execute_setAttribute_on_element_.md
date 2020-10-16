@@ -53,6 +53,19 @@ main
 콤마를 안넣는 코딩컨벤션으로 통일하는것이 좋을듯하다.
 
 
+# 메모
+
+위에서 언급한 콤마 이외에도 여러 패턴으로 `Failed to execute 'setAttribute' on 'Element':`에러가 발생하는듯하다.
+
+예를들어 아래와 같이 이벤트 바인드 옆에 공백을 넣어주면 `(`가 하나의 인자로 인식 되어
+
+`ERROR Error: Uncaught (in promise): InvalidCharacterError: Failed to execute 'setAttribute' on 'Element': '(' is not a valid attribute name.`
+
+에러가 발생한다든지..
+
+```js
+<div class="card-block" ( click )="siteSelected( site );">
+```
 
 
 
