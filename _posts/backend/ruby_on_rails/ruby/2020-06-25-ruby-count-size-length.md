@@ -6,6 +6,12 @@ description: length,size는 같음. count는 length,size의 상위버전으로 �
 tags: ruby
 ---
 
+# 결론
+
+`length`와 `size`는 같다
+
+웬만하면 count쓰지말고 2바이트 절약가능한 size를 사용하자.
+
 
 # length=size
 
@@ -101,11 +107,35 @@ Caused by Mysql2::Error: You have an error in your SQL syntax; check the manual 
 `select count(*)`와 `select organizations.*, other_parents_organizations.name as parent_name`가 공존할 수 없으므로 당연한 에러
 
 
+# 메모3.(2020/10/16추가)
+
+특정 쿼리결과에 first를 한후 count를 사용하면 에러가 발생함
+
+### 에러 안나는 코드
+
+```ruby
+@@members.count 
+```
+
+### 에러가 발생하는 코드
+
+```ruby
+@@members.first(5).count
+```
+
+```
+ctiveRecord::StatementInvalid: Mysql2::Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near
+from /shared/vendor/bundle/ruby/2.6.0/gems/mysql2-0.5.2/lib/mysql2/client.rb:131:in `_query'
+```
+
+그냥 count를 사용하지마..!!
+
+
 
 
 ### reference:
 
-```
-https://qiita.com/motoki4917/items/ffc89d955e20b91d1014
-https://qiita.com/tacumai/items/28100326874dae9e5f5c
-```
+[Link1](https://qiita.com/motoki4917/items/ffc89d955e20b91d1014)
+
+[Link2](https://qiita.com/tacumai/items/28100326874dae9e5f5c)
+
