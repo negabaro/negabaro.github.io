@@ -40,3 +40,5 @@ Vuex에서 state변경을 감시하는 방법은 아래 3가지이다.
 ### reference:
 
 [Link1](https://kawadev.net/vuex-watch/)
+
+[Link2](https://qiita.com/nqyutq/items/3d7193aea9a4cfe6f914)
