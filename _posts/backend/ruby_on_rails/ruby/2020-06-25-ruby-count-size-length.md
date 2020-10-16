@@ -109,7 +109,7 @@ Caused by Mysql2::Error: You have an error in your SQL syntax; check the manual 
 
 # 메모3.(2020/10/16추가)
 
-특정 쿼리결과에 first를 한후 count를 사용하면 에러가 발생함
+특정 쿼리결과에 first를 한후 count를 사용하면 에러가 발생함(length,size는 당연히 가능)
 
 ### 에러 안나는 코드
 
