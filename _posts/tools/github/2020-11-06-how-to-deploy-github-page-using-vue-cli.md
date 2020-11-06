@@ -44,6 +44,7 @@ dist가 아닌 docs이하에 빌드결과가 출력되는것을 확인하도록�
 
 ### reference:
 
-[project별 github pages 공개하는 방법]:(https://negabaro.github.io/archive/how-to-create-github-page-project)
+[project별 github pages 공개하는 방법]: https://negabaro.github.io/archive/how-to-create-github-page-project
+
 [Link](https://qiita.com/paragaki/items/4b4e1171f2265ad807bc)
 
