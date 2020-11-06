@@ -51,7 +51,8 @@ root에 index.html이 없으면 README.md를 표시해준다.
 
 [![Image from Gyazo](https://i.gyazo.com/83d6f79281ec6668b4250b87c5d32e03.gif)](https://gyazo.com/83d6f79281ec6668b4250b87c5d32e03)
 
-테스트는 못해봤지만 docs이외에도 동작하는듯..?
+※docs이외에 선택은 불가능한것같다.
+
 
 
 ### reference:
