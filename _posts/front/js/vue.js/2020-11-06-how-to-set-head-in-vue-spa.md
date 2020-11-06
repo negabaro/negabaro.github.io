@@ -109,6 +109,9 @@ head: {
 
 google bot은 javascript를 실행해 크롤링해주지만 twitter,facebook은 javasscript을 실행해주지 않기때문에 vue-head로 OGP(meta tag)를 추가해준들 의미가없음.
 
+아래 캡쳐와같이 설정해줘도 설정되지 않은걸로 나옴.
+
+![image](https://user-images.githubusercontent.com/4640346/98397233-610d8980-20a2-11eb-89de-092b380af671.png)
 
 ### reference:
 
