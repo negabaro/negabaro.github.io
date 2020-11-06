@@ -103,6 +103,13 @@ head: {
 즉, 상위 컴퍼넌트를 우선사용하고 하위 컴퍼넌트에 재정의 되어있을시 해당 설정이 덮어쓰기 된다는 의미이다.
 
 
+# 메모
+
+## vue-head로 OGP설정시 문제점
+
+google bot은 javascript를 실행해 크롤링해주지만 twitter,facebook은 javasscript을 실행해주지 않기때문에 vue-head로 OGP(meta tag)를 추가해준들 의미가없음.
+
+
 ### reference:
 
 [Link1](https://www.sky-limit-future.com/entry/2017/09/19/131736)
@@ -112,4 +119,6 @@ head: {
 [Github Document](https://github.com/ktquez/vue-head)
 
 [Link3](https://ti-tomo-knowledge.hatenablog.com/entry/2018/06/21/104519)
+
+[SPA with AWS]:(https://www.slideshare.net/rs_wisteria/spaogp)
 
