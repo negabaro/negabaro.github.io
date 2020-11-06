@@ -48,6 +48,7 @@ open graph설정이 제대로 되었는지 확인하기 위해서 [디버깅]툴
 
 ### reference:
 
-[SPA with AWS]:(https://www.slideshare.net/rs_wisteria/spaogp)
-[디버깅]:(https://developers.facebook.com/tools/debug/?q=https%3A%2F%2Fnegabaro.github.io%2Fclip-youtube%2F)
-[prerender-spa-plugin]:(https://github.com/chrisvfritz/prerender-spa-plugin)
+[SPA with AWS](https://www.slideshare.net/rs_wisteria/spaogp)
+
+[디버깅]: https://developers.facebook.com/tools/debug/?q=https%3A%2F%2Fnegabaro.github.io%2Fclip-youtube%2F
+[prerender-spa-plugin]: https://github.com/chrisvfritz/prerender-spa-plugin
