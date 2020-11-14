@@ -107,6 +107,6 @@ port지정예
 
 ### reference:
 
-[vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법]: archive/netlify-deploy-using-vue-cli
+[vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법]: netlify-deploy-using-vue-cli
 
 [Link](https://qiita.com/Sr_Bangs/items/7867853f5e71bd4ada56)
