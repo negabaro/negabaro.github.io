@@ -81,7 +81,7 @@ git push
 
 ### reference:
 
-[Netlify]: (https://www.netlify.com/)
+[Netlify]: https://www.netlify.com/
 
 [Link](https://qiita.com/mnuma/items/15f2e8a5f34a392bc604)
 
