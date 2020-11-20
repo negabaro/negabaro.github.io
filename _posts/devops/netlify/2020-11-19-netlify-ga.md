@@ -9,10 +9,12 @@ tags: devops/netlify
 Netlify에서는 월$9 가격에 analytics기능도 제공하고 있지만
 Google Analytics도 간단히 설정이 가능하다.
 
+이 포스트에서는 Netlify에서 GA(Google Analytics)설정을 하는 방법에 대해 알아보자.
+
 
 # GA의 트랙킹코드
 
-먼저 아래와 같은 트랙킹 코드를
+먼저 아래와 같은 트랙킹 코드를 준비후
 
 ```js
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -28,7 +30,7 @@ Google Analytics도 간단히 설정이 가능하다.
 
 다음으로
 
-Netlify관리화면 -> Build & Deploy -> Snippet Injection -> Add snippet
+Netlify관리화면에서  -> Build & Deploy -> Snippet Injection -> Add snippet
 
 를 클릭해준다.
 

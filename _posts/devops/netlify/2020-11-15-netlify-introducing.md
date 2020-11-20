@@ -3,7 +3,7 @@ layout: post
 title: "정적 컨텐츠 호스팅 서비스 Netlify에 대해 알아보자."
 description: 
 author: negabaro kim
-tags: devops
+tags: devops/netlify
 ---
 
 # Netlify란?
