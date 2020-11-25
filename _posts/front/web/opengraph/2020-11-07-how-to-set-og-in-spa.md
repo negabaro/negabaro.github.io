@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "SPA에서 open graph(og)설정하는 방법"
-tags: web
+tags: web/ogp
 ---
 
 
@@ -31,6 +31,8 @@ nuxt.js,rails와 같이 억세스시 서버에서 렌더링을 해주는 방식
 블로그와 같이 어느정도 건수가 정해져있는 페이지일 경우 유용한 선택지가 될 수 있다.
 
 [prerender-spa-plugin]을 많이들 사용하는듯하다.
+
+※추가 Netlify의 prerendering기능을 사용하면 간단히 구현가능하다.
 
 ## 3. 서버리스 인프라툴을 이용한 아키텍처 구성
 
