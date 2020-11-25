@@ -67,6 +67,8 @@ twitter어플에서는 불가능
 
 찾아보니까 slack은 YouTube,Spotify같은 유명사이트들을 위한 embed를 따로 제공한다고함.
 
+즉 쩌리 사이트는 불가능..한듯 ㅠ
+
 ```
 Unfortunately, this doesn't seem to be supported at the moment! Only Slack's own, natively built embeds are currently possible, such as YouTube, Spotify, etc.
 ```
