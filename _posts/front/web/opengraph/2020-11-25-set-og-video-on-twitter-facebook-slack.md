@@ -12,6 +12,11 @@ tags: web/ogp
 
 불가능
 
+데스크톱 어플에서는 썸네일 조차 표시안됨
+
+모바일 어플에서는 썸네일,description까지는 동작함
+
+
 # Facebook의 경우
 
 
@@ -24,7 +29,12 @@ tags: web/ogp
 
 # Twitter의 경우
 
-가능
+웹에서 가능
+
+모바일에서도 가능 사파리에서 동작확인
+
+twitter어플에서는 불가능
+
 
 <blockquote class="twitter-tweet"><p lang="und" dir="ltr"><a href="https://t.co/gzeMmT3NvZ">https://t.co/gzeMmT3NvZ</a></p>&mdash; negabaro (@negabaro) <a href="https://twitter.com/negabaro/status/1331468011899785217?ref_src=twsrc%5Etfw">November 25, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -53,9 +63,15 @@ tags: web/ogp
 
 ![image](https://user-images.githubusercontent.com/4640346/100186885-3fc5ed80-2f2a-11eb-82c4-5f61a49a33c4.png)
 
+단순og:video이나 twitter:xx 설정만으로는 인라인 재생이 안됨
 
-조사중..
-단순og:video이나 twitter:xx설정만으로는  인라인 재생안됨
+찾아보니까 slack은 YouTube,Spotify같은 유명사이트들을 위한 embed를 따로 제공한다고함.
+
+```
+Unfortunately, this doesn't seem to be supported at the moment! Only Slack's own, natively built embeds are currently possible, such as YouTube, Spotify, etc.
+```
+
+[Slack integration] 를 참조
 
 ---
 
