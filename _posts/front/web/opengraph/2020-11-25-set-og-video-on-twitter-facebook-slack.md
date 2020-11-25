@@ -4,8 +4,6 @@ title:  "Facebook,Twitter,Slack,KakaoTalk,Line에서 영상링크를 인라인�
 tags: web/ogp
 ---
 
-
-
 # Line
 
 불가능
@@ -89,5 +87,4 @@ meta tag정보가 https://youtube.com여도 문제 없이 동작함(twitter)
 
 [My question]: https://stackoverflow.com/questions/64968557/even-if-the-same-meta-tag-og-video-as-youtube-is-set-the-behavior-does-not-m?noredirect=1#comment114869380_64968557
 
-[Slack create custom embedded video or audio player… similar to the Youtube integration
-]: https://stackoverflow.com/questions/38426714/slack-create-custom-embedded-video-or-audio-player-similar-to-the-youtube-int
+[Slack integration]: https://stackoverflow.com/questions/38426714/slack-create-custom-embedded-video-or-audio-player-similar-to-the-youtube-int
