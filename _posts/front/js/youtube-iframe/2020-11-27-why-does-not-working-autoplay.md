@@ -59,8 +59,16 @@ playing이 불려진 시점에서 영상이 정지된 상태가됨
 
 ## 왜 autoplay가 동작하지 않는가?
 
+```
 YouTube Autoplay not working, It's not working since April of 2018 because Google decided to give greater src​="https://www.youtube.com/embed/-SFcIUEvNOQ?autoplay=  If autoplay is not working for you the next time you’re trying to watch videos on YouTube, then try one of the methods that follow. Make sure that Autoplay is enabled Regardless of all of the other settings and options that you tweak and play with, if you haven’t enabled the autoplay feature on YouTube then it simply will not work.
+```
 
+```
 Why does my YouTube video not autoplay?, If autoplay is not working for you the next time you're trying to watch videos on YouTube, then try one of the methods that follow. Make sure that  It's not working since April of 2018 because Google decided to give greater control of playback to users. You just need to add &mute=1 to your URL.
+```
 
-https://www.xspdf.com/resolution/53158319.html
+[Link]
+
+[Link]: https://www.xspdf.com/resolution/53158319.html
+
+
