@@ -90,8 +90,32 @@ iframe태그를 javascript로 동적으로 생성하고 생성한 iframe태그�
 
 필자는 vue.js에서 youtube-iframe를 이용해 아래와 같이 구현했다.
 
-```
-준비중
+```js
+<template>
+  <div id="player2" />
+</template>
+<script>
+  import YouTubeIframeLoader from "youtube-iframe";
+  export default Vue.extend({
+  methods: {
+      player2() {
+        YouTubeIframeLoader.load((YT) => {
+          const player = new YT.Player("player2", {
+            //startSeconds: '1999',
+            //height: '390',
+            //width: '640',
+            videoId: this.videoId,
+            //videoId: "Vw-tayLQLuQ",
+            events: {
+              onReady: () => {},
+              onStateChange: e => {}
+            }
+          });
+        });
+      },
+  }
+  });
+</script>
 ```
 
 
@@ -101,8 +125,51 @@ iframe태그를 javascript로 동적으로 생성하고 생성한 iframe태그�
 `vue-youtube`를 사용하면 더 심플하게 구현이 가능하다.
 
 
-```
-준비중
+
+```js
+<template>
+  <youtube
+    :video-id="videoId"
+    :player-vars="playerVars"
+    @ready="ready"
+    @playing="playing"
+    @ended="ended"
+    @error="error"
+    ref="youtube" />
+</template>
+<script>
+  import Vue from "vue";
+  import VueYoutube from "vue-youtube";
+  Vue.use(VueYoutube);
+  export default Vue.extend({
+      computed: {
+        playerVars() {
+          return {
+            //controls: 0,
+            player3: Object,
+            rel: 0,
+            autoplay: 1,
+            enablejsapi: 1,
+            fs: 0,
+            playsinline: 1,
+            ivLoadPolicy2: 1,
+            //playlist: this.videoId,
+            //muted: 1,
+            //loop: 1,
+            start: this.start,
+            end: this.end
+          };
+        },
+      },
+      methods: {
+          ready(){},
+          playing(){},
+          ended(){},
+          error(){}
+      }
+  });
+</script>
+
 ```
 
 ---
