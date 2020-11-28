@@ -107,6 +107,13 @@ ended event가 호출되기전에 종료시간이 되면 seekTo를 호출하는 
 
 requestAnimationFrame을 이용해서 youtube의 재생 슬라이드 돔을 워치해서 시간을 특정하는 방법들이 있었는데 실제 검증은 해보지 못했으므로 이 포스트에서는 다루지 않았다.
 
+[youtube-api-event-on-timeupdate] 인용
+
+```
+I have built a player using the YouTube API and I used the requestAnimationFrame() function to create a loop which constantly checks getElapsedTime() to update the player's track position. Although you said you don't want to use setInterval, it is this 'polling' method which I believe is how you would be able to check if the track has reached a specific frame.
+```
+
+
 ----------
 
 # 메모
@@ -160,3 +167,5 @@ https://www.youtube.com/embed/X03jlFijeQ0?playlist=X03jlFijeQ0&autoplay=1&contro
 [youtube-embed-feature-for-looping-single-videos-isnt-working]: https://stackoverflow.com/questions/44087897/youtube-embed-feature-for-looping-single-videos-isnt-working
 
 [Youtube iframe 자동재생(autoplay)옵션에 대해서]: https://negabaro.github.io/archive/why-does-not-working-autoplay
+
+[youtube-api-event-on-timeupdate]: https://stackoverflow.com/questions/42754097/youtube-api-event-on-timeupdate
