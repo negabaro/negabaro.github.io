@@ -77,5 +77,6 @@ const timeupdater = setInterval(console.log(" created setInterval!"), 100);
 
 ### reference:
 
+[setInterval Document]
 
-[setInterval Document]: (https://developer.mozilla.org/ja/docs/Web/API/WindowOrWorkerGlobalScope/setInterval)
+[setInterval Document]: https://developer.mozilla.org/ja/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
