@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Javascript setInterVal이란?"
+title: "Javascript setInterval이란?"
 author: negabaro kim
 tags: js/webapi
 ---
