@@ -101,7 +101,7 @@ ended event가 호출되기전에 종료시간이 되면 seekTo를 호출하는 
 2번의 단점이 존재(현재까지 버그는 없어보임)
 
 
----
+## 그 외
 
 그 외 iframe을 포기하고 video태그를 이용하는 방법(실제 유명 반복재생 사이트인 listenonrepeat의 경우 video태그를 이용하고 있었다.)
 
@@ -154,12 +154,6 @@ https://www.youtube.com/embed/X03jlFijeQ0?playlist=X03jlFijeQ0&autoplay=1&contro
 
 
 -----------
-
-
-  
-
-# reference:
-
 
 [youtube-api-event-on-a-specified-time]: https://stackoverflow.com/questions/10175367/youtube-api-event-on-a-specified-time
 
