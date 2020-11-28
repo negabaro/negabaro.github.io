@@ -74,6 +74,21 @@ binding.pry에 비해서는 아직 많이 불편해보이지만 디버깅시 유
 
 # 메모
 
+## 브라우저에서도 가능
+
+chrome에서 
+window: `Ctrl+Shift+I` mac: `cmd + opt + i` 로 dev tools을 띄어줌
+
+그 후에 특정 액션 실행하면 해당 액션에 기술된 debugger코드로 브레이킹 포인트 됨
+
+정확히는 source탭의 해당 코드가 있는 js코드로 이동
+
+
+
+
+
+## 테스트시
+
 테스트시에도 사용이 가능하다고
 mocha의 경우 아래와 같이 실행해주면 된다.
 
@@ -88,3 +103,5 @@ mocha debug <file-name>
 [Node.js v7.7.2 Documentation Debugger]: https://nodejs.org/api/debugger.html
 
 [Link]: https://qiita.com/murata0705/items/272579bc6bbaffad6292
+
+[binding-pry-for-javascript-console]: https://stackoverflow.com/questions/17096263/binding-pry-for-javascript-console
