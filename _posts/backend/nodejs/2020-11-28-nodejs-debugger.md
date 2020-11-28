@@ -83,6 +83,7 @@ window: `Ctrl+Shift+I` mac: `cmd + opt + i` 로 dev tools을 띄어줌
 
 정확히는 source탭의 해당 코드가 있는 js코드로 이동
 
+dev tools을 띄어주지 않으면 실행되지 않으므로 주의하자.
 
 
 
