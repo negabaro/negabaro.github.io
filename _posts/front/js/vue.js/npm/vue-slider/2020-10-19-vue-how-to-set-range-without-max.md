@@ -1,16 +1,17 @@
 ---
 layout: post
-title:  "Vue Slider에 시간(HH:MM:SS)을 설정하는 방법"
+title:  "Vue Slider Component에 시간(HH:MM:SS)을 설정하는 방법"
 author: negabaro kim
 tags:	vue.js
 ---
 
 
-기본적인 vue-slider의 사용법은 [JSfield]를 참고
+기본적인 vue-slider-component의 사용법은 [JSfield]를 참고
 
 
-# Vue slider에 시간을 설정하는 방법
+# Vue slider component에 시간을 설정하는 방법
 
+아래 코드를 참조
 
 ```js
 <vue-slider
@@ -45,8 +46,8 @@ new Vue( {
 
 [![Image from Gyazo](https://i.gyazo.com/ecfd14f384ec7e9a68c080ea20b6cac7.gif)](https://gyazo.com/ecfd14f384ec7e9a68c080ea20b6cac7)
 
-### reference:
+---
 
-[JSfield]:(https://jsfiddle.net/NightCatSama/2xy72dod/10547/)
+[JSfield]: https://jsfiddle.net/NightCatSama/2xy72dod/10547/
 
 [Link](https://stackoverflow.com/questions/64394866/how-to-set-range-without-max-values-in-vue-slider)
