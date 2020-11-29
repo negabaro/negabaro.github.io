@@ -18,6 +18,11 @@ tags: js/youtube
 ></iframe>
 ```
 
+
+# 유투브 플레이어 데모
+
+[유투브 플레이어 데모]에서 여러가지 옵션을 테스트해볼 수 있다.
+
 -----
 
 # autoplay
@@ -82,6 +87,7 @@ iOS에서 HTML5영상을 인라인을 재생시킬때 필요한 옵션
 
 ### reference:
 
+[유투브 플레이어 데모]: https://developers.google.com/youtube/youtube_player_demo
 [Document]: https://developers.google.com/youtube/player_parameters?hl=ja
 
 [Youtube iframe 자동재생(autoplay)옵션에 대해서]: https://negabaro.github.io/archive/why-does-not-working-autoplay
