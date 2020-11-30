@@ -83,7 +83,42 @@ iOS에서 HTML5영상을 인라인을 재생시킬때 필요한 옵션
 
 이 옵션은 iOS로만든 어플리케이션안에서만 해당하는듯?
 
+# color
 
+동영상 플레이어의 색상변경시 사용
+디폴트가 red인데 white로 변경이 가능하다.(선택지가 적구나..)
+
+```
+이 매개변수는 시청자가 동영상에서 이미 시청한 부분을 강조표시하기 위해 플레이어의 동영상 진행률 표시줄에서 사용할 색상을 지정합니다. 유효한 매개변수 값은 red 및 white이며 기본적으로 플레이어는 동영상 진행률 표시줄에서 빨간색을 사용합니다. 색상 옵션에 대한 자세한 내용은 YouTube API 블로그를 참조하세요.
+
+참고: color 매개변수를 white로 설정하면 modestbranding 옵션이 사용 중지됩니다.
+```
+
+# modestbranding
+
+```
+이 매개변수를 통해 YouTube 로고를 표시하지 않는 YouTube 플레이어를 사용할 수 있습니다. 매개변수 값을 1로 설정하면 YouTube 로고가 컨트롤바에 표시되지 않습니다. 하지만 사용자가 마우스 포인터를 플레이어 위에 올려놓으면 작은 YouTube 텍스트 라벨이 일시중지된 동영상의 오른쪽 상단에 표시됩니다.
+```
+
+# theme
+
+예전엔 이런 옵션이 있었다고 하는데 현재는 사용되지 않는다고 한다.
+
+```
+The theme parameter has been deprecated for the HTML5 player. HTML5 players now always use the dark theme.
+```
+
+# controls
+
+Another example is the controls parameter that indicates whether the video player controls are displayed. For IFrame embeds that load a Flash player, it also defines when the controls display in the player as well as when the player will load.
+
+Supported values are:
+
+controls=0 – Player controls do not display in the player. For IFrame embeds, the Flash player loads immediately.
+controls=1 (default) – Player controls display in the player. For IFrame embeds, the controls display immediately and the Flash player also loads immediately.
+controls=2 – Player controls display in the player. For IFrame embeds, the controls display and the Flash player loads after the user initiates the video playback.
+
+https://stackoverflow.com/questions/38332421/customise-youtube-controls-title-and-the-whole-iframe
 
 ### reference:
 
