@@ -63,13 +63,15 @@ Netlify의 설정파일인netlify.toml파일을 루트디렉토리에 작성해�
 #netlify.toml
 [build]
   command = "npm run build"
-  functions = "dist/api"
+  functions = "dist/functions"
 ```
 
 command = Netlify디플로이시 실행된 커맨드
 functions = Netlify Functions의 엔드포인트
 
-## 로컬에서 테스트
+---
+
+### 로컬에서 테스트
 
 
 `netlify-lambda`를 사용하면 로컬에서 Netlify Functions의 에뮬레이트가 가능하다.
@@ -78,18 +80,24 @@ functions = Netlify Functions의 엔드포인트
 
 루트에서 아래 커맨드로 netlify-lambda인스톨 해주자.
 
+
+### netlify-lambda install
+
 ```js
 npm init
 npm i netlify-lambda
 ```
 
+### package.json변경
+
 인스톨후 아래와 같이 package.json을 변경
 
+소스 디렉토리가 src/functions 있다는 전제다.
 
 ```js
 "scripts": {
-  "dev": "netlify-lambda serve resources/api（소스코드가 있는 디렉토리명）",
-  "build": "netlify-lambda build resources/api（소스코드가 있는 디렉토리명）"
+  "dev": "netlify-lambda serve src/functions",
+  "build": "netlify-lambda build src/functions"
 }
 ```
 
@@ -104,8 +112,76 @@ port지정예
 "dev": "netlify-lambda serve resources/api --port 9001"
 ```
 
+---
 
-### reference:
+
+### hello world작성
+
+`src/functions/index.js`에 아래와 같은 js파일을 추가 해주자
+
+```js
+exports.handler = function(event, context, callback) {
+  callback(null, {
+    statusCode: 200,
+    body: "Hello World"
+  });
+};
+```
+
+### 동작확인
+
+`npm run dev`로 `netlify-lambda`를 기동해주고
+
+`http://localhost:9000/.netlify/functions/index`
+
+에 억스세하면 `Hello World`가 표시되는걸 알 수 있다.
+
+---
+
+로컬에서의 동작확인은 여기까지다.
+
+
+[vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법]가 설정된 전제에서 이제 실제 netlify functions에 동작하는지 확인해보자.
+
+지금까지의 코드를 github에 commit & push 한뒤
+
+netlify의 dashboard가 아래와 같이 표시된다면 정상적으로 디플로이가 끝난것이다.
+
+
+![image](https://user-images.githubusercontent.com/4640346/100726016-bcb00600-3407-11eb-8e35-6934b62d00db.png)
+
+해당 functions을 클릭해주고 endpoint에 표시된 url에 억세스해주면 Function log가 아래처럼 표시된다.(새로고침 필요)
+
+
+![image](https://user-images.githubusercontent.com/4640346/100726277-17496200-3408-11eb-9a23-85fc7ab30666.png)
+
+---
+
+
+
+
+---
+
+# 메모
+
+
+## Node.js6.10이 아닌 경우
+
+async로 쓰면 더 간결하게 사용이 가능
+
+실행환경이 Nodejs6.10인 경우는 사용못하므로 주의
+```js
+hello.js
+exports.handler = async () => {
+  return {
+    statusCode: 200,
+    body: 'Hello World',
+  };
+};
+```
+
+---
+
 
 [vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법]: netlify-deploy-using-vue-cli
 
