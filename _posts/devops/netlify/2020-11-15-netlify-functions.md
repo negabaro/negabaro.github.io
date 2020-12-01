@@ -159,6 +159,82 @@ netlify의 dashboard가 아래와 같이 표시된다면 정상적으로 디플�
 
 
 
+# 환경변수
+
+API KEY와 같이 세큐어 하게 관리되는 정보는 환경변수에 넣어서 관리해야할 필요가 있다.
+
+
+## netlify에서 환경변수 추가
+ 
+netlify는 아래 캡쳐와 같이 dashboard에서 간단히 환경변수를 추가할 수 있다.
+
+![image](https://user-images.githubusercontent.com/4640346/100727220-4b715280-3409-11eb-9d6b-d297d3ff241f.png)
+
+
+## netlify.toml에 추가하는것도 가능
+
+세큐어 하지 않다면 `netlify.toml`에 직접 넣어줘도 괜찮다.(코드에 포함되므로)
+
+netlify.toml
+```
+[build.environment]
+  NON_SECURE_KEY="test"
+```
+
+설정한 환경변수는 코드에서 `process.env.KEY`와 같은방법으로 가져올 수 있다.
+
+## dotenv-webpack 인스톨
+
+로컬에서 동작확인을 위해서는 `dotenv-webpack`를 이용한다.
+
+`npm i dotenv-webpack`
+
+## webpack.functions.js추가
+
+```
+const Dotenv = require('dotenv-webpack')
+
+module.exports = {
+  plugins: [new Dotenv()],
+}
+```
+
+## .env추가
+
+루트에 .env파일을 추가해서 필요한 환경변수를 추가해주자
+
+.env
+
+```
+KEY=value
+```
+
+## command수정
+
+추가해준 webpack설정을 적용하기 위해 아래와 같이 수정해주자
+
+package.json
+```js
+"dev": "netlify-lambda serve resources/api --config ./webpack.functions.js",
+```
+
+
+
+
+
+
+```js
+exports.handler = function(event, context, callback) {
+
+  callback(null, {
+    statusCode: 200,
+    body: `Hello World X_RAPIDAPI_KEY: ${process.env.X_RAPIDAPI_KEY} | NON_SECURE_KEY: ${process.env.NON_SECURE_KEY}`
+  });
+};
+```
+
+
+
 
 ---
 
