@@ -53,3 +53,10 @@ Note: This command is deprecated. Use get-login-password instead.
 `aws-cli/1.16.69`버전 에는 `get-login-password`커맨드가 없으므로 `aws-cli/1.18.186`로 업데이트 해줬다.
 
 
+## AWS CLI Version 2부터는 get-login커맨드는 아에 삭제되어 있음
+
+1.17.10대는 하위호환을 위해 이용가능
+
+```
+The older aws ecr get-login command is still available in the AWS CLI version 1 for backward compatibility
+```
