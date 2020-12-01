@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "nginx upstream sent too big header while reading response header from upstream에러"
+title: "nginx upstream sent too big header while reading response header from upstream에러 해결방법"
 author: negabaro kim
 tags: nginx
 ---
@@ -34,10 +34,18 @@ proxy_busy_buffers_size 64k; # default 8k|16k
 
 # 메모
 
-ちなみにproxy_buffersですが実際にどれだけのサイズを使っているか調べる方法があります。
+## 사용중인 proxy_buffers확인 방법
+
 현재 운영중인 nginx의 proxy_buffers가 어느정도 사용중인지 확인하는 방법은 아래링크를 참고
 
 [Nginx FastCGI response buffer sizes]
+
+## 실제로그
+
+```
+xx- - [01/Dec/2020:16:28:57 +0900] "GET / HTTP/1.1" 502 494 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36" "18.176.143.63"
+2020/12/01 16:28:57 [error] 28#28: *69037 upstream sent too big header while reading response header from upstream, client: xx, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:3000/", host: "yy
+```
 
 ---
 
