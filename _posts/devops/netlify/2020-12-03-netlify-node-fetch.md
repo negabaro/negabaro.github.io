@@ -12,6 +12,8 @@ Netlify에서 node-fetch사용시 `npm i encoding` 해주자
 
 ---
 
+# 에러(Cannot find module 'encoding')
+
 `netlify-lambda`를 이용해 Netlify Functions로직을 작성할때 
 로컬에서는 node-fetch가 문제없이 동작하는데 디플로이시 아래와 같은 에러가 발생했다.
 
@@ -33,6 +35,8 @@ Netlify에서 node-fetch사용시 `npm i encoding` 해주자
 10:17:36 AM:   - /opt/buildhome/.netlify-build-
 ```
 
+# 원인
+
 `Cannot find module 'encoding'` 포인트는 이 메시지인데 
 이 에러의 원인은 아래와 같다.
 
@@ -45,7 +49,17 @@ One annoying thing is that I had to add encoding to my top-level package, which 
 node-fetch package자체에는 encoding패키지에 대한 디펜더시 설정이 되어있는데 
 netlify상에서 디플로이시 동작하는 `@netlify/zip-it-and-ship-it`패키지에 encoding이 포함되어 있지 않아 동작하지 않는다고 한다.
 
+그래서 로컬에서는 정상동작하고 netlify상에서 동작을 안했던거구나~
+
 자세한 내용은 [Link]를 참조
+
+# 해결방법
+
+실제로 안쓰여도 netlify상에서 정상작동하게 하기위해 encoding을 추가해주자
+
+```
+npm i encoding
+```
 
 ---
 
