@@ -29,7 +29,7 @@ Github Action은 Workflow라는 단위로 작업을 관리 한다.
 
 `Github Action`의 부하격(?)에 위치한다.
 
-Workflow는 Github에서 발생하는 다양한 이벤트(pull request,push) 발생시 특정 동작을 어떤 순서대로 실행할지를 지정해준다.
+Workflow는 Github에서 발생하는 다양한 이벤트(pull request,push,스케줄러) 발생시 특정 동작을 어떤 순서대로 실행할지를 지정해준다.
 
 이러한 Workflow는 Runners라고 불리는 호스팅 머신에서 실행되는데
 Linux, macOS, Windows 환경 그리고 컨테이너에서 실행가능 하다고한다.(필자는 only ubuntu:latest만 사용)
@@ -106,6 +106,33 @@ Job 안에서 Github API를 호출한다면 1시간 동안 최대 1,000번까지
 비공개 저장소는 해당 계정에 부여된 무료 사용량 이후에 과금된다고
 
 Github 무료 계정의 전체 비공개 저장소를 기준으로 한달에 500MB 스토리지와 실행 시간 2,000분(minute)까지 제공된다고 한다.
+
+# 사용용도
+
+## crontab대체
+
+Workflow의 스케줄러 기능이 정말 대박인것 같다.
+
+웬만한 crontab은 Github Action으로 대체가 가능할것 같다.
+
+## 비동기 실행
+
+비동기 실행도 가능할것 같고.. 예를들면 5분에 한번 특정 테이블을 보고 특정 컬럼이 있으면 메일을 송신한다든지
+
+## 주식 stock
+
+5분에 한번씩 주가 정보를 알려주는..?
+
+필자가 운영중인 strong-gemi슬랙에 미국주가 정보를 정기적으로 전송해주는 역할로 사용하려고 한다.
+
+## docker파일 갱신
+
+코드 merge시 docker build -> push하는 hook을 동작시킬때
+
+Docker와 관련 없는 파일 갱신시에도 Docker가 빌드가 되는 문제가 있었는데
+path를 지정이 가능해져 효율적인 hook을 만들기가 쉬울거 같다.
+(이 문제를 해결하기 위해 git diff + 반복문으로 특정파일시 hook을 제외하는 shell script를 만드는 등 귀찮은 작업이 필요했음)
+
 
 # 메모
 
