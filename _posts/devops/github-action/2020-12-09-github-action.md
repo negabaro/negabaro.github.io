@@ -10,9 +10,11 @@ tags: ci_cd/github-action
 
 시작하기 앞서 아래와 같은 용어가 자주 등장할텐데
 
-Github Action
-Workflow
-Action
+- Github Action
+
+- Workflow
+
+- Action
 
 `Github Action`과 `Action`은 전혀 다른 의미임을 기억하자.
 
