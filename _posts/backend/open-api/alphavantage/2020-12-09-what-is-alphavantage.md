@@ -35,6 +35,49 @@ REST API이므로 실행환경에 의존하지 않고 실행가능
 This API returns the realtime exchange rate for any pair of digital currency (e.g., Bitcoin) or physical currency (e.g., USD).
 ```
 
+---
+
+## 주의사항
+
+예전 가격정책과 현재 정책이 바뀐듯하다.
+그로인해 잘못된 정보들이 있었다. 예를들어 실시간으로 stock data확인이 가능하다는 등..
+
+[Best 5 free stock market APIs in 2020]를 보면 Alpha Vantage를 아래와 같이 소개하고 있다.
+
+![image](https://user-images.githubusercontent.com/4640346/101610038-0bceea00-3a4b-11eb-8c67-40e739c6cedd.png)
+
+```
+Alpha Vantage Inc. is a leading provider of various free APIs. It provides APIs to gain access to historical and real-time stock data, FX-data, and cryptocurrency data.
+With Alphavantage you can perform up to 5 API-requests per minute and 500 API requests per day. 30 API requests per minute with $29.9/month.
+```
+
+톱 페이지에서도 리얼타임을 언급하는걸 보면 예전에는 실시간 데이터도 확인이 가능했던것 같다.
+
+현재 톱페이지는 아래와 같음(리얼타임 언급이 사라짐)
+
+![image](https://user-images.githubusercontent.com/4640346/101610638-de367080-3a4b-11eb-8936-cd87b5d55119.png)
+
+
+## 실시간 데이터 제공이 멈추게 된 이유
+
+도큐멘트에 실시간 데이터가 필요하다면 `Polygon.io`를 사용하라고 권하고 있다.
+
+제휴관계에 있는듯?
+
+```
+If you are interested in realtime intraday data for US stocks and ETFs, we have partnered with Polygon.io, a leading provider of realtime market data that counts Google and Robinhood as its customers. Specifically, this Intraday Time Series API maps directly to Polygon's Aggregates API.
+
+Alpha Vantage users will enjoy a lifetime 10% discount for their Polygon subscriptions. To unlock the discount, simply sign up for Polygon using your Alpha Vantage user email and enter the code ALPHAV on the subscription page.
+```
+
+찾아보니 StackOverFlow에 같은 의문을가진 현자분이 계셨다.
+
+[Alpha Vantage가 실시간데이터 제공을 그만둔 이유] <<링크 
+
+요약하면 라이센스 폴리시 문제로 Alpha Vantage는 실시간 데이터 제공을 그만둔 듯하다.
+`Polygon.io`는 NASDAQ에서 공인한 리얼타임 데이터를 싼 가격에 제공하는 프로바이더 중 하나라고 함.
+이거 보다 더싼 프로바이더들은 위법적으로 데이터를 수집하고 있을 가능성이 있어 이후에 사용이 불가능해질 수도 있다고
+
 
 ---
 
@@ -59,27 +102,6 @@ This API returns the realtime exchange rate for any pair of digital currency (e.
 
 api key에 `undefined`넣어도 실행됨 ㅋㅋ 뭐지
 
-
-## 주의사항
-
-예전 가격정책과 현재 정책이 바뀐듯하다.
-그로인해 잘못된 정보들이 있었다. 예를들어 실시간으로 stock data확인이 가능하다는 등..
-
-[Best 5 free stock market APIs in 2020]를 보면 Alpha Vantage를 아래와 같이 소개하고 있다.
-
-![image](https://user-images.githubusercontent.com/4640346/101610038-0bceea00-3a4b-11eb-8c67-40e739c6cedd.png)
-
-```
-Alpha Vantage Inc. is a leading provider of various free APIs. It provides APIs to gain access to historical and real-time stock data, FX-data, and cryptocurrency data.
-With Alphavantage you can perform up to 5 API-requests per minute and 500 API requests per day. 30 API requests per minute with $29.9/month.
-```
-
-톱 페이지에서도 리얼타임을 언급하는걸 보면 예전에는 실시간 데이터도 확인이 가능했던것 같다.
-
-현재 톱페이지는 아래와 같음(리얼타임 언급이 사라짐)
-
-![image](https://user-images.githubusercontent.com/4640346/101610638-de367080-3a4b-11eb-8936-cd87b5d55119.png)
-
 ## symbol이 틀려도 apikey없다고 에러가나옴
 
 symbol값 지정이 잘못되거나 파라메터가 틀려도 일률적으로 아래와 같은 메시지가 나오므로 주의가 필요
@@ -89,28 +111,6 @@ symbol값 지정이 잘못되거나 파라메터가 틀려도 일률적으로 �
     "Error Message": "the parameter apikey is invalid or missing. Please claim your free API key on (https://www.alphavantage.co/support/#api-key). It should take less than 20 seconds."
 }
 ```
-
-## 실시간 데이터 제공이 멈추게 된 이유
-
-도큐멘트에 실시간 데이터가 필요하다면 `Polygon.io`를 사용하라고 권하고 있다.
-
-제휴관계에 있는듯?
-
-```
-If you are interested in realtime intraday data for US stocks and ETFs, we have partnered with Polygon.io, a leading provider of realtime market data that counts Google and Robinhood as its customers. Specifically, this Intraday Time Series API maps directly to Polygon's Aggregates API.
-
-Alpha Vantage users will enjoy a lifetime 10% discount for their Polygon subscriptions. To unlock the discount, simply sign up for Polygon using your Alpha Vantage user email and enter the code ALPHAV on the subscription page.
-```
-
-찾아보니 StackOverFlow에 같은 의문을가진 현자분이 계셨다.
-
-[Alpha Vantage가 실시간데이터 제공을 그만둔 이유] <<링크 
-
-요약하면 라이센스 폴리시 문제로 Alpha Vantage는 실시간 데이터 제공을 그만둔 듯하다.
-`Polygon.io`는 NASDAQ에서 공인한 리얼타임 데이터를 싼 가격에 제공하는 프로바이더 중 하나라고 함.
-이거 보다 더싼 프로바이더들은 위법적으로 데이터를 수집하고 있을 가능성이 있어 이후에 사용이 불가능해질 수도 있다고
-
-
 
 
 ---
