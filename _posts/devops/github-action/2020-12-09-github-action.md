@@ -115,7 +115,7 @@ Github 무료 계정의 전체 비공개 저장소를 기준으로 한달에 500
 
 Workflow의 스케줄러 기능이 정말 대박인것 같다.
 
-웬만한 crontab은 Github Action으로 대체가 가능할것 같다.
+이 기능 덕분에 웬만한 crontab은 Github Action으로 대체가 가능할것 같다.
 
 ## 비동기 실행
 
@@ -135,6 +135,7 @@ Docker와 관련 없는 파일 갱신시에도 Docker가 빌드가 되는 문제
 path를 지정이 가능해져 효율적인 hook을 만들기가 쉬울거 같다.
 (이 문제를 해결하기 위해 git diff + 반복문으로 특정파일시 hook을 제외하는 shell script를 만드는 등 귀찮은 작업이 필요했음)
 
+---
 
 # 메모
 
