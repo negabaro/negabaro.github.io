@@ -117,8 +117,6 @@ Alpha Vantage users will enjoy a lifetime 10% discount for their Polygon subscri
 
 [Alpha Vantage가 실시간데이터 제공을 그만둔 이유]: https://stackoverflow.com/a/62800260/8229332
 
-[Best 5 free stock market APIs in 2020]를 참고
-
 [도큐멘트]: https://www.alphavantage.co/documentation/
 
 [Best 5 free stock market APIs in 2020]: https://towardsdatascience.com/best-5-free-stock-market-apis-in-2019-ad91dddec984
