@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Github Action act로 로컬환경에서 실행해보자"
+title: "act를 이용해 Github Action의 Workflow를 로컬환경에서 실행해보자"
 author: negabaro kim
 tags: ci_cd/github-action
 ---
@@ -74,6 +74,8 @@ mac기준으로 아래 커맨드로 인스톨이 가능했다.
 ```
 brew install nektos/tap/act
 ```
+
+다른OS는 [act]를 참고
 
 # 사용방법
 
