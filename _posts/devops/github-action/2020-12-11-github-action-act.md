@@ -89,6 +89,30 @@ brew install nektos/tap/act
 
 `act`해주면 해당 Workflow를 전체실행한다.
 
+Github -> Settings에서 설정하는 Secret값이 로컬에서 필요할땐
+
+`my.secrets`파일을 만들어서 Secret값을 넣어준 후 아래와 같이 실행해주자.
+
+ex)
+
+```
+#my.secrets
+SLACK_WEBHOOK_URL=xx
+```
+
+`act --secret-file my.secrets`
+
+설정한 Secret값은 Workflow에서 아래와 같이 env에 매핑해서 사용하게된다.
+
+
+```yml
+env:
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+```
+
+node.js코드에서는 
+
+`process.env.SLACK_WEBHOOK_URL`로 사용이 가능하다.
 
 
 
