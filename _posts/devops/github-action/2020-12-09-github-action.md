@@ -88,6 +88,10 @@ github페이지에서 아래와 같은 팝업이 뜨게 된다.
 
 해당 팝업을 클릭하면 marketplace에 등록하기 위한 설정이 나온다.
 
+name값 unique, README.md필수 등등
+
+※ 참고로 marketplace에 등록하지 않아도 Action으로 사용은 가능
+
 
 ---
 
