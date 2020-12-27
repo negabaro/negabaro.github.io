@@ -31,3 +31,7 @@ exports.handler = async (event, context, callback) => {
 ```
 
 Netlify functions는 aws lambda기반으로 동작하므로 lambda에서 같은 방법으로 queryString값을 취득할 수 있다.
+
+---
+
+[Link]: https://stackoverflow.com/questions/31329958/how-to-pass-a-querystring-or-route-parameter-to-aws-lambda-from-amazon-api-gatew
