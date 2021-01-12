@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "주식용어정리 - 자산이란?"
-description: `부채 + 자본`을 `자산`이라고 한다.
+description: 부채 + 자본을 자산이라고 한다.
 author: negabaro kim
 tags: kabu
 ---

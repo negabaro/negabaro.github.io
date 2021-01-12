@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "주식용어정리 - 자본이란?"
-description: `자산 - 부채`를 자본이라 한다.
+description: 자산 - 부채 를 자본이라 한다.
 author: negabaro kim
 tags: kabu
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "주식용어정리 - 자본이란?"
-description: 자산중에 `남에게 빌린 재산`,`갚아야할 의무가 있는 재산`을 말한다.
+title: "주식용어정리 - 부채란?"
+description: 자산중에 남에게 빌린 재산,갚아야할 의무가 있는 재산을 말한다.
 author: negabaro kim
 tags: kabu
 ---
