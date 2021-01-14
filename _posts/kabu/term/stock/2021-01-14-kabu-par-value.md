@@ -35,6 +35,7 @@ Par value
 100원
 
 [네이버 금융 삼성전자]에서 간단히 확인가능
+
 [네이버 금융 삼성전자]: https://finance.naver.com/item/main.nhn?code=005930
 
 
@@ -42,7 +43,8 @@ Par value
 
 
 [How to Figure Out Par Value on Balance Sheet]
-[What is Par Value?]
+
+[What is Par Value]
 
 ```
 Par value is usually set at $0.001 or $0.0001 per share as stated in the corporate charter.
@@ -169,7 +171,7 @@ Par value is usually set at $0.001 or $0.0001 per share as stated in the corpora
 ---
 
 [How to Figure Out Par Value on Balance Sheet]: https://www.fool.com/knowledge-center/how-to-figure-out-par-value-on-balance-sheet.aspx
-[What is Par Value?]: https://corporatefinanceinstitute.com/resources/knowledge/accounting/par-value-overview/
 
+[What is Par Value]: https://corporatefinanceinstitute.com/resources/knowledge/accounting/par-value-overview/
 [액면가 뜻 - 주식 액면가 알아보기]: https://cowblog.tistory.com/45
 [액면가 나무위키]: https://namu.wiki/w/%EC%95%A1%EB%A9%B4%EA%B0%80
