@@ -1,3 +1,8 @@
+---
+layout: post
+title:  "수학 - 약수란?"
+tags: math
+---
 
 ## 전제지식
 
@@ -94,3 +99,10 @@ divisor,factor(넒은 의미로),measure(측정,관점의 차이),divisible by
 12 / 12
 
 이므로 제수=약수이다.
+
+
+---
+
+[약수 wikipedia]
+
+[약수 wikipedia]: https://ko.wikipedia.org/wiki/%EC%95%BD%EC%88%98
