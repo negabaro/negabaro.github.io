@@ -17,6 +17,9 @@ tags: math
 
 자연수로 한정하면 `인수=약수`이다.
 
+![image](https://user-images.githubusercontent.com/4640346/104912852-2a23f000-59d0-11eb-81fe-0a1234ffd969.png)
+
+
 #### 영어
 
 factor
