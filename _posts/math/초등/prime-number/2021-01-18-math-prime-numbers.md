@@ -83,6 +83,27 @@ Prime Number
 
 1의 경우 약수가 하나 뿐이므로 소수도 아니고 합성수도 아니다.
 
+### ruby로 1~100사이의 소수 구하는 로직
+
+```ruby
+(2..100).each do |n|
+
+  status = false
+  
+  (2..9).each do |ns|
+    status = false
+    if n % ns == 0 # 나누어서 값이 떨어지면 소수가 아님
+      status = true if n == ns # 나누어서 값이 떨어졌지만 해당수가 자신인 경우 소수임
+      break;
+    else # 값이 떨어지지 않았다면 소수
+      status = true
+    end
+  end
+
+  print "#{n}," if status
+
+end
+```
 
 ---
 
