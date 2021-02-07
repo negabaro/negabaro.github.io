@@ -80,10 +80,9 @@ t2를 slack메시지 전송시 blocks에 담아주기만 하면 된다.
 
 [fileds]: https://api.slack.com/messaging/composing/layouts#block-basics
 
-[How to render tables in Slack
-]: https://stackoverflow.com/questions/59006831/how-to-render-tables-in-slack
+[How-to-render-tables-in-Slack]: https://stackoverflow.com/questions/59006831/how-to-render-tables-in-slack
 
-[Does Slack support Markdown tables]: https://stackoverflow.com/questions/55816333/does-slack-support-markdown-tables
+[Does-Slack-support-Markdown-tables]: https://stackoverflow.com/questions/55816333/does-slack-support-markdown-tables
 
 [sample]: https://app.slack.com/block-kit-builder/T5LLAJ415#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22%60%60%60%20------------%20------------%20-----------%20%5Cn%7C%20Header%201%20%20%20%7C%20Header%202%20%20%20%7C%20Header%203%20%20%7C%5Cn%20============%20============%20===========%20%5Cn%7C%20body%20row%201%20%7C%20column%202%20%20%20%7C%20column%203%20%20%7C%5Cn%20------------%20------------%20-----------%20%60%60%60%22%7D%7D%5D%7D
 
