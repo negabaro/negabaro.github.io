@@ -85,7 +85,13 @@ client = Aws::S3::Client.new(region: Settings.aws.region, credentials: Aws::ECSC
 client.put_object(bucket: Settings.aws.delivery_bucket, key: key, body: File.read(TEMP_CSV_FILE_PATH))
 ```
 
+### 메모3.
 
+CSV.open말고 csv block에 태우기전 문자열에다가 encoding옵션으로 undef,invalid를 추가할 수 있는 방법도 있다.
+
+필자는 비효율적이라 생각해 이 방법은 사용하지 않음
+
+[Solution3],[Solution4]가 이 내용에 해당한다.
 
 
 ## 도움이 된 기사
@@ -95,8 +101,13 @@ client.put_object(bucket: Settings.aws.delivery_bucket, key: key, body: File.rea
 [Solution1]
 
 [Solution2]
+
+
 ---
 
 [Solution1]: https://colabmix.co.jp/tech-blog/rails-sjis-error/
 [Solution2]: https://qiita.com/kano-e/items/19df487e163c606bd652
 [Shift_JIS와 Windows-31J 차이]: https://weblabo.oscasierra.net/shift_jis-windows31j/
+
+[Solution3]: https://qiita.com/hirokik-0076/items/dd6743dee82551fb1659
+[Solution4]: https://noterr0001.hateblo.jp/entry/20131007/1381157708
