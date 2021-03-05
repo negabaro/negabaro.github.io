@@ -16,9 +16,9 @@ DB데이터를 csv파일로 export하는 데일리 배치가 아래와 같은 �
 
 `é`와 같은 linux,mac에서 읽을 수 없는 문자(Windows-31J)가 들어오면서 csv export시 에러가 발생했다.
 
-필자의 경우 사용자가 `白鷗大学`라는 한자를 입력했는데 `鷗`한자가 Windows-31J 였던것.
+이번 케이스는 필자가 관리하는 시스템의 사용자가 `白鷗大学`라는 한자를 입력했는데 `鷗`한자가 Windows-31J 였던것이 원인이었다.
 
-아래 코드로 간단히 재현이 가능했다.
+아래 코드로 간단히 에러 재현이 가능했다.
 
 ```ruby
 CSV.open(File.join('/var/tmp/test.csv'), 'w', encoding: 'Windows-31J') do |csv|
@@ -37,6 +37,7 @@ invalid, undef옵션을 이용해 처리할 수 없는 문자를 `?`로 변경�
 
 ```ruby
 CSV.open(TEMP_CSV_FILE_PATH,'w', force_quotes: true, encoding:Encoding::SJIS, invalid: :replace, undef: :replace) do |csv|
+  csv << %w( d é f )
 end
 ```
 
@@ -106,8 +107,11 @@ CSV.open말고 csv block에 태우기전 문자열에다가 encoding옵션으로
 ---
 
 [Solution1]: https://colabmix.co.jp/tech-blog/rails-sjis-error/
+
 [Solution2]: https://qiita.com/kano-e/items/19df487e163c606bd652
+
 [Shift_JIS와 Windows-31J 차이]: https://weblabo.oscasierra.net/shift_jis-windows31j/
 
 [Solution3]: https://qiita.com/hirokik-0076/items/dd6743dee82551fb1659
+
 [Solution4]: https://noterr0001.hateblo.jp/entry/20131007/1381157708
