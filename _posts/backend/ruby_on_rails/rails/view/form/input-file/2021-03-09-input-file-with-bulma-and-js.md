@@ -90,3 +90,30 @@ delButton.addEventListener('click',function(e){
 ### multipart: true
 
 첨부파일이 있을땐 form_for의 옵션에 multipart: true를 설정해줘야 한다.
+
+### 첨부파일이 존재하느냐 판별
+
+`input type="file"`돔의 files의 크기가 0 보다 높다면 첨부파일이 존재하는걸로 판단
+
+
+```js
+var files = document.querySelector('.file-input').files;
+if (files.length > 0){
+  ...
+}
+```
+
+### 첨부파일을 지울땐
+
+value값에 ""을 넣어주면 된다.
+
+```js
+document.querySelector('.file-input').value = "";
+```
+
+### 버튼 표시 숨김
+
+`display: none`옵션을 넣어주고 이벤트 발생시 해당 돔의 display에 `inline-block`을 넣어주는 방식을 사용했다.
+
+block을 사용해도 되는 이번엔 같은행에 버튼을 표시하기 위해 inline-block을 사용
+
