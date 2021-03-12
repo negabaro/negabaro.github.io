@@ -43,6 +43,16 @@ flex 아이템은 아래에서 위로 수직 방향으로 배치
 
 ---
 
+## 참고
+
+[MDN]
+
+[헤로피 CSS Flex완벽 가이드]
+
+[Main Axis and Cross Axis]
+
+[MDN]: https://developer.mozilla.org/ja/docs/Web/CSS/flex-direction
+
 [헤로피 CSS Flex완벽 가이드]: https://www.tabmode.com/homepage/flex-direction.html
 
 [Main Axis and Cross Axis]: https://github.com/negabaro/css-masterclass-nomad-coders/pull/3
