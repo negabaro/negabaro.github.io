@@ -34,12 +34,20 @@ get 'users/:id', to: 'users#show', constraints: { id: /[A-Z]\d{5}/ }
 
 ### 탭 만들때 사용하는 패턴
 
-같은 페이지에 3개의 탭이 있고 해당탭을 클릭시 url을 변경(SSR)하고 싶을 경우 아래와 같은 패턴을 자주 사용
+같은 페이지에 3개의 탭이 있고 해당탭을 클릭시 url을 변경(SSR)하고 싶은데, 공통처리 부분이 많아 하나의 컨트롤러에서
+처리하고 싶을때 아래와 같은 패턴을 자주 사용
 
 ```ruby
 get '/:attendance_status', to: 'notice#attendance_list', as: 'attendance_list', defaults: {attendance_status: "attendants"}, constraints: { attendance_status: /attendants|absentees|undecideds/ }
 ```
 
+아래와 같이 status를 넘겨주면 하나의 컨트롤러에서 `params[:attendance_status]`을 받아서 조건분기 처리가 가능
+
+```ruby
+attendance_list_organization_notice_path(attendance_status: 'attendants')
+attendance_list_organization_notice_path(attendance_status: 'absentees')
+attendance_list_organization_notice_path(attendance_status: 'undecideds')
+```
 ---
 
 
