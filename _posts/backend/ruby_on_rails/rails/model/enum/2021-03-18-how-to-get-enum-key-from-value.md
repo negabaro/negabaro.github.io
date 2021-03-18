@@ -23,3 +23,27 @@ enum roles: {
 User.roles.key("Teacher".intern) # => "선생"
 ```
 
+---
+
+## 메모
+
+enum에 국한된 얘기는 아니고 hash에서도 동일하게 적용된다.
+
+```ruby
+list = {a: 1, b: 2, c: 3}
+list.key(1)
+# => :a
+```
+
+
+### ruby1.9이하에서는 invert
+
+ruby1.9이하에서는 invert가 사용되었고 1.9이후부터 key가 생겼다고 한다.
+
+```ruby
+list = {a: 1, b: 2, c: 3}
+list.invert[1]
+# => :a
+list.key(1)  #1.9以降
+# => :a
+```
