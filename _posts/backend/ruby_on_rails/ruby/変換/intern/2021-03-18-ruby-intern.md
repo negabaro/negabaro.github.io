@@ -60,7 +60,7 @@ String#internってのがあります．名前が気に入らないかも知れ�
 해석하면 lisp에서 가져온 이름이라한다.
 
 
-### 
+### Wikipedia에서 말하는 interning이란
 
 ```
 In computer science, string interning is a method of storing only one copy of each distinct string value, which must be immutable.
