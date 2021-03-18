@@ -2,9 +2,7 @@
 layout: post
 title:  "Rails resource vs resources 차이"
 author: negabaro kim
-categories: rails
-tags:	rails handson
-cover:  "/assets/twice.jpg"
+tags:	rails/routing
 ---
 
 

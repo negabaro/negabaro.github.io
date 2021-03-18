@@ -2,9 +2,7 @@
 layout: post
 title:  "Rails의 scope,scope module,namespace의 차이"
 author: negabaro kim
-categories: rails
-tags:	rails handson
-cover:  "/assets/twice.jpg"
+tags:	rails/routing
 ---
 
 
