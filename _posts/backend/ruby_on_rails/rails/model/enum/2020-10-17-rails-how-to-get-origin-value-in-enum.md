@@ -2,7 +2,7 @@
 layout: post
 title:  "rails enum사용시 실제 DB에 저장되는 값 가져오는 방법"
 author: negabaro kim
-tags:	rails/model
+tags:	rails/enum
 ---
 
 # 개요 
@@ -59,6 +59,8 @@ User.genders[User.first.gender]
 
 enum으로 지정해준 컬럼명 뒤에 `_before_type_cast`를 추가해주는 방식이다.
 
+
+# 메모
 
 아직 실무에서 사용은 못해봤지만 아래와 같은 방식을 사용하면 범용적으로 사용이 가능할것 같다.
 (아 모델이 복수일경우 동작안하겠네..)
