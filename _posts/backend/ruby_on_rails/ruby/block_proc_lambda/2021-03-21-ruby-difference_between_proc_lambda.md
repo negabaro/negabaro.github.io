@@ -5,6 +5,16 @@ author: negabaro kim
 tags: ruby
 ---
 
+## block,proc,lambda관련 포스팅 인덱스
+
+- [ruby block,proc,lambda에 대해 개념정리]
+- [ruby block이란]
+- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자] << 오늘 할 내용
+- [ruby Proc에 대해 알아보자]
+- [ruby Lambda 대해 알아보자] 
+  
+---
+
 이 포스트에서는 proc,lambda의 차이점에 대해 알아보자.
 
 ## proc,lambda 공통점
@@ -131,3 +141,13 @@ hello_method.to_proc.lambda? # => true
 
 
 [루비 블록, Proc 객체, 람다 함수의 차이]: https://www.44bits.io/ko/post/ruby-proc-and-lambda
+
+[ruby block,proc,lambda에 대해 개념정리]: https://negabaro.github.io/archive/ruby-block_proc_lambda
+
+[ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]: https://negabaro.github.io/archive/ruby-difference_between_proc_lambda
+
+[ruby block이란]: https://negabaro.github.io/archive/ruby-block
+
+[ruby Lambda 대해 알아보자]: https://negabaro.github.io/archive/ruby-lambda
+
+[ruby Proc에 대해 알아보자]: https://negabaro.github.io/archive/ruby-proc

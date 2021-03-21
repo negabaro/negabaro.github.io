@@ -8,11 +8,11 @@ tags: ruby
 
 ## block,proc,lambda관련 포스팅 인덱스
 
-- [ruby block,proc,lambda에 대해 개념정리]
-- [ruby block이란]
-- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
-- [ruby Proc에 대해 알아보자]
-- [ruby Lambda 대해 알아보자] << **오늘 할 내용**
+> - [ruby block,proc,lambda에 대해 개념정리]
+> - [ruby block이란]
+> - [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
+> - [ruby Proc에 대해 알아보자]
+> - [ruby Lambda 대해 알아보자] << **오늘 할 내용**
 
 ## Lambda란
 
@@ -121,9 +121,7 @@ pp ->(){}.call # nil
 
 ---
 
-[루비 블록, Proc 객체, 람다 함수의 차이
-블록, Proc 객체, 람다(lambda) 함수의 차이 이해하기]: https://www.44bits.io/ko/post/ruby-proc-and-lambda
-
+[루비proc lambda block함수의 차이 이해하기]: https://www.44bits.io/ko/post/ruby-proc-and-lambda
 
 [ruby block,proc,lambda에 대해 개념정리]: https://negabaro.github.io/archive/ruby-block_proc_lambda
 

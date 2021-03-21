@@ -5,6 +5,17 @@ author: negabaro kim
 tags: ruby
 ---
 
+
+## block,proc,lambda관련 포스팅 인덱스
+
+- [ruby block,proc,lambda에 대해 개념정리] << 오늘 할 내용
+- [ruby block이란]
+- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
+- [ruby Proc에 대해 알아보자]
+- [ruby Lambda 대해 알아보자] 
+
+---
+
 ruby에서 자주 사용하는 block,proc,lambda에 대해 알아보자.
 
 우선 block,proc,lambda는 크게봐서 유사한 카테고리인데 이들을 공통적으로 나타내는 용어가 없으므로 이 포스트에서는 
@@ -209,4 +220,12 @@ sample proc1 # 5.rb:1:in `sample': wrong number of arguments (given 1, expected 
 
 [Ruby block/proc/lambdaの使いどころ]: https://qiita.com/kidach1/items/15cfee9ec66804c3afd2
 
+[ruby block,proc,lambda에 대해 개념정리]: https://negabaro.github.io/archive/ruby-block_proc_lambda
+
+[ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]: https://negabaro.github.io/archive/ruby-difference_between_proc_lambda
+
 [ruby block이란]: https://negabaro.github.io/archive/ruby-block
+
+[ruby Lambda 대해 알아보자]: https://negabaro.github.io/archive/ruby-lambda
+
+[ruby Proc에 대해 알아보자]: https://negabaro.github.io/archive/ruby-proc

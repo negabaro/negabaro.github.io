@@ -6,6 +6,14 @@ categories: ruby
 tags: ruby
 ---
 
+## block,proc,lambda관련 포스팅 인덱스
+
+- [ruby block,proc,lambda에 대해 개념정리]
+- [ruby block이란] << 오늘 할 내용
+- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
+- [ruby Proc에 대해 알아보자]
+- [ruby Lambda 대해 알아보자] 
+
 ## 블록이란
 
 블록이란 간단히 말하면 코드 덩어리이다.
@@ -223,3 +231,13 @@ test { pp 'test'}
 [Link3]: https://yakst.com/ja/posts/1634
 [Link4]: https://qiita.com/mojihige/items/4850f7dc2836bb7f0efa
 [defではないメソッドについて]: https://teratail.com/questions/172699
+
+[ruby block,proc,lambda에 대해 개념정리]: https://negabaro.github.io/archive/ruby-block_proc_lambda
+
+[ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]: https://negabaro.github.io/archive/ruby-difference_between_proc_lambda
+
+[ruby block이란]: https://negabaro.github.io/archive/ruby-block
+
+[ruby Lambda 대해 알아보자]: https://negabaro.github.io/archive/ruby-lambda
+
+[ruby Proc에 대해 알아보자]: https://negabaro.github.io/archive/ruby-proc
