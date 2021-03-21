@@ -8,11 +8,11 @@ tags: ruby
 
 ## block,proc,lambda관련 포스팅 인덱스
 
-- [ruby block,proc,lambda에 대해 개념정리] << 오늘 할 내용
-- [ruby block이란]
-- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
-- [ruby Proc에 대해 알아보자]
-- [ruby Lambda 대해 알아보자] 
+> - [ruby block,proc,lambda에 대해 개념정리] << 오늘 할 내용
+> - [ruby block이란]
+> - [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
+> - [ruby Proc에 대해 알아보자]
+> - [ruby Lambda 대해 알아보자] 
 
 ---
 
