@@ -5,6 +5,12 @@ author: negabaro kim
 tags: ruby
 ---
 
+- [ruby block,proc,lambda에 대해 개념정리]
+- [ruby block이란]
+- [ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
+- [ruby Proc에 대해 알아보자]
+- [ruby Lambda 대해 알아보자] << 오늘 할 내용
+
 ## Lambda란
 
 Proc객체의 한종류
@@ -19,6 +25,8 @@ Proc이 존재하는 이유와 같다.
 
 아래 링크를 참조
 
+[ruby Proc에 대해 알아보자]
+
 ## Proc Lambda차이
 
 기본적으로는 같다.
@@ -26,6 +34,8 @@ Proc이 존재하는 이유와 같다.
 return방식이나 인자체크의 동작방식에 조금 차이가 있다.
 
 자세한건 아래링크를 참조
+
+[ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]
 
 ### lambda인지 확인하는 방법
 
@@ -110,3 +120,14 @@ pp ->(){}.call # nil
 
 [루비 블록, Proc 객체, 람다 함수의 차이
 블록, Proc 객체, 람다(lambda) 함수의 차이 이해하기]: https://www.44bits.io/ko/post/ruby-proc-and-lambda
+
+
+[ruby block,proc,lambda에 대해 개념정리]: https://negabaro.github.io/archive/ruby-block_proc_lambda
+
+[ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자]: https://negabaro.github.io/archive/ruby-difference_between_proc_lambda
+
+[ruby block이란]: https://negabaro.github.io/archive/ruby-block
+
+[ruby Lambda 대해 알아보자]: https://negabaro.github.io/archive/ruby-lambda
+
+[ruby Proc에 대해 알아보자]: https://negabaro.github.io/archive/ruby-proc
