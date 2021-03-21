@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ruby 절차오브젝트(proc,lambda)의 차이에 대해 알아보자"
+title: "ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자"
 author: negabaro kim
 tags: ruby
 ---
