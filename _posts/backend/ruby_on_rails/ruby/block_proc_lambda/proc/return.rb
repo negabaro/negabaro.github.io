@@ -4,4 +4,4 @@ def proc_method
   p "채영"
 end
 
-proc_method
+proc_method 

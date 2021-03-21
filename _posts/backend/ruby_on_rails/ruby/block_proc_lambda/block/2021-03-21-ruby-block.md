@@ -199,6 +199,7 @@ yield가 있는 메소드 호출시 반드시 인자에 block을 넘겨줘야한
 
 Proc 넘겨줘도 문자열 넘겨줘도 에러 ArgumentError가 발생한다.
 
+아무것도 안 넘겨주면 LocalJumpError 에러가 발생
 
 ```ruby
 def test
@@ -221,4 +222,4 @@ test { pp 'test'}
 [Link2]: https://www.sejuku.net/blog/14291
 [Link3]: https://yakst.com/ja/posts/1634
 [Link4]: https://qiita.com/mojihige/items/4850f7dc2836bb7f0efa
-
+[defではないメソッドについて]: https://teratail.com/questions/172699
