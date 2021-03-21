@@ -67,6 +67,7 @@ def test
 end
 ```
 
+※yield가 있는 메소드 호출시 인자가 없으면 에러가 발생
 
 ## 블록은 왜 쓰는거임?
 
@@ -187,6 +188,30 @@ end
 false
 true
 true
+```
+
+## 메모
+
+
+### yield사용시 주의사항
+
+yield가 있는 메소드 호출시 반드시 인자에 block을 넘겨줘야한다.
+
+Proc 넘겨줘도 문자열 넘겨줘도 에러 ArgumentError가 발생한다.
+
+
+```ruby
+def test
+  yield
+end
+
+#test # no block given (yield) (LocalJumpError)
+
+#test Proc.new { pp 'test'} # wrong number of arguments (given 1, expected 0) (ArgumentError)
+
+#test 'test' # wrong number of arguments (given 1, expected 0) (ArgumentError)
+
+test { pp 'test'}
 ```
 
 ### Reference Link:
