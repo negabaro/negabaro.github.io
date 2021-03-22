@@ -2,7 +2,7 @@
 layout: post
 title: "rails includes에 대해 알아보자(with N+1문제)"
 author: negabaro kim
-tags: rails rails/model
+tags: rails/model
 ---
 
 

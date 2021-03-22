@@ -2,7 +2,7 @@
 layout: post
 title: "rails includes 메소드에 대해 자세히 알아보자"
 author: negabaro kim
-tags: rails rails/model
+tags: rails/model
 ---
 
 
