@@ -32,7 +32,7 @@ pp @twice
 
 아래와 같이 해도 된다.
 
-```
+```ruby
 pp @twice = @twice.merge({"IU" => 98})
 ```
 
