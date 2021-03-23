@@ -1,3 +1,8 @@
+
+
+ディープコピーではなく、シャローコピー
+浅いコピーと深いコピー
+
 ## = 에 의한 복제
 
 shallow-copy,deep-copy와 관계없이 =에 의해 오브젝트를 복제하면 이름만 틀릴뿐 실제 데이터는 같은곳은 보고 있게됨.
@@ -73,6 +78,37 @@ origin_arr
 1. deep_dup メソッドを使う(要 activesupport)
    深いコピーを複製してくれるメソッドです。これは ruby にはないメソッドなので、activesupport を require しないと使えないことに留意してください。
 
+
+---
+
+そのうちに、「dupでもコピーされない！」と思う時がきっと来るの、そのときは、
+「Ruby ディープコピー」で検索してみて下さい。
+dupやcloneメソッドでは、ディープコピーではなく、シャローコピーを行います。
+
+
+
+fruits = ["apple", "orange", "banana", "kiwi", "banana"]
+kk = fruits
+p kk.delete("banana")
+p fruits
+p kk
+rubyでこのコードを実行すると以下のように出力されます。
+
+
+"banana"
+["apple", "orange", "kiwi"]
+["apple", "orange", "kiwi"]
+
+
+fruits のarray値をkkに渡して
+kk.deleteをしたにも関わらず
+fruitsの値も変わってるのですが、、
+これは仕様ということですか？
+
+rubyのバージョンは 2.0です。
+
+Arrayの値を消して消す前の状態を保存するためにもどのようにコードを書きますか？
+
 ### Reference Link:
 
 https://qiita.com/mojihige/items/7b0a36b595273e70812d
@@ -80,3 +116,8 @@ https://qiita.com/mojihige/items/7b0a36b595273e70812d
 https://qiita.com/ricoirico/items/5cfcac1b8e67184641f1
 https://ref.xaio.jp/ruby/classes/object/clone
 https://ja.stackoverflow.com/questions/27101/ruby%E3%81%AEclone%E3%81%A8dup%E3%81%A8activerecord%E3%81%AEclone%E3%81%A8dup%E3%81%AF%E5%88%A5%E7%89%A9
+
+
+[teratail 내가질문한거]: https://teratail.com/questions/21332
+
+[新人エンジニアがはまるかもしれないrubyの浅いコピーと深いコピーともろもろ背景]: https://qiita.com/sue738/items/92228f0ae0518bf0a693
