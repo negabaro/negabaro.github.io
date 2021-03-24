@@ -32,6 +32,16 @@ html_safe를 사용하면 완벽하게 escape를 사용하지 않게되므로 �
 상황에 따라서 특정 문자열만 치환해준다거나 위험한 태그들을 제어할 수 있는 `sanitize`를 사용하는것이 권장되고 있다.
 
 
+예를들면
+
+```ruby
+- test_text = "<a href='http://example.com'>web site</a><script type='text/javascript'>$('#test').on('click',function(){ alert('out!')});</script>"
+= test_text.html_safe
+```
+
+아래와 같은 코드는 script로 읽어들여버림
+
+
 ---
 
 [Link1]: https://www.javadrive.jp/rails/template/index7.html
