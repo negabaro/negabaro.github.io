@@ -39,4 +39,6 @@ simple_format("text")
 
 ---
 
+[Rails safe_join에 대해 알아보자]: https://negabaro.github.io/archive/rails-view-safe_join
+
 [simple_format]: https://apidock.com/rails/ActionView/Helpers/TextHelper/simple_format

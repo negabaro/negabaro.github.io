@@ -96,6 +96,16 @@ raw의 경우 `val#html_safe?`로직이 실행되고 `<%==`는 실행되지 않�
 
 `@output_buffer.append=( raw val )`보다 `@output_buffer.safe_append=( val )`가 조금 빠를것이다.(큰 차이는 없고..)
 
+## 메모 
+
+console에서 raw와 같은 helper커맨드 실행방법
+
+```ruby
+ApplicationController.helpers.raw("html");
+# or
+view_context.raw("html");
+```
+
 ---
 
 [RailsGuidesの「5.1 Output Safety」]: https://guides.rubyonrails.org/active_support_core_extensions.html#output-safety
