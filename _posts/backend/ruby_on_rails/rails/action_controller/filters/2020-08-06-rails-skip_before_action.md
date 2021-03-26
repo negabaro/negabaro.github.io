@@ -1,9 +1,11 @@
 ---
 layout: post
-title:  rails 특정 컨트롤러에서만 before_action skip하는 방법
+title:  rails 특정 컨트롤러에서만 before_action skip하는 방법(skip_before_action)
 description: skip_before_action을 사용하면 skip가능
 tags: rails
 ---
+
+
 
 
 # 개요
@@ -105,3 +107,8 @@ end
 
 굉장히 유용한 skip_before_action이지만 많아지면 전체구조를 쫓기 어려울 수 있으므로 
 과도한 사용은 자제하도록 하자.
+
+
+---
+
+[skip_before_action참고]: https://pikawaka.com/rails/before_action
