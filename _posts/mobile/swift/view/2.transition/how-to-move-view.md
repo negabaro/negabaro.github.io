@@ -19,7 +19,7 @@ https://twih1203.medium.com/swift-ios-%ED%99%94%EB%A9%B4%EC%A0%84%ED%99%98%ED%95
 이 방법으로 화면 전환을 하려면 먼저 Navigation Controller를 embed in 해주어야 합니다.
 그 뒤에 다음과 같은 코드를 작성합니다.
 
-```s
+```swift
 let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "vcStoaryBoardID")
 self.navigationController?.pushViewController(pushVC!, animated: true)
 ```

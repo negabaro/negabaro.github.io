@@ -12,7 +12,7 @@ navigationController에 pushViewController를 하면 이동 popViewController을
 
 ### 화면 이동
 
-```js
+```swift
 @IBAction func naviGoSecond(_ sender: Any) {
     guard let naviSecondview = self.storyboard?.instantiateViewController(withIdentifier: "NavigationSecondView") else{
         return
@@ -23,7 +23,7 @@ navigationController에 pushViewController를 하면 이동 popViewController을
 
 ### 뒤로 이동
 
-```js
+```swift
 @IBAction func popNavigationVIew(_ sender: Any) {
     self.navigationController?.popViewController(animated: true)
 }

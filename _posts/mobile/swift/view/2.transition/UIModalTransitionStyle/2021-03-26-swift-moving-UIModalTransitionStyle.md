@@ -19,7 +19,7 @@ tags: swift
 
 ### 앞으로 이동
 
-```s
+```swift
 @IBAction func moveNext(_ sender: Any){
     guard let uvc = self.storyboard?.instantiateViewController(identifier: "SecondVC") else {
       return
@@ -34,7 +34,7 @@ tags: swift
 
 ### 뒤로이동
 
-```s
+```swift
  @IBAction func back(_ sender: Any){
     self.presentingViewController?.dismiss(animated: true)
     
