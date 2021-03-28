@@ -6,9 +6,9 @@ tags:	rails/view
 ---
 
 
-## tagHeloper란?
+## tagHelper란?
 
-ruby코드로 html돔을 그릴때 사용
+ruby코드로 html돔을 그릴때 사용하는 ViewHelper이다.
 
 ## 사용방법
 
@@ -63,8 +63,8 @@ content_tag(:div, class: "a")     # => "<div>{:class=&gt;&quot;a&quot;}</div>"
 
 ## 헤맨부분
 
-문자열에 개행코드(\n)가 있으면 <br />로 바꿔주고 escape안하게 하는 로직을
-데코레이터에서 작성하려기 위해 아래와 같이 기술하면 tag메소드가 없다고 에러가 난다.
+문자열에 `개행코드(\n)`가 있으면 `<br />`로 바꿔주고 `html_safe`로 escape하지않게 하는 로직을
+데코레이터에서 작성하기 위해 아래와 같이 기술하면 tag메소드가 없다고 에러가 난다.
 
 ```ruby
 safe_join(content.split("\n"),tag(:br)).html_safe
@@ -83,14 +83,14 @@ include ActionView::Helpers::TagHelper
 safe_join(content.split("\n"),"<br />").html_safe
 ```
 
-어짜피 `tag(:br)` 이 부분이 `<br />`이니 상관없다고 생각했는데 위와 같이 하면 정상적으로 개행이 되지않는다.
+어짜피 `tag(:br)` 이 부분이 `<br />`이니 상관없다고 생각했는데 위와 같이 하면 정상적으로 개행이 되지않는다.(html_safe가 제대로 안먹힘)
 
 
-왜일까?? 좀 찾아보니 tagHelper가 escape를 해주기 때문이었다.
+왜일까?? 좀 찾아보니 tagHelper가 escape를 해주기 때문이었다.(단순문자열은 escape안해줌 view에서 `=` 뒤에오면 escape해줌)
 
-escape를 안해준 상태의 문자열을 html_safe로 escape하지 않은 상태로 돌려준다해도 단순문자열은 escape를 안해줬기때문에 html_safe가 제대로 안먹히는것.
+escape를 안해준 상태의 문자열을 html_safe로 롤백해줬다 하더라도 단순문자열은 escape를 안해줬기때문에 롤백할 대상이 없는것
 
-아래와 같이 h(html_escape)를 해줘도 정상작동하는것을 확인했다.
+아래와 같이 h(html_escape)를 이용해 escape를 해줘도 정상작동 하는것을 확인했다.
 
 ```ruby
 require "action_view"
@@ -98,7 +98,7 @@ include ActionView::Helpers::TextHelper
 safe_join(content.split("\n"),h("<br />")).html_safe
 ```
 
-잊지말자 tagHelper는 자동으로 escape를 해준다는것..!
+잊지말자 tagHelper는 내부에서 escape를 해준다는것..!
 
 
 코드는 [tag method]를 참고
