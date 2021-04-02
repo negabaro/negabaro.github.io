@@ -37,7 +37,7 @@ user = auth.create_user(
 print('Sucessfully created new user: {0}'.format(user.uid))
 ```
 
-## UID로 유저 가져오기
+## email로 유저 가져오기
 
 
 ```python
