@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Flutter doctor실행시 [!] Connected device ! No devices available는 에러가 아니다."
+title:  "Flutter doctor실행시 [!] Connected device ! No devices available메시지는 에러가 아니다."
 author: negabaro kim
 tags: flutter/error
 ---
@@ -15,8 +15,7 @@ tags: flutter/error
     ! No devices available
 ```
 
-에러가 발생해도 쫄지말자. 단순히 에뮬레이터가 실행이 안되어있을 뿐이므로 
-
+메시지가 나와도 당황하지말자. 단순히 에뮬레이터가 실행이 안되어있을 뿐이다.
 
 [IOS 시뮬레이터만 기동하는 방법]를 참고해서 실행해주자.
 
