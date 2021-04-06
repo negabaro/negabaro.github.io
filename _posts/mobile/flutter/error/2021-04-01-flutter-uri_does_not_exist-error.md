@@ -2,7 +2,7 @@
 layout: post
 title:  "flutter [dart] Target of URI doesn't exist: 'package:xx/main.dart'. [uri_does_not_exist] 에러"
 author: negabaro kim
-tags: flutter
+tags: flutter/error
 ---
 
 ## 에러

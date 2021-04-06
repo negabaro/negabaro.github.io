@@ -2,7 +2,7 @@
 layout: post
 title:  "flutter pub command not found 에러"
 author: negabaro kim
-tags: flutter
+tags: flutter/error
 ---
 
 
