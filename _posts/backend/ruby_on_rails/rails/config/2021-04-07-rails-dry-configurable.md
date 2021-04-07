@@ -7,7 +7,7 @@ tags: rails/config
 
 ## dry-configurable란?
 
-dry-rb시리즈중에 하나로 config/settings의 설정을 `Thread-safe`하게 선언이 가능한 gem이다.
+[dry-rb]시리즈 중에 하나로 config/settings의 설정을 `Thread-safe`하게 선언이 가능한 gem이다.
 
 
 > dry-configurable is a simple mixin to add thread-safe configuration behaviour to your classes. There are many libraries that make use of configuration, and each seemed to have their own implementation with a similar or duplicate interface, so we thought it was strange that this behaviour had not already been encapsulated into a reusable gem, hence dry-configurable was born.
@@ -79,5 +79,6 @@ config/settings/default.rb을 베이스로 선언해서 `config/settings/develop
 
 ---
 
+[dry-rb]: https://dry-rb.org/
 [dry-configurable]: https://github.com/dry-rb/dry-configurable
 [document]: https://dry-rb.org/gems/dry-configurable/0.11/
