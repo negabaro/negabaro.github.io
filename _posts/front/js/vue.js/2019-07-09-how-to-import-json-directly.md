@@ -71,8 +71,8 @@ var app = new Vue({
 })
 ```
 
+---
 
-### reference:
 
-https://qiita.com/Hiroyuki1993/items/56e4b0c15786bf8d787b
+[Link1]: https://qiita.com/Hiroyuki1993/items/56e4b0c15786bf8d787b
 

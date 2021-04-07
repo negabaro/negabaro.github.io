@@ -150,9 +150,10 @@ UMD는 하나로 정해진 코드라기 보다는 디자인 패턴에 더 가깝
 AMD는 define을 쓰고, CommonJS는 module.exports를 씁니다. 이 차이를 활용하면 UMD를 만들 수 있습니다. 모듈을 아래와 같이 선언하면 됩니다.
 
 
-https://d2.naver.com/helloworld/12864
 
 
-### reference:
+
+---
 
 [Link1]: http://www.commonjs.org/history/
+[Link2]: https://d2.naver.com/helloworld/12864

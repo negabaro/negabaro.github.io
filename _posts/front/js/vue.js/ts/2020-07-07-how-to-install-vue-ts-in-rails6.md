@@ -199,8 +199,6 @@ Property or method "message" is not defined on the instance but referenced durin
 에러를 만나게 된다.
 `config/webpack/loaders/typescript.js`수정을 꼭 할것
 
-### reference:
+---
 
-```
-http://clash-m45.hatenablog.com/entry/2019/09/21/120215
-```
+[Link1]: http://clash-m45.hatenablog.com/entry/2019/09/21/120215

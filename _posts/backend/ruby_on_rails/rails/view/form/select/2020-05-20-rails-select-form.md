@@ -106,7 +106,9 @@ html옵션만 쓰고 싶다고 그것만 정의하면 html옵션 부분을 옵�
 
 알맞은 예제는 사용하지 않는 옵션은 {}로 정의해줘야함.
 
+```ruby
 <%= f.select :sex, {'男性': 1, '女性': 2}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+```
 
 
 ### reference:
