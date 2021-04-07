@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "flutter Debug adapter process has terminated unexpectedly (exit code: 1)에러"
+title:  "flutter Debug adapter process has terminated unexpectedly (exit code: 1)　에러"
 author: negabaro kim
 tags: flutter/error
 ---
