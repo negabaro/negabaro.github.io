@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Netlify에서 node-fetch사용시 주의사항"
+title: "Netlify에서 node-fetch 사용시 주의사항"
 author: negabaro kim
 tags: devops/netlify
 ---

@@ -132,6 +132,15 @@ text없이 check_box만드는 케이스도 많은데 이걸 강제하는 이유�
 초기선택값이나 id,class를 지정할때 사용
 필수옵션이 아님.
 
+### include_hidden
+
+옵션중에 유용한 친구.
+
+そこで、チェックが入っていない時、何も送られてこないようにinclude_hidden: falseで設定します。
+そうするとチェックを入れてない時何も送られてこないのでpresenceでチェックが可能です。
+
+validates :my_check_boxies, presence: true
+
 ## &block(생략가능..)
 
 아래 코드의 do ~end사이에 들어가는 내용

@@ -2,7 +2,7 @@
 layout: post
 title:  "ruby로 배우는 디자인패턴3 【Template Method】"
 author: negabaro kim
-categories: ruby design-pattern
+tags: ruby/design-pattern
 ---
 
 
@@ -76,8 +76,8 @@ session을 저장한다
 각 로직의 서브 클래스에서 소속로직에 대한 재정의
 
 
+---
 
 
-### reference:
-
-https://qiita.com/kidach1/items/7c2a80bfc8a87a05051f
+[Link1]: https://qiita.com/kidach1/items/7c2a80bfc8a87a05051f
+[Link2]: https://yaboong.github.io/design-pattern/2018/09/27/template-method-pattern/

@@ -68,3 +68,4 @@ Email인증을 유효화 시킨후 다시 실행하니까 정상동작했다.
 
 ---
 
+[stackoverflow]: https://stackoverflow.com/questions/55522640/the-identity-provider-configuration-is-not-found-react-native-firebase-authent

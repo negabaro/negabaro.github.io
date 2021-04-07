@@ -33,6 +33,11 @@ html_escape('is a > 0 & a < 10?')
 # is a &gt; 0 &amp; a &lt; 10?
 ```
 
+```ruby
+pp ERB::Util.html_escape("<html>");
+"&lt;html&gt;"
+```
+
 ## html_escape = h
 
 

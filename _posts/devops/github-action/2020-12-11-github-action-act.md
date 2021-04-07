@@ -116,8 +116,20 @@ node.js코드에서는
 
 
 
+# 메모
+
+## reference not found 에러
+
+브랜치명이 v3여도 [reference not found]에러가 발생
+
+`리포지토리명/tags`에 기술되어있는 태그명을 정확히 입력하면 해결
+
+`ex) https://github.com/actions-rs/toolchain/tags`
+
+
+
 
 ---
-
+[reference not found]: https://github.com/nektos/act/issues/177
 [act]: https://github.com/nektos/act
 [GitHub Actionsのローカル実行ツール「act」を使う事でCI/CDコンフィグとローカルでのタスクランナーを1つにする]: https://dev.classmethod.jp/articles/act-for-github-actions-local-execution-tool/

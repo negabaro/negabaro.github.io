@@ -1,0 +1,1 @@
+https://pilgwon.github.io/blog/2017/09/25/Under-the-Hood-of-Assertions-in-Swift.html

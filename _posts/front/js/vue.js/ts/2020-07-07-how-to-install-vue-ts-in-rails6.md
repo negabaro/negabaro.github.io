@@ -15,7 +15,7 @@ bundle exec rake webpacker:install:typescript
 를 실행해주면 70%완료이다.
 몇가지 설정만 바꿔주면 끝이다.
 
-#  config/webpack/loaders/typescript.js 수정
+# config/webpack/loaders/typescript.js 수정
 
 PnpWebpackPlugin.tsLoaderOptions에 
 `appendTsSuffixTo: [/\.vue$/]`를 추가해줌
@@ -176,9 +176,20 @@ document.addEventListener("DOMContentLoaded", () => {
   ],
   "compileOnSave": false
 }
-
-
 ```
+
+## vue-loader
+
+```js
+//config/webpack/loaders/vue.js
+module.exports = {
+  test: /\.vue(\.erb)?$/,
+  use: [{
+    loader: 'vue-loader'
+  }]
+}
+```
+
 #  메모1. config/webpack/loaders/typescript.js 수정을 안하면
 
 ```

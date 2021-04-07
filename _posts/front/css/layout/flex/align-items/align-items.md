@@ -1,6 +1,8 @@
 
 ## 수직정렬(align-items)
 
+세로 간격조정
+
 ### flex-start
 
 flex 아이템은 flex 컨테이너의 교차축의 시작점(cross start, 위쪽 맞춤)에 배치됩니다.

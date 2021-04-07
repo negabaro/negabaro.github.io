@@ -2,7 +2,7 @@
 layout: post
 title: "rails joins 메소드의 특징에 대해 알아보자"
 author: negabaro kim
-tags: rails rails/model
+tags: rails/model
 ---
 
 # joins 메소드란?
@@ -42,7 +42,7 @@ Owner.joins(:cats).select('owners.*, cats.name')
 ```ruby
 Owner.joins(:cats).select('owners.*, cats.name').where(name: 'xx')
 ```
-하면 join대상 테이블에 where조건이 Owner인지Cats인지 판단이 안되므로(디폴트로는 Owner를 선택해버림)
+하면 join대상 테이블에 where조건의 타겟이 Owner인지Cats인지 판단이 안되므로(디폴트로는 Owner를 선택해버림)
 
 join 대상 테이블에 조건을 걸고 싶을때는 아래와 같은 문법으로 실행해줘야한다.
 
@@ -147,11 +147,9 @@ Owner.joins(cats: [cat_children: :hamster])
 
 
 
+---
 
-### reference:
+[Link1]: https://pikawaka.com/rails/joins
+[Link2]: https://qiita.com/TeruhisaFukumoto/items/007ad22cc170d297dbcc
 
-```
-https://pikawaka.com/rails/joins
-https://qiita.com/TeruhisaFukumoto/items/007ad22cc170d297dbcc
-```
 

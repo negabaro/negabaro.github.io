@@ -1,0 +1,1 @@
+발행주식(Shares Outstanding)

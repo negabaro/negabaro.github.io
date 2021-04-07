@@ -1,0 +1,17 @@
+基本的にプラットフォーム側の状態をFlutterアプリの状態として再定義している感じですが、iOSのライフサイクルに近いと思います。なお、iOSのライフサイクルは詳しくなく、AndroidエンジニアのためのiOSのUIViewControllerのライフサイクルとAndroidのActivityのライフサイクル比較を参考にさせていただきました。間違いがあればコメントでご指摘いただけると幸いです。
+
+inactiveとpausedの違いは、画面が表示されているか否かの違いの様子です。
+
+状態	内容	Android	iOS
+inactive	アプリは表示されているが、フォーカスがあたっていない状態	onStart, onPause	viewDidLoad
+paused	アプリがバックグラウンドに遷移し（最前面に表示されてない）、入力不可な一時停止状態	onPause	viewWillDisappear viewDidDisappear
+resumed	アプリがフォアグランドに遷移し（paused状態から復帰）、復帰処理用の状態	onResume	viewWillAppear viewDidAppear
+detached	アプリが終了する時に通る終了処理用の状態	onDestroy	dealloc
+AndroidのonSaveInstanceStateの様な仕組みはあるのか？
+現状なさそうです。
+
+
+AppLifecycleStateの状態を見て、必要であれば自分で対応する必要があります。
+
+
+https://qiita.com/kurun_pan/items/0c6de1313844a8cc1603

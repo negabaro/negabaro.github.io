@@ -2,7 +2,7 @@
 layout: post
 title: "rails joins 메소드 사용시 자동으로 select 지정하는 방법"
 author: negabaro kim
-tags: rails rails/model
+tags: rails/model
 ---
 
 [rails joins 메소드의 특징에 대해 알아보자]에서 소개한것처럼

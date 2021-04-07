@@ -11,6 +11,10 @@ tags: js/youtube
 
 여기서 말하는 `옵션`은 아래 코드에 쿼리파라메터에 기술되어있는 `옵션`을 말한다.
 
+전체 옵션은 [Document]를 참고
+
+
+
 ```html
 <iframe
   src="https://www.youtube.com/embed/xx?옵션"

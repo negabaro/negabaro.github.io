@@ -1,0 +1,1 @@
+https://blog.ohgaki.net/rails-javascript-string-escape

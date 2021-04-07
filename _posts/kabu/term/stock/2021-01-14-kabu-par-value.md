@@ -25,7 +25,7 @@ tags: kabu
 
 ##### 영어
 
-Par value
+Par value or Face Value
 
 ##### 동의어
 
