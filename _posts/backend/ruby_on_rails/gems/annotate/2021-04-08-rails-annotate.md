@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "rails annotate gem 사용방법"
+tags:	rails/gem/cancancan
+---
+
 ## annotate란
 
 
