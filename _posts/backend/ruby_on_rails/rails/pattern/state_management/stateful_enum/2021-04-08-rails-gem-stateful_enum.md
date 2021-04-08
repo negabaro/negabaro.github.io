@@ -84,7 +84,7 @@ event :close do
   after do
     p "Jyp와 계약해지"
   end
-  transition [:active, :inactive] => :closed, if: -> { twice.scandel? }
+  transition [:active, :inactive] => :closed, if: -> { twice.scandal? }
 end
 ```
 
