@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Rails FactoryBot이란? 설치에서 사용방법까지 알아보자."
+author: negabaro kim
+tags:	rails/factorybot
+---
+
 ## factory-bot(FactoryBot)이란?
 
 각 모델 인스턴스에 더미 데이터를 간단하게 만들어주는 Gem이다.
