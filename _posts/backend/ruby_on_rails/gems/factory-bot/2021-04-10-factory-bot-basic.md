@@ -53,7 +53,7 @@ end
 rails g model user name:string admin:boolean
 ```
 
-아래와 같은 파일이 만들어지는걸 확인할 수 있다.
+위 커맨드를 실행하면 아래와 같은 파일이 만들어진다.
 
 ```ruby
 #spec/factories/users.rb
