@@ -79,6 +79,7 @@ config/settings/default.rb을 베이스로 선언해서 `config/settings/develop
 
 ---
 
+[dry-configurable gemのスレッドセーフについて]: https://teratail.com/questions/332520?modal=q-comp
 [dry-rb]: https://dry-rb.org/
 [dry-configurable]: https://github.com/dry-rb/dry-configurable
 [document]: https://dry-rb.org/gems/dry-configurable/0.11/
