@@ -13,10 +13,10 @@ tags:	rails/factorybot
 
 ---
 
-이 포스트에서는 rails에서 FactoryBot으로 더미데이터를 생성할때 해당 모델에 관계된 데이터를 동시에 생성하는 방법에 대해 알아보자.
+이 포스트에서는 rails에서 FactoryBot으로 더미 데이터를 생성할때 해당 모델에 관계된 데이터를 동시에 생성하는 방법에 대해 알아보자.
 
 
-아래 2가지 패턴에서 사용하는 방법을 소개한다.
+아래 2가지 패턴에서 쓰이는 방법을 소개한다.
 
 1. belongs_to관계의 모델 동시생성
 2. has_may관계의 모델 동시생성
@@ -24,8 +24,10 @@ tags:	rails/factorybot
 
 ## 1. belongs_to관계의 모델 동시생성
 
-총 세가지 패턴을 소개하는데 가장 마지막에 소개하는
-`1-3. 이 가장 권장되는 방법`이다. 
+belongs_to관계의 모델 동시생성하는 방법은
+총 세가지 패턴을 소개한다.
+
+그중 가장 마지막에 소개하는`1-3. 이 가장 권장되는 방법`이다. 
 
 ### 1-1. 같은 파일내 다른 팩토리 호출
 
@@ -105,7 +107,7 @@ shop = FactoryBot.build :shop
 ```
 
 
-callback을 사용할때 `after(:build) do`를 사용하는것이 무난핟.
+callback을 사용할때 `after(:build) do`를 사용하는것이 무난하다.
 
 
 `after(:create) do`를 사용할 경우, `Factorybot.build`시에는 해당 콜백이 실행이 안되는점을 주의하자

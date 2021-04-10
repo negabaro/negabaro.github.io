@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Rails FactoryBot이란? 설치에서 사용방법까지 알아보자."
+title:  "Rails FactoryBot이란? 설치부터 사용방법까지 알아보자."
 author: negabaro kim
 tags:	rails/factorybot
 ---
