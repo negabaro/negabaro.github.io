@@ -277,6 +277,21 @@ $ flutter --help
 $ flutter --help
 $ flutter run --help
 
+## --no-sound-null-safety
+Null-Safety対応と未対応のパッケージが入り交じるときのビルド実行時は --no-sound-null-safety をつける
+
+$ dart --no-sound-null-safety run
+$ flutter run --no-sound-null-safety
+
+
+https://dart.dev/null-safety/unsound-null-safety
+
+## --delete-conflicting-outputs
+
+build_runnerがうまく動かないとき
+1: --delete-conflicting-outputsをつけて実行する
+$ flutter pub run build_runner build --delete-conflicting-outputs
+2: analyzerのバージョンを明示的に変更する
 
 ---
 

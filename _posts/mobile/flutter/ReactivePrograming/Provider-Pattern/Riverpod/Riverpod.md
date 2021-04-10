@@ -1,3 +1,70 @@
+## Riverpod
+
+前提として`Riverpodには3つの種類`があって、その中でも今回はFlutterで使用するための基本的なパッケージであるflutter_riverpodについて解説していきます。
+
+Pub.dev：flutter_riverpod | Flutter Package
+公式サイトにもありますが、3つの違いを表にしました。
+
+### hooks_riverpod
+
+Flutter +
+flutter_hooks
+
+小さな追加機能を提供しながらflutter_hooksとRiverpodの両方を使用する方法。
+※flutter_riverpodのボイラープレートをより簡潔に記述することができるようになります。
+
+### flutter_riverpod
+
+Flutter only
+
+
+Riverpodを使用する基本的な方法。flutter_hooksに依存しません。
+※FlutterでRiverpodを使用するための最小構成はこちらです。
+
+### riverpod
+
+Dart only(No Flutter)
+
+Flutterに関する全てのクラスが取り除かれたDartパッケージです。
+※Flutterに依存するかたちでの使用はできません。
+
+
+app type	package name	説明
+Flutter +
+flutter_hooks	hooks_riverpod	小さな追加機能を提供しながらflutter_hooksとRiverpodの両方を使用する方法。
+※flutter_riverpodのボイラープレートをより簡潔に記述することができるようになります。
+
+
+Flutter only	flutter_riverpod	Riverpodを使用する基本的な方法。flutter_hooksに依存しません。
+※FlutterでRiverpodを使用するための最小構成はこちらです。
+Dart only
+(No Flutter)	riverpod	Flutterに関する全てのクラスが取り除かれたDartパッケージです。
+※Flutterに依存するかたちでの使用はできません。
+
+
+## Providerとの違い
+Providerは直感的で使いやすく、かつ高機能で非常に優れたパッケージですが、以下のような不都合もありました。
+この問題は僕も実際に使用していて要所要所で感じていました🤔
+
+Providerで包んだツリー以外からアクセスしようとすると実行時にProviderNotFoundExceptionが発生する。
+この問題に関しては確実に防ぐ方法がなく、コーディング中に気をつけて使うしかありませんでした。
+同じ型を複数同時に使用できない
+ProviderはWidgetツリーを遡って最寄りの型を探してくるので、複数同じ型を使用することができませんでした。（使用できるけどWidgetツリーの中で一番近い型にしかアクセスできない）
+
+Widgetツリーが肥大化する
+Provideするオブジェクトが増えていくと、DevToolsなどで確認する際にWidgetツリーが肥大化して少し見にくくなってしまいます。（見にくいだけで実害はなし）
+
+以上のような不都合がRiverpodでは解決されています🥳
+
+## Riverpodのメリット
+Providerをグローバル定数として宣言するので確実にアクセスできる
+同じ型のProviderを利用できる
+ProviderScopeにProviderが紐づくのでWidgetツリーが肥大化しない
+etc…
+
+
+
+
 こんにちは。
 BPSの福岡拠点として一緒にお仕事させてもらっています、ウイングドアのウメバヤシです。
 
@@ -229,3 +296,6 @@ class MyHomePage extends StatelessWidget {
 公式サイトにより詳しい情報が載っているのでそちらも参考にしてみてください。
 
 https://techracho.bpsinc.jp/wingdoor/2020_10_08/97815
+
+
+[【Flutter】Providerのほぼ上位互換、Riverpodの基本的な使い方]: https://techracho.bpsinc.jp/wingdoor/2020_10_08/97815
