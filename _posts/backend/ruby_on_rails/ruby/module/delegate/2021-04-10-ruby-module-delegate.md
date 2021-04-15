@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails,ruby에서 delegate를 사용하는 이유"
 author: negabaro kim
-tags:	software
+tags:	ruby rails
 ---
 
 ## delegate란?
