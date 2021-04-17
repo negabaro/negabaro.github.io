@@ -11,7 +11,9 @@ dio에서 제공하는 클래스로 dio로 통신한 `request -> response`정보
 
 외부 서버와의 통신(ex API)관련한 디버깅 작업 할때 유용하게 쓰인다.
 
-자세한 내용은[LogInterceptor Class]를 참고
+자세한 내용은[LogInterceptor Class]나 [예제]를 참고
+
+
 
 
 ## 사용방법
@@ -42,3 +44,5 @@ interceptors.add(LogInterceptor(responseBody: true));
 ```
 
 [LogInterceptor Class]: https://pub.dev/documentation/dio/latest/dio/LogInterceptor-class.html
+
+[예제]: https://github.com/ashishrawat2911/network_handling/blob/f98b4809a744e21c56b7677971f56e5dbe63acc1/lib/services/dio_client.dart#L32-L38
