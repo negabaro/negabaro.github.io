@@ -22,3 +22,6 @@ Test_module.self_method
 
 Test_module.module_function_method
 # => called module_function_method
+
+include Test_module
+Test_module.normal_method
