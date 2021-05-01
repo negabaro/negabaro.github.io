@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "S3 Presigned URL을 이용해 클라이언트에서 직접 컨텐츠 업로드 구현방법(feat. ruby && aws-s3-sdk)"
+title:  "S3 Presigned URL을 이용해 클라이언트에서 직접 컨텐츠 업로드 구현방법(feat. ruby && aws-sdk-s3)"
 author: negabaro kim
 tags:	rails
 ---
