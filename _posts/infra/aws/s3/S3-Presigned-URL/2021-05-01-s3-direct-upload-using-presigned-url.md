@@ -7,22 +7,20 @@ tags:	rails
 
 통상적으로 컨텐츠의 업로드는 인증로직과 관계되어 서버에서 처리되는 경우가 많다.
 
-한편 동영상을 업로드하는 경우, 여러 확장자 파일과 수GB파일의 영상파일을 업로드하게 되는데 이때 서버를 경유해서 처리시 아래와 같은 문제가 있다.
+한편 동영상을 업로드하는 경우, 여러 확장자 파일과 수GB파일 단위의 영상파일을 업로드하게 되는데 이때 서버를 경유해서 처리시 아래와 같은 문제가 있다.
 
 1. 비효율적인 리소스 활용 (영상을 서버에 넘겨주는 처리와 서버에서 영상을 스토리지에 업로드하는 작업) 
 2. 서버의 스토리지 용량관리
 3. 각종 대응(타임아웃, 동기화/비동기화 고려)
 
-이러한 문제를 해결하기 위해 컨텐츠(영상)을 서버에 보내서 업로드하지 않고 클라이언트에서 직접 스토리지(이 포스트에서 소개하는 스토리지는 S3)에 업로드 하는 방법이 나왔다.
+이러한 문제를 해결하기 위해 컨텐츠(영상)을 서버에 보내서 업로드하지 않고 클라이언트에서 직접 스토리지(이 포스트에서 소개하는 스토리지는 S3)에 업로드 하는 방법이 등장했다.
 
 S3에서는 `pre-signed URL`을 이용해 구현이 가능하다.
-
-아래 플로우를 보면 차이가 쉽게 이해가 가능하다.
 
 ![image](https://user-images.githubusercontent.com/4640346/116769426-049a8e00-aa77-11eb-9b20-d4cee71cb2fa.png)
 
 
-S3의 Presigned URL에 대해서는 다른 포스트에서 설명할 예정
+S3의 Presigned URL에 대해서는 다른 포스트에서 자세히 설명할 예정이다. 이 포스트에서는 가볍게 사용방법만 언급한다.
 
 ## 대략적인 구현방법
 
@@ -36,7 +34,7 @@ A = "#{dir}/#{file_name}"
 
 ### 2.
 
-A라는 변수에 담은 path에 해당하는 `presigned_url(:put)`을 발행해준다.
+A라는 변수에 있는 path를 이용해`presigned_url(:put)`을 발행해준다.
 
 ruby코드로는 아래와 같다.
 
@@ -52,11 +50,11 @@ obj.presigned_url(:put)
 `presigned_url(:put)`을 실행해주면 크게 두가지 액션이 실행된다.
 
 
-#### 실제 해당 path에 0byte의 파일이 생성됨
+#### 실제 해당 S3상에 0byte의 파일이 생성됨
 
-bucket명 xxx에 `images/xx.mp4` 라는 path였다면 실제 s3에 0byte의 파일이 만들어진다.
+bucket명 xxx에 `images/xx.mp4` 라는 path였다면 해당 path의 S3에 0byte의 파일이 만들어진다.
 
-#### presigned_url발행
+#### presigned_url 발행
 
 아래와 같은 presigned url이 발행된다. 해당 URL은 디폴트 유효기간이 15분이고(최대 7일까지 가능) 그 시간이 지나면 사용이 불가능하다.
 
@@ -74,6 +72,24 @@ https://xxx.s3.amazonaws.com/images/xx.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Am
 
 클라이언트는 4에서 전달받은 presigned_url을 이용해 직접 파일업로드가 가능하다.
 
+해당 url에 REST로 put을 해주면 업로드가 가능하다.
+
+flutter에서 image파일 업로드시 사용하는 코드를 첨부해둔다.
+
+```dart
+  Future<void> uploadImage(String url, File image) {
+
+    final Dio dio = Dio()..interceptors.add(LogInterceptor(responseBody: true));
+    dio.options = BaseOptions(contentType: 'image/jpeg');
+    return dio.putUri<void>(Uri.parse(url),
+        data: image.openRead(),
+        options: Options(headers: <String, dynamic>{
+          HttpHeaders.contentTypeHeader: ContentType('image', 'jpeg'),
+          HttpHeaders.contentLengthHeader: image.lengthSync(),
+        }));
+  }
+```
+
 클라이언트에서 작업할때 알고 있으면 좋을 포인트로는 아래와 같은것이 있다.
 
 - presigned_url을 이용하면 업로드할 s3 bucket policy를 무시한다.(s3:PutObject Deny라고 해도 가능?)
@@ -83,7 +99,7 @@ https://xxx.s3.amazonaws.com/images/xx.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Am
 
 ## 메모
 
-예전 기사를 보면 s3 put처리는 용량제한이 있는듯??
+예전 기사를 보면 S3 put처리는 용량제한이 있는듯??
 
 컨텐츠의 용량에 따라 lambda등을 경유해서 처리할 필요가 있을지도
 
