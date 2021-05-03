@@ -24,16 +24,41 @@ id token을 발행할때 필요하다.
 
 ## Custom Token발행을 위해 필요한것은?
 
-`Firebase Web API Key`와 유저 식별을 위한 `UID`가 필요하다.
+`firebase-admin-sdk.json`파일과 유저 식별을 위한 `UID`가 필요하다.
 
-### Firebase Web API Key 확인방법
 
-Firebase관리화면 -> 프로젝트 설정 -> Web API Key에서 확인가능
+### firebase-admin-sdk.json 다운로드 방법
+
+
+Firebase관리화면 -> 프로젝트 설정 -> Service Account -> Firebase Admin SDK에서 새로운 키 작성 버튼을 누르면 다운로드 받을 수 있다.
 
 ### UID 확인방법
 
 Firebase관리화면 -> Authentication -> ID(email)에 해당하는 UID로 확인이가능
 
+
+
+## Python코드를 이용해 custom token발행하는 방법
+
+위에서 언급한대로 `firebase-adminsdk.json`을 다운받아두고
+uid를 수정할 필요가 있다.
+
+
+```python
+import json
+import os
+import subprocess
+import firebase_admin
+from firebase_admin import auth
+file_path = f"{os.getcwd()}/firebase-adminsdk.json"
+cred = firebase_admin.credentials.Certificate(file_path)
+app = firebase_admin.initialize_app(cred, name='auth')
+
+uid = 'xx'
+auth.get_user(uid, app)
+custom_token = auth.create_custom_token(uid, app=app)
+print(custom_token.decode('utf-8'))
+```
 
 ## 메모
 
