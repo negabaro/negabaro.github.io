@@ -197,8 +197,31 @@ Bool조건으로 `aws:MultiFactorAuthPresent`로 MFA인증한 경우만 `put/del
 }
 ```
 
+## 7.
+
+CloudFront로 부터의 접근만 허용하는 예제
+
+```
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForCloudFrontPrivateContent",
+    "Statement": [
+        {
+            "Sid": "1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity {your oai id}"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::{your bucket name}/*"
+        }
+    ]
+}
+```
+
 ---
 
+[CloudFront×S3で403 Access Deniedが出るときに確認すべきこと]: https://qiita.com/sakuraya/items/add2cb7ced954215fb03
 [S3 バケットポリシーいろいろ]: https://qiita.com/leomaro7/items/3d77328c04322efe608e
 [Link1]: https://stackoverflow.com/questions/39688422/correct-s3-policy-for-pre-signed-urls
 [Link2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-policies-s3.html

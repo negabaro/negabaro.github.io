@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails text_area에서 개행과 링크주소를 html코드로 만들기(with. Rinku)"
+title: "Rails text_area에서 개행과 링크주소(a태그,a href)를 html코드로 만들기(with. Rinku)"
 author: negabaro kim
 tags: rails/view
 ---

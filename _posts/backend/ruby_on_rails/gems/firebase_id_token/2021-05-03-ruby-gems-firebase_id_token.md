@@ -9,6 +9,8 @@ tags: infra/firebase/authentication
 
 ruby에서 `Firebase ID Token`이 정상적인 서명값을 가지고 있는지 검증(verify)해주는 gem이다.
 
+비슷한 gem으로 [firebase-auth-rails]가 있다.
+
 이때 `Google's x509`키를 이용해 서명값을 검증하는데 해당 키들을 redis에서 관리한다.
 
 즉 이 gem을 사용하기 위해서는 반드시 redis가 필요하다.
@@ -93,6 +95,9 @@ FirebaseIdToken::Certificates.request!
 @payload ||= FirebaseIdToken::Signature.verify(@id_token)
 ```
 
----
 
+
+---
+[firebase-auth-rails]: https://github.com/penguinwokrs/firebase-auth-rails/blob/master/lib/firebase/auth/authenticable.rb
+[FirebaseIdToken::Signature.verify-README]: https://inch-ci.org/github/fschuindt/firebase_id_token/revision/4ac7c1d9/code_object/11893411?branch=master
 [firebase_id_token-signature]: https://github.com/fschuindt/firebase_id_token/blob/master/lib/firebase_id_token/signature.rb

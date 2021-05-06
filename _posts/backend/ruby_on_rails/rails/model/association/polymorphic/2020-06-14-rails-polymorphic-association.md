@@ -262,11 +262,11 @@ org_majorable_type 안에 `Organization::University` 부분이 다 들어갈 줄
 뭐 그래도 `org_majorable_id`하나만으로 참조가 가능하긴 함.
 
 
-[다형성(polymorphism)을 이해해보자]: https://negabaro.github.io/archive/software-polymorphism
-### reference:
+---
 
-```
-https://railsguides.jp/association_basics.html#%E3%83%9D%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91
-https://qiita.com/geshi/items/9e76f8d407dfd3e5211b
-https://qiita.com/itkrt2y/items/32ad1512fce1bf90c20b
-```
+[다형성(polymorphism)을 이해해보자]: https://negabaro.github.io/archive/software-polymorphism
+
+
+[Link1]:https://railsguides.jp/association_basics.html#%E3%83%9D%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91
+[Link2]: https://qiita.com/geshi/items/9e76f8d407dfd3e5211b
+[Link3]: https://qiita.com/itkrt2y/items/32ad1512fce1bf90c20b
