@@ -185,4 +185,13 @@ CategoryProduct.all # category_products의 전레코드 표시
 
 
 
+## 메모
+
+### habtm
+
+`has_and_belongs_to_many`는 길어서 `habtm`이라고 줄여서 사용함
+
+---
+
+
 [original]:      http://ruby-rails.hatenadiary.com/entry/20141204/1417688260
