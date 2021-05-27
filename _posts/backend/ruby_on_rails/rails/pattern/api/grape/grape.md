@@ -120,7 +120,8 @@ Swagger UI as Rails Engine for grape-swagger gem.
 
 [grape_logging]: https://github.com/aserafin/grape_logging
 [Grape + Grape Entity で作る API]: https://h-piiice16.hatenablog.com/entry/2019/11/29/105434
-[]: https://github.com/ruby-grape/grape
+[grape]: https://github.com/ruby-grape/grape
 [Grapeを使ってRESTfulAPIを簡単作成 その1 Grape]: https://qiita.com/Esfahan/items/90feb3ae39dde51f95fa
 
 [Grape+SwaggerでAPIのドキュメント作成を自動化した]: https://tech.misoca.jp/entry/2016/12/22/110000
+
