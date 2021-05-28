@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "rails Grape::Entity에 대해알아보자"
+title:  "rails grape-entity(Grape::Entity)에 대해알아보자"
 author: negabaro kim
 tags:	rails
 ---
