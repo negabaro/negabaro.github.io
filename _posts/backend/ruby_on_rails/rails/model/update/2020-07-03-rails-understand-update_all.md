@@ -17,13 +17,13 @@ tags:	rails rails/model
 아래 예제를 살펴보자.
 
 ```ruby
-@organization = self.left_joins(:other_parent)
+@org = self.left_joins(:others)
 
-target = @organization.users.where(entity_id: entity_ids)
+target = @org.users.where(entity_id: entity_ids)
 target.update_all(status: 1)
 ```
 
-@organization이 join한 결과이므로 `target.update_all`을 실행하면
+@org이 join한 결과이므로 `target.update_all`을 실행하면
 target table을 판단하지 못해  `You can't specify target table 'xx' for update in FROM clause` 에러가 발생하게된다.
 
 ## 해결방법1
@@ -31,9 +31,9 @@ target table을 판단하지 못해  `You can't specify target table 'xx' for up
 join을 사용하지 않는다.
 
 ```ruby
-@organization = self
+@org = self
 
-target = @organization.users.where(entity_id: entity_ids)
+target = @org.users.where(entity_id: entity_ids)
 target.update_all(status: 1)
 ```
 
@@ -41,10 +41,10 @@ target.update_all(status: 1)
 
 
 ```ruby
-@organization = self.left_joins(:other_parent)
+@org = self.left_joins(:other_parent)
 
-ids = @organization.users.where(entity_id: entity_ids).ids
-target = @organization.organization_users.where(user_id: ids)
+ids = @org.users.where(entity_id: entity_ids).ids
+target = @org.org_users.where(user_id: ids)
 target.update_all(status: 1)
 ```
 
