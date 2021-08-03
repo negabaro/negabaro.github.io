@@ -1,19 +1,7 @@
 
-```ruby
-- UnivasUser.roles.reject{|k, _| _ == :Fan}.each_with_index do | b, i|
-  label
-    //- binding.pry
-    //= current_user.role_list(@organization).pluck(:name).include?(b[0].to_s)
-    = check_box_tag 'add_roles[]', b[1], curr dent_user.role_list(@organiza.pluck(:name).include?(b[1].to_s), id: "add_roles_#{i}"
-    = b[0]
-end
-```
 
-```ruby
-def role_list(org)
-  self.roles.where(resource_id: org.id)&.select {|f| !f.name.match(/^Permit/) }
-end
-```
+
+
 
 check_box_tag 'accept'
 # => <input id="accept" name="accept" type="checkbox" value="1" />
