@@ -96,13 +96,7 @@ ORM에서 간단히`select count(*)`를 넣을 수 있게 하기위한 메소드
 
 rails에서 `Organization::ActiveRecord_Relation`형태로 select한 결과를 count하면 에러가남
 
-```ruby
-Organization.left_joins(:other_parent).select("organizations.*, other_parents_organizations.name as parent_name").count
-   (0.8ms)  SELECT COUNT(organizations.*, other_parents_organizations.name as parent_name) FROM `organizations` LEFT OUTER JOIN `organizations` `other_parents_organizations` ON `other_parents_organizations`.`id` = `organizations`.`organization_other_parent_id`
-ActiveRecord::StatementInvalid: Mysql2::Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*, other_parents_organizations.name as parent_name) FROM `organizations` LEFT OU' at line 1
-from /Users/sehwakim/docker/univas-com4/vendor/bundle/ruby/2.6.0/gems/mysql2-0.5.2/lib/mysql2/client.rb:131:in `_query'
-Caused by Mysql2::Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*, other_parents_organizations.name as parent_name) FROM `organizations` LEFT OU' at line 1
-```
+
 
 `select count(*)`와 `select organizations.*, other_parents_organizations.name as parent_name`가 공존할 수 없으므로 당연한 에러
 
