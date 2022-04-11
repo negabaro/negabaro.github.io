@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "flutter build ios실행시 error: "Runner" requires a provisioning profile with the Push Notifications feature 에러"
+title:  "flutter build ios실행시 error: 'Runner' requires a provisioning profile with the Push Notifications feature 에러"
 author: negabaro kim
 tags: flutter/error
 ---
