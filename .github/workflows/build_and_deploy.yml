@@ -27,7 +27,6 @@ jobs:
           GITHUB_IO_REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
         run: |
           echo "$GITHUB_IO_REPO_DEPLOY_KEY" > ~/deploy_key.pem
-          cat ~/deploy_key.pem
           chmod 600 ~/deploy_key.pem
           git config --global user.email "negabaro@naver.com"
           git config --global user.name "negabaro"
@@ -38,6 +37,8 @@ jobs:
         run: |
           touch Gemfile.lock
           chmod a+w Gemfile.lock
+          mkdir -p _site
+          chmod a+w _site
           make build
 
       # - name: Deploy pages
