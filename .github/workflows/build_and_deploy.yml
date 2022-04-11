@@ -27,14 +27,15 @@ jobs:
           GITHUB_IO_REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
         run: |
           echo "$GITHUB_IO_REPO_DEPLOY_KEY" > ~/deploy_key.pem
+          ls -la ~/deploy_key.pem
           chmod 600 ~/deploy_key.pem
           git config --global user.email "negabaro@naver.com"
           git config --global user.name "negabaro"
           git config remote.origin.url "git@github.com:negabaro/negabaro.github.io.git"
           git checkout master
 
-      # - name: Build pages
-      #   run: hugo
+      - name: Build pages
+        run: make build
 
       # - name: Deploy pages
       #   env:
@@ -59,7 +60,6 @@ jobs:
       #       git pull $origin master
       #       git push $origin master
       #     fi
-
 # refs
 # - actions/checkout@v2 and submodule update
 #   https://github.com/actions/checkout/tree/c85684db76ba6ef08713c10cf4befe3318887415#checkout-submodules
