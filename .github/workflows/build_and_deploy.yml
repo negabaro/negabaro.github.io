@@ -1,0 +1,66 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build-and-deploy:
+    name: Build static pages and deploy
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Setup Hugo
+      #   run: |
+      #     wget https://github.com/gohugoio/hugo/releases/download/v0.61.0/hugo_0.61.0_Linux-64bit.deb
+      #     sudo dpkg -i hugo_0.61.0_Linux-64bit.deb
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      #- name: Checkout submodules
+      #  run: |
+      #    auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+      #    git submodule sync --recursive
+      #    git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
+      - name: Setup git repogitories
+        env:
+          GITHUB_IO_REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
+        run: |
+          echo "$GITHUB_IO_REPO_DEPLOY_KEY" > ~/deploy_key.pem
+          chmod 600 ~/deploy_key.pem
+          git config --global user.email "negabaro@naver.com"
+          git config --global user.name "negabaro"
+          cd public
+          git config remote.origin.url "git@github.com:negabaro/negabaro.github.io.git"
+          git checkout master
+
+      # - name: Build pages
+      #   run: hugo
+
+      # - name: Deploy pages
+      #   env:
+      #     GIT_SSH_COMMAND: ssh -i ~/deploy_key.pem -o StrictHostKeyChecking=no -F /dev/null
+      #   run: |
+      #     cd public
+      #     git add -A
+      #     if ! git diff --cached --quiet; then
+      #       git commit -m "Deploy $GITHUB_SHA by GitHub Actions"
+      #       git pull origin master
+      #       git push origin master
+      #     fi
+
+      # - name: Update dependency of submodule
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     git add public
+      #     if ! git diff --cached --quiet; then
+      #       origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/3nan3/blog.git
+      #       git commit -m "Update dependency of submodule"
+      #       git pull $origin master
+      #       git push $origin master
+      #     fi
+
+# refs
+# - actions/checkout@v2 and submodule update
+#   https://github.com/actions/checkout/tree/c85684db76ba6ef08713c10cf4befe3318887415#checkout-submodules
