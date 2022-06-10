@@ -1,6 +1,0 @@
-文脈からeager_loadはModelのeager_loadメソッドのことをいってるんだと思いますが、
-Modelのeager_loadはDBからデータを検索する際に、指定したassociationを一緒に取得しておいて
-キャッシュしてくれるメソッドです。
-
-それに対してeager_load_pathsはDBではなくクラスの読み込み関連の設定のためModelのeager_loadとは関係ありません。
-

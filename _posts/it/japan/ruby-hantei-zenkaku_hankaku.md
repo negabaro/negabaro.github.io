@@ -1,1 +1,0 @@
-https://blog.goo.ne.jp/j_adversaria/e/474436565cd3d53d4ca4de22f594948b

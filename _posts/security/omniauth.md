@@ -1,6 +1,0 @@
-OmniAuth
-
-　OmniAuthは、複数の外部サービスのアカウント情報を使ってユーザー登録やログインを提供します。OmniAuthはサービスごとにストラテジー（Strategies）を管理する、いわば元締めのgemです。OmniAuthのストラテジーとは、外部サービスごとにOAuth認証に必要な処理が記述されており、Rackミドルウェアとして提供されます。
-　サービスごとのストラテジーは、 omniauth-［外部サービス名］のような名称のgemとして本体とは別のgemで提供されています。例えば、Facebookであればomniauth-facebookというgemとして、認証フロー「OAuth2」でストラテジーが提供されています。開発においては、OmniAuth本体のgemとストラテジー用のgemの両方をGemfileに記述して使用します。
-
-https://codezine.jp/article/detail/10970

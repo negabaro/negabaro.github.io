@@ -1,1 +1,0 @@
-https://github.com/kuboon/restful_error

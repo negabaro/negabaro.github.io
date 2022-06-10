@@ -1,1 +1,0 @@
-처리합니다. Reactive Programming은 데이터 스트림을 비동기적으로 처리해야하는 문제를 해결하는 방법입니다. BLOC는 Reactive Programming을 사용하기 때문에 rxdart를 사용합니다.

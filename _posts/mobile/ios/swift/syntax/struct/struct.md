@@ -1,1 +1,0 @@
-http://seorenn.blogspot.com/2014/06/swift-structure.html#:~:text=struct%EB%8A%94%20%EC%97%AC%EB%9F%AC%20%EB%B3%80%EC%88%98%EB%A5%BC,%EC%9D%98%20%EC%A0%95%EC%9D%98%EB%8F%84%20%EA%B0%80%EB%8A%A5%ED%95%98%EB%8B%A4

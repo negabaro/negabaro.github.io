@@ -1,1 +1,0 @@
-데쓰크로스오버 : 하락장(bearish cross over) 장기 ma가 단기 ma 돌파시

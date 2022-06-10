@@ -1,1 +1,0 @@
-https://techracho.bpsinc.jp/hachi8833/2017_10_23/46891

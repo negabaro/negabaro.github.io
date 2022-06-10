@@ -1,1 +1,0 @@
-https://blog.ull.im/engineering/2019/04/01/javascript-object-deep-copy.html

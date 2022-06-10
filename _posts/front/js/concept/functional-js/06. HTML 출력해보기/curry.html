@@ -1,7 +1,0 @@
-<script>
-const curry = f =>  (a, ..._) => { return (_.length ? f(a, ..._) : (..._) => { return f(a, ..._) } ) }  ;
-//そのままreturn {}がないと
-//..._ = rest parameters
-
-const curry = f => {  return (a, ..._) => (_.length ? f(a, ..._) : (..._) => f(a, ..._)) };
-</script>

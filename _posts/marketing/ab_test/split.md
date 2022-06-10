@@ -1,1 +1,0 @@
-https://medium.com/@Fred.it/%EB%B2%88%EC%97%AD-ruby-on-rails-%EB%A1%9C-ab-c-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0-8414d23f6acd
