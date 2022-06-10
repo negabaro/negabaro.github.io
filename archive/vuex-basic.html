@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="vue.js Vuex에 대해서 알아보자" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/vuex-basic" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>vue.js Vuex에 대해서 알아보자 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/vuex-basic">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>vue.js Vuex에 대해서 알아보자</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, August 9, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/vue.js"><i class="fa fa-tag"></i> vue.js</a> <a href="/archive/tags/vuex"><i class="fa fa-tag"></i> vuex</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="vuex란">vuex란?</h1>
+
+<p>Vue에서 개발하는 컴퍼넌트에서 사용가능한 데이터를 중앙 집중식 저장소에서 저장하고 관리하는 툴이다.</p>
+
+<p>여기서 말하는 데이터는 특정 액션에 의해 값이 변하는데 이 변화를 추적하는것이 vuex의 중요한 역할이어서
+데이터(data)를 상태(state)라고 표현한다.</p>
+
+<h1 id="store란">store란?</h1>
+
+<p>위에서 말한 중앙 집중식 저장소를 store라고 부른다.</p>
+
+<h1 id="state란">state란?</h1>
+
+<p>store안에 있는 데이터를 state라고 부른다.</p>
+
+<p>data가 아닌 state라고 표기한것은 vuex의 목적이 data의 변화를 캐치하는것이 메인이어서 state라고 명명한것 같다.</p>
+
+<h1 id="vuex의-내부기능외부기능">vuex의 내부기능/외부기능</h1>
+
+<p>vuex는 개발자가 건드릴 수 없는 영역(내부기능?)과 개발자가 건드릴 수 있는 영역(내부기능?)이 있다.</p>
+
+<h2 id="외부기능">외부기능</h2>
+
+<p>개발자가 건드릴 수 있는 영역이다. 우리가 열심히 만져야할 부분..</p>
+
+<p>외부기능의 목적은 state값을 set하거나 get하는것이다.</p>
+
+<p>set에 해당하는 기능으로는 mutations get에 해당하는 기능으로는 getters가 있다.
+그리고 set하는 기능인 mutations을 보조하는 역할로 actions가 있다.</p>
+
+<h2 id="내부기능">내부기능</h2>
+
+<p>만지지는 못하지만 잘 이해해야할 부분이다.</p>
+
+<p>vuex의 특징과도 같은데 대표적으로는 state가 갱신되면 해당 상태를 참조하는 컴퍼넌트들에게도 갱신된 정보가 전달된다는 점이다.</p>
+
+<h1 id="getters란">getters란?</h1>
+
+<p>getters는 store에 있는 state값을 가져올때 사용한다.</p>
+
+<p>사실 getters가 없어도 이런식으로 <code class="language-plaintext highlighter-rouge">this.$store.state.xx</code> state값에 접근하는게 가능하다.
+그런데도 getters를 쓰는 이유는 일종의 규약으로서 코드의 가독성이 높아지고 중복 호출시 성능의 이점도 가지기 때문이다.</p>
+
+<p>그 이외에도 store를 module별로 나눴을때 A모듈의 getters에서 B모듈의 state값에 접근이 가능하는 등(rootState) 유용한 기능이 많다.</p>
+
+<p>그러므로 Vue 초심자분들은 일단 <code class="language-plaintext highlighter-rouge">state는 getters를 경유해서 가져온다</code>라고 생각하면 좋을것 같다.</p>
+
+<h2 id="getters문법">getters문법</h2>
+
+<p>기본 문법은 아래와 같다.</p>
+
+<h3 id="등록">등록</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vuex</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span>
+  <span class="c1">// ...</span>
+  <span class="na">getters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">getItem</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">.</span><span class="nx">item</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="호출">호출</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">app</span><span class="dl">"</span><span class="o">&gt;</span>
+    
+  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="nx">computed</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">getItem</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">getters</span><span class="p">.</span><span class="nx">getItem</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h1 id="mutations">mutations</h1>
+
+<p>state값을 set할때 사용한다.</p>
+
+<p>state값은 초기값이 있으므로 set보다 갱신(변경)한다고도 표현하는게 맞을 수 있다.</p>
+
+<p>mutations 안에서 변경하지 않고 state를 직접 변경하는것도 가능하지만 
+어디에서 변경되었는지 추적이 어려워 안티패턴이다.</p>
+
+<p>당연한 얘기지만 갱신을 하므로 인자를 받는다.</p>
+
+<p>mutations 호출시 commit이라는 메소드를 이용해야한다.</p>
+
+<p>mutation의 경우 다른 모듈의 state값에 접근할 수 없다.(인자로 rootState를 받을 수 없음. rootState를 사용하기 위해서는 뒤에서 설명할 actions을 경유해야함)</p>
+
+<h2 id="mutations문법">mutations문법</h2>
+
+<h3 id="등록-1">등록</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// store.js</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vuex</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span>
+  <span class="c1">// ...</span>
+  <span class="na">mutations</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">addItem</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">.</span><span class="nx">item</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="호출-1">호출</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">addItem</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">addItem</span><span class="dl">'</span><span class="p">,</span> <span class="nx">item</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<h1 id="actions">actions</h1>
+
+<p>actions는 mutations을 보조해준다고 생각하면 편하다.</p>
+
+<p>javascript에서는 동기처리/비동기 처리라는 개념이 있는데 
+mutations에서 동기처리/비동기 처리를 전부 포함 시켜버리면 변경 순서에 대한 예측이 어려우므로
+mutations에서는 동기처리만을 담당하게 하고 actions에서는 비동기 처리를 담당하도록 역할 분담을 하고 있다.</p>
+
+<p>여기서 헷갈리지 말아야할 것은 비동기처리만 actions에서 하고 실제 값을 변경하는것은 mutations을 그대로 이용한다는 점이다.
+그래서 actions안에 mutation을 호출하는 commit로직이 들어가 있다.</p>
+
+<p>예를들어 비동기로 api호출후 성공하면 response state에 success를 실패하면 failed라는 값을 넣는다든지 actions안에 복수의 commit이 들어가 있는 경우가 많다.</p>
+
+<p>mutations호출시 commit을 이용하는 것처럼 actions는 호출시 dispatch를 사용한다.</p>
+
+<h2 id="문법">문법</h2>
+
+<h3 id="등록-2">등록</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// store.js</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vuex</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span>
+  <span class="c1">// ...</span>
+  <span class="na">mutations</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">setItem</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">.</span><span class="nx">item</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">...</span><span class="nx">생략</span>
+  <span class="p">},</span>
+  <span class="na">actions</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">getItemApi</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">response</span><span class="p">;</span>
+      <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">axios</span><span class="p">(</span> <span class="p">{</span><span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="na">url</span><span class="p">:</span> <span class="nx">apiUrl</span><span class="p">})</span>
+      <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">commit</span><span class="p">(</span> <span class="dl">'</span><span class="s1">changeApiStatus</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="nx">ApiStatus</span><span class="p">.</span><span class="nx">FAILURE</span> <span class="p">}</span> <span class="p">)</span>
+      <span class="p">}</span>
+      <span class="nx">commit</span><span class="p">(</span> <span class="dl">'</span><span class="s1">changeApiStatus</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="nx">ApiStatus</span><span class="p">.</span><span class="nx">SUCCESS</span> <span class="p">}</span> <span class="p">)</span>
+      <span class="nx">commit</span><span class="p">(</span> <span class="dl">'</span><span class="s1">setItem</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span> <span class="p">}</span> <span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="호출-2">호출</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">getItemApi</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="dl">'</span><span class="s1">getItemApi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/vuex-basic"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/vuejs-props" data-toggle="tooltip" data-placement="top" title="vue.js props에 대해 알아보자">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/vuex-single-state-tree" data-toggle="tooltip" data-placement="top" title="vuex의 단일 상태 트리란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

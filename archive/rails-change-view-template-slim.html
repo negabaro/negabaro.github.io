@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails6.0 erb->slim으로 변경" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-change-view-template-slim" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails6.0 erb->slim으로 변경 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-change-view-template-slim">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails6.0 erb->slim으로 변경</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, May 2, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/template"><i class="fa fa-tag"></i> template</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="slim이란">slim이란?</h1>
+
+<p>rails의 디폴트 템플릿엔진은 erb다. 그 외에 slim,haml이 있다.</p>
+
+<h4 id="특징장점">특징/장점:</h4>
+
+<p>slim은 html태그 대신 인덴트로 html구조를 표현하므로 코드량을 줄일 수 있음
+가독성이 높아짐
+디폴트로 escape를 실행하므로 erb보다 세큐어
+erb에 비교해서 퍼포먼스가 좋다고함</p>
+
+<h4 id="단점">단점:</h4>
+
+<p>기술방법이 독특하기때문에 학습코스트가 발생함</p>
+
+<h1 id="설정방법필수">설정방법(*필수)</h1>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'slim'</span>
+<span class="n">bundle</span> <span class="n">install</span>
+</code></pre></div></div>
+
+<p>끝!!(진짜?)</p>
+
+<h1 id="erb---slim으로-변경">erb -&gt; slim으로 변경</h1>
+
+<p>기존의 erb파일을 slim으로 변경해보자(필수설정은 아님)</p>
+
+<h4 id="gem-install">gem install</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="n">install</span> <span class="n">html2slim</span>
+</code></pre></div></div>
+
+<h4 id="커맨드-확인">커맨드 확인</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ html2slim -h
+$ erb2slim -h
+</code></pre></div></div>
+
+<h4 id="실행">실행</h4>
+
+<p>app/views이하에 있는 파일을 일괄적으로 erb -&gt; slim으로 바꾸는 커맨드</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">file</span> <span class="k">in</span> <span class="n">app</span><span class="o">/</span><span class="n">views</span><span class="o">/**</span><span class="sr">/*.erb; do erb2slim $file ${file%erb}slim &amp;&amp; rm $file; done
+</span></code></pre></div></div>
+
+<h4 id="erb---slim변경시-devise에-에러가-나는-부분">erb -&gt; slim변경시 devise에 에러가 나는 부분</h4>
+
+<p>erb -&gt; slim으로 변경이 100% 완벽하게 되는건 아닌 듯
+변경후<code class="language-plaintext highlighter-rouge">localhost:3000</code>에 억세스하면 에러가 발생</p>
+
+<p>이하 설정을</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/views/devise/shared/_error_messages.html.slim</span>
+<span class="o">-</span> <span class="k">if</span> <span class="n">resource</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">any?</span>
+    <span class="c1">#error_explanation</span>
+      <span class="n">h2</span>
+        <span class="o">=</span> <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span><span class="p">(</span><span class="s2">"errors.messages.not_saved"</span><span class="p">,</span>
+        <span class="o">-</span>                  <span class="ss">count: </span><span class="n">resource</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">count</span><span class="p">,</span>
+        <span class="o">-</span>                  <span class="ss">resource: </span><span class="n">resource</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">human</span><span class="p">.</span><span class="nf">downcase</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>아래와 같이</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="o">=</span> <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span><span class="p">(</span><span class="s2">"errors.messages.not_saved"</span><span class="p">,</span> <span class="ss">count: </span><span class="n">resource</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">count</span><span class="p">,</span> <span class="ss">resource: </span><span class="n">resource</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">human</span><span class="p">.</span><span class="nf">downcase</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>변경하면 해결</p>
+
+<h1 id="rails-generator실행시-생성되는-파일-형식을-erb---slim으로-바꾸는법">rails generator실행시 생성되는 파일 형식을 erb -&gt; slim으로 바꾸는법</h1>
+
+<h3 id="bundle-install">bundle install</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'slim-rails'</span>
+<span class="n">bundle</span> <span class="n">install</span>
+</code></pre></div></div>
+
+<h3 id="config설정추가">config설정추가</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">config</span><span class="o">/</span><span class="n">initializers</span><span class="o">/</span><span class="n">generators</span><span class="p">.</span><span class="nf">rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">generators</span><span class="p">.</span><span class="nf">template_engine</span> <span class="o">=</span> <span class="ss">:slim</span>
+</code></pre></div></div>
+
+<p>위 설정을 해주면 <code class="language-plaintext highlighter-rouge">rails g controller xx method_name</code> 이러한 커맨드 실행시
+erb가 아닌 slim으로 생성해주게 된다.</p>
+
+<h2 id="메모1">메모1</h2>
+
+<p>erb -&gt; slim 변경시 확장자가 <code class="language-plaintext highlighter-rouge">html.slim</code> 인데
+<code class="language-plaintext highlighter-rouge">slim</code>으로만 기술해도 문제없이 동작함.</p>
+
+<h2 id="메모2">메모2</h2>
+
+<p>html.erb,slim 공존해도 정상적으로 동작하므로
+무리해서 기존의html.erb파일을 바꿀 필요는 없음</p>
+
+<h2 id="메모3">메모3</h2>
+
+<p>html.erb안에서 slim확장자를 render해도 정상적으로 동작함</p>
+
+<h2 id="메모4">메모4</h2>
+
+<p>template에러를 자세히 보면 handlers에 읽어올 수 있는 확장자가 적혀있음.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Missing</span> <span class="n">partial</span> <span class="n">partials</span><span class="o">/</span><span class="n">_header</span> <span class="n">with</span> <span class="p">{</span><span class="ss">:locale</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:en</span><span class="p">],</span> <span class="ss">:formats</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:html</span><span class="p">],</span> <span class="ss">:variants</span><span class="o">=&gt;</span><span class="p">[],</span> <span class="ss">:handlers</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:raw</span><span class="p">,</span> <span class="ss">:erb</span><span class="p">,</span> <span class="ss">:html</span><span class="p">,</span> <span class="ss">:builder</span><span class="p">,</span> <span class="ss">:ruby</span><span class="p">,</span> <span class="ss">:jbuilder</span><span class="p">]}</span><span class="o">.</span> <span class="no">Searched</span> <span class="ss">in:
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">gem slim</code>후에 다시 확인해보니 slim이 추가되어 있는걸 확인!</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Missing</span> <span class="n">partial</span> <span class="n">partials</span><span class="o">/</span><span class="n">_header</span> <span class="n">with</span> <span class="p">{</span><span class="ss">:locale</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:en</span><span class="p">],</span> <span class="ss">:formats</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:html</span><span class="p">],</span> <span class="ss">:variants</span><span class="o">=&gt;</span><span class="p">[],</span> <span class="ss">:handlers</span><span class="o">=&gt;</span><span class="p">[</span><span class="ss">:raw</span><span class="p">,</span> <span class="ss">:erb</span><span class="p">,</span> <span class="ss">:html</span><span class="p">,</span> <span class="ss">:builder</span><span class="p">,</span> <span class="ss">:ruby</span><span class="p">,</span> <span class="ss">:slim</span><span class="p">,</span> <span class="ss">:jbuilder</span><span class="p">]}</span><span class="o">.</span> <span class="no">Searched</span> <span class="ss">in:
+</span></code></pre></div></div>
+
+<h2 id="메모5">메모5</h2>
+
+<p>참고한 글을 보면 slim-rails로 인스톨하고 <code class="language-plaintext highlighter-rouge">config/application.rb</code>에도 설정할 필요가 있다고 하는데
+<code class="language-plaintext highlighter-rouge">gem slim</code>하나로 문제없이 동작했다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Rails</span> <span class="mf">5.1</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">gem</span> <span class="s1">'slim-rails'</span><span class="p">,</span> <span class="s1">'3.1.3'</span>
+</code></pre></div></div>
+
+<h4 id="configapplicationrb설정">config/application.rb설정</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">generators</span><span class="p">.</span><span class="nf">template_engine</span> <span class="o">=</span> <span class="ss">:slim</span>  
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>아무래도 rails6에서는 자동적으로 설정되는 듯?(미검증)</p>
+
+<h4 id="참고">참고</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://qiita.com/moriyaman/items/c0d60406422677bcb398
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-change-view-template-slim"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/create-profile-using-activestorage" data-toggle="tooltip" data-placement="top" title="Rails active storage란">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-nested-form" data-toggle="tooltip" data-placement="top" title="rails form_with에서 nested form구현(accepts_nested_attributes_for)">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

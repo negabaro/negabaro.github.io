@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="이벤트 버블링과 캡쳐링" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-EventBubbling_vs_Capturing" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>이벤트 버블링과 캡쳐링 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-EventBubbling_vs_Capturing">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>이벤트 버블링과 캡쳐링</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, April 5, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="이벤트-버블링event-bubbling">이벤트 버블링(Event Bubbling)</h1>
+
+<p><code class="language-plaintext highlighter-rouge">거품이 밑에서 올라오듯</code>
+<strong>이벤트 흐름이 밑에서 위로 향한다</strong></p>
+
+<h1 id="캡쳐링">캡쳐링</h1>
+
+<p><code class="language-plaintext highlighter-rouge">x-ray를 찍으면 몸에서부터 몸안의 내부를 캡쳐해나가듯</code>
+<strong>이벤트 흐름이 위에서 밑으로 향한다.</strong></p>
+
+<h1 id="예제">예제</h1>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"event-bubbling-example"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;main&gt;</span>
+    <span class="nt">&lt;section&gt;</span>
+      <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;button&gt;</span>Click!<span class="nt">&lt;/button&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/section&gt;</span>
+  <span class="nt">&lt;/main&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>위와 같은 html이 있고 button에 이벤트가 발생했을때
+</p>
+
+<h2 id="캡쳐링의-경우">캡쳐링의 경우</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main ▶ section ▶ div ▶ button
+</code></pre></div></div>
+
+<h2 id="버블링의-경우">버블링의 경우</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button ▶ div ▶ section ▶ main
+</code></pre></div></div>
+
+<p>같은 순서로 이벤트를 찾으러 간다
+등록된 이벤트가 있으면 해당 이벤트를 실행하고 이벤트가 없으면 그냥 지나간다.</p>
+
+<h1 id="ie일부-버전은-캡쳐링을-지원하지-않음">IE일부 버전은 캡쳐링을 지원하지 않음</h1>
+
+<p>IE의 경우 위와 같은 탐색에서 캡션단계를 지원하지 않음으로 이벤트 핸들링은 버블링을 기준으로 작성되어야 한다.</p>
+
+<h1 id="버블링으로-인한-문제">버블링으로 인한 문제</h1>
+
+<p>예를들어 나는 button만 클릭해서 해당 이벤트를 동작시키고 싶은데 버블링으로 인해 의도치않게
+상위에 있는 다른 이벤트가 동작해버리는 문제가 발생할 수 있다.</p>
+
+<p>이럴때는 <code class="language-plaintext highlighter-rouge">stopPropagation()</code>를 이용하여 거품이 위로 올라오지 않게 차단해주어야 한다</p>
+
+<h1 id="event">event</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">handleClick</span> <span class="o">=</span> <span class="nx">e</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">tagName</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nb">document</span>
+  <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#event-bubbling-example main</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleClick</span><span class="p">);</span>
+<span class="nb">document</span>
+  <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#event-bubbling-example section</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleClick</span><span class="p">);</span>
+<span class="nb">document</span>
+  <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#event-bubbling-example div</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleClick</span><span class="p">);</span>
+<span class="nb">document</span>
+  <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#event-bubbling-example button</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleClick</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>와 같은 이벤트가 있을경우 버튼을 클릭하면 버블링에 의해 이벤트가 존재하는지 체크를 하게되므로</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button ▶ div ▶ section ▶ main
+</code></pre></div></div>
+
+<p>순으로 alert가 발생하는걸 알 수 있다.</p>
+
+<h1 id="ex2">ex2</h1>
+
+<p>addEventListener의 3번째 파라메터를 ture로 해주면(default: false)
+캡쳐링에 의해 이벤트가 존재하는지 체크하게 된다.</p>
+
+<p>그러므로 반대인</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main ▶ section ▶ div ▶ button
+</code></pre></div></div>
+
+<p>순으로 실행된다</p>
+
+<h1 id="ex3">ex3</h1>
+
+<p>div부분만 3번째 파라메터를 ture로 해주면 어떻게 될까
+main,section,button은 버블링으로 실행되고 div만 캡쳐링으로 실행되어</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div -&gt; button -&gt; section -&gt; main
+</code></pre></div></div>
+
+<p>와 같은 순서로 alert가 발생한다</p>
+
+<p>이벤트,버블링이 섞여 있을때는 버블링보다 <code class="language-plaintext highlighter-rouge">캡쳐링이 우선실행</code> 되는걸 알 수 있다.</p>
+
+<h1 id="리액트에서의-버블링과-캡쳐링">리액트에서의 버블링과 캡쳐링</h1>
+
+<p>리액트의 이벤트 핸들러는 버블링 단계의 이벤트에 의해 트리거된다.
+캡쳐링 단계에 대한 이벤트 핸들러를 등록하려면, Capture를 접미사로 붙인다.
+예 : onClickCapture, onKeyPressCapture</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<p>https://codesandbox.io/s/2zlm2o41r
+https://wonism.github.io/event-bubbling-capturing/
+http://insanehong.kr/post/front-end-developer-interview-javascript/</p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-EventBubbling_vs_Capturing"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-react-webpacker" data-toggle="tooltip" data-placement="top" title="react-rails와 webpacker를 사용해서 Rails어플리케이션에서 React실행">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/webpack-css-loader-style-loader" data-toggle="tooltip" data-placement="top" title="webpack4 + css-loader,style-loader를 사용해서 css를 loader해보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

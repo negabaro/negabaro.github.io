@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="firebase_id_token gem에 대해 알아보자." />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/ruby-gems-firebase_id_token" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>firebase_id_token gem에 대해 알아보자. - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/ruby-gems-firebase_id_token">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>firebase_id_token gem에 대해 알아보자.</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, May 3, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/infra/firebase/authentication"><i class="fa fa-tag"></i> infra/firebase/authentication</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="firebase_id_token-gem이란">firebase_id_token gem이란?</h2>
+
+<p>ruby에서 <code class="language-plaintext highlighter-rouge">Firebase ID Token</code>이 정상적인 서명값을 가지고 있는지 검증(verify)해주는 gem이다.</p>
+
+<p>비슷한 gem으로 <a href="https://github.com/penguinwokrs/firebase-auth-rails/blob/master/lib/firebase/auth/authenticable.rb">firebase-auth-rails</a>가 있다.</p>
+
+<p>이때 <code class="language-plaintext highlighter-rouge">Google's x509</code>키를 이용해 서명값을 검증하는데 해당 키들을 redis에서 관리한다.</p>
+
+<p>즉 이 gem을 사용하기 위해서는 반드시 redis가 필요하다.</p>
+
+<blockquote>
+  <p>A Ruby gem to verify the signature of Firebase ID Tokens. It uses Redis to store Google’s x509 certificates and manage their expiration time, so you don’t need to request Google’s API in every execution and can access it as fast as reading from memory.</p>
+</blockquote>
+
+<h2 id="어디에서-쓰나">어디에서 쓰나?</h2>
+
+<p>필자는 클라이언트에서 보내온 firebase_id_token의 유효성을 서버단에서 검증할때 이 gem을 사용했다.</p>
+
+<p>해당 검증이 끝나면 doorkeeper gem에서 백엔드 서버의 정보에 접근가능한 access_token을 발행해서 클라이언트에 넘겨주는 방식이다.</p>
+
+<hr />
+
+<h2 id="os의-타임존에도-의존함">OS의 타임존에도 의존함.</h2>
+
+<p>위에서 언급한 redis외에도 OS시간에 의존해 동작하는 부분이 있어 주의가 필요하다.</p>
+
+<p>예를들어 mac에서 동작한다고 할때 맥OS의 시간설정이 1분 느린경우, 1분이 지날때까지 유효성 검증에 실패해 버린다.</p>
+
+<p>이 부분은 firebase_id_token gem만의 문제는 아니고 <code class="language-plaintext highlighter-rouge">jwt</code>의 유효성검증시 나타나는 공통적인 문제로 주의가 필요하다.</p>
+
+<h2 id="주요-메소드">주요 메소드</h2>
+
+<p>이하에서는 firebase_id_token 내부에서 사용하는 주요 메소드에 대해 알아보자</p>
+
+<h3 id="발행한-키-전체를-확인하는-방법">발행한 키 전체를 확인하는 방법</h3>
+
+<p>redis안에 저장되어있는 키이다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">FirebaseIdToken</span><span class="o">::</span><span class="no">Certificates</span><span class="p">.</span><span class="nf">all</span>
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">=&gt;</span> <span class="p">[{</span><span class="s2">"cc3f4e8b2f1d02f0ea4b1bdde55add8b08bc5386"</span><span class="o">=&gt;</span>
+   <span class="c1">#&lt;OpenSSL::X509::Certificate</span>
+    <span class="n">subject</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::X509::Name CN=securetoken.system.gserviceaccount.com&gt;,</span>
+    <span class="n">issuer</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::X509::Name CN=securetoken.system.gserviceaccount.com&gt;,</span>
+    <span class="n">serial</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::BN 396438985964157741&gt;,</span>
+    <span class="n">not_before</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">30</span> <span class="mi">09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">20</span> <span class="no">UTC</span><span class="p">,</span>
+    <span class="n">not_after</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">20</span> <span class="no">UTC</span><span class="o">&gt;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s2">"4e9df5a4f28ad025064d66553bcb9b339685ef94"</span><span class="o">=&gt;</span>
+   <span class="c1">#&lt;OpenSSL::X509::Certificate</span>
+    <span class="n">subject</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::X509::Name CN=securetoken.system.gserviceaccount.com&gt;,</span>
+    <span class="n">issuer</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::X509::Name CN=securetoken.system.gserviceaccount.com&gt;,</span>
+    <span class="n">serial</span><span class="o">=</span><span class="c1">#&lt;OpenSSL::BN 8324807083683462874&gt;,</span>
+    <span class="n">not_before</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">22</span> <span class="mi">09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">20</span> <span class="no">UTC</span><span class="p">,</span>
+    <span class="n">not_after</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">08</span> <span class="mi">21</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">20</span> <span class="no">UTC</span><span class="o">&gt;</span><span class="p">}]</span>
+</code></pre></div></div>
+
+<h3 id="키가-없을때-새로-추가하는-방법">키가 없을때 새로 추가하는 방법</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">FirebaseIdToken</span><span class="o">::</span><span class="no">Certificates</span><span class="p">.</span><span class="nf">request</span>
+</code></pre></div></div>
+
+<h3 id="키를-새로-덮어쓰기하는-방법">키를 새로 덮어쓰기하는 방법</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">FirebaseIdToken</span><span class="o">::</span><span class="no">Certificates</span><span class="p">.</span><span class="nf">request!</span>
+</code></pre></div></div>
+
+<p>※ 필자가 관리하는 프로젝트에서는 10분에 한번 새로운 키로 덮어쓰는 cron이 동작하고 있었다.
+정기적 재발행이 반드시 필요한가에 대해서는 조사중</p>
+
+<h3 id="id-token체크하는-방법">id token체크하는 방법</h3>
+
+<p>아래와 같은 로직으로 id_token의 유효성을 검증하고 있다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="vi">@payload</span> <span class="o">||=</span> <span class="no">FirebaseIdToken</span><span class="o">::</span><span class="no">Signature</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="vi">@id_token</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/ruby-gems-firebase_id_token"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/firebase_id_token-Theres-no-certificates-in-Redis-database" data-toggle="tooltip" data-placement="top" title="FirebaseIdToken::Exceptions::NoCertificatesError: There's no certificates in Redis database. 에러">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/firebase-custom-token" data-toggle="tooltip" data-placement="top" title="Firebase Custom Token이란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

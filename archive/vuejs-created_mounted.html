@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="vue.js 라이프사이클 created mounted의 차이" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/vuejs-created_mounted" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>vue.js 라이프사이클 created mounted의 차이 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/vuejs-created_mounted">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>vue.js 라이프사이클 created mounted의 차이</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, July 24, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/vue.js"><i class="fa fa-tag"></i> vue.js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>vue.js에 created,mounted의 차이에 대해 알아보자.</p>
+
+<h1 id="created">created</h1>
+
+<p>인스턴스가 작성된 후 동기적으로 호출됨.</p>
+
+<p>부모,자식 관계의 컴퍼넌트가 렌더링 될때 mounted보다 먼저 호출되며 <code class="language-plaintext highlighter-rouge">부모,자식</code>순으로 실행한다.</p>
+
+<p>데이터 초기화 선언을 created에서 많이 한다.</p>
+
+<p>가상돔을 건드릴 수 없음($el 속성을 아직 사용할 수 없음)</p>
+
+<h1 id="mounted">mounted</h1>
+
+<p>부모,자식 관계의 컴퍼넌트가 렌더링 될때 created다음으로 호출되며 
+<code class="language-plaintext highlighter-rouge">자식,부모</code>순으로 실행한다.</p>
+
+<p>el이 새로 생성된 vm.$el로 대체된 인스턴스가 마운트 된 직후 호출됨.(가상돔 조작이 가능)</p>
+
+<p>돔조작관련을 mounted영역에 기술함.</p>
+
+<h1 id="컴퍼넌트간의-호출순서">컴퍼넌트간의 호출순서</h1>
+
+<p>예를들어 <code class="language-plaintext highlighter-rouge">App -&gt; Cat -&gt; CatChild</code>관계의 컴퍼넌트가 있다고 하면
+created와mounted는 각각 아래와 같이 호출된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>App created
+Cat created
+CatChild created
+CatChild mounted
+Cat mounted
+App mounted
+</code></pre></div></div>
+
+<h1 id="라이프-사이클에-따른-watch타이밍">라이프 사이클에 따른 watch타이밍</h1>
+
+<p>라이프사이클에 따른 차이를 이해하기 위해 watch를 예로 들어보겠다.</p>
+
+<p>Cat컴퍼넌트가 CatChild <code class="language-plaintext highlighter-rouge">cat-crying</code>이라는 props를 넘겨주고
+CatChild는 cat-crying을 watch하면서 부모 컴퍼넌트에서 값이 변경되는걸
+감시한다고 해보자.</p>
+
+<p>이 때 Cat컴퍼넌트는 created,mounted 어디에서 cat-crying값을 변경하느냐에 따라 CatChild컴퍼넌트의 watch가 동작에 차이가 있다.</p>
+
+<p>created일 경우 변경한 값을 그대로 catChild에게 넘겨준 것이므로
+watch대상이 되지 않는다.</p>
+
+<p>mounted일 경우는 일단 초기의 props값을 넘긴 후 
+mounted가 실행될때 값이 바뀌는것이므로 watch가 정상적으로 동작한다.</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://mygumi.tistory.com/201
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/vuejs-created_mounted"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/vuejs-emit" data-toggle="tooltip" data-placement="top" title="vue.js에서 json파일을 읽어오는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/vuejs-watch" data-toggle="tooltip" data-placement="top" title="vue.js watch에 대해 알아보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

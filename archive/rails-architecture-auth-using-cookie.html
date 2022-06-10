@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails6에서 웹 어플리케이션 구축시 cookie를 이용한 인증패턴에 대해" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-architecture-auth-using-cookie" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails6에서 웹 어플리케이션 구축시 cookie를 이용한 인증패턴에 대해 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-architecture-auth-using-cookie">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails6에서 웹 어플리케이션 구축시 cookie를 이용한 인증패턴에 대해</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by  on Friday, August 28, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/security"><i class="fa fa-tag"></i> rails/security</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="개요">개요</h1>
+
+<p>현대의 웹 어플리케이션은 여러가지 패턴으로 구축이 가능한데
+그 패턴에 따라 cookie를 이용한 인증방법에 차이가 있다.</p>
+
+<p>이 포스트에서는 rails 기반에서 각 패턴별 인증방법에 대해 알아본다.</p>
+
+<h1 id="cookie란">cookie란?</h1>
+
+<p><a href="https://negabaro.github.io/archive/security-cookie">cookie란 무엇인가?</a>를 참고 바란다.</p>
+
+<h1 id="웹-어플리케이션이란">웹 어플리케이션이란?</h1>
+
+<p>웹을 기반으로 실행되는 프로그램을 말한다. 페이스북,트위터,구글,airbnb가 전부 웹 어플리케이션이다.</p>
+
+<h1 id="웹-어플리케이션의-구성패턴">웹 어플리케이션의 구성/패턴</h1>
+
+<p>웹 어플리케이션은 크게 백엔드와 프론트로 나뉜다.</p>
+
+<p>백엔드는 화면 뒷단에서의 인증을 하거나 DB에서 값을 가져오는 등 처리로직을 담당하고
+프론트는 사용자에게 보여지는 화면 부분을 담당한다.</p>
+
+<p>웹에서 사용자에게 화면을 보여주게 하는 행위를 랜더링이라고도 말한다.</p>
+
+<p>프론트에서는 이 랜더링의 방식에 따라 <code class="language-plaintext highlighter-rouge">서버 사이드 랜더링(SSR)</code>과 <code class="language-plaintext highlighter-rouge">클라이언트 사이드 랜더링(SPA)</code> 방식으로 나눠진다.</p>
+
+<p>SSR은 백엔드(서버)에서 DOM을 만들어 프론트에 보내 렌더링 하는 방식이고
+SPA은 백엔드(서버)가 관여하지 않고 브라우저에서 지지고 볶아 랜더링 하는 방식이다.</p>
+
+<p>한편 레일즈에서는 MVC패턴으로 프론트와 백엔드가 유기적으로 돌아가는데 프론트의 SSR 까지는 rails 다운 
+빠른 구현이 가능하다.</p>
+
+<p>그러나 SPA 부분은 rails특혜(?)를 받을 수 없어 개발속도가 느려진다.</p>
+
+<p>느려지는 포인트는 아래와 같다.</p>
+
+<ol>
+  <li>javascript를 사용한 개발을 해야한다.</li>
+  <li></li>
+</ol>
+
+<p>왜냐면 브라우저에 실행되는 언어는 javascript 뿐이기 때문이다.</p>
+
+<p>javascript가 빠른 개발이 가능한것이 장점이라고 하지만 rails세상에서 레일을 탄 개발 패턴은</p>
+
+<p>rails의 레일을 탄  비교하면 거북이 수준이다.</p>
+
+<p>레일즈는 빠른 프로토타입 작성에 특화된 프레임워크로 레일즈 특혜를 받을 수 없는 SPA는 
+가급적 사용안하는것이 좋다</p>
+
+<p>예외적으로 모바일 앱도</p>
+
+<p>우선 javascript언어가 ruby에 비해</p>
+
+<p>해야하는 부분의 구현이 까다로운 편이다.</p>
+
+<p>여기서 까다롭다의 의미는 레일즈여서 까다롭다기 보다는 javascript를 이용하다 보니</p>
+
+<p>클라이언트 사이드에 대한</p>
+
+<h1 id="패턴1">패턴1</h1>
+
+<p>A. 프론트(SPA) = vue.js,react
+B. 프론트(SSR) = rails
+C. 백엔드 = rails</p>
+
+<p>기존의 레일즈에 클라이언트 사이드 랜더링 할 부분만 vue.js나react로 처리하는 구성이다.</p>
+
+<h1 id="패턴2">패턴2</h1>
+
+<p>레일즈를 api용도로만 쓰는 패턴이다.
+SPA용 JS 프레임워크의 발달로 레일즈의 프론트 영역이 틀니 취급 당해 압수당하고
+ActiveRecord만이 현자 대접을 받아서 api로서의 명맥만 유지한 구성이다.</p>
+
+<p>요즘 많이들 사용하는것 같다.</p>
+
+<p>A. 프론트(SPA)
+B. 백엔드(레일즈)</p>
+
+<h2 id="패턴2-1">패턴2-1</h2>
+
+<p>A가 xx:8000
+B가 xx:3000 
+이런식으로 포트가 다르거나</p>
+
+<h2 id="패턴2-2">패턴2-2</h2>
+
+<p>A가 test.com
+B가 api.test.com</p>
+
+<p>이런식으로 서브도메인이 다른경우</p>
+
+<h1 id="패턴1의-장점으로">패턴1의 장점으로</h1>
+
+<p>모놀리식한 구성이다.</p>
+
+<p>여기서는 cookie인증 관련한 특징에 대해만 설명한다.</p>
+
+<p>vue.js에서 xhr통신시 cookie의 설정이 이용가능하다.</p>
+
+<p>기존 레일즈에서 로그인하면 cookie에 해당 정보가 들어가게되고</p>
+
+<p>아무것도 할 필요가 없다</p>
+
+<p>프론트가 있고</p>
+
+<h1 id="js의-xhr에도-cookie정보가-담길까">js의 xhr에도 cookie정보가 담길까</h1>
+
+<p>착각했던 부분이 api에서는 cookie
+헤멨던 부분인데 같은 도메인이면 js에서 axios통신할때도 cookie정보가 넘어가는거 같음.</p>
+
+<p>서브도메인과 다르더라도 같은결과가 나올것으로 예상됨</p>
+
+<p>というのも、ローカル開発中でSPAのdev serverがlocalhost:4200、APIサーバーがlocalhost:3000というように別ポートで動いていたり、本番環境でSPAをホスティングしてるサーバーのオリジンと、APIサーバーのオリジンが違うと(要はCORSになっている時)、cookieでの認証はできないという思い込んでいました。</p>
+
+<h1 id="api와-spa포트가-다르면">api와 spa포트가 다르면</h1>
+
+<p>Postmanからリクエストする分にはこれで動きますが、今回は4200番ポートで動いているAngularアプリケーションからリクエスト想定なので、CORSの設定をします。Railsではrack-corsが便利です。</p>
+
+<p>Gemfileにrack-corsを追加し、config/application.rbを以下のように変更します。</p>
+
+<p>config/application.rb
+require_relative ‘boot’</p>
+
+<p>require ‘rails/all’</p>
+
+<p>Bundler.require(*Rails.groups)</p>
+
+<p>module RailsSpaCookieSessionSample
+  class Application &lt; Rails::Application
+    config.load_defaults 6.0</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "http://localhost:4200"
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :options, :head]
+  end
+end   end end
+</code></pre></div></div>
+
+<h1 id="cors에서는-cookie-set안됨">cors에서는 cookie set안됨</h1>
+
+<p>CORSでcookieを使えるようにするには、ブラウザからのリクエストにはXMLHttpRequest.withCredentialsを、サーバーからのレスポンスにはAccess-Control-Allow-Credentialsをそれぞれtrueにする必要があります。</p>
+
+<p>그래서 SPA에서는 axios시 option에</p>
+
+<p>const requestOptions = {
+      withCredentials: true
+    };</p>
+
+<p>를 넘겨주자</p>
+
+<p>Rails側は、rack-corsのcredentialsオプションでAccess-Control-Allow-Credentialsを有効にすることができます。</p>
+
+<p>config/application.rb
+require_relative ‘boot’</p>
+
+<p>require ‘rails/all’</p>
+
+<p>Bundler.require(*Rails.groups)</p>
+
+<p>module RailsSpaCookieSessionSample
+  class Application &lt; Rails::Application
+    config.load_defaults 6.0</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "http://localhost:4200"
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :options, :head],
+      credentials: true #この行を追加
+  end
+end   end end
+</code></pre></div></div>
+
+<p>rails api작성시 디폴트로는 cookie 안들어감 
+https://pocke.hatenablog.com/entry/2016/06/23/193232
+https://daido.hatenablog.jp/entry/2020/05/06/143145</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-architecture-auth-using-cookie"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/security-stateless-stateful" data-toggle="tooltip" data-placement="top" title="세큐리티 시점에서의 stateless,stateful에 대해서 알아보자.">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-uniq_vs_distinct" data-toggle="tooltip" data-placement="top" title="rails uniq와 distinct의 차이">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title></title>
+        <description>Hello World</description>      
+        <link>https://negabaro.github.io</link>
+        <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
+        <lastBuildDate>Fri, 28 May 2021 00:00:00 -0500</lastBuildDate>
+        
+            <item>
+                <title>rails grape-entity(Grape::Entity)에 대해알아보자</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;grape-entitygrapeentity란&quot;&gt;Grape Entity(Grape::Entity)란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Fri, 28 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/rails-grape-entity</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-grape-entity</guid>
+            </item>
+        
+            <item>
+                <title>rails model에서의 scope이란</title>
+                        
+                
+                    <description>&lt;h3 id=&quot;rails-model-scope이란&quot;&gt;rails model scope이란&lt;/h3&gt;
+
+</description>
+                
+                <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/rails-scope</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-scope</guid>
+            </item>
+        
+            <item>
+                <title>rails default scope은 웬만하면 쓰지말자</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;결론&quot;&gt;결론&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/rails-default-scope</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-default-scope</guid>
+            </item>
+        
+            <item>
+                <title>flutter state_notifier란?</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;state_notifierstatenotifer란&quot;&gt;state_notifier(StateNotifer)란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sun, 23 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/flutter-state_notifier</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/flutter-state_notifier</guid>
+            </item>
+        
+            <item>
+                <title>Dart collection패키지란?</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;dart-collection패키지란&quot;&gt;Dart collection패키지란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Fri, 07 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/flutter-dart-collection</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/flutter-dart-collection</guid>
+            </item>
+        
+            <item>
+                <title>DoorKeeper사용시 invalid_grant에러(The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client)</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;에러-내용&quot;&gt;에러 내용&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Tue, 04 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</guid>
+            </item>
+        
+            <item>
+                <title>Firebase Custom Token이란?</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;firebase-custom-token이란&quot;&gt;Firebase Custom Token이란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/firebase-custom-token</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/firebase-custom-token</guid>
+            </item>
+        
+            <item>
+                <title>firebase_id_token gem에 대해 알아보자.</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;firebase_id_token-gem이란&quot;&gt;firebase_id_token gem이란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/ruby-gems-firebase_id_token</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/ruby-gems-firebase_id_token</guid>
+            </item>
+        
+            <item>
+                <title>FirebaseIdToken::Exceptions::NoCertificatesError: There&apos;s no certificates in Redis database. 에러</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;에러내용&quot;&gt;에러내용&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/firebase_id_token-Theres-no-certificates-in-Redis-database</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/firebase_id_token-Theres-no-certificates-in-Redis-database</guid>
+            </item>
+        
+            <item>
+                <title>Firebase Web API Key란?</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;firebase-web-api-key란&quot;&gt;Firebase Web API Key란&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sun, 02 May 2021 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/firebase-web-api-key</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/firebase-web-api-key</guid>
+            </item>
+        
+    </channel>
+</rss>

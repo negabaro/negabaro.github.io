@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Terraform Backend" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/terraform-backend" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Terraform Backend - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/terraform-backend">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Terraform Backend</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by  on Wednesday, July 10, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags:  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+<hr />
+<p>layout: post
+title:  “terraform backend 기능”
+author: negabaro kim
+tags: terraform
+—</p>
+
+<h1 id="backend란">backend란</h1>
+
+<p>どのようにstate file(いわゆる.tfファイル)を管理し適用するか定義するもの。
+Backend typeとしてAmazon S3だけでなくAzure Storage、Google Cloud Storageなどのパブリッククラウドのオブジェクトストレージサービスやetcdやconsulなどの分散KVSとして使えるもの等が用意されている。</p>
+
+<p>使うメリットとしては、単純にstate fileをリモートで一括管理できるというだけでなく、backendによってはリモートでの実行も可能にしてくれるらしい。</p>
+
+<p>#</p>
+
+<p>terraform init するとmoduleやpluginと共にbackendの設定も行われる。</p>
+
+<p>また、S3の中にまだtfファイルがない場合は、applyした際にkeyで指定した文字列をファイル名にtfファイルを作ってくれる。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="p">{</span>
+  <span class="nx">required_version</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">&gt;= v0.11.1</span><span class="dl">"</span>
+
+  <span class="c1">//backend "local" {}</span>
+  <span class="nx">backend</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span> <span class="p">{</span>
+    <span class="nx">region</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ap-northeast-1</span><span class="dl">"</span>
+    <span class="nx">bucket</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">twice-tfstates</span><span class="dl">"</span>
+    <span class="nx">key</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">terraform.tfstate.kim</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="v08">v0.8:</h2>
+<p>v0.8までは初回にterraformn remote configでバックエンドの設定を行っていました。しかしTerraformファイルに書くことができず、メンバーやプロジェクトが増えるたびに「バックエンドの設定どうやるんだっけ？」とハマることが結構ありました。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span> <span class="nx">terraform</span> <span class="nx">remote</span> <span class="nx">config</span> <span class="o">\</span>
+    <span class="o">-</span><span class="nx">backend</span><span class="o">=</span><span class="nx">S3</span> <span class="o">\</span>
+    <span class="o">-</span><span class="nx">backend</span><span class="o">-</span><span class="nx">config</span><span class="o">=</span><span class="dl">"</span><span class="s2">bucket=terraform-tfstate-bucket</span><span class="dl">"</span> <span class="o">\</span>
+    <span class="o">-</span><span class="nx">backend</span><span class="o">-</span><span class="nx">config</span><span class="o">=</span><span class="dl">"</span><span class="s2">key=tfstate</span><span class="dl">"</span>
+ 
+<span class="nx">Remote</span> <span class="nx">configuration</span> <span class="nx">updated</span>
+<span class="nx">Remote</span> <span class="nx">state</span> <span class="nx">configured</span> <span class="nx">and</span> <span class="nx">pulled</span><span class="p">.</span>
+</code></pre></div></div>
+
+<h2 id="v09">v0.9:</h2>
+<p>v0.9からは以下のようにTerraformファイルにバックエンドの設定ができるようになり、設定手順などを別途用意する必要がなくなりました。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span> <span class="nx">cat</span> <span class="nx">backend</span><span class="p">.</span><span class="nx">tf</span>
+<span class="nx">terraform</span> <span class="p">{</span>
+  <span class="nx">backend</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span> <span class="p">{</span>
+    <span class="nx">bucket</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">terraform-tfstate-bucket</span><span class="dl">"</span>
+    <span class="nx">key</span>    <span class="o">=</span> <span class="dl">"</span><span class="s2">tfstate</span><span class="dl">"</span>
+    <span class="nx">region</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ap-northeast-1</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="err">#</span> <span class="nx">terraform</span> <span class="nx">initで初期化または既存のtfstateと同期する</span>
+<span class="nx">$</span> <span class="nx">terraform</span> <span class="nx">init</span>
+<span class="nx">Initializing</span> <span class="nx">the</span> <span class="nx">backend</span><span class="p">...</span>
+ 
+<span class="nx">Successfully</span> <span class="nx">configured</span> <span class="nx">the</span> <span class="nx">backend</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span><span class="o">!</span> <span class="nx">Terraform</span> <span class="nx">will</span> <span class="nx">automatically</span>
+<span class="nx">use</span> <span class="k">this</span> <span class="nx">backend</span> <span class="nx">unless</span> <span class="nx">the</span> <span class="nx">backend</span> <span class="nx">configuration</span> <span class="nx">changes</span><span class="p">.</span>
+</code></pre></div></div>
+
+<h3 id="state-locking">State Locking</h3>
+<p>複数の環境から同時にterraform applyを実行してしまうと、意図せぬ変更になったりtfstateを壊してしまう可能性があるため、planやapplyを実行してる間、tfstateをロックする機能が追加されました。以下はS3をバックエンドにしてい場合の例です。S3がバックエンドの場合はDynamoDBを利用してState Lockを実装しています。
+まず、State Lockの設定をする前にDynamoDBを作成しなければならないので、以下の設定でDynamoDBを作成します。RCU/WCUは1としています。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="dl">"</span><span class="s2">aws_dynamodb_table</span><span class="dl">"</span> <span class="dl">"</span><span class="s2">terraform-state-lock</span><span class="dl">"</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">terraform-state-lock</span><span class="dl">"</span>
+  <span class="nx">read_capacity</span>  <span class="o">=</span> <span class="mi">1</span>
+  <span class="nx">write_capacity</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="nx">hash_key</span>       <span class="o">=</span> <span class="dl">"</span><span class="s2">LockID</span><span class="dl">"</span>
+ 
+  <span class="nx">attribute</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">LockID</span><span class="dl">"</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">S</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>バックエンドの設定にlock_tableを追加します。値は先ほど作成したDynamoDBのテーブル名です。(v0.9.7からlock_tableはDeprecated、代わりにdynamodb_tableで設定します)</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="p">{</span>
+  <span class="nx">backend</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span> <span class="p">{</span>
+    <span class="nx">bucket</span>     <span class="o">=</span> <span class="dl">"</span><span class="s2">terraform-tfstate-bucket</span><span class="dl">"</span>
+    <span class="nx">key</span>        <span class="o">=</span> <span class="dl">"</span><span class="s2">tfstate</span><span class="dl">"</span>
+    <span class="nx">region</span>     <span class="o">=</span> <span class="dl">"</span><span class="s2">ap-northeast-1</span><span class="dl">"</span>
+    <span class="nx">lock_table</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">terraform-state-lock</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>State Lockの設定を追加すると、バックエンド設定を変更したらterraform initせよとエラーメッセージが出力されます。</p>
+
+<h2 id="enhanced-backends">Enhanced Backends</h2>
+<p>Enhanced Backends には以下の二種類があります.</p>
+
+<p>local はデフォルトの Backend で明示的に path を指定しない場合にはカレントディレクトリに tfstate ファイルは保存されるようです. 以下は, 明示的に path の設定を行った例です.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="p">{</span>
+  <span class="nx">backend</span> <span class="dl">"</span><span class="s2">local</span><span class="dl">"</span> <span class="p">{</span>
+    <span class="nx">path</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">relative/path/to/terraform.tfstate</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="reference">reference:</h3>
+<p>https://inokara.hateblo.jp/entry/2018/09/08/151804#Backends
+https://dev.classmethod.jp/devops/terraform-changelog-from-v0-9-to-v0-11/
+https://qiita.com/mashmash911/items/e8c05f580d07451fcf5e
+https://www.terraform.io/docs/backends/index.html</p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/terraform-backend"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/vue-scss-deep" data-toggle="tooltip" data-placement="top" title="Vue Scss Deep">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/we-have-know-ts-vue" data-toggle="tooltip" data-placement="top" title="We Have Know Ts Vue">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

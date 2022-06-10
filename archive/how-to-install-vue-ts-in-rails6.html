@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails6 + typescript + vue.js 2.6.1 설치방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/how-to-install-vue-ts-in-rails6" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails6 + typescript + vue.js 2.6.1 설치방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/how-to-install-vue-ts-in-rails6">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails6 + typescript + vue.js 2.6.1 설치방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, July 7, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/vue.js"><i class="fa fa-tag"></i> vue.js</a> <a href="/archive/tags/rails/front"><i class="fa fa-tag"></i> rails/front</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="vuetypescript-인스톨">vue,typescript 인스톨</h1>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">webpacker</span><span class="ss">:install:vue</span>
+<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">webpacker</span><span class="ss">:install:typescript</span>
+</code></pre></div></div>
+
+<p>를 실행해주면 70%완료이다.
+몇가지 설정만 바꿔주면 끝이다.</p>
+
+<h1 id="configwebpackloaderstypescriptjs-수정">config/webpack/loaders/typescript.js 수정</h1>
+
+<p>PnpWebpackPlugin.tsLoaderOptions에 
+<code class="language-plaintext highlighter-rouge">appendTsSuffixTo: [/\.vue$/]</code>를 추가해줌</p>
+
+<h2 id="before">Before</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PnpWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">pnp-webpack-plugin</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.(</span><span class="sr">ts|tsx</span><span class="se">)?(\.</span><span class="sr">erb</span><span class="se">)?</span><span class="sr">$/</span><span class="p">,</span>
+  <span class="na">use</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts-loader</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">options</span><span class="p">:</span> <span class="nx">PnpWebpackPlugin</span><span class="p">.</span><span class="nx">tsLoaderOptions</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="after">After</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PnpWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">pnp-webpack-plugin</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.(</span><span class="sr">ts|tsx</span><span class="se">)?(\.</span><span class="sr">erb</span><span class="se">)?</span><span class="sr">$/</span><span class="p">,</span>
+  <span class="na">use</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts-loader</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">options</span><span class="p">:</span> <span class="nx">PnpWebpackPlugin</span><span class="p">.</span><span class="nx">tsLoaderOptions</span><span class="p">({</span>
+        <span class="na">appendTsSuffixTo</span><span class="p">:</span> <span class="p">[</span><span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">]</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+</code></pre></div></div>
+
+<h1 id="appjavascriptappvue">app/javascript/app.vue</h1>
+
+<p>을 아래와 같이 수정</p>
+
+<p>바뀌는 부분은 <code class="language-plaintext highlighter-rouge">script lang="ts"</code>와 <code class="language-plaintext highlighter-rouge">Vue.extend</code>를 추가해주는 부분</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">app</span><span class="dl">"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="sr">/p</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">lang</span><span class="o">=</span><span class="dl">"</span><span class="s2">ts</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello Vue!</span><span class="dl">"</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">style</span> <span class="nx">scoped</span><span class="o">&gt;</span>
+<span class="nx">p</span> <span class="p">{</span>
+  <span class="nx">font</span><span class="o">-</span><span class="nx">size</span><span class="p">:</span> <span class="mi">2</span><span class="nx">em</span><span class="p">;</span>
+  <span class="nx">text</span><span class="o">-</span><span class="nx">align</span><span class="p">:</span> <span class="nx">center</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h1 id="javascript_pack_tag추가">javascript_pack_tag추가</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//app/views/layouts/application.html.erb</span>
+ <span class="o">&lt;%=</span> <span class="nx">javascript_pack_tag</span> <span class="dl">'</span><span class="s1">hello_vue</span><span class="dl">'</span> <span class="o">%&gt;</span>
+</code></pre></div></div>
+
+<p>추가</p>
+
+<h1 id="동작-확인">동작 확인</h1>
+
+<p>webpack-dev-server를 기동하고 콘솔로그에 아래와 같이 표시되면 정상적으로 동작하는것임.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Vue</span><span class="err"> </span><span class="p">{</span><span class="nl">_uid</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">_isVue</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">$options</span><span class="p">:</span> <span class="p">{</span><span class="err">…</span><span class="p">},</span> <span class="nx">_renderProxy</span><span class="p">:</span> <span class="nb">Proxy</span><span class="p">,</span> <span class="nx">_self</span><span class="p">:</span> <span class="nx">Vue</span><span class="p">,</span><span class="err"> …</span><span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">webpacker</span><span class="ss">:install:vue</span>
+<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">webpacker</span><span class="ss">:install:typescript</span>
+</code></pre></div></div>
+
+<p>아래는 위 커맨드 실행시 생성되는 파일들이다.</p>
+
+<h2 id="appjavascriptpackshello_vuejs">app/javascript/packs/hello_vue.js</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@/src/app.vue</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">DOMContentLoaded</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">//const container = document.querySelector("#v-page");</span>
+  <span class="c1">//if (container === null) return;</span>
+
+  <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">render</span><span class="p">:</span> <span class="nx">h</span> <span class="o">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span>
+  <span class="p">}).</span><span class="nx">$mount</span><span class="p">();</span>
+  <span class="c1">//container.appendChild(app.$el);</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">$el</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="packagejson">package.json</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">ts-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^7.0.5</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">typescript</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^3.9.6</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.6.11</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">vue-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^15.9.3</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">vue-template-compiler</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.6.11</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<h2 id="tsconfigjson">tsconfig.json</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">compilerOptions</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">declaration</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">emitDecoratorMetadata</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">experimentalDecorators</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">lib</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">es6</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dom</span><span class="dl">"</span><span class="p">],</span>
+    <span class="dl">"</span><span class="s2">module</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">es6</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">moduleResolution</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">baseUrl</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">.</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">paths</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">node_modules/*</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app/javascript/*</span><span class="dl">"</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">sourceMap</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">target</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">es5</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">exclude</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="dl">"</span><span class="s2">**/*.spec.ts</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">node_modules</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">vendor</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">public</span><span class="dl">"</span>
+  <span class="p">],</span>
+  <span class="dl">"</span><span class="s2">compileOnSave</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="vue-loader">vue-loader</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//config/webpack/loaders/vue.js</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue</span><span class="se">(\.</span><span class="sr">erb</span><span class="se">)?</span><span class="sr">$/</span><span class="p">,</span>
+  <span class="na">use</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue-loader</span><span class="dl">'</span>
+  <span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="메모1-configwebpackloaderstypescriptjs-수정을-안하면">메모1. config/webpack/loaders/typescript.js 수정을 안하면</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Property or method "message" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property
+</code></pre></div></div>
+
+<p>에러를 만나게 된다.
+<code class="language-plaintext highlighter-rouge">config/webpack/loaders/typescript.js</code>수정을 꼭 할것</p>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/how-to-install-vue-ts-in-rails6"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/ruby-defined" data-toggle="tooltip" data-placement="top" title="ruby 로컬변수가 정의되어 있는지 확인하는 방법(defined?)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-problem-radio_button-when-validation-error" data-toggle="tooltip" data-placement="top" title="rails6 validation error시 raidio_button위에 field_with_errors class가 추가되는 문제">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

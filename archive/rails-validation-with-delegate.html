@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails delegate사용시 validation설정" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-validation-with-delegate" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails delegate사용시 validation설정 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-validation-with-delegate">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails delegate사용시 validation설정</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, April 15, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>이 포스트에서는 delegate사용시 validation설정을 어디에 정의해야할지 헷갈렸기에 내용을 정리해본다.</p>
+
+<h2 id="전제조건">전제조건</h2>
+
+<p>Idol은 그룹별 하나의 팬클럽에 속해있고 팬클럽에는 복수의팬이 존재한다고 할때,</p>
+
+<p>Rails에서 아래와 같은 모델 관계를 가지게 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1:N = Idol -&gt; FanClub
+1:N = FanClub -&gt; Fan
+</code></pre></div></div>
+
+<p>이 상태에서 아래 사양을 전제조건으로 생각해봤다.</p>
+
+<ol>
+  <li>Idol모델이 <code class="language-plaintext highlighter-rouge">delegate to</code>를 사용해 복수의 Fan 모델에 접근하고 싶음</li>
+  <li>물관리를 위해 Fanclub안에 Fan은 1000명이 넘지않게 validation처리</li>
+  <li>Fan등록시 <code class="language-plaintext highlighter-rouge">idol.fans.create!(fan_params)</code>로직을 이용</li>
+</ol>
+
+<h2 id="코드">코드</h2>
+
+<p>전제조건에서 설명한 상태를 코드로 표현하면 아래와 같다.</p>
+
+<h3 id="idol">Idol</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/models/Idol.rb</span>
+<span class="k">class</span> <span class="nc">Idol</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:fanclub</span><span class="p">,</span> <span class="ss">inverse_of: :idols</span><span class="p">,</span> <span class="ss">optional: </span><span class="kp">true</span>
+  <span class="n">delegate</span> <span class="ss">:fans</span><span class="p">,</span> <span class="ss">to: :fanclub</span><span class="p">,</span> <span class="ss">allow_nil: </span><span class="kp">true</span>
+
+  <span class="n">validate</span> <span class="ss">:fans_count_must_be_within_limit</span><span class="p">,</span> <span class="ss">on: :create</span>
+
+  <span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">fans_count_must_be_within_limit</span>
+    <span class="nb">binding</span><span class="p">.</span><span class="nf">pry</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="fanclub">Fanclub</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/models/fanclub.rb</span>
+<span class="k">class</span> <span class="nc">Fanclub</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:fans</span><span class="p">,</span> <span class="ss">inverse_of: :present</span><span class="p">,</span> <span class="ss">dependent: :destroy</span>
+  <span class="n">validate</span> <span class="ss">:fans_count_must_be_within_limit</span><span class="p">,</span> <span class="ss">on: :create</span>
+
+  <span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">fans_count_must_be_within_limit</span>
+    <span class="nb">binding</span><span class="p">.</span><span class="nf">pry</span>
+  <span class="k">end</span>
+  
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="fan">Fan</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/models/handwritten_letter.rb</span>
+<span class="k">class</span> <span class="nc">Fan</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:fanclub</span><span class="p">,</span> <span class="ss">inverse_of: :fan</span>
+
+  <span class="n">validate</span> <span class="ss">:fans_count_must_be_within_limit</span><span class="p">,</span> <span class="ss">on: :create</span>
+
+  <span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">fans_count_must_be_within_limit</span>
+    <span class="nb">binding</span><span class="p">.</span><span class="nf">pry</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="validation설정을-어디에-걸어줘야할까">validation설정을 어디에 걸어줘야할까</h2>
+
+<p>각 모델에 있는 <code class="language-plaintext highlighter-rouge">fans_count_must_be_within_limit</code> 메소드에 validation설정을 걸어놨다.</p>
+
+<p>어떤 모델이 호출될지 불분명해서 테스트해봤는데 결과, <code class="language-plaintext highlighter-rouge">Fan모델 이외</code>에는 전혀 호출되지 않았다.</p>
+
+<p>고로 Fan모델에 걸어줘야함</p>
+
+<h2 id="fan모델에-validation설정">fan모델에 validation설정</h2>
+
+<p>한편 fan모델에서는 <code class="language-plaintext highlighter-rouge">fans</code>에 접근할 수 없지만 <code class="language-plaintext highlighter-rouge">fanclub</code>에 접근할 수 있으므로</p>
+
+<p>fanclub을 경유해 fans의 정보를 가져올 수 있다.</p>
+
+<p>그 결과, 코드는 아래와 같다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fans_count_must_be_within_limit</span>
+  <span class="no">MAX_FANS_COUNT</span> <span class="o">=</span> <span class="mi">1000</span>
+  <span class="n">errors</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="ss">:base</span><span class="p">,</span> <span class="s2">"fans count limit: </span><span class="si">#{</span><span class="no">MAX_FANS_COUNT</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="nb">self</span><span class="p">.</span><span class="nf">fanclub</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">fans</span><span class="p">.</span><span class="nf">count</span> <span class="o">&gt;=</span> <span class="no">MAX_FANS_COUNT</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-validation-with-delegate"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/flutter-How-to-Run-with-stacktrace-option-to-get-the-stack-trace" data-toggle="tooltip" data-placement="top" title="Flutter android 빌드시 --stacktrace옵션을 실행하는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/flutter-painting-EdgeInsets" data-toggle="tooltip" data-placement="top" title="Flutter EdgeInsets란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

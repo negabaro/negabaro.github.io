@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails6 EachValidator을 이용해서 validators 커스텀 하는법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-validators" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails6 EachValidator을 이용해서 validators 커스텀 하는법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-validators">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails6 EachValidator을 이용해서 validators 커스텀 하는법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, May 7, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        6 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="custom-validator를-하는-이유">custom validator를 하는 이유</h1>
+
+<h3 id="1-dry">1. DRY</h3>
+
+<p>프로젝트 내에서 사용하는 유효성 검사(validation)는 대게 중복될 가능성이 높으므로
+validators class로 분리시켜서 DRY하게 코드를 짤 수 있음</p>
+
+<h3 id="2-테스트-용이">2. 테스트 용이</h3>
+
+<p>분리한 클래스만 테스트하면 되므로 테스트 코드짜기가 수월함</p>
+
+<h3 id="3-debug-용이">3. debug 용이</h3>
+
+<p>gem까볼 필요없이 커스텀한 메소드안에서 <code class="language-plaintext highlighter-rouge">binding.pry</code> 를 실행해서 
+확인하는 편이 debug하기 쉬움</p>
+
+<h3 id="4-커스텀-용이">4. 커스텀 용이</h3>
+
+<p>이건 장점이랄까 validate를 커스텀하려면 필수다.</p>
+
+<h1 id="custom-validator설정방법">custom validator설정방법</h1>
+
+<h3 id="appvalidators-디렉토리-생성">app/validators 디렉토리 생성</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span> <span class="n">app</span><span class="o">/</span><span class="n">validators</span>
+</code></pre></div></div>
+
+<p>꼭 이 디렉토리일 필요는 없지만 암묵적으로 <code class="language-plaintext highlighter-rouge">app/validators</code> 많이사용함</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/validators/tel_validator.rb</span>
+<span class="k">class</span> <span class="nc">TelValidator</span> <span class="o">&lt;</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">EachValidator</span>
+  <span class="k">def</span> <span class="nf">validate_each</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span><span class="p">.</span><span class="nf">presence</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="no">ModelConstants</span><span class="o">::</span><span class="no">TEL_REGEXP</span><span class="p">))</span>
+        <span class="c1">#validation성공후 추가로 custom할 코드가 있으면 여기에 정의</span>
+      <span class="k">else</span>
+        <span class="n">record</span><span class="p">.</span><span class="nf">errors</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="ss">:message</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"의 형식이 다릅니다."</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ModelConstants::TEL_REGEXP</code> 부분은 정규표현을 직접 넣어줘도되는데 
+다른곳에도 쓰일거 같아서 concern화해줌</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/models/concerns/form_confirmable.rb</span>
+<span class="k">module</span> <span class="nn">ModelConstants</span>
+  <span class="no">TEL_REGEXP</span> <span class="o">=</span> <span class="sr">%r"</span><span class="se">\A</span><span class="sr">[0-9]{2,3}-?[0-9]{3,4}-?[0-9]{4}</span><span class="se">\Z</span><span class="sr">"</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="모델쪽-설정">모델쪽 설정</h1>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#app/models/user.rb</span>
+
+<span class="c1">#before</span>
+<span class="c1">#validates :tel, format: {with: /\A[0-9]{2,3}-[0-9]{4}-[0-9]{4}\z/}</span>
+<span class="c1">#validates :emergency_tel, format: {with: /\A[0-9]{2,3}-[0-9]{4}-[0-9]{4}\z/}</span>
+
+<span class="n">validates</span> <span class="ss">:tel</span><span class="p">,</span> <span class="ss">tel: </span><span class="kp">true</span>
+<span class="n">validates</span> <span class="ss">:emergency_tel</span><span class="p">,</span> <span class="ss">tel: </span><span class="kp">true</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">tel: true</code> 부분이 핵심인데 tel이라고 적으면 자동으로 <code class="language-plaintext highlighter-rouge">TelValidator</code>라는 클래스를 찾음
+(역시 규약의 레일즈..!!)<code class="language-plaintext highlighter-rouge">test: true</code>라고 적어주면 <code class="language-plaintext highlighter-rouge">TestValidator</code>를 찾음</p>
+
+<p>여기까지 문제없이 설정했다면 정상적으로 validation이 동작함</p>
+
+<h1 id="테스트-코드">테스트 코드</h1>
+
+<p>class로 분리한 validators를 어떻게 테스트하는지도 알아보자.</p>
+
+<p>validators테스트는 암묵적으로 <code class="language-plaintext highlighter-rouge">spec/validators</code>에서 많이들 사용함</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#spec/validators/tel_validator_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'rails_helper'</span>
+
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">TelValidator</span><span class="p">,</span> <span class="ss">type: :model</span> <span class="k">do</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:validator_options</span><span class="p">)</span> <span class="p">{</span> <span class="kp">true</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:model_class</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">validator_options</span>
+    <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="k">do</span>
+      <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validations</span>
+      <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">name</span>
+        <span class="s2">"DummyModel"</span>
+      <span class="k">end</span>
+      <span class="n">validates</span> <span class="ss">:tel</span><span class="p">,</span> <span class="ss">tel: </span><span class="n">options</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#validate'</span> <span class="k">do</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'000-2222-3333'</span> <span class="p">}</span>
+
+    <span class="n">subject</span> <span class="p">{</span> <span class="n">model_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">tel</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span> <span class="p">}</span>
+
+    <span class="n">context</span> <span class="s1">'when valid tel'</span> <span class="k">do</span>
+      
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'000-222-3333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'000-2222-3333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'00022223333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'0002223333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'00-2222-3333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'0022223333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="n">context</span> <span class="s1">'when not valid tel'</span> <span class="k">do</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'foo'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">not_to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'0000-2222-3333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">not_to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+      <span class="n">context</span> <span class="k">do</span>
+        <span class="n">let</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">{</span> <span class="s1">'0000-222-3333'</span> <span class="p">}</span>
+        <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">not_to</span> <span class="n">be_valid</span><span class="p">(</span><span class="ss">:tel</span><span class="p">)</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="메모1">메모1</h1>
+
+<p>참고한 포스트를 보면 아래와 같은 설정도 필요하다고 하는데
+rails6에서는 없어도 움직임</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#confing/application.rb</span>
+ <span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="no">Dir</span><span class="p">[</span><span class="s2">"</span><span class="si">#{</span><span class="n">config</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/app/validators"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">user</span><span class="p">.</span><span class="nf">rb</span>
+<span class="c1">#include ModelConstants</span>
+</code></pre></div></div>
+
+<h1 id="메모2">메모2</h1>
+
+<p>이번 포스트에서는 <code class="language-plaintext highlighter-rouge">ActiveModel::EachValidator</code>를 이용해서 validator를 커스텀해봤는데
+<code class="language-plaintext highlighter-rouge">ActiveModel::Validator</code>를 이용하는 방법도 있다.
+둘의 차이는 멀티 컬럼에 validation설정하는 경우 <code class="language-plaintext highlighter-rouge">ActiveModel::Validator</code>를 사용한다고 한다</p>
+
+<h3 id="ex">ex)</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/validators/multi_presence_validator.rb</span>
+<span class="k">class</span> <span class="nc">MultiPresenceValidator</span> <span class="o">&lt;</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validator</span>
+  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+    <span class="n">record</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="ss">:base</span><span class="p">,</span> <span class="s1">'bust be presence'</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="ss">:attributes</span><span class="p">].</span><span class="nf">all?</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">record</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">c</span><span class="p">).</span><span class="nf">blank?</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validations</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+
+  <span class="n">validates_with</span> <span class="no">MultiPresenceValidator</span><span class="p">,</span> <span class="ss">attributes: </span><span class="p">[</span><span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="메모3">메모3</h1>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">%r"</span><span class="se">\A</span><span class="sr">[0-9]{2,3}-?[0-9]{3,4}-?[0-9]{4}</span><span class="se">\Z</span><span class="sr">"</span>
+</code></pre></div></div>
+
+<p>정규표현 부분 앞에 %r이 있는데 이게 없으면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A regular expression or a proc or lambda must be supplied as :with
+</code></pre></div></div>
+
+<p>에러가 남</p>
+
+<p><code class="language-plaintext highlighter-rouge">%r</code>에 대해 찾아보니 「/」나「[ 」와 같은 문자의 에스케이프를 생략해줘서 가독성을 올려주는 역할을 한다고</p>
+
+<h3 id="reference">reference</h3>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-validators"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-actiontext" data-toggle="tooltip" data-placement="top" title="Rails6.0 Action Text를 사용해보자">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-select-form" data-toggle="tooltip" data-placement="top" title="rails select form을 알아보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

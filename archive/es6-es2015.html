@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="ECMA?ES?ES2015?ES6 이해를 위한 용어정리 " />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/es6-es2015" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>ECMA?ES?ES2015?ES6 이해를 위한 용어정리  - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/es6-es2015">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>ECMA?ES?ES2015?ES6 이해를 위한 용어정리 </h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, March 21, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="es6es2015는-같은의미">ES6=ES2015는 같은의미</h1>
+
+<p>ESx 할때 x는 년도를 의미하는게 아니라 Edition번호를 의미함</p>
+
+<p>즉 ES2018은 ES8이 아님(ES7임)</p>
+
+<p>ES2015와ES5는 같은 의미가 아님</p>
+
+<h1 id="왜-명칭이-두개가-있는거야-헷갈리게">왜 명칭이 두개가 있는거야? 헷갈리게</h1>
+
+<p>이걸 이해할려면 이 단체의 역사를 알아야함.</p>
+
+<p>간단히 요약하면</p>
+
+<p>1.</p>
+
+<p>ES3,4,5 이런식으로 JS의 사양을 발표함
+해당 버전은 몇년에 한번씩 발표됨</p>
+
+<p>2.</p>
+
+<p>ES5이후부터 웹 생태계의 빠른 변화를 눈치채고
+1년에 한번씩은 무조건 갱신합시다 라는 움직임이 생김</p>
+
+<p>3.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ES6, ES7, ES8, ES9, ES10, ES11, etc</code> 이런식으로 진행되면 보기가 어렵다는 이유로
+발행년도를 기준으로 새로운 이름을 만듬</p>
+
+<h1 id="통일성이-없으니-년도로-부릅시다">통일성이 없으니 <code class="language-plaintext highlighter-rouge">년도</code>로 부릅시다</h1>
+
+<p>ES6과ES2015는 같은의미
+용어통일을 위해 <code class="language-plaintext highlighter-rouge">년도</code>로 부르는걸 추천하고 있음
+ES2015이후부터 매년 갱신되고 있음</p>
+
+<p>정식명칭은<code class="language-plaintext highlighter-rouge">ECMA-262 edition 6</code></p>
+
+<h1 id="es의-정확한-명칭은-ecma-262이다">ES의 정확한 명칭은 <code class="language-plaintext highlighter-rouge">ECMA-262</code>이다</h1>
+
+<p>그러하다.</p>
+
+<h1 id="ecma-international이란-뭐하는-곳">Ecma International이란 뭐하는 곳?</h1>
+
+<p>ES뿐만 아니라 여러가지 사양을 정하는 단체
+C#의 사양을 정하기도 한다고함</p>
+
+<p>이전에는 <code class="language-plaintext highlighter-rouge">ECMA = European Computer Manufacturers Association（欧州電子計算機工業会）</code>라는 단체였다고함.
+국제화에 맞춰 1994년에 ECMA 뒤에 <code class="language-plaintext highlighter-rouge">International</code>가 추가되었다고함 window95보다 전 이야기..</p>
+
+<p>여튼 예전에는 ECMA가 위에 기술한 약자로 사용되었으나 현재는 업계에서 고유명사같이 사용되고 있는 듯</p>
+
+<h1 id="es6">ES6</h1>
+
+<p>본래는 ES(ECMA-262) Edition6를 의미함
+class라든지 화살표함수라든지 현재 많이 사용되는 모던JS 기능들이 추가됨</p>
+
+<h1 id="es2015">ES2015</h1>
+
+<p>ES6 이전 버전인 ES5가 2009년 발표하고 2011년 ES5.1이라는 이름으로 대규모 업데이트가 있었으나 해당내용의 발표가 2015년이었다.</p>
+
+<p>이때, 웹 생태계의 빠른 변화에 맞춰 1년에 한번씩은 무조건 새로운 사양을 발표하고자 하는 움직임이 있었고</p>
+
+<p>Editon번호보다는 발행년도를 기준으로 부르는게 알기 쉽기에 해당 사양의 타이틀에 년도 명칭을 추가하기로함</p>
+
+<h1 id="es2016-es2017">ES2016, ES2017</h1>
+
+<p>현재 공개되어있음
+ES2015만큼의 큰 기능의 변화는 없지만
+새로운 기능이 계속 추가되고 있다</p>
+
+<h1 id="es2015es6-이후의-사양을-모던js라-칭함">ES2015(ES6) 이후의 사양을 모던JS라 칭함</h1>
+
+<p>ES2015의 변화가 워낙커서 그 이전의 것들을 낡은JS(legacy JavaScript), 그 이후를 모던JS (modern JavaScript) 라고 부른다</p>
+
+<p>ES3,ES5 = legacy JS
+ES6 = modern JS</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<p>https://ginpen.com/2017/12/24/es6-vs-es2015/</p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/es6-es2015"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/devops-tf-ecs" data-toggle="tooltip" data-placement="top" title="xx">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/less-unrecognized-option-R" data-toggle="tooltip" data-placement="top" title="docker alpine rails환경에서 발생하는 less: unrecognized option: R 에러">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

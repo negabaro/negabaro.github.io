@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Youtube IFrame Player API란?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/what-is-youtube-iframe-player-api" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Youtube IFrame Player API란? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/what-is-youtube-iframe-player-api">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Youtube IFrame Player API란?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, November 28, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js/youtube"><i class="fa fa-tag"></i> js/youtube</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="iframe-player-api란">IFrame Player API란?</h1>
+
+<p>html에 유투브 영상을 랜더링 해주는 API이다.</p>
+
+<p>일반적으로는 iframe src프로퍼티에 youtube링크를 넣어줌으로 구현이 가능하지만 IFrame Player API은 거기에 더해서 유투브 영상을 간단히 제어할 수 있는 옵션들이 제공된다.</p>
+
+<p>예를들어 커스텀한 버튼을 만들어 해당 버튼을 클릭하면 영상을 재생한다든지 중지시킨다든지
+현재 보고 있는 영상의 Time을 알아내는 getCurrentTime이나 해당 영상의 전체길이가 알 수 있는 getDuration도 사용가능하다.</p>
+
+<p>필자가 개발하고 있는 영상반복재생 서비스인 <a href="https://l-youtube.com">Loop Youtube</a>도 Youtube Iframe API를 사용해 구현했다.</p>
+
+<h1 id="동작방식">동작방식</h1>
+
+<p>iframe태그를 javascript로 동적으로 생성하고 생성한 iframe태그는 하나의 오브젝트로서 사용된다.</p>
+
+<p>그리고 해당 오브젝트에 IFrame Player API로 정의된 메소드를 실행하는 방식으로 제어가 가능한다.</p>
+
+<p>정적으로 iframe태그를 만든후 해당 dom을 js로 제어하는거랑 똑같은거 아님? 이라고 할 수 있는데 이건 none-cross-origin문제로 브라우저 룰 위반이라 제어가 불가능</p>
+
+<h1 id="기본-코드">기본 코드</h1>
+
+<p><a href="https://developers.google.com/youtube/iframe_api_reference">YouTubeIFrame Player API공식 도큐멘트</a>에 기술되어있는 코드는 아래와 같다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- 1. The &lt;iframe&gt; (and video player) will replace this &lt;div&gt; tag. --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"player"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script&gt;</span>
+      <span class="c1">// 2. This code loads the IFrame Player API code asynchronously.</span>
+      <span class="kd">var</span> <span class="nx">tag</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
+
+      <span class="nx">tag</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://www.youtube.com/iframe_api</span><span class="dl">"</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">firstScriptTag</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+      <span class="nx">firstScriptTag</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">tag</span><span class="p">,</span> <span class="nx">firstScriptTag</span><span class="p">);</span>
+
+      <span class="c1">// 3. This function creates an </span><span class="o">&lt;</span><span class="nx">iframe</span><span class="o">&gt;</span> <span class="p">(</span><span class="nx">and</span> <span class="nx">YouTube</span> <span class="nx">player</span><span class="p">)</span>
+      <span class="c1">//    after the API code downloads.</span>
+      <span class="kd">var</span> <span class="nx">player</span><span class="p">;</span>
+      <span class="kd">function</span> <span class="nx">onYouTubeIframeAPIReady</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YT</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span><span class="dl">'</span><span class="s1">player</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+          <span class="na">height</span><span class="p">:</span> <span class="dl">'</span><span class="s1">360</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">width</span><span class="p">:</span> <span class="dl">'</span><span class="s1">640</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">videoId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">M7lc1UVf-VE</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">events</span><span class="p">:</span> <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">onReady</span><span class="dl">'</span><span class="p">:</span> <span class="nx">onPlayerReady</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">onStateChange</span><span class="dl">'</span><span class="p">:</span> <span class="nx">onPlayerStateChange</span>
+          <span class="p">}</span>
+        <span class="p">});</span>
+      <span class="p">}</span>
+
+      <span class="c1">// 4. The API will call this function when the video player is ready.</span>
+      <span class="kd">function</span> <span class="nx">onPlayerReady</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">playVideo</span><span class="p">();</span>
+      <span class="p">}</span>
+
+      <span class="c1">// 5. The API calls this function when the player's state changes.</span>
+      <span class="c1">//    The function indicates that when playing a video (state=1),</span>
+      <span class="c1">//    the player should play for six seconds and then stop.</span>
+      <span class="kd">var</span> <span class="nx">done</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="kd">function</span> <span class="nx">onPlayerStateChange</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span> <span class="o">==</span> <span class="nx">YT</span><span class="p">.</span><span class="nx">PlayerState</span><span class="p">.</span><span class="nx">PLAYING</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">stopVideo</span><span class="p">,</span> <span class="mi">6000</span><span class="p">);</span>
+          <span class="nx">done</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="kd">function</span> <span class="nx">stopVideo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">player</span><span class="p">.</span><span class="nx">stopVideo</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h1 id="vuejs-코드">vue.js 코드</h1>
+
+<p>필자는 vue.js에서 youtube-iframe를 이용해 아래와 같이 구현했다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">player2</span><span class="dl">"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="k">import</span> <span class="nx">YouTubeIframeLoader</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">youtube-iframe</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">export</span> <span class="k">default</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nx">player2</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">YouTubeIframeLoader</span><span class="p">.</span><span class="nx">load</span><span class="p">((</span><span class="nx">YT</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">const</span> <span class="nx">player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YT</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">player2</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="c1">//startSeconds: '1999',</span>
+            <span class="c1">//height: '390',</span>
+            <span class="c1">//width: '640',</span>
+            <span class="na">videoId</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">videoId</span><span class="p">,</span>
+            <span class="c1">//videoId: "Vw-tayLQLuQ",</span>
+            <span class="na">events</span><span class="p">:</span> <span class="p">{</span>
+              <span class="na">onReady</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+              <span class="na">onStateChange</span><span class="p">:</span> <span class="nx">e</span> <span class="o">=&gt;</span> <span class="p">{}</span>
+            <span class="p">}</span>
+          <span class="p">});</span>
+        <span class="p">});</span>
+      <span class="p">},</span>
+  <span class="p">}</span>
+  <span class="p">});</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h1 id="vue-youtube를-사용한-예제">vue-youtube를 사용한 예제</h1>
+
+<p><code class="language-plaintext highlighter-rouge">vue-youtube</code>를 사용하면 더 심플하게 구현이 가능하다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">youtube</span>
+    <span class="p">:</span><span class="nx">video</span><span class="o">-</span><span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">videoId</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">player</span><span class="o">-</span><span class="nx">vars</span><span class="o">=</span><span class="dl">"</span><span class="s2">playerVars</span><span class="dl">"</span>
+    <span class="p">@</span><span class="nd">ready</span><span class="o">=</span><span class="dl">"</span><span class="s2">ready</span><span class="dl">"</span>
+    <span class="p">@</span><span class="nd">playing</span><span class="o">=</span><span class="dl">"</span><span class="s2">playing</span><span class="dl">"</span>
+    <span class="p">@</span><span class="nd">ended</span><span class="o">=</span><span class="dl">"</span><span class="s2">ended</span><span class="dl">"</span>
+    <span class="p">@</span><span class="nd">error</span><span class="o">=</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span>
+    <span class="nx">ref</span><span class="o">=</span><span class="dl">"</span><span class="s2">youtube</span><span class="dl">"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">import</span> <span class="nx">VueYoutube</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vue-youtube</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">VueYoutube</span><span class="p">);</span>
+  <span class="k">export</span> <span class="k">default</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+      <span class="na">computed</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nx">playerVars</span><span class="p">()</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">{</span>
+            <span class="c1">//controls: 0,</span>
+            <span class="na">player3</span><span class="p">:</span> <span class="nb">Object</span><span class="p">,</span>
+            <span class="na">rel</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="na">autoplay</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="na">enablejsapi</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="na">fs</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="na">playsinline</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="na">ivLoadPolicy2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="c1">//playlist: this.videoId,</span>
+            <span class="c1">//muted: 1,</span>
+            <span class="c1">//loop: 1,</span>
+            <span class="na">start</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">start</span><span class="p">,</span>
+            <span class="na">end</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">end</span>
+          <span class="p">};</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+      <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nx">ready</span><span class="p">(){},</span>
+          <span class="nx">playing</span><span class="p">(){},</span>
+          <span class="nx">ended</span><span class="p">(){},</span>
+          <span class="nx">error</span><span class="p">(){}</span>
+      <span class="p">}</span>
+  <span class="p">});</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+</code></pre></div></div>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/what-is-youtube-iframe-player-api"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/how-to-inline-play-youtube" data-toggle="tooltip" data-placement="top" title="모바일 브라우저에서 인라인으로 비디오 재생하는 방법은?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/kabu-api" data-toggle="tooltip" data-placement="top" title="nasdaq주식 정보를 가져올 수 있는 API들 조사">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

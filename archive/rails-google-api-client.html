@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails6 google-oauth2 && google-api-client를 이용해서 YouTube Data API에 억세스 하는 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-google-api-client" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails6 google-oauth2 && google-api-client를 이용해서 YouTube Data API에 억세스 하는 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-google-api-client">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails6 google-oauth2 && google-api-client를 이용해서 YouTube Data API에 억세스 하는 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, August 26, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/devise"><i class="fa fa-tag"></i> devise</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        4 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="개요">개요</h1>
+
+<p>이 포스트에서는 rails에서 google-api-client를 이용해  YouTube Data API에 억세스하는 방법에 대해 정리해본다.</p>
+
+<p>devise,omniauth,google-oauth2의 설정이 끝났다는 전제로 설명한다.</p>
+
+<p>자세한 내용은 <a href="https://negabaro.github.io/archive/rails-devise-with-google-oauth2">Rails6 devise &amp;&amp; omniauth &amp;&amp; google-oauth2를 이용해 인증로직을 구현해보자</a> 이 부분을 참고바란다.</p>
+
+<h1 id="gemfile">Gemfile</h1>
+
+<p>우선 Gemfile에 아래 gem을 추가해서 bundle install 해주자.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'google-api-client'</span>
+</code></pre></div></div>
+
+<p>google-api-client의 스팩은 <a href="https://github.com/googleapis/google-api-ruby-client">google-api-ruby-client github</a>을 참고</p>
+
+<h1 id="refresh_token-추가">refresh_token 추가</h1>
+
+<p>google-api-client이용해서 api취득시 반드시 필요한 refresh_token을 저장해놀 컬럼을 추가해주자
+(컬럼명은 뭐든지 상관없음)</p>
+
+<p>필자는 db migration에 refresh_token을 추가해줬다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#db/migrate/20200818194423_devise_create_users.rb</span>
+<span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:refresh_token</span>
+</code></pre></div></div>
+
+<h1 id="user-create시-refresh_token을-컬럼에-추가">user create시 refresh_token을 컬럼에 추가</h1>
+
+<p>User작성시 위에서 작성한 refresh_token에 값을 넣어준다.
+추가라고 커맨트한 부분만 추가해주면 된다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kp">protected</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">find_for_google</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">email: </span><span class="n">auth</span><span class="p">.</span><span class="nf">info</span><span class="p">.</span><span class="nf">email</span><span class="p">)</span>
+
+    <span class="k">unless</span> <span class="n">user</span>
+      <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="nf">credentials</span><span class="p">.</span><span class="nf">refresh_token</span> <span class="c1"># &lt;&lt;추가</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">email:         </span><span class="n">auth</span><span class="p">.</span><span class="nf">info</span><span class="p">.</span><span class="nf">email</span><span class="p">,</span>
+                         <span class="ss">provider:      </span><span class="n">auth</span><span class="p">.</span><span class="nf">provider</span><span class="p">,</span>
+                         <span class="ss">uid:           </span><span class="n">auth</span><span class="p">.</span><span class="nf">uid</span><span class="p">,</span>
+                         <span class="ss">token:         </span><span class="n">auth</span><span class="p">.</span><span class="nf">credentials</span><span class="p">.</span><span class="nf">token</span><span class="p">,</span>
+                         <span class="ss">refresh_token: </span><span class="n">refresh_token</span><span class="p">,</span> <span class="c1"># &lt;&lt;추가</span>
+                         <span class="c1">#password: Devise.friendly_token[0, 20],</span>
+                         <span class="ss">meta:     </span><span class="n">auth</span><span class="p">.</span><span class="nf">to_yaml</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="n">user</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="scope추가">scope추가</h1>
+
+<p>google api사용시 사용범위를 정해주는 부분에 이번에 사용할 Youtube Data Api억세스에 필요한
+범위를 추가해준다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#config/initializers/devise.rb</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">omniauth</span> <span class="ss">:google_oauth2</span><span class="p">,</span>
+                  <span class="no">ENV</span><span class="p">[</span><span class="s1">'GOOGLE_APP_ID'</span><span class="p">],</span>
+                  <span class="no">ENV</span><span class="p">[</span><span class="s1">'GOOGLE_APP_SECRET'</span><span class="p">],</span>
+                  <span class="ss">skip_jwt: </span><span class="kp">true</span><span class="p">,</span>
+                  <span class="ss">name: :google</span><span class="p">,</span>
+                  <span class="ss">scope: </span><span class="sx">%w(email https://www.googleapis.com/auth/youtube.readonly)</span> <span class="c1"># &lt;&lt;추가</span>
+</code></pre></div></div>
+
+<p>여기까지 설정이 별문제없다면 Youtube Data Api에 억세스가 가능하다.</p>
+
+<h1 id="api-예제">api 예제</h1>
+
+<p>필자는 아래와 같은 api를 만들어서 정상동작하는것을 확인했다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Api::YoutubeController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">before_action</span> <span class="ss">:authenticate_user!</span>
+  <span class="nb">require</span> <span class="s1">'google/api_client/client_secrets.rb'</span>
+  <span class="nb">require</span> <span class="s1">'google/apis/youtube_v3'</span>
+
+  <span class="k">def</span> <span class="nf">video</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="no">Google</span><span class="o">::</span><span class="no">Apis</span><span class="o">::</span><span class="no">YoutubeV3</span><span class="o">::</span><span class="no">YouTubeService</span><span class="p">.</span><span class="nf">new</span> <span class="c1">#1. 인스턴스 생성</span>
+    <span class="n">service</span><span class="p">.</span><span class="nf">authorization</span> <span class="o">=</span> <span class="n">google_secret</span><span class="p">.</span><span class="nf">to_authorization</span> <span class="c1">#2. ClientSecrets 인스턴스 생성</span>
+    <span class="n">service</span><span class="p">.</span><span class="nf">authorization</span><span class="p">.</span><span class="nf">refresh!</span> <span class="c1">#3. 인증 refresh</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">id: </span><span class="s1">'9bZkp7q19f0'</span><span class="p">,</span> <span class="c1">#싸이 강남스타일</span>
+    <span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">service</span><span class="p">.</span><span class="nf">list_videos</span><span class="p">(</span><span class="ss">:snippet</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span> <span class="c1"># 4. api취득</span>
+    <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="n">res</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">google_secret</span>
+    <span class="no">Google</span><span class="o">::</span><span class="no">APIClient</span><span class="o">::</span><span class="no">ClientSecrets</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+      <span class="p">{</span> <span class="s2">"web"</span> <span class="o">=&gt;</span>
+        <span class="p">{</span> <span class="s2">"access_token"</span> <span class="o">=&gt;</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">token</span><span class="p">,</span>
+          <span class="s2">"refresh_token"</span> <span class="o">=&gt;</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">refresh_token</span><span class="p">,</span>
+          <span class="s2">"client_id"</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'GOOGLE_APP_ID'</span><span class="p">],</span>
+          <span class="s2">"client_secret"</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'GOOGLE_APP_SECRET'</span><span class="p">],</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="메모">메모</h1>
+
+<h2 id="api-class-googleapisyoutubev3youtubeservice">API Class: Google::Apis::YoutubeV3::YouTubeService</h2>
+
+<p>Youtube Data Api의 자세한 Document는 아래 URL을 참고하자.</p>
+
+<p>https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/YoutubeV3/YouTubeService</p>
+
+<h2 id="accessnotconfigured-youtube-data-api-v3-has-not-been-used-in-project-xx">accessNotConfigured: YouTube Data API v3 has not been used in project xx</h2>
+
+<p>API활성화를 안시켜주면 아래와 같은 에러가 나온다.
+해당 에러에 있는 링크를 클릭해서 API활성화를 해주자.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>accessNotConfigured: YouTube Data API v3 has not been used in project xx before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=xx then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+</code></pre></div></div>
+
+<h2 id="googleapisauthorizationerror-unauthorized">Google::Apis::AuthorizationError (Unauthorized)</h2>
+
+<p>refresh_token설정이 없으면 에러가 발생한다.</p>
+
+<p>특히 api실행시</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">service</span><span class="p">.</span><span class="nf">authorization</span><span class="p">.</span><span class="nf">refresh!</span>
+</code></pre></div></div>
+
+<p>이 부분이 없으면 첫 로그인후 문제없이 움직이다 token유효기간이 끝난후 
+<code class="language-plaintext highlighter-rouge">Google::Apis::AuthorizationError (Unauthorized):</code>에러가 발생하므로 주의가 필요하다.</p>
+
+<hr />
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://medium.com/@amoschoo/google-oauth-for-ruby-on-rails-129ce7196f35
+https://qiita.com/taptappun/items/a217b7017316881d6459
+
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-google-api-client"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-submit-when-change-select" data-toggle="tooltip" data-placement="top" title="rails select선택시 form submit실행시키는 법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-time_current_vs_time_now" data-toggle="tooltip" data-placement="top" title="Rails Time.current와 Time.now의 차이">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

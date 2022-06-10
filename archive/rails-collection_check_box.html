@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails6.0 collection_check_box란?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-collection_check_box" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails6.0 collection_check_box란? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-collection_check_box">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails6.0 collection_check_box란?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, June 7, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/view"><i class="fa fa-tag"></i> rails/view</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="collection_check_box란">collection_check_box란?</h1>
+
+<p>activeModel에서 관리하는 데이터와 연결해
+checkbox리스트 DOM을 작성하는 레일즈의 view::helpers의 메소드</p>
+
+<h1 id="장점">장점</h1>
+
+<p>빠르게 코딩이 가능(적응하면)
+특히 웹에서 자주 있는 복수의 체크박스를 선택하는 폼 작성시 효율적
+(ex. 경험해본 언어를 체크하시오. 복수의 카테고리를 선택할때)</p>
+
+<h1 id="단점">단점</h1>
+
+<p>학습코스트가 필요(개인적으로 얻어지는 메릿보다 학습코스트가 더큰듯..)
+규율이 심해서 엔지니어의 자율성을 침해
+이게 코딩인지 암기과목인지 현타가 찾아옴</p>
+
+<p>체크박스를 선택하는 페이지가 얼마나 많냐에 따라 학습코스트에 따른 메릿의 비율이 달라질듯</p>
+
+<h1 id="문법">문법</h1>
+
+<p>formbuilder의 레시버로 사용할경우(form에 의존하는)와 아닌경우 2가지로 나뉜다.</p>
+
+<h2 id="form에-의존하는경우">form에 의존하는경우</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="p">.</span><span class="nf">collection_check_boxes</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">value_method</span><span class="p">,</span> <span class="n">text_method</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">html_options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>첫번째 인자인 object를 생략가능하다.</p>
+
+<h2 id="아닌경우">아닌경우</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">collection_check_boxes</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="nb">method</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">value_method</span><span class="p">,</span> <span class="n">text_method</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">html_options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>첫번째 인자인 object를 지정해줘야한다.</p>
+
+<h1 id="argument설명">argument설명</h1>
+
+<p>각 argument에 대한 설명</p>
+
+<h2 id="첫번째-인자-object생략가능">첫번째 인자 object(생략가능)</h2>
+
+<p>데이터를 저장할 테이블명
+form에 의존하는 collection_check_box를 사용시 생략가능하다.</p>
+
+<p>object인자에 넣어준값이 아래 결과의 xx부분이된다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"xx[yy] /&gt;
+</span></code></pre></div></div>
+
+<p>formbuilder를 사용할경우 아래의 <code class="language-plaintext highlighter-rouge">form_with scope:</code>에 지정한 부분이 선택된다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span> <span class="n">form_name</span> <span class="o">=</span> <span class="ss">:xx</span>
+<span class="o">=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">scope: </span><span class="n">form_name</span><span class="p">,</span> <span class="ss">url: </span><span class="n">create_xx_path</span><span class="p">,</span> <span class="ss">method: :post</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">collection_check_boxes</span><span class="p">(</span><span class="err">생략</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="두번째-인자-method생략가능">두번째 인자 method(생략가능)</h2>
+
+<p>데이터를 저장할 컬럼명을 지정
+지정하지 않으면 check_box돔의 name값이 사용됨</p>
+
+<p><code class="language-plaintext highlighter-rouge">object.method</code>의 값이 후술할 value_method의 결과와 일치하면 checked상태가 됨.</p>
+
+<p>method인자에 <code class="language-plaintext highlighter-rouge">:yy</code>나<code class="language-plaintext highlighter-rouge">"yy"</code>라고 지정해주면 아래와 같은 폼이 만들어진다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"xx[yy] /&gt;
+</span></code></pre></div></div>
+
+<p>사용하지 않을 경우 <code class="language-plaintext highlighter-rouge">nil</code>을 적어주면된다.</p>
+
+<h2 id="세번째-인자-collection필수">세번째 인자 collection(필수)</h2>
+
+<p>collection_check_box의 핵심 옵션..!</p>
+
+<p>여기에 지정한 데이터의 수만큼 check_box가 생성됨
+이름에서 나오듯 collection형태만을 받을 수 있음. 단순 배열을 넘기면 에러가나므로 주의
+1,2번째 인자와 관계없이 동작이 가능</p>
+
+<p>※배열혹은 ActiveRecord::Relation형태면 가능하다는 문구도 발견 
+배열이 들어가지나??</p>
+
+<h2 id="4번째-인자-value_method필수">4번째 인자 value_method(필수)</h2>
+
+<p>input tag의 value속성에 들어갈 값
+주의해야될게 collection안의 요소에 존재하는 컬럼을 지정해야한다.(이부분 주의가 필요)</p>
+
+<p>예를들어 collection안에 pp라는 요소가 있고 해당값이  zz라면
+아래와 같이 렌더링된다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">collection</span><span class="p">.</span><span class="nf">pp</span> <span class="o">=</span> <span class="s2">"zz"</span>
+<span class="c1"># =&gt; &lt;input type="checkbox" value="zz" /&gt;</span>
+</code></pre></div></div>
+
+<p>value적기 싫다고(value가 없으면 의미가 없는 form이지만) 안적어주고 싶어도
+rails의 규약에서는 그것을 기만으로 판단하고 허용하지 않는다.
+nil도 안먹힘. 무조건 collection안에 있는 요소를 하나 지정해줘야한다..(ㅎㄷㄷ)</p>
+
+<h2 id="5번째-인자-text_method필수">5번째 인자 text_method(필수)</h2>
+
+<p>input tag안의 텍스트에 들어갈 값
+value_method와 마찬가지로 collection안의 요소에 존재하는 컬럼을 지정해야한다.</p>
+
+<p>그런데 text가 필요없을땐 어떻게 해야하나??
+그딴건 고려하지 않음..무조건 collection안의 요소중 하나를 지정해야한다. (쓰지도 않지만)
+text없이 check_box만드는 케이스도 많은데 이걸 강제하는 이유를 모르겠음..</p>
+
+<h2 id="6번째-인자-options7번째-이후-인자는-html_options생략가능">6번째 인자 options,7번째 이후 인자는 html_options(생략가능)</h2>
+
+<p>초기선택값이나 id,class를 지정할때 사용
+필수옵션이 아님.</p>
+
+<h3 id="include_hidden">include_hidden</h3>
+
+<p>옵션중에 유용한 친구.</p>
+
+<p>そこで、チェックが入っていない時、何も送られてこないようにinclude_hidden: falseで設定します。
+そうするとチェックを入れてない時何も送られてこないのでpresenceでチェックが可能です。</p>
+
+<p>validates :my_check_boxies, presence: true</p>
+
+<h2 id="block생략가능">&amp;block(생략가능..)</h2>
+
+<p>아래 코드의 do ~end사이에 들어가는 내용</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>collection_check_box(...) do
+end
+</code></pre></div></div>
+
+<p>생성되는 체크박스의 형태나 라벨을 변경할때 사용</p>
+
+<p>생략한적은 아직 한번도 없지만 생략이 가능하다. 생략하면 collection.text가 라벨에 자동으로 추가됨</p>
+
+<h2 id="block의-사용예제">block의 사용예제</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>= f.collection_check_boxes(nil, @list, :entity_id, :entity_id) do |b|
+  = b.check_box class: 'is-checkradio'
+</code></pre></div></div>
+
+<h1 id="db에-존재하지-않는-값을-collection에-넣고-싶을때는">DB에 존재하지 않는 값을 collection에 넣고 싶을때는?</h1>
+
+<p>단순배열이 가능하다는 글도 봤는데 필자가 테스트한 결과 동작하지 않음.
+DB에 존재하는 값을 checkbox리스트에 두고 싶을때는</p>
+
+<p>ActiveModel을 만들어서 ActiveRecord와 같은 클래스를 만드는게 편함</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Prefecture</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span>
+  <span class="no">ALL</span> <span class="o">=</span> <span class="sx">%w[서울 대전 대구 부산]</span><span class="p">.</span><span class="nf">map</span><span class="p">.</span><span class="nf">with_index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span> <span class="n">new</span><span class="p">(</span><span class="ss">id: </span><span class="n">index</span><span class="p">,</span> <span class="ss">name: </span><span class="nb">name</span><span class="p">)}.</span><span class="nf">freeze</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="collection_check_box를-사용하지-않고-check_box리스트를-구현하는법">collection_check_box를 사용하지 않고 check_box리스트를 구현하는법</h1>
+
+<p>collection_check_box를 사용하지않고 다른 rails문법으로 check_box리스트를 구현하는법
+each로 loop해서 만드는 수밖에 ^^;</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="vi">@configs</span> <span class="o">=</span> <span class="p">[{</span><span class="ss">name: </span><span class="s1">'111'</span><span class="p">,</span> <span class="ss">value: </span><span class="n">oc</span><span class="p">.</span><span class="nf">status1</span><span class="p">,</span> <span class="ss">dom_id: </span><span class="s1">'status1'</span><span class="p">},</span>
+              <span class="p">{</span><span class="ss">name: </span><span class="s1">'222'</span><span class="p">,</span> <span class="ss">value: </span><span class="n">oc</span><span class="p">.</span><span class="nf">status2</span><span class="p">,</span> <span class="ss">dom_id: </span><span class="s1">'status2'</span><span class="p">},</span>
+              <span class="p">{</span><span class="ss">name: </span><span class="s1">'222'</span><span class="p">,</span> <span class="ss">value: </span><span class="n">oc</span><span class="p">.</span><span class="nf">status3</span><span class="p">,</span> <span class="ss">dom_id: </span><span class="s1">'status3'</span><span class="p">}]</span>
+<span class="o">=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">url: </span><span class="n">organization_config_path</span><span class="p">,</span> <span class="ss">method: :put</span><span class="p">,</span> <span class="ss">local: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s2">"are you sure?"</span> <span class="p">}</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+  <span class="p">.</span><span class="nf">border</span><span class="o">-</span><span class="n">list</span>
+    <span class="o">-</span> <span class="vi">@configs</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
+      <span class="p">.</span><span class="nf">border</span><span class="o">-</span><span class="n">list</span><span class="o">-</span><span class="n">item</span>
+        <span class="p">.</span><span class="nf">border</span><span class="o">-</span><span class="n">list_title</span>
+          <span class="n">label</span>
+            <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
+        <span class="p">.</span><span class="nf">border</span><span class="o">-</span><span class="n">list_check</span>
+          <span class="p">.</span><span class="nf">field</span>
+            <span class="o">=</span> <span class="n">check_box_tag</span><span class="p">(</span><span class="s2">"config[</span><span class="si">#{</span><span class="n">b</span><span class="p">[</span><span class="ss">:dom_id</span><span class="p">]</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span><span class="kp">true</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="ss">:valueid</span><span class="p">:</span> <span class="n">b</span><span class="p">[</span><span class="ss">:dom_id</span><span class="p">],</span> <span class="ss">class: </span><span class="s1">'switch'</span><span class="p">)</span>
+            <span class="o">=</span> <span class="n">label_tag</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="ss">:dom_id</span><span class="p">],</span> <span class="s1">''</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://qiita.com/tanutanu/items/b86c4adc26ae464c71fd
+https://qiita.com/RaimuEr/items/58971510735c6b906c50
+https://qiita.com/MasamotoMiyata/items/f47621606f1cd6384e15
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-collection_check_box"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-check_box_tag" data-toggle="tooltip" data-placement="top" title="Rails Check_box_tag">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-view-form-label" data-toggle="tooltip" data-placement="top" title="Rails View Form Label">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

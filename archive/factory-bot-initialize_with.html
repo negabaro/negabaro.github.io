@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails FactoryBot에서 initialize_with을 이용해 생성된 데이터를 재사용하는 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/factory-bot-initialize_with" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails FactoryBot에서 initialize_with을 이용해 생성된 데이터를 재사용하는 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/factory-bot-initialize_with">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails FactoryBot에서 initialize_with을 이용해 생성된 데이터를 재사용하는 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, April 10, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/factorybot"><i class="fa fa-tag"></i> rails/factorybot</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="결론">결론</h2>
+
+<p><code class="language-plaintext highlighter-rouge">initialize_with</code>을 사용할때는 FactoryBot정의가 복잡해질 수 있으므로 주의해서 사용해야한다.</p>
+
+<h2 id="initialize_with이란">initialize_with이란?</h2>
+
+<p>FactoryBot에서 제공하는 메소드로 한번 생성된 데이터를 재사용할때 사용된다.</p>
+
+<p>build,create를 몇번을 하더라도 하나의 인스턴스를 사용한다.</p>
+
+<h2 id="initialize_with를-사용하고-싶을때">initialize_with를 사용하고 싶을때</h2>
+
+<p>필자의 경우 아래경우 initialize_with를 사용한다.</p>
+
+<ol>
+  <li>시스템상에서 특정수 이상은 증가하지 않는 값일때</li>
+  <li>똑같은 데이터를 무한대로 늘리기 싫을때</li>
+</ol>
+
+<h3 id="1-시스템상에서-특정수-이상은-증가하지-않는-값일때">1. 시스템상에서 특정수 이상은 증가하지 않는 값일때</h3>
+
+<p><code class="language-plaintext highlighter-rouge">시스템상 특정수 이상 증가하지 않는값</code>이라 하면</p>
+
+<ol>
+  <li>광역시(6개를 넘을 수 없음)</li>
+  <li>트와이스 멤버(9명을 넘을 수 없음)</li>
+</ol>
+
+<p>등이 있을 수 있다.</p>
+
+<p>※실제 validation이나 유니크 설정에 의해 Duplicate에러가 발생할 수 있다.</p>
+
+<h3 id="2-똑같은-데이터를-무한대로-늘리기-싫을때">2. 똑같은 데이터를 무한대로 늘리기 싫을때</h3>
+
+<p>반복해서 써도 상관없는 데이터(각 인스턴스간 의존성이 없는전제)를 무한대로 늘려서 리소스 낭비나 실행시간을 늘리고 싶지 않을때 사용할 수 있다.</p>
+
+<h2 id="사용방법">사용방법</h2>
+
+<p><code class="language-plaintext highlighter-rouge">initialize_with</code>안에 <code class="language-plaintext highlighter-rouge">find_or_initialize_by</code>를 사용하는 방식을 많이 쓴다.</p>
+
+<p>확실한것은 아니지만 <code class="language-plaintext highlighter-rouge">find_or_create_by</code>를 써도 문제가 없는것 같다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:twice</span> <span class="k">do</span>
+
+    <span class="n">initialize_with</span> <span class="k">do</span>
+      <span class="no">Twice</span><span class="p">.</span><span class="nf">find_or_initialize_by</span><span class="p">(</span>
+        <span class="ss">name: </span><span class="s1">'sana'</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>위와 같이 작성하고 <code class="language-plaintext highlighter-rouge">FactoryBot.crate :twice</code>를 몇번 실행해도 <code class="language-plaintext highlighter-rouge">sana</code>가 2명이 될일은 없다.</p>
+
+<h2 id="initialize_with를-사용시-장점">initialize_with를 사용시 장점</h2>
+
+<ol>
+  <li>리소스 낭비X</li>
+  <li>실행시간이 짦아짐</li>
+  <li>시스템 사양에 맞는 데이터 구현이 가능</li>
+</ol>
+
+<h2 id="initialize_with를-사용시-단점">initialize_with를 사용시 단점</h2>
+
+<h3 id="더미-데이터-구현시-귀찮음각종-에러에-시달릴-가능성이-있음">더미 데이터 구현시 귀찮음(각종 에러에 시달릴 가능성이 있음)</h3>
+
+<p>외부키 제약에러에 걸린다든가..Duplicate Index에러에 시달린다.</p>
+
+<p>또한 <code class="language-plaintext highlighter-rouge">initialize_with</code>를 사용한 모델에 관계된 다른 모델의 더미데이터 생성시 영향을 끼치므로 복잡한 관계모델 구현시 시간이 걸릴 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">initialize_with</code> 관련해서 헤맨 부분이 있는데  그 부분은 따로 정리해서 포스트할 예정이다.</p>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/factory-bot-initialize_with"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/factory-bot-basic" data-toggle="tooltip" data-placement="top" title="Rails FactoryBot이란? 설치부터 사용방법까지 알아보자.">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/factory-bot-relation-model" data-toggle="tooltip" data-placement="top" title="Rails FactoryBot에서 관계된 모델 데이터를 동시에 생성하는 방법">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

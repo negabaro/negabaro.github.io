@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="slack에서 markdown table 그리는 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/how-to-draw-mrkdown-table" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>slack에서 markdown table 그리는 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/how-to-draw-mrkdown-table">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>slack에서 markdown table 그리는 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, February 7, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/slack"><i class="fa fa-tag"></i> slack</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>slack에서 markdown기능을 서포트하지 않아서 우리가 아는 markdown table을 그릴 수 없다.</p>
+
+<p>이 포스트에서는 slack에서 markdown table과 비슷한 table을 구현하는 방법에 대해 알아보자.</p>
+
+<h2 id="방법1">방법1</h2>
+
+<p>테이블을 캡쳐해서 파일로 업로드한다.(귀찮으므로 피하고 싶다.)</p>
+
+<h2 id="방법2">방법2</h2>
+
+<p>슬랙에서 제공하는 <a href="https://api.slack.com/messaging/composing/layouts#block-basics">fileds</a>를 이용해 구현하는 방법이 있다.</p>
+
+<p>fileds를 사용하면 border가 없고 <code class="language-plaintext highlighter-rouge">2 column테이블</code> 밖에 만들 수 없다는 문제가 있다. (그 이상 만들면 레이아웃이 깨짐)</p>
+
+<h2 id="방법3">방법3</h2>
+
+<p><a href="https://app.slack.com/block-kit-builder/T5LLAJ415#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22%60%60%60%20------------%20------------%20-----------%20%5Cn%7C%20Header%201%20%20%20%7C%20Header%202%20%20%20%7C%20Header%203%20%20%7C%5Cn%20============%20============%20===========%20%5Cn%7C%20body%20row%201%20%7C%20column%202%20%20%20%7C%20column%203%20%20%7C%5Cn%20------------%20------------%20-----------%20%60%60%60%22%7D%7D%5D%7D">sample</a>과 같이 문자(monospace font)로 테이블을 만들어 본다.</p>
+
+<p>markdown table과 가장 근접한 효과를 얻을 수 있다.</p>
+
+<h2 id="방법3이-가장-근접한-솔루션인데">방법3이 가장 근접한 솔루션인데</h2>
+
+<p>방법3이 가장 근접한 솔루션인데 일일이 테이블 텍스트를 만드는게 귀찮다.</p>
+
+<p>먼저 변수를 넣으려면</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">monthly_numbers_str</span> <span class="o">=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">```</span><span class="dl">"</span>
+<span class="nx">monthly_numbers_str</span> <span class="o">+=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">{</span><span class="dl">"</span><span class="nx">Month</span><span class="dl">"</span><span class="s2">.ljust(7)}{</span><span class="dl">"</span><span class="nx">Users</span><span class="dl">"</span><span class="s2">.ljust(7)}</span><span class="se">\n</span><span class="dl">"</span>
+
+<span class="nx">monthly_numbers_str</span> <span class="o">+=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">{</span><span class="dl">"</span><span class="nx">Jan</span><span class="dl">"</span><span class="s2">.ljust(7)}{</span><span class="dl">"</span><span class="mi">15</span><span class="dl">"</span><span class="s2">.ljust(7)}</span><span class="se">\n</span><span class="dl">"</span>
+<span class="nx">monthly_numbers_str</span> <span class="o">+=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">{</span><span class="dl">"</span><span class="nx">Feb</span><span class="dl">"</span><span class="s2">.ljust(7)}{</span><span class="dl">"</span><span class="mi">19</span><span class="dl">"</span><span class="s2">.ljust(7)}</span><span class="se">\n</span><span class="dl">"</span>
+<span class="nx">monthly_numbers_str</span> <span class="o">+=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">{</span><span class="dl">"</span><span class="nx">Mar</span><span class="dl">"</span><span class="s2">.ljust(7)}{</span><span class="dl">"</span><span class="mi">30</span><span class="dl">"</span><span class="s2">.ljust(7)}</span><span class="se">\n</span><span class="dl">"</span>
+<span class="nx">monthly_numbers_str</span> <span class="o">+=</span> <span class="nx">f</span><span class="dl">"</span><span class="s2">```</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<p>이런식으로 해야한다. 행이나 열이 늘어갈때 유연하게 대응하기 어렵다.</p>
+
+<p>monospace font를 자동으로 생성해주는 javaascript OSS는 없을까?</p>
+
+<p>있었다. <a href="https://github.com/bahmutov/console.table">console-table</a> 과<a href="https://github.com/wooorm/markdown-table">markdown-table</a>가 있었는데 
+markdown-table이 조금더 옵션이 많고 테이블과 비슷했기에 markdown-table을 사용했다.</p>
+
+<h2 id="markdown-table">markdown-table</h2>
+
+<p><code class="language-plaintext highlighter-rouge">npm i markdown-table</code>으로 설치후</p>
+
+<p>아래와 같이 간단히 사용이 가능했다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">table</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">markdown-table</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">table</span><span class="p">([</span>
+  <span class="p">[</span><span class="dl">"</span><span class="s2">Stock</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Price</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Change</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">latest date</span><span class="dl">"</span><span class="p">],</span>
+  <span class="p">[</span><span class="nx">sym</span><span class="p">,</span> <span class="nx">price</span><span class="p">,</span> <span class="nx">changePer</span><span class="p">,</span> <span class="nx">date</span><span class="p">]</span>
+<span class="p">]);</span>
+
+<span class="kd">const</span> <span class="nx">t2</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">```</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">t</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">```</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>t2를 slack메시지 전송시 blocks에 담아주기만 하면 된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/107134765-6647d200-6938-11eb-911b-98585e2d9a1f.png" alt="image" /></p>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/how-to-draw-mrkdown-table"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/slack-how-to-pass-args-slash-command" data-toggle="tooltip" data-placement="top" title="slack slash command의 인자를 lambda에 넘겨주는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/growth-stock__vs__value-stock" data-toggle="tooltip" data-placement="top" title="성장주와 가치주의 차이">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

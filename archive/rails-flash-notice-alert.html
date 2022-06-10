@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails flash오브젝트에 대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-flash-notice-alert" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails flash오브젝트에 대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-flash-notice-alert">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails flash오브젝트에 대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, May 4, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="플래쉬-오브젝트란">플래쉬 오브젝트란</h3>
+
+<p>Rails에서 간단한 메시지를 뷰에서 보여주게 하고 싶을때 사용되는 오브젝트입니다.
+컨트롤러에서 보여질 메시지를 지정해서 뷰에 넘겨줍니다.
+예를 들면 어떤 액션에 대해서 성공하거나 실패했을때 표시해줍니다.</p>
+
+<h3 id="기본">기본</h3>
+
+<p>컨트롤러에서 flash오브젝트를 선언해주고 해당 뷰에서 그것을 표시합니다.</p>
+
+<h4 id="컨트롤러">컨트롤러</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">test1</span>
+  <span class="n">flash</span><span class="p">[</span><span class="ss">:test</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"test 플래쉬입니다."</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="뷰">뷰</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">%=   flash[:test]  %&gt;</span></code></pre></figure>
+
+<p>bootstrap등을 이용해 css설정을 해주지 않으면 
+뷰에서는 test플래쉬입니다 라는 text message만 보여지게 됩니다.</p>
+
+<h3 id="실제-사용예">실제 사용예</h3>
+
+<p>css를 적용후 flash메시지를 표시해봅시다.</p>
+
+<h4 id="css">css</h4>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.flash</span> <span class="p">{</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="m">251</span><span class="p">,</span> <span class="m">170</span><span class="p">,</span> <span class="m">88</span><span class="p">);</span>
+  <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">64px</span><span class="p">;</span>
+  <span class="nl">z-index</span><span class="p">:</span> <span class="m">10</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">2px</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="컨트롤러-설정">컨트롤러 설정</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"전체공개 했습니다"</span></code></pre></figure>
+
+<h4 id="뷰-설정applicationhtmlerb">뷰 설정(application.html.erb)</h4>
+
+<p>보통은 해당뷰에 설정하는것보다  layout/application.html.erb에서 공통적으로 flash메시지를 표시하는 경우가 많습니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#/app/views/layouts/application.html.erb</span>
+    <span class="o">&lt;</span><span class="sx">% if </span><span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="o">%&gt;</span>
+      <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"flash"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="sx">%= flash[:notice] %&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;</span></code></pre></figure>
+
+<h4 id="화면-캡쳐">화면 캡쳐</h4>
+
+<p>이런식으로 화면에 표시가 되는걸 확인할 수 있습니다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/39665007-973a7b7e-50c7-11e8-9e52-2cd36299655b.png" alt="image" /></p>
+
+<h3 id="그외">그외</h3>
+
+<h4 id="리다이렉트된-페이지에-flash메시지를-보여주는-로직을-넣을것">리다이렉트된 페이지에 flash메시지를 보여주는 로직을 넣을것.</h4>
+
+<p><code class="language-plaintext highlighter-rouge">application.html.erb</code>와 같은 공통로직에 flash 메시지를 표시하는 로직을 넣으면 신경안써도 될부분이긴 하지만 
+flash를 표시하는 메시지는 어떤 액션이 처리된후 리다이렉트 된 페이지에 선언해줘야합니다.</p>
+
+<p>예를들면 등록 -&gt; 등록완료 -&gt; top페이지 라면 top페이지에 flash를 표시하는 로직이 있어야 된다는 얘깁니다.</p>
+
+<h4 id="컨트롤러에서-리다이렉트할때-flash메시지를-보내기">컨트롤러에서 리다이렉트할때 flash메시지를 보내기</h4>
+
+<p>리다이렉트시 flash를 자주 사용하므로,redirect_to메소드에서 flash메소드를 넘겨주는 것이 가능합니다.</p>
+
+<p>이것을 이용하면 flash[:notice]나flash[:error]와 같은 의미로 사용가능합니다</p>
+
+<h5 id="예제">예제</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">redirect_to</span> <span class="vi">@user</span><span class="p">,</span> <span class="ss">notice: </span><span class="s1">'로그인에 성공했습니다.'</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">redirect_to</span> <span class="n">login_url</span><span class="p">,</span> <span class="ss">alert: </span><span class="s1">'로그인에 실패했습니다.'</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">redirect_to</span> <span class="ss">action: </span><span class="s1">'index'</span><span class="p">,</span> <span class="ss">flash: </span><span class="p">{</span><span class="ss">notice: </span><span class="s1">'로그인에 성공했습니다.'</span><span class="p">}</span></code></pre></figure>
+
+<h4 id="flash의-종류별로-다른-css적용">flash의 종류별로 다른 css적용</h4>
+
+<p>위에서는 원초적으로 flash의 오브젝트를 넘겨서 그것을 표시하는 것에 포커스를 맞췄는데</p>
+
+<p>flash에서는 flash[:notice],flash[:alert] 등 여러가지 변수를 지정가능합니다.</p>
+
+<p>그 변수별로 보여지는 css를 조정하거나 html을 바꿔주고 싶을때는 이하와 같이 flash.each 를 
+이용하면 간편합니다.</p>
+
+<h5 id="예제1">예제1)</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="o">&lt;</span><span class="sx">% flash.each </span><span class="k">do</span> <span class="o">|</span><span class="n">type</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span> <span class="sx">%&gt;
+&lt;div class="flash" role="alert"&gt;</span>
+  <span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"close"</span> <span class="n">data</span><span class="o">-</span><span class="n">dismiss</span><span class="o">=</span><span class="s2">"alert"</span><span class="o">&gt;</span><span class="err">×</span><span class="o">&lt;</span><span class="sr">/button&gt;
+  &lt;%= message %&gt;
+&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span></code></pre></figure>
+
+<h5 id="예제2">예제2)</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">% if </span><span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="o">%&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"alert alert-success"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sx">%= flash[:notice] %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+&lt;% if flash[:alert] %&gt;
+  &lt;div class=</span><span class="s2">"alert alert-danger"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sx">%= flash[:alert] %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;</span></code></pre></figure>
+
+<h4 id="flash-close버튼-만들기">flash close버튼 만들기</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"flash"</span> <span class="n">role</span><span class="o">=</span><span class="s2">"alert"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"close"</span> <span class="n">data</span><span class="o">-</span><span class="n">dismiss</span><span class="o">=</span><span class="s2">"alert"</span><span class="o">&gt;</span><span class="err">×</span><span class="o">&lt;</span><span class="sr">/button&gt;
+  &lt;%= message %&gt;
+&lt;/</span><span class="n">div</span><span class="o">&gt;</span></code></pre></figure>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-flash-notice-alert"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/profile.change-pw-resign" data-toggle="tooltip" data-placement="top" title="Rails User패스워드 변경,탈퇴 기능 만들기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/aasm" data-toggle="tooltip" data-placement="top" title="Rails AASM로 상태 관리기능 만들기">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

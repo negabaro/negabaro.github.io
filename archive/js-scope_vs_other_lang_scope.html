@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="JavaScript의Scope과 타언어 scope 와의 차이" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-scope_vs_other_lang_scope" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>JavaScript의Scope과 타언어 scope 와의 차이 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-scope_vs_other_lang_scope">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>JavaScript의Scope과 타언어 scope 와의 차이</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, March 9, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="scope에-대해서-알아야하는-이유">scope에 대해서 알아야하는 이유</h1>
+
+<p>변수와 매개변수의 접근성과 생존기간을 제어할 수 있음.
+JavaScript에 대한 깊은 이해를 하기 위해서는 클로저(Closure)에 대해 알아야 되며 이를 알기 위해서는 Scope 개념의이해가 필요함.</p>
+
+<h1 id="scope유효범위이란">scope(유효범위)이란?</h1>
+
+<p>Scope를 직역하면 영역, 범위라는 뜻이지만 프로그램 언어에서의 유효범위는 어느 범위까지 참조하는지. 즉, 변수와 매개변수(parameter)의 접근성과 생존기간을 뜻한다.</p>
+
+<p>#유효범위의 종류</p>
+
+<p>javascript의 유효범위는 2종류가 있음 하나는 <code class="language-plaintext highlighter-rouge">전역 유효범위(Global Scope)</code>, 또 하나는 <code class="language-plaintext highlighter-rouge">지역 유효범위(Local Scope)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">전역 유효범위</code>는 스크립트 전체에서 참조되는 것을 의미하는데, 말 그대로 스크립트 내 어느 곳에서든 참조됨</p>
+
+<p><code class="language-plaintext highlighter-rouge">지역 유효범위</code>는 정의된 함수 안에서만 참조되는 것을 의미하며, 함수 밖에서는 참조하지 못함.</p>
+
+<h1 id="javascript의-유효범위는-타언어와-다름">JavaScript의 유효범위는 타언어와 다름</h1>
+
+<p>JavaScript의 유효범위는 다른 언어의 유효범위와는 다르다.
+다른 프로그래밍 언어에 익숙한 개발자들은 주의가 필요</p>
+
+<h1 id="javascript-유효범위의-특징">JavaScript 유효범위의 특징</h1>
+
+<p>언급했듯 JavaScript의 유효범위는 다른 프로그래밍언어와 다른 개념을 갖는다.</p>
+
+<p>JavaScript 유효범위만의 특징을 크게 분류하여 나열하면 다음과 같음.</p>
+
+<ol>
+  <li>함수 단위의 유효범위</li>
+  <li>변수명 중복 허용</li>
+  <li>var 키워드의 생략</li>
+  <li>렉시컬 특성</li>
+</ol>
+
+<h2 id="1-함수-단위의-유효범위">1. 함수 단위의 유효범위</h2>
+
+<p>다른 프로그래밍 언어들은 유효범위의 단위가 블록 단위이기 때문에 if,for문 안에서 선언한 변수를 해당 블록 밖에서 사용할 수 없지만</p>
+
+<p>javascript는 함수 단위의 유효범위여서 함수 안에만 있으면 같은 유효범위를 가짐</p>
+
+<p>함수안이라면 블록이 몇천개라도 싸그리 무시하고 참조가능하다는 얘기</p>
+
+<h2 id="2-변수명-중복-허용">2. 변수명 중복 허용</h2>
+
+<p>JavaScript는 다른 프로그래밍 언어와는 달리 변수명이 중복되어도 에러나 나지않음.
+단, 같은 변수명이 여러 개 있는 변수를 참조할 때 가장 가까운 범위의 변수를 참조함.</p>
+
+<h3 id="예제">예제</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var song = 'Signal';
+function FamousSong() {
+  var song = 'TT';
+  if (true) {
+    if(true) {
+      var song = 'Yes or Yes';
+    }
+  }
+  console.log("song:", song);
+}
+FamousSong();
+
+//실행결과
+/*
+song: 'Yes or Yes'
+*/
+</code></pre></div></div>
+
+<h2 id="3-var-키워드의-생략">3. var 키워드의 생략</h2>
+
+<p>다른 프로그래밍 언어의 경우 변수를 선언할 때 int나 char와 같은 변수 형을 썼지만, JavaScript는 var 키워드를 사용함</p>
+
+<p>또한 다른 프로그래밍 언어의 경우 변수를 선언할 때 변수형을 쓰지 않을 경우 에러가 나지만 JavaScript는 var 키워드가 생략이 가능함.</p>
+
+<p>기억해야할것은 <code class="language-plaintext highlighter-rouge">var 키워드를 빼먹고 변수를 선언할 경우 전역 변수로 선언</code>된다는것</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function twice() {
+ cnt = 9;
+ console.log("cnt = " + cnt);
+}
+
+function itzy() {
+ console.log("cnt = " + cnt);
+}
+twice(); //cnt =9
+itzy();  //cnt =9
+</code></pre></div></div>
+
+<p>위 예제를 보면 twice함수안에서 cnt변수에 9를 대입하고 itzy함수에서 cnt를 선언하지 않았는데 불구하고 twice함수에서 선언한 cnt값을 출력하는걸 알 수 있다.</p>
+
+<h2 id="4-렉시컬-특성">4. 렉시컬 특성</h2>
+
+<p>렉시컬 특성이란 함수 실행 시 유효범위를 <code class="language-plaintext highlighter-rouge">함수 실행 환경이 아닌 함수 정의 환경으로 참조하는 특성</code>이다.</p>
+
+<p>위의 좌측코드를 봤을 때 함수 twice에서 함수 itzy를 호출하면 실행이 됨. twice,itzy함수 모두 전역에서 생성된 함수여서 서로를 참조할 수 있는것.</p>
+
+<p>twice함수에서 itzy를 실행하므로 itzy함수가 실행되었을때는 twice함수에서 정의한 변수가 참조가능할지도 모른다.
+하지만 이 렉시컬 특성에 의해 함수 정의시 기준에 <code class="language-plaintext highlighter-rouge">xx</code>변수가 없으면 itzy함수에서 <code class="language-plaintext highlighter-rouge">xx</code>를 찾을 수 없으므로 에러가 발생한다</p>
+
+<h1 id="블록-스코프가-존재하지-않음">블록 스코프가 존재하지 않음?</h1>
+
+<p>Java의 경우 if,for등 {}의 블록안에서도 블록스코프가 존재하나 Javascript는 존재하지 않음?</p>
+
+<p>Javascript에서 블록스코프를 사용하고 싶으면 with명령을 사용하거나 무명함수를 정의 정의해서 바로 실행하는 방법이</p>
+
+<p>블록스코프와 같은효과를 내는게 가능
+let을 사용해도 블록스코프가 만들어짐</p>
+
+<h1 id="let">let</h1>
+
+<p>let で変数を宣言すればブロックスコープになりますよ</p>
+
+<h1 id="정리">정리</h1>
+
+<p>글로벌 변수는 프로그램 어디에서든 참조가 가능,로컬 변수는 정의한 함수안에서만 참조가능
+로컬변수는 var이 있고 없고에 따라 scope가 변함/변수 선언시 var를 붙이자
+호이스팅에 의한 혼란을 피하기 위해 함수안에서 가장윗행에 변수선언을 적자
+로컬변수의 스코프,
+仮引数もローカル変数のスコープだが、参照渡しの場合は関数外から参照するオブジェクトにも影響を与えるので気をつける。</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://tacamy.hatenablog.com/entry/2012/12/30/191125
+http://www.nextree.co.kr/p7363/
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-scope_vs_other_lang_scope"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/js-%EC%83%9D%EC%84%B1%EC%9E%90%ED%95%A8%EC%88%98" data-toggle="tooltip" data-placement="top" title="Javascript생성자 함수란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-scope-chain" data-toggle="tooltip" data-placement="top" title="Javascript scope chain이란">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

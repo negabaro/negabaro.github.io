@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="ruby 모듈 시스템이란?require과 주변 메소드들 소개" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/ruby-module-system-require-etc" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>ruby 모듈 시스템이란?require과 주변 메소드들 소개 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/ruby-module-system-require-etc">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>ruby 모듈 시스템이란?require과 주변 메소드들 소개</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, February 9, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/ruby"><i class="fa fa-tag"></i> ruby</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="모듈-시스템이란">모듈 시스템이란?</h2>
+
+<p>A라는 파일이 다른 파일의 기능을 가져와서 동작 시키는 형태를 일컬음
+루비에서는<code class="language-plaintext highlighter-rouge">Kernel.#require</code> 메소드를 이용해서 구현하고 있다.
+이 포스트에서는 require메소드와 주변기능들에 대해 소개하고자 한다.</p>
+
+<h2 id="require">require</h2>
+
+<p>require은 외부파일의 기능을 현재 파일에서 사용할때 사용한다.
+기본적으로 사용하고 싶은 파일을 확장자없이 적어서 불러준다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require "./sub"
+</code></pre></div></div>
+
+<p>위 예제는 현재 디렉토리에서 sub.rb라는 외부파일을 읽어오겠다는 의미</p>
+
+<h2 id="load_path">LOAD_PATH</h2>
+
+<p>현재디렉토리 이외에 있는 파일들이나 시스템에 인스톨된 gem등을 읽어오기 위해서는 어떻게 해야할까??
+require가 읽어오는 대상은 사실 현재 디렉토리 뿐만이 아니다.
+<code class="language-plaintext highlighter-rouge">$LOAD_PATH</code>에 저장되어 있는 내용들을 차례대로 읽는다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby -e 'puts $LOAD_PATH'
+</code></pre></div></div>
+
+<p>필자의 환경에서 실행한 결과는 이하와 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ruby -e 'puts $LOAD_PATH'
+/usr/local/Cellar/rbenv/1.1.1/rbenv.d/exec/gem-rehash
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/did_you_mean-1.3.0/lib
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/site_ruby/2.6.0
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/site_ruby/2.6.0/x86_64-darwin18
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/site_ruby
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/vendor_ruby/2.6.0
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/vendor_ruby/2.6.0/x86_64-darwin18
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/vendor_ruby
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/2.6.0
+/Users/sehwakim/.rbenv/versions/2.6.0/lib/ruby/2.6.0/x86_64-darwin18
+</code></pre></div></div>
+
+<p>위 패스를 순서대로 읽어서 sub.rb가 존재하지 않으면 현재디렉토리에 있는 sub.rb를 읽어오게 된다.</p>
+
+<h2 id="require_relative">require_relative</h2>
+
+<p>require은LOAD_PATH를 기점으로 파일을 검색하지만
+상황에 따라 require을 호출한 파일패스를 기점으로 파일을 검색(상대패스)하고 싶을때가 있다.
+그때 사용하는게 require_relative이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require_relative "../../sub"
+</code></pre></div></div>
+
+<h2 id="load">load</h2>
+
+<p>require과 거의 비슷한 기능으로 <code class="language-plaintext highlighter-rouge">Kernel.#load</code>가 있다.
+require과 결정적 차이는 require는 한번 읽은 파일은 다시 읽어들이지 않는것에 비해
+load는 몇번이고 읽어들인다는 점이다.
+develop환경에서 irb/pry등의 대화형 쉘 실행시에 유효할 수 있다.
+읽고 싶은 파일을 변경하고 다시 읽어오고 싶을때 require같은 경우 반영되지 않지만 load로 불러들일 경우 성공하게 된다.</p>
+
+<h2 id="requireload를-이용시-변수사용-여부">require/load를 이용시 변수사용 여부</h2>
+
+<h3 id="로컬변수">로컬변수</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sub.rb
+local_var = "hoge"
+</code></pre></div></div>
+
+<p>위 파일을 require해도 local_var은 스코프 밖이므로 참조할 수 없다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pry
+[1] pry(main)&gt; require "./sub"
+=&gt; true
+[2] pry(main)&gt; puts local_var
+NameError: undefined local variable or method `local_var' for main:Object
+Did you mean?  local_variables
+from (pry):2:in `__pry__'
+</code></pre></div></div>
+
+<h3 id="클래스-변수">클래스 변수</h3>
+
+<p>클래스 변수일경우 참조가 가능하다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sub.rb
+@local_var = "hoge"
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pry
+[1] pry(main)&gt; require "./sub"
+=&gt; true
+[2] pry(main)&gt; puts @local_var
+hoge
+=&gt; nil
+</code></pre></div></div>
+
+<p>하지만 require를 이용해서 변수를 넘겨주는것은 캡슐화 관점에 좋은 방법은 아니다.</p>
+
+<h2 id="autoload">autoload</h2>
+
+<p>require은 바로 파일을 읽어오지만 퍼포먼스의 이유로 실제 지정한 클랫스나 모듈이 처음으로 사용될때
+require하고 싶은 경우도 있을것이다.
+그럴 경우<code class="language-plaintext highlighter-rouge">Kernel.#autoload</code>를 사용한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sub.rb
+class Dog
+  def cry
+    puts "멍멍"
+  end
+  puts "Dog has loaded"
+end
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pry
+[1] pry(main)&gt; autoload :Dog, "./sub"
+=&gt; nil
+[2] pry(main)&gt; Dog.new.cry
+"Dog has loaded"
+멍멍
+=&gt; nil
+</code></pre></div></div>
+
+<h2 id="bundler과require">Bundler과require</h2>
+
+<p>Bundler는 루비용 라이브러리 관리 툴이다. 특별한 경우를 제외하고는
+거의 모든 시스템이 Bundler를 경유해서 라이브러리를 관리한다.</p>
+
+<p>bundler로 인스톨한gem은 어떤식으로 require하면 좋을까?
+Bundler에서는 인스톨한gem들을 일괄적으로 require하기 위한
+<code class="language-plaintext highlighter-rouge">Bundler.require</code>라는 메소드가 있다.
+따라서 이하와 같은식으로 사용하면 Gemfile에 지정한 gem을 간단히 require할수가 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require 'bundler'
+Bundler.require
+
+employee = Hashie::Mash.new
+</code></pre></div></div>
+
+<h2 id="include">include</h2>
+
+<p>require가 헷갈릴수 있는데 include와require은 전혀 다른기능을 가지고 있다.</p>
+
+<p>include는 지정한 Module의 기능을 Class or Module에 Mix-in하는 기능을 가지고 있다.
+반면 require은 읽어올 외부파일의 내용을 가져오기만할 뿐이다.</p>
+
+<p>include의 경우 정의한 Module안의 메소드와Class를 호출처에 합성하는 처리가 움직인다.
+당연한 얘기지만 include할 모듈이 다른 파일에 정의되어 있다면(거의 그렇지만)먼저 require를 해줄 필요가 있다.</p>
+
+<p>Reference Link:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://system.blog.uuum.jp/entry/2016/08/10/110000
+https://qa.atmarkit.co.jp/q/2034
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/ruby-module-system-require-etc"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/ruby-load-path" data-toggle="tooltip" data-placement="top" title="ruby LOAD_PATH">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-formdata" data-toggle="tooltip" data-placement="top" title="Js Formdata">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

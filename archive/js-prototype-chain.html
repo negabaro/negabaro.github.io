@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Javascript Prototype Chain 이해하기" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-prototype-chain" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Javascript Prototype Chain 이해하기 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-prototype-chain">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Javascript Prototype Chain 이해하기</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, March 8, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        15 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="프로토타입-체인">프로토타입 체인</h1>
+
+<p>객체와 객체의 연결을 통한 단방향 공유 관계를 칭함</p>
+
+<h1 id="통상적인-상속-개념과-다른-javascript에서의-상속">통상적인 상속 개념과 다른 javascript에서의 상속</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var objectMadeByLiteral = {};
+var objectMadeByConstructor = new Object();
+</code></pre></div></div>
+
+<p>통상적으로 위 코드는 Ojbect객체의 인스턴스를 만든것에 불과하니 상속받았다고 표현하긴 힘들다.
+하지만 자바스크립트에서는 조금 다른 개념으로 생각해야 한다</p>
+
+<p>지금 만들어진 객체가 Object 타입의 인스턴스 객체인 것도 맞지만 프로토타입을 이용한 상속을 지원하는 자바스크립트에서는 <code class="language-plaintext highlighter-rouge">Object 생성자의 프로토타입을 상속받은 객체라고 표현하는 게 더 정확한 표현</code>이다.</p>
+
+<p>사실 상속이라는 표현도 OOP의 관점에서 사용하는 단어로 표현하고자 한 것일 뿐 <code class="language-plaintext highlighter-rouge">실제로는 링크드리스트 형태의 참조를 통한 객체끼리의 연결에 가깝고</code> <code class="language-plaintext highlighter-rouge">클래스 메커니즘처럼 정적이지 않고 매우 동적</code>이다.</p>
+
+<p>이런 동적인 연결이 좋다는 뜻은 아니다. 상속 구조의 변경이 언어나 엔진 차원에서 아무 제약이 없다 보니 약속된 컨벤션 규칙 혹은 안티 패턴에
+대한 이해가 없어 제대로 사용하지 않았을 때는 헬게이트가 열리게 되는 단점이기도 하다.</p>
+
+<h1 id="__proto__를-이용한-상속"><code class="language-plaintext highlighter-rouge">__proto__</code>를 이용한 상속</h1>
+
+<p>자바스크립트에서는 프로토타입을 이용해 <code class="language-plaintext highlighter-rouge">객체와 객체를 연결하고 한쪽 방향으로 상속을 받는 형태</code>를 만들 수가 있다.</p>
+
+<p>자바스크립트에서 상속을 받는다는것은 <code class="language-plaintext highlighter-rouge">다른말로 객체를 연결해 멤버 함수나 멤버 변수를 공유한다는 뜻</code>이다.</p>
+
+<p>이런점을 이용해 자바스크립트에서는 상속과 비슷한 효과를 얻는다.</p>
+
+<h3 id="__proto__"><code class="language-plaintext highlighter-rouge">__proto__</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">__proto__</code> 속성은 ECMAScript의 스펙 [[Prototype]] 이 자바스크립트로 노출된 것인데 예전 스펙이 legacy 처럼 남아있는 것이다. 모던 브라우저 개발자 도구에서도 디버깅 편의상 노출하고 있지만 개발 코드에서 직접적으로 접근하는 것은 피해야 한다. 여기서도 프로토타입의 이해를 돕기 위해 사용한다. <code class="language-plaintext highlighter-rouge">__proto__</code> 이 참조하는 객체를 확인해야 하는 상황(예를 들면 프레임웍 개발)이라면 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성을 직접 사용하지 말고 <code class="language-plaintext highlighter-rouge">Object.getPrototypeOf()</code> 를 이용해서 참조하면 된다</p>
+
+<h3 id="예제">예제)</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sana</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">샤샤샤</span><span class="dl">"</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">chang</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>위 예제를 보자.
+<code class="language-plaintext highlighter-rouge">chang</code>객체는 <code class="language-plaintext highlighter-rouge">sana</code>객체의 멤버변수인<code class="language-plaintext highlighter-rouge">skill</code>에 접근할 방법이 없다.
+이때<code class="language-plaintext highlighter-rouge">__proto__</code>라는 특수한 속성을 이용한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sana</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">샤샤샤</span><span class="dl">"</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">chang</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="nx">chang</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">sana</span><span class="p">;</span>
+<span class="nx">chang</span><span class="p">.</span><span class="nx">skill</span> <span class="c1">// '샤샤샤'</span>
+</code></pre></div></div>
+
+<h2 id="코드해설">코드해설</h2>
+
+<p>위 예제에서는 chang 의 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 sana 객체를 가리키고(참조)있다.</p>
+
+<p>이 말은 sana객체의 멤버 변수나 메서드를 몇 가지 제약은 있지만 마치 chang객체가 소유한 것처럼 사용할 수 있다는 것이다.</p>
+
+<p>이 과정에서 상속과 비슷한 효과를 얻을 수 있게 된다.</p>
+
+<p>다른 클래스를 통한 상속의 경우 클래스의 상속 정보를 이용해 상속 구조의 모습을 가진 새로운 객체를 찍어내는 반면 <code class="language-plaintext highlighter-rouge">프로토타입을 통한 상속 구조는 존재하는 객체와 존재하는 객체의 동적인 연결로 풀어낸다.</code></p>
+
+<p>그렇다 보니 이미 객체가 만들어진 상태라도 상속된 내용이 변경되거나 혹은 추가되기도 하고 아예 상속 구조를 바꿀 수도 있게 된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">물론 대부분 안티 패턴이다</code></p>
+
+<h1 id="javascript에서의-상속공유다">Javascript에서의 상속=공유다.</h1>
+
+<h3 id="예제-1">예제)</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sana</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">사또떨</span><span class="dl">"</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">chang</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="nx">chang</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">sana</span><span class="p">;</span>
+<span class="nx">chang</span><span class="p">.</span><span class="nx">skill</span> <span class="c1">// '사또떨'</span>
+
+<span class="nx">sana</span><span class="p">.</span><span class="nx">skill</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">사다닥</span><span class="dl">'</span><span class="p">;</span> <span class="c1">//상속받은 객체의 내용 변경</span>
+
+<span class="nx">chang</span><span class="p">.</span><span class="nx">skill</span> <span class="c1">// '사다닥'</span>
+
+
+<span class="nx">sana</span><span class="p">.</span><span class="nx">buzzword</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">치즈김밥?</span><span class="dl">"</span>
+<span class="nx">chang</span><span class="p">.</span><span class="nx">buzzword</span> <span class="c1">// '치즈김밥?'</span>
+
+<span class="k">delete</span> <span class="nx">sana</span><span class="p">.</span><span class="nx">buzzword</span> <span class="c1">// 상속받은 객체의 내용 삭제</span>
+<span class="nx">chang</span><span class="p">.</span><span class="nx">buzzword</span> <span class="c1">// undefined</span>
+</code></pre></div></div>
+
+<p>chang은 멤버변수가 하나도 없었는데 부모객체(sana)에서 정의한 내용을 그대로 참조가능하다.</p>
+
+<p>일반적인 클래스개념에서는 상상도 할 수 없는 일이다.</p>
+
+<p>이런 방식이 좋다 나쁘다를 떠나서 자바스크립트에서는 이렇게밖에 못한다.</p>
+
+<p>사실 이런 성질을 이용해 클래스 메커니즘을 흉내 내는 것은 비교적 쉬운 반면 클래스 기반의 언어가 프로토타입 메커니즘을 흉내내기는 매우 어려울 것이다.</p>
+
+<p>아무튼 <code class="language-plaintext highlighter-rouge">객체와 객체의 연결을 통한 단방향 공유 관계를 프로토타입 체인</code>이라고 한다.</p>
+
+<p>자바스크립트의 프로토타입 상속은 사실 이 내용만 제대로 이해하면 90% 이상 이해했다고 봐도 된다.</p>
+
+<p>이런 연결을 직접적으로 코드에서 <code class="language-plaintext highlighter-rouge">__proto__</code> 에 접근하지 않고 만들어야 하는데 그 방법은 몇 가지가 있다.</p>
+
+<p>하지만 그 전에 프로토타입을 통해 식별자를 찾는 과정을 조금 더 살펴보자.</p>
+
+<h1 id="프로토타입-룩업">프로토타입 룩업</h1>
+
+<p>프로토타입 룩업이라는 과정은 클래스의 상속과 비교되는 특징 중 하나이다.</p>
+
+<h2 id="프로토타입-식별자-룩업-방법">프로토타입 식별자 룩업 방법</h2>
+
+<p>식별자 룩업방법에는 이하 2가지가 있다.</p>
+
+<ol>
+  <li>프로토타입 룩업</li>
+  <li>스코프 룩업</li>
+</ol>
+
+<p>여기서는 <code class="language-plaintext highlighter-rouge">프로토타입 룩업</code>을 통해 식별자를 찾아가는 방법에 대해 살펴보자.</p>
+
+<h1 id="프로토타입-룩업-1">프로토타입 룩업</h1>
+
+<p>프로토타입 룩업이라는 과정은 클래스의 상속과 비교되는 특징 중 하나이다.</p>
+
+<p>쉽게 이야기하면 클래스 상속은 <code class="language-plaintext highlighter-rouge">객체를 만든 시점에 이미 이 객체가 상속구조를 통해 어떤 멤버들을 보유하고 있는지 결정된 반면</code></p>
+
+<p>프로토타입 체인을 통한 상속의 경우 <code class="language-plaintext highlighter-rouge">실행을 해봐야 객체가 해당 멤버를 가지고 있는지 알 수 있다.</code></p>
+
+<p>물론 개발자는 알고 있겠지만 자바스크립트 엔진의 관점에서는 메서드를 실행할 때 동적으로 해당 메서드를 찾아서 실행한다는 의미다. 그래서 이미 만들어진 객체의 상속된 내용이 변경될 수 있는 것이다. <code class="language-plaintext highlighter-rouge">객체가 만들어 질 때가 아닌 실행할 때의 내용이 중요하니까</code> 말이다. 이렇게 <code class="language-plaintext highlighter-rouge">프로토타입 체인을 통해 객체의 메서스나 속성을 찾아가는 과정을 프로토타입 룩업</code>이라고 한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">jyp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill1</span><span class="p">:</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">jyp</span><span class="p">,</span>
+    <span class="na">skill2</span><span class="p">:</span> <span class="dl">'</span><span class="s1">에너지</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">itzy</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">twice</span><span class="p">,</span>
+    <span class="na">skill3</span><span class="p">:</span> <span class="dl">'</span><span class="s1">카리스마</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="nx">itzy</span><span class="p">.</span><span class="nx">skill1</span> <span class="c1">// '공기반소리반'</span>
+</code></pre></div></div>
+
+<p>위 코드에서는 객체3개를 만들고 각 객체의 <code class="language-plaintext highlighter-rouge">__proto__</code>속성을 이용해 <code class="language-plaintext highlighter-rouge">itzy-&gt;twice-&gt;jyp</code>로 연결했다.
+itzy객체에 없는 멤버변수인 <code class="language-plaintext highlighter-rouge">skill1</code>이라는 속성에 접근하려하면 자바스크립트 엔진은 아래와 같은 작업을 수행한다.
+(엔진의 최적화 설정에 따라 단계를 축소될 수 있다.)</p>
+
+<ol>
+  <li>itzy객체 내부에서 <code class="language-plaintext highlighter-rouge">skill1</code> 속성을 찾는다 -&gt; 없다.</li>
+  <li>itzy객체에 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 존재하는지 확인한다 -&gt; 있다.</li>
+  <li>itzy객체의 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 참조하는 객체로 이동한다 -&gt; twice객체로 이동</li>
+  <li>twice객체 내부에 <code class="language-plaintext highlighter-rouge">skill1</code> 속성을 찾는다 -&gt; 없다.</li>
+  <li>twice객체에 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 존재하는지 확인한다 -&gt; 있다.</li>
+  <li>jyp객체 내부에 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 참조하는 객체로 이동한다 -&gt; jyp객체로 이동</li>
+  <li>jyp객체 내부에서 <code class="language-plaintext highlighter-rouge">skill1</code> 속성을 찾는다 -&gt; 있다!!</li>
+  <li>찾은 속성의 값을 리턴한다.</li>
+</ol>
+
+<p>단순히 말하면 <code class="language-plaintext highlighter-rouge">__proto__</code>의 연결을 따라 링크드리스트를 탐색하듯 탐색해서 원하는 키값을 찾는것이다.</p>
+
+<h1 id="어떤-객체에도-존재하지-않는-속성인-shortcomings을-찾게되면">어떤 객체에도 존재하지 않는 속성인 <code class="language-plaintext highlighter-rouge">shortcomings</code>을 찾게되면?</h1>
+
+<p>어떤 객체에도 존재하지 않는 <code class="language-plaintext highlighter-rouge">shortcomings</code>이라는 속성을 찾게되면 7번부터 다른 과정을 거치게 된다.</p>
+
+<p>(7번부터)</p>
+
+<ol>
+  <li>jyp객체 내부에서 <code class="language-plaintext highlighter-rouge">skill1</code> 속성을 찾는다 -&gt; 없다..!</li>
+  <li>jyp객체에 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 존재하는지 확인한다. -&gt; 있다.</li>
+  <li>jyp객체의 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 참조하는 객체로 이동한다. -&gt; Object.prototype 로 이동</li>
+  <li><code class="language-plaintext highlighter-rouge">Object.prototype</code> 에서 <code class="language-plaintext highlighter-rouge">shortcomings</code> 속성을 찾는다. -&gt; 없다.</li>
+  <li><code class="language-plaintext highlighter-rouge">Object.prototype</code> 에서 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성을 찾는다. -&gt; 없다.</li>
+  <li>undefined리턴</li>
+</ol>
+
+<p>모든 프로토타입 체인의 끝은 항상 Object.prototype 이다
+그래서 <code class="language-plaintext highlighter-rouge">Object.prototype</code>은 종점과 같기 때문에 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 없다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">shortcomings</code>이라는 속성은 프로토타입의 마지막 단계인 Object.prototype 에 존재하지 않고 Object.prototype 에는 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 존재하지 않으니 탐색을 종료하고 <code class="language-plaintext highlighter-rouge">undefined</code>를 리턴한다.</p>
+
+<p>크롬과 Node.js의 자바스크립트 엔진인 V8은 이 과정을 최적화해 탐색 비용을 줄여 퍼포먼스를 향상시켰다. 단일 링크드리스트 형태로 한쪽 방향의 연결이다 보니 상속이란 개념을 얼추 적용할 수 있다. itzy에서 jyp의 속성은 접근할 수 있지만 jyp에서 itzy의 속성은 접근할 수 없다.</p>
+
+<h1 id="메소드-오버라이드">메소드 오버라이드</h1>
+
+<p><code class="language-plaintext highlighter-rouge">itzy에서 jyp의 속성은 접근할 수 있지만 jyp에서 itzy의 속성은 접근할 수 없다.</code></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">jyp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill1</span><span class="p">:</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">jyp</span><span class="p">,</span>
+    <span class="na">skill2</span><span class="p">:</span> <span class="dl">'</span><span class="s1">에너지</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">itzy</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">twice</span><span class="p">,</span>
+    <span class="na">skill3</span><span class="p">:</span> <span class="dl">'</span><span class="s1">카리스마</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="nx">jyp</span><span class="p">.</span><span class="nx">skill2</span> <span class="c1">// undefined  --&gt; twice의skill2에 접근할 수 없다!</span>
+<span class="nx">jyp</span><span class="p">.</span><span class="nx">skill3</span> <span class="c1">// undefined  --&gt; itzy의skill3에 접근할 수 없다!</span>
+</code></pre></div></div>
+
+<p>이런 점을 이용해 메서드 오버라이드를 구현할 수 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">jyp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">jyp</span><span class="p">,</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">에너지</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">itzy</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">twice</span>
+<span class="p">};</span>
+
+<span class="nx">jyp</span><span class="p">.</span><span class="nx">skill</span> <span class="c1">//'공기반소리반'</span>
+<span class="nx">itzy</span><span class="p">.</span><span class="nx">skill</span> <span class="c1">//'에너지'</span>
+</code></pre></div></div>
+
+<p>itzy 의 skill속성을 실행하면 <code class="language-plaintext highlighter-rouge">프로토타입 룩업</code>을 통해 itzy-&gt;twice로 이동하고 twice에 이미 해당 속성이 있기 때문에
+jyp까지 안올라가고 twice의 skill속성이 실행된다</p>
+
+<p>자바스크립트에서는 이런 상황을 <code class="language-plaintext highlighter-rouge">jyp의 skill메서드를 twcie가 오버라이드 했다</code>라고 말한다.</p>
+
+<h1 id="생성자를-통한-프로토타입-체인의-문제점">생성자를 통한 프로토타입 체인의 문제점</h1>
+
+<p>생성자를 이용해 객체를 생성하면 생성된 객체는 생성자의 프로토타입 객체와 프로토타입 체인으로 연결된다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Jyp</span><span class="p">(</span><span class="nx">skill</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">skill</span> <span class="o">=</span> <span class="nx">skill</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Jyp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getSkill</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">skill</span><span class="p">;</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Jyp</span><span class="p">(</span><span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>매우 간단한 생성자 예제이다. Jyp 가 만들어낸 객체twice 는 skill 이라는 속성을 가지고 있고</p>
+
+<p>getSkill 이라는 프로토타입 메서드를 사용할 수 있다.</p>
+
+<p>twice 객체가 Jyp 의 프로토타입 메서드에 접근할 수 있는 이유는 twice 객체의 <code class="language-plaintext highlighter-rouge">__proto__</code> 속성이 Jyp.prototype 을 참조하고 있기 때문이다.</p>
+
+<p>이 과정은 생성자를 new 키워드와 함께 사용할 때 엔진 내부에서 연결해준다.</p>
+
+<p>실제로 엔진은 아래와 같은 행동을 한다. (이해를 돕기 위한 코드이다)</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Jyp</span><span class="p">(</span><span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// 엔진 내부에서 하는 일</span>
+<span class="nx">twice</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// 새로운 객체를 만들고</span>
+<span class="nx">Jyp</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">twice</span><span class="p">,</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// call이용해 Jyp함수의 this를 p로 대신해서 실행해주고</span>
+<span class="nx">twice</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">Jyp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// 프로토타입을 연결한다.</span>
+
+
+<span class="nx">twice</span><span class="p">.</span><span class="nx">getSkill</span><span class="p">();</span> <span class="c1">// '공기반소리반'</span>
+</code></pre></div></div>
+
+<p>위 코드는 생성자가 만들어 내는 객체가 어떻게 생성자의 =prototype=과 연결되는지 보여주고 있다.</p>
+
+<p>위 과정을 통해서 프로토타입 룩업시 twice -&gt; Jyp.prototype 의 탐색 과정을 만들어 낼 수 있다.</p>
+
+<p>다만 문제가 있다.</p>
+
+<p>현재의 코드에선 Object 타입을 제외한다면 <code class="language-plaintext highlighter-rouge">의도적으로 구현된 상속이란 개념은 아직 들어가 있지 않다.</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">의도적으로 구현된 상속</code>이라함은 통상적인 프로그램에서의 상속개념을 얘기한다
+<code class="language-plaintext highlighter-rouge">부모,자식간에 어떤 속성을 공유하지 않고 독자적인 인스턴스를 새로 생성</code>할 수 있는것 말이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">twice.__proto__ = Jyp.prototype</code> 이부분이 문제다. twice객체가 Jyp객체의 prototype을 <code class="language-plaintext highlighter-rouge">참조</code>,즉 <code class="language-plaintext highlighter-rouge">공유</code>하고 있으므로</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">twice</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getSkill</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">없어요..</span><span class="dl">"</span> <span class="p">};</span>
+</code></pre></div></div>
+
+<p>위 코드와 같이 twice인스턴스의 prototype을 수정하면 Jyp객체에서 getSkill해도 <code class="language-plaintext highlighter-rouge">없어요</code>가 리턴되버린다..</p>
+
+<p>jyp는 skill이 있는데 불구하고 prototype을 공유한거 때문에 둘다 skill이 <code class="language-plaintext highlighter-rouge">없어요</code> 가 되버리는것.</p>
+
+<h1 id="생성자를-통한-프로토타입-체인의-문제점을-해결하기-위한-꼼수">생성자를 통한 프로토타입 체인의 문제점을 해결하기 위한 꼼수</h1>
+
+<p>좋지 않다. 위에서 설명한 문제를 해결하려면 어떻게 해야할까?</p>
+
+<p>그 옛날 선조 자바스크립트 개발자분들은 이런생각을 했다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">__proto__에 직접 대입만 안하면 되는거지??</code></p>
+
+<p>중간다리용 객체를 만들어서 중간다리의 prototype에 부모의 prototype을 대입해버리면 어떨까?(<code class="language-plaintext highlighter-rouge">__proto__</code>에 대입하면 <code class="language-plaintext highlighter-rouge">참조,공유</code> 해버린다)</p>
+
+<p>성공적인 발상이고 멋진 <code class="language-plaintext highlighter-rouge">꼼수</code>였다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">jyp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">Sixteen</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">//중간다리용 객체</span>
+<span class="nx">Sixteen</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">jyp</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sixteen</span><span class="p">();</span>
+<span class="nx">twice</span><span class="p">.</span><span class="nx">skill</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">에너지</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jyp</span><span class="p">.</span><span class="nx">skill</span><span class="p">);</span>    <span class="c1">//'공기반소리반'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twice</span><span class="p">.</span><span class="nx">skill</span><span class="p">);</span>  <span class="c1">//'에너지'</span>
+</code></pre></div></div>
+
+<p>위 예제와 같이 Sixteen 이라는 중간다리용 객체 (대리 혹은 임시)를 만들고
+사용자가 직접 <code class="language-plaintext highlighter-rouge">__proto__</code>를 건드리지 않고 중간다리에 <code class="language-plaintext highlighter-rouge">Sixteen.prototype = jyp</code> 함으로서
+<code class="language-plaintext highlighter-rouge">참조,공유</code>가 아닌 <code class="language-plaintext highlighter-rouge">대입,교체</code>을 하게되어 새로운 인스턴스를 만들 수 있게 된 것</p>
+
+<p>이걸로 자바스크립트에서 <code class="language-plaintext highlighter-rouge">통상적으로 프로그래밍에서 말하는 상속</code>이 실현가능 하게 되었다.</p>
+
+<h1 id="__proto__-를-직접-건드리는건-왜-문제일까"><code class="language-plaintext highlighter-rouge">__proto__</code> 를 직접 건드리는건 왜 문제일까?</h1>
+
+<p>정확히는 <code class="language-plaintext highlighter-rouge">__proto__</code> 가 참조하는 prototype안에 name이라는 속성이 문제다.
+이 속성은 굉장히 특별해서 Twice의 프로토타입으로 그대로 받아서 사용하게 되면 name이라는 속성을 Twice의 인스턴스(twice)들이 그대로 공유해서 사용하게 되는데
+이 부분때문에 <code class="language-plaintext highlighter-rouge">참조,공유</code>를 해버리는 문제가 발생한다.</p>
+
+<p>그래서 이 name속성을 받지않게 하기위해 Sixteen같은 임시 생성자를 이용해 순수하게 프로토타입 체인만 연결된 빈 객체를 만들어서 Twice프로토타입에 대입시킨것이다.</p>
+
+<h1 id="objectcreate">Object.create();</h1>
+
+<p>위에서 설명한 <code class="language-plaintext highlighter-rouge">꼼수</code>는 중간다리용 객체를 만들어야 되는등 코드가 굉장히 장황하다</p>
+
+<p>그래서 이 <code class="language-plaintext highlighter-rouge">꼼수</code>를 착안해서 표준API가 등장했는데 그것이 <code class="language-plaintext highlighter-rouge">Object.create()</code>이다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">jyp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">skill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">공기반소리반</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">twice</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">jyp</span><span class="p">);</span>
+
+<span class="nx">twice</span><span class="p">.</span><span class="nx">skill</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">에너지</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jyp</span><span class="p">.</span><span class="nx">skill</span><span class="p">);</span>    <span class="c1">//'공기반소리반'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twice</span><span class="p">.</span><span class="nx">skill</span><span class="p">);</span>  <span class="c1">//'에너지'</span>
+</code></pre></div></div>
+
+<p>위 예제와 같이 번거로운 <code class="language-plaintext highlighter-rouge">임시 생성자</code>를 만들 필요 없이<code class="language-plaintext highlighter-rouge">Object.create</code>의 첫번째 인자에 상속받을 생성자를 대입해주면 끝이다.</p>
+
+<h1 id="es6에서-class등장">ES6에서 class등장</h1>
+
+<p>자바스크립트는 상속이 이루어지는 개념은 간단한데 그것을 구현하는 코드가 상당히 장황하다. <code class="language-plaintext highlighter-rouge">Object.create()</code> 을 사용해도 장황한 건 마찬가진데</p>
+
+<p>이를 보완하기 위해 ECMAScript6에서 class 스펙이 추가되었다.</p>
+
+<p>클래스라고는 하지만 새로운 개념이 아니고 상속의 구현 원리는 기존과 동일한 내용으로 <code class="language-plaintext highlighter-rouge">장황했던 코드를 간결하게 하는 숏컷이 추가</code>됐다고 생각하면 된다.</p>
+
+<p>class를 이용하면 이하와 같이 쓸 수 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Jyp</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">getSkill</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">Twice</span> <span class="kd">extends</span> <span class="nx">Jyp</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// 생성자 빌려쓰기 대신....super 함수를 이용 한다.</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">energy</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">getEnergy</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>코드가 간결해지고 이해하기 쉽게 바뀌었다.</p>
+
+<p>코드는 달라졌다 하더라도 이를 통해 만들어진 객체의 프로토타입 체인 연결 구조는 기존과 동일하고 또한 동일한 방식의 프로토타입 룩업으로 식별자를 찾아간다.</p>
+
+<h1 id="정리">정리</h1>
+
+<ol>
+  <li>Javascript에서는 <code class="language-plaintext highlighter-rouge">__proto__</code>를 이용해서 상속 비슷한것을 구현해낸다</li>
+  <li><code class="language-plaintext highlighter-rouge">__proto__</code>를 통해서 상위 객체를 찾아가는 행위(상속 비슷한것을 하는)를 <code class="language-plaintext highlighter-rouge">프로토타입 체인</code>이라 칭한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">__proto__</code>에 직접 대입시 부모 프로토타입의 속성을 <code class="language-plaintext highlighter-rouge">공유,참조</code> 한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">공유,참조</code> 하기 싫을때는 중간 생성자를 통해서 부모 프로토타입을 대입받는 형식으로 <code class="language-plaintext highlighter-rouge">꼼수</code>를 사용해서 부모 속성을 <code class="language-plaintext highlighter-rouge">참조,공유</code> 하지 않는 독자적인 객체를 구현했다.</li>
+  <li><code class="language-plaintext highlighter-rouge">꼼수</code>를 사용하면 코드가 장황해져서 <code class="language-plaintext highlighter-rouge">Object.create()</code>가 등장했다.</li>
+  <li><code class="language-plaintext highlighter-rouge">Object.create()</code>도 장황해서 ES6부터 <code class="language-plaintext highlighter-rouge">class</code>가 등장했다.</li>
+</ol>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://meetup.toast.com/posts/104
+https://qiita.com/howdy39/items/35729490b024ca295d6c
+http://maeharin.hatenablog.com/entry/20130215/javascript_prototype_chain
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-prototype-chain"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/js-literal" data-toggle="tooltip" data-placement="top" title="Javascript literal(리터럴)이란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-%EC%83%9D%EC%84%B1%EC%9E%90%ED%95%A8%EC%88%98" data-toggle="tooltip" data-placement="top" title="Javascript생성자 함수란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

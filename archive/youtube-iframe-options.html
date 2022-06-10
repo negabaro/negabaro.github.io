@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Youtube iframe에서 사용하는 옵션에 대해" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/youtube-iframe-options" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Youtube iframe에서 사용하는 옵션에 대해 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/youtube-iframe-options">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Youtube iframe에서 사용하는 옵션에 대해</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, November 27, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js/youtube"><i class="fa fa-tag"></i> js/youtube</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>이 포스트에서는 Youtube iframe에서 자주 사용하는 옵션에 대해 알아보자.</p>
+
+<p>여기서 말하는 <code class="language-plaintext highlighter-rouge">옵션</code>은 아래 코드에 쿼리파라메터에 기술되어있는 <code class="language-plaintext highlighter-rouge">옵션</code>을 말한다.</p>
+
+<p>전체 옵션은 <a href="https://developers.google.com/youtube/player_parameters?hl=ja">Document</a>를 참고</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;iframe</span>
+  <span class="na">src=</span><span class="s">"https://www.youtube.com/embed/xx?옵션"</span>
+  <span class="na">allow=</span><span class="s">"autoplay; fullscreen"</span>
+<span class="nt">&gt;&lt;/iframe&gt;</span>
+</code></pre></div></div>
+
+<h1 id="유투브-플레이어-데모">유투브 플레이어 데모</h1>
+
+<p><a href="https://developers.google.com/youtube/youtube_player_demo">유투브 플레이어 데모</a>에서 여러가지 옵션을 테스트해볼 수 있다.</p>
+
+<hr />
+
+<h1 id="autoplay">autoplay</h1>
+
+<p>디폴트 0, 1일 경우 자동재생</p>
+
+<p><a href="https://negabaro.github.io/archive/why-does-not-working-autoplay">Youtube iframe 자동재생(autoplay)옵션에 대해서</a>를 참고</p>
+
+<h1 id="cc_load_policy">cc_load_policy</h1>
+
+<p>1일 경우 유저가 자막을 Off해도 강제로 띄어줌</p>
+
+<p>0일 경우 디폴트로 유저설정에 따름.</p>
+
+<h1 id="enablejsapi">enablejsapi</h1>
+
+<p>1일 경우 IFrame또는  JavaScript Player의 호출을 제어가능해짐</p>
+
+<p>디폴트값은 0 제어불가능</p>
+
+<h1 id="rel">rel</h1>
+
+<p>이 파라메터는 2018/9/25일에 변경됨</p>
+
+<h2 id="변경전">변경전</h2>
+
+<p>１일 경우, 첫 영상의 재생이 끝난뒤 유저에게 관련영상을 표시해줌(디폴트 1)</p>
+
+<p>0일 경우, 관련영상은 표시되지 않음</p>
+
+<h2 id="변경후">변경후</h2>
+
+<p>관련영상을 비활성화 시키는건 불가능해짐</p>
+
+<p>대신 0일 경우, 해당 영상의 채널내에 관련영상만 보여지게됨</p>
+
+<h1 id="fs">fs</h1>
+
+<p>디폴트 값은 1. 전체화면을 띄어주는 버튼을 표시</p>
+
+<p>0일경우 해당 버튼을 비표시</p>
+
+<h1 id="playsinline">playsinline</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iOS상의 HTML5플레이어 영상을 인라인또는 전체화면으로 재생할지에 대한 제어가 가능하다.
+0: 전체화면으로 재생한다.(현재 디폴트값이지만 변경될 가능성도 있다.)
+1: UIWebViews（allowsInlineMediaPlayback 프로퍼티를 TRUE로 지정한 경우）는 인라인 재생한다.
+</code></pre></div></div>
+
+<p>iOS에서 HTML5영상을 인라인을 재생시킬때 필요한 옵션</p>
+
+<p>0일 경우 전체화면으로 재생되지만 1일 경우 인라인 재생
+단 UIWebViews의 allowsInlineMediaPlayback 프로퍼티가 true일 경우만</p>
+
+<p>이 옵션은 iOS로만든 어플리케이션안에서만 해당하는듯?</p>
+
+<h1 id="color">color</h1>
+
+<p>동영상 플레이어의 색상변경시 사용
+디폴트가 red인데 white로 변경이 가능하다.(선택지가 적구나..)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>이 매개변수는 시청자가 동영상에서 이미 시청한 부분을 강조표시하기 위해 플레이어의 동영상 진행률 표시줄에서 사용할 색상을 지정합니다. 유효한 매개변수 값은 red 및 white이며 기본적으로 플레이어는 동영상 진행률 표시줄에서 빨간색을 사용합니다. 색상 옵션에 대한 자세한 내용은 YouTube API 블로그를 참조하세요.
+
+참고: color 매개변수를 white로 설정하면 modestbranding 옵션이 사용 중지됩니다.
+</code></pre></div></div>
+
+<h1 id="modestbranding">modestbranding</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>이 매개변수를 통해 YouTube 로고를 표시하지 않는 YouTube 플레이어를 사용할 수 있습니다. 매개변수 값을 1로 설정하면 YouTube 로고가 컨트롤바에 표시되지 않습니다. 하지만 사용자가 마우스 포인터를 플레이어 위에 올려놓으면 작은 YouTube 텍스트 라벨이 일시중지된 동영상의 오른쪽 상단에 표시됩니다.
+</code></pre></div></div>
+
+<h1 id="theme">theme</h1>
+
+<p>예전엔 이런 옵션이 있었다고 하는데 현재는 사용되지 않는다고 한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The theme parameter has been deprecated for the HTML5 player. HTML5 players now always use the dark theme.
+</code></pre></div></div>
+
+<h1 id="controls">controls</h1>
+
+<p>Another example is the controls parameter that indicates whether the video player controls are displayed. For IFrame embeds that load a Flash player, it also defines when the controls display in the player as well as when the player will load.</p>
+
+<p>Supported values are:</p>
+
+<p>controls=0 – Player controls do not display in the player. For IFrame embeds, the Flash player loads immediately.
+controls=1 (default) – Player controls display in the player. For IFrame embeds, the controls display immediately and the Flash player also loads immediately.
+controls=2 – Player controls display in the player. For IFrame embeds, the controls display and the Flash player loads after the user initiates the video playback.</p>
+
+<p>https://stackoverflow.com/questions/38332421/customise-youtube-controls-title-and-the-whole-iframe</p>
+
+<h3 id="reference">reference:</h3>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/youtube-iframe-options"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/why-does-not-working-autoplay" data-toggle="tooltip" data-placement="top" title="Youtube iframe 자동재생(autoplay)옵션에 대해서">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/nodejs-debugger" data-toggle="tooltip" data-placement="top" title="Node.js에서 binding.pry같이 디버깅하는 방법">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

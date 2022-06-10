@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="vue.js props에 대해 알아보자" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/vuejs-props" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>vue.js props에 대해 알아보자 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/vuejs-props">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>vue.js props에 대해 알아보자</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, August 9, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/vue.js"><i class="fa fa-tag"></i> vue.js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        6 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="props란">props란</h1>
+
+<p>부모 컴퍼넌트가 자식 컴퍼넌트에게 특정 값을 넘겨줄때 사용한다.</p>
+
+<h1 id="props-사용시-주의사항">props 사용시 주의사항</h1>
+
+<p>props기술이 많다는것은 부모 컴퍼넌트에 많은 속성을 전달받는다는 의미이고
+그것을 받는 자식 컴퍼넌트는 부모컴퍼넌트에 그만큼 종속된 것을 의미한다.</p>
+
+<p>이러한 종속은 시스템에 복잡해질수록 가독성을 떨어뜨리고 버그를 일으킬 가능성이 높아지므로 지양해야한다.</p>
+
+<h1 id="props값을-넘겨받아서-직접-변경은-불가능기본적으로">props값을 넘겨받아서 직접 변경은 불가능(기본적으로)</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">cat-crying</span><span class="dl">"</span><span class="p">],</span>
+<span class="nx">created</span><span class="p">(){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">catCrying</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span> <span class="c1">//&lt;&lt; Vue warn이 뜸</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>직접변경시 아래와 같은 에러를 만나게된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. Prop being mutated: "catCrying"
+</code></pre></div></div>
+
+<p>경고는 발생했지만 실제로 값은 바뀌긴 바뀐다.</p>
+
+<h1 id="자식-컴퍼넌트에서-전달받은-props의-값을-바꿔야한다면-props를-전달한-부모에-변수를-바꿔라">자식 컴퍼넌트에서 전달받은 props의 값을 바꿔야한다면 props를 전달한 부모에 변수를 바꿔라</h1>
+
+<p>props로 전달받은 값은 자식 컴퍼넌트에서 안바꾸는게 좋겠지만
+굳이 바꿔야한다면 자식컴퍼넌트가 아니고 props를 전달한 부모 컴퍼넌트의 값을 바꿔줘야할것이다.</p>
+
+<p>방법으로는 watch와 같은 감시자를 만들고 상위 컴퍼넌트에 이벤트를 전달하는 $emit을 이용해 부모 컴퍼넌트에서 넘긴 props의 값을 재바인딩한다.</p>
+
+<p>이러한 로직이 늘면 가독성이 매우 떨어져 보수가 힘드므로 주의해서 사용하자.</p>
+
+<h1 id="부모에게-받은-props를-자식컴퍼넌트안에서-사용하는-데이터의-초기값으로-사용할-경우">부모에게 받은 props를 자식컴퍼넌트안에서 사용하는 데이터의 초기값으로 사용할 경우</h1>
+
+<p>이 경우는 로컬 데이터 속성을 따로 선언하고, props의 값을 해당 속성의 초기값으로 대입하는것이 바람직하다.</p>
+
+<p>아래 예제는 prop값을 local data인 counter에 대입하는 예제이다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">initialCounter</span><span class="dl">'</span><span class="p">],</span>
+<span class="nx">data</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">counter</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialCounter</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="전달된-prop의-형태를-바꾸어야-하는-경우">전달된 prop의 형태를 바꾸어야 하는 경우</h1>
+
+<p>이 경우는 computed 속성을 사용하는 것이 가장 바람직하다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">size</span><span class="dl">'</span><span class="p">],</span>
+<span class="nx">computed</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">normalizedSize</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">toLowerCase</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="변수에-담긴-값을-자식-컴퍼넌트에-props로-넘겨줄때동적-props">변수에 담긴 값을 자식 컴퍼넌트에 props로 넘겨줄때(동적 props)</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">CatChild</span> <span class="nx">cat</span><span class="o">-</span><span class="nx">crying</span><span class="o">=</span><span class="dl">"</span><span class="s2">catCrying</span><span class="dl">"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>이런식으로 넘겨주면 “catCrying”이라는 문자열을 props로 넘겨준다는 의미이다.</p>
+
+<p>catCrying이라는 변수값을 넘기기 위해서는 <code class="language-plaintext highlighter-rouge">:</code>를 props의 변수명앞에 붙여주면 된다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">CatChild</span> <span class="p">:</span><span class="nx">cat</span><span class="o">-</span><span class="nx">crying</span><span class="o">=</span><span class="dl">"</span><span class="s2">catCrying</span><span class="dl">"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>아래의 축약형이다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">CatChild</span> <span class="nx">v</span><span class="o">-</span><span class="nx">bind</span><span class="p">:</span><span class="nx">cat</span><span class="o">-</span><span class="nx">crying</span><span class="o">=</span><span class="dl">"</span><span class="s2">catCrying</span><span class="dl">"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<h1 id="props로-받은-값을-template에서-그대로-사용가능">props로 받은 값을 template에서 그대로 사용가능</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span>
+    <span class="nx">Cat</span> <span class="nx">Child</span><span class="p">:</span> <span class="p">{</span><span class="s2">`{ crying }`</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/span</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">crying</span><span class="dl">"</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h1 id="props로-받은-변수명과-data에-정의한-변수명이-같으면-에러">props로 받은 변수명과 data에 정의한 변수명이 같으면 에러</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">crying</span><span class="dl">"</span><span class="p">],</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">crying</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mew</span><span class="dl">"</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+</code></pre></div></div>
+
+<p>props로 넘긴 crying과 똑같은 이름이 data에도 존재할때
+아래와 같은 에러가 발생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Vue warn]: The data property "crying" is already declared as a prop. Use prop default value instead.
+</code></pre></div></div>
+
+<h1 id="kebab-case--camelcase-자동매핑">kebab-case = CamelCase 자동매핑</h1>
+
+<p>kebab-case = CamelCase 자동매핑이 되어있어</p>
+
+<p>props값을 kebab-case로 넘겨도 CamelCase로 받아 사용할 수 있다.</p>
+
+<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid">  
+    &lt;template&gt;
+      &lt;span&gt;Cat Child: `{`{cryingText}`}` &lt;/span&gt;
+    &lt;/template&gt;
+    &lt;script&gt;
+    export default {
+      props: ["crying-text"]
+    }
+    &lt;/script&gt;
+  </code></pre></figure>
+
+<h1 id="props-options">props options</h1>
+
+<p>옵션을 지정하지 않을때 props는 문자열 배열을 열거하지만
+옵션 지정시 오브젝트 배열을 이용한다.
+옵션에는 type형태,필수항목,디폴트값등 지정이 가능하다.</p>
+
+<p>아래에서는 몇가지 props의 옵션에 대해 알아보자.</p>
+
+<h2 id="required-true">required: true</h2>
+
+<p><code class="language-plaintext highlighter-rouge">required: true</code>지정시 해당 props를 넘겨받지 않으면 아래와 같은 에러를 발생시킨다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Vue warn]: Missing required prop: "catCrying"
+</code></pre></div></div>
+
+<h3 id="코드-예제">코드 예제</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">catCrying</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">required</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// 필수항목으로 지정</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<h2 id="type">type</h2>
+
+<p><code class="language-plaintext highlighter-rouge">type: Number</code>지정하고 문자열 값을 넘기면 아래와 같은 에러가 발생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Vue warn]: Invalid prop: type check failed for prop "catCrying". Expected Number with value NaN, got String with value "hhhhhhhhhhh".
+</code></pre></div></div>
+
+<h3 id="코드-예제-1">코드 예제</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">catCrying</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="nb">Number</span><span class="p">,</span> <span class="c1">// Number type지정</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<h3 id="그-외">그 외</h3>
+
+<p>type에는 String, Number, Boolean, Array, Object, Date, Function, Symbol이 있다.</p>
+
+<p>type지정시 부모 컴퍼넌트는 정적인 값일때도 v-bind 해줘야함을 기억하자</p>
+
+<h3 id="multiple-type">multiple type</h3>
+
+<p>복수의 타입을 지정하는것도 가능</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span><span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">,</span> <span class="nb">Number</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="validator">validator</h2>
+
+<p>validator를 <code class="language-plaintext highlighter-rouge">"meow", "mew"</code>지정후 그 외 문자열을 props로 넘기면 아래와 같은 에러가 발생한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="nx">Vue</span> <span class="nx">warn</span><span class="p">]:</span> <span class="nx">Invalid</span> <span class="nx">prop</span><span class="p">:</span> <span class="nx">custom</span> <span class="nx">validator</span> <span class="nx">check</span> <span class="nx">failed</span> <span class="k">for</span> <span class="nx">prop</span> <span class="dl">"</span><span class="s2">catCrying</span><span class="dl">"</span><span class="p">.</span>
+</code></pre></div></div>
+
+<h3 id="코드-예제-2">코드 예제</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">props</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">catCrying</span><span class="p">:</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="na">validator</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="dl">"</span><span class="s2">meow</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">mew</span><span class="dl">"</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<p>prop은 초기값만 전달하고, 자식 컴포넌트는 그 초기값을 로컬 데이터 속성으로 활용하고 싶은 경우
+해당 경우에는 로컬 데이터 속성을 따로 선언하고 그 속성의 초기값으로써 prop을 사용하는 것이 가장 바람직합니다.</p>
+
+<p>props: [‘initialCounter’],
+data: function () {
+  return {
+    counter: this.initialCounter
+  }
+}
+전달된 prop의 형태를 바꾸어야 하는 경우
+해당 경우에는 computed 속성을 사용하는 것이 가장 바람직합니다.</p>
+
+<p>props: [‘size’],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
+  }
+}</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://kr.vuejs.org/v2/guide/components-props.html
+https://www.e-loop.jp/knowledges/3/
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/vuejs-props"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-update_all" data-toggle="tooltip" data-placement="top" title="rails update_all이란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/vuex-basic" data-toggle="tooltip" data-placement="top" title="vue.js Vuex에 대해서 알아보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

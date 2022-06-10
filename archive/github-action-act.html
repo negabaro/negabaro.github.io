@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="act를 이용해 Github Action의 Workflow를 로컬환경에서 실행해보자" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/github-action-act" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>act를 이용해 Github Action의 Workflow를 로컬환경에서 실행해보자 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/github-action-act">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>act를 이용해 Github Action의 Workflow를 로컬환경에서 실행해보자</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, December 11, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/ci_cd/github-action"><i class="fa fa-tag"></i> ci_cd/github-action</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="act란">act란?</h1>
+
+<p><a href="https://github.com/nektos/act">act</a>를 이용하면 로컬에서 <code class="language-plaintext highlighter-rouge">Github Action</code>의 <code class="language-plaintext highlighter-rouge">workflow</code>를 실행할 수 있다.</p>
+
+<h1 id="써보고-느낀점">써보고 느낀점</h1>
+
+<p>약간의 버그가 있긴한데 체감상 85%이상은 실제동작과 동일하게 움직이는것 같다.</p>
+
+<p>반복작업시 git push해서 조금 기다렸다 동작확인해야하는 과정이 굉장히 귀찮은데 act를 이용하면 빠르게 동작확인을 할 수 있으므로 꼭 사용하기를 권한다.</p>
+
+<p>act를 사용해보고 몇가지 느낀 주의사항을 적어본다.</p>
+
+<h1 id="주의사항">주의사항</h1>
+
+<h2 id="완벽하게-실제-github-action과-호환하지-않음">완벽하게 실제 Github Action과 호환하지 않음</h2>
+
+<p>위에서 얘기했듯이 실제동작과 완벽히 일치하지 않는다.</p>
+
+<p>조금 의심스러운 동작일경우 실제 git push해보면 Github Action상에서는 잘 동작하는 부분이 있었다.</p>
+
+<h2 id="스케줄러-이벤트는-동작하지-않음">스케줄러 이벤트는 동작하지 않음</h2>
+
+<p>아래 이벤트는 동작하지 않는다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">schedule</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">cron</span><span class="pi">:</span> <span class="s1">'</span><span class="s">0</span><span class="nv"> </span><span class="s">0-23/1</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1-5'</span>
+</code></pre></div></div>
+
+<p>로컬에서 테스트하기위해 아래와 같이 임시로 변경해서 사용하자</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">For Test</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h2 id="github-action의-action을-로컬에서-확인하기-위해">Github Action의 Action을 로컬에서 확인하기 위해</h2>
+
+<p>오해하지 말아야할게 act는 <code class="language-plaintext highlighter-rouge">Github Action</code>의 <code class="language-plaintext highlighter-rouge">Workflow</code>를 실행해줄뿐 <code class="language-plaintext highlighter-rouge">Action</code>을 실행해주는것은 아니다.</p>
+
+<p>action.yml이 로컬에서 제대로 동작하는지 확인하는 방법은 내가알기론 없다.
+보통 결과물을 실행해주기만 해서(ex node index.js) 딱히 문제없기도 한데 env,with이나 다른 action에 의존하는 action을 실행해줘야할때는 아래와 같이 사용이 가능하다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">For Hellow World</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Hello</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@master</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">run hello action</span>
+        <span class="na">id</span><span class="pi">:</span> <span class="s">hello-action</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">node index.js</span>
+</code></pre></div></div>
+
+<p>이 방법 외에도 action자체는 git push한 후 로컬에서 uses로 해당 리포지토리를 사용하게 하고
+로컬에서 반복해서 동작확인을 하는 방법도 차선책으로 괜찮을듯</p>
+
+<h1 id="설치방법">설치방법</h1>
+
+<p>mac기준으로 아래 커맨드로 인스톨이 가능했다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install nektos/tap/act
+</code></pre></div></div>
+
+<p>다른OS는 <a href="https://github.com/nektos/act">act</a>를 참고</p>
+
+<h1 id="사용방법">사용방법</h1>
+
+<p>루트 디렉토리에서 <code class="language-plaintext highlighter-rouge">act -l</code>을 해주면 실행가능한 Workflow리스트가 뜬다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">act</code>해주면 해당 Workflow를 전체실행한다.</p>
+
+<p>Github -&gt; Settings에서 설정하는 Secret값이 로컬에서 필요할땐</p>
+
+<p><code class="language-plaintext highlighter-rouge">my.secrets</code>파일을 만들어서 Secret값을 넣어준 후 아래와 같이 실행해주자.</p>
+
+<p>ex)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#my.secrets
+SLACK_WEBHOOK_URL=xx
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">act --secret-file my.secrets</code></p>
+
+<p>설정한 Secret값은 Workflow에서 아래와 같이 env에 매핑해서 사용하게된다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">env</span><span class="pi">:</span>
+  <span class="na">SLACK_WEBHOOK_URL</span><span class="pi">:</span> <span class="s">$</span>
+</code></pre></div></div>
+
+<p>node.js코드에서는</p>
+
+<p><code class="language-plaintext highlighter-rouge">process.env.SLACK_WEBHOOK_URL</code>로 사용이 가능하다.</p>
+
+<h1 id="메모">메모</h1>
+
+<h2 id="reference-not-found-에러">reference not found 에러</h2>
+
+<p>브랜치명이 v3여도 <a href="https://github.com/nektos/act/issues/177">reference not found</a>에러가 발생</p>
+
+<p><code class="language-plaintext highlighter-rouge">리포지토리명/tags</code>에 기술되어있는 태그명을 정확히 입력하면 해결</p>
+
+<p><code class="language-plaintext highlighter-rouge">ex) https://github.com/actions-rs/toolchain/tags</code></p>
+
+<hr />
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/github-action-act"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/action-of-github-action-hello-world" data-toggle="tooltip" data-placement="top" title="Github Action에서 node.js로 Hello World Action 만들기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/curl-tip" data-toggle="tooltip" data-placement="top" title="curl사용시 팁">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

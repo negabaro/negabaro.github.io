@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="webdriverIO 에서의 파일업로드 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/webdriverio-fileupload" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>webdriverIO 에서의 파일업로드 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/webdriverio-fileupload">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>webdriverIO 에서의 파일업로드 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, May 7, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/webdriverio"><i class="fa fa-tag"></i> webdriverio</a> <a href="/archive/tags/e2e"><i class="fa fa-tag"></i> e2e</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p><a href="https://negabaro.github.io/webdriverio/2018/04/17/controll-dom-pattern.html">webdriverIO에서 돔조작 패턴</a>에서 간단히 파일 업로드하는 방법을 알아봤다.
+이 포스트에서는 조금 구체적인 파일업로드 로직에 대해서 정리해봤다.</p>
+
+<p>이하 2가지 방법으로 파일업로드를 구현했다.</p>
+
+<ol>
+  <li>셀레니움을 이용한 파일 업로드</li>
+  <li>supertest를 이용한 파일 업로드</li>
+</ol>
+
+<h3 id="셀레니움을-이용한-파일-업로드">셀레니움을 이용한 파일 업로드</h3>
+
+<p>이전 포스트에서 파일업로드를 위해 <code class="language-plaintext highlighter-rouge">chooseFile</code>을 확인 다이어로그를 넘기기 위해
+<code class="language-plaintext highlighter-rouge">alertAccept</code>을 사용한다고 설명했다.
+이하와 같은형식이다.</p>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">browser.chooseFile('#snapshot_file', path);
+browser.element('#btn-upload').click();
+browser.alertAccept();
+browser.alertAccept();</code></pre></figure>
+
+<p>실제로 위 코드는 움직이지만 복수의 테스트를 실행했을때 
+다이어로그 Accept가 가끔 삑싸리(?) 나는 문제가 발생했다.</p>
+
+<p>이 문제는 <code class="language-plaintext highlighter-rouge">waitUntil</code>과 <code class="language-plaintext highlighter-rouge">pause</code>를 이용해서 실행 커맨드 사이에 텀을 주는것으로 해결했다.</p>
+
+<p>코드는 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">    browser.chooseFile('#snapshot_file', path);
+    browser.element('#btn-upload').click();
+
+    //browser.ignoreSynchronization = true;
+    browser.waitUntil(() =&gt; {
+            try {
+              return browser.alertText() != null;
+            }
+            catch (error) {
+              return false;
+            }
+          }, 5000);
+
+    browser.alertAccept();
+    browser.pause(300);
+    browser.waitUntil(() =&gt; {
+                  try {
+                    return browser.alertText() != null;
+                  }
+                  catch (error) {
+                    return false;
+                  }
+                }, 5000);
+
+    browser.alertAccept();</code></pre></figure>
+
+<p>그 외에도 특정 리소스가 존재할때까지 기다리는 메소드들이 여러가지 있다.</p>
+
+<h4 id="waitforvisible">WAITFORVISIBLE</h4>
+
+<p>http://webdriver.io/api/utility/waitForVisible.html</p>
+
+<h4 id="waitforvalue">WAITFORVALUE</h4>
+<p>http://webdriver.io/api/utility/waitForValue.html</p>
+
+<h4 id="waitfortext">WAITFORTEXT</h4>
+
+<p>http://webdriver.io/api/utility/waitForText.html</p>
+
+<h4 id="waitforexist">WAITFOREXIST</h4>
+
+<p>http://webdriver.io/api/utility/waitForExist.html</p>
+
+<p>waitForExist외에는 아직 써보진 못했지만..</p>
+
+<h3 id="supertest를-이용한-파일-업로드">supertest를 이용한 파일 업로드</h3>
+
+<p>셀레니움을 이용하지 않고도 실제 뒷 단에서는 실행되는 http POST부분을 실행하는 방법도 있다.
+이 포스트에서는 supertest를 이용해서 http POST를 실행해봤다.</p>
+
+<h4 id="add-npm-install-supertest">add npm install supertest</h4>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">npm install supertest --save-dev</code></pre></figure>
+
+<p>실제로 파일업로드시 실행되는 curl문은 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">curl <span class="nt">-X</span> POST <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="nt">--header</span> <span class="s1">'Accept: application/json'</span> <span class="nt">--header</span> <span class="s1">'authorization: Bearer xxx'</span> <span class="nt">-d</span> <span class="s1">'업로드할 파일내용'</span> <span class="s1">'http://xx.com/api/snapshots?ignore_warnings=true'</span></code></pre></figure>
+
+<p>이 부분을 supertest로 구현하면 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">const request = require("supertest");
+ const agent = request.agent(domain);
+    const token = browser.element('table tr:nth-of-type(1)').element('td:nth-of-type(2)').getText()
+
+    agent
+      .post('api/snapshots?ignore_warnings=true')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', 'Bearer' + ' ' + token )
+      .send(json)
+      //.attach('data', env.PATTERN_1)
+      .expect(200)
+      .end(function(err, res) {
+        console.log(res.body);
+        if (err) throw err;
+
+      });</code></pre></figure>
+
+<p>WebdriverIO에서 파일 업로드를 구현을 위한 2가지 방법을 알아봤다.</p>
+
+<h4 id="참고한-사이트">참고한 사이트</h4>
+
+<p><a href="https://github.com/webdriverio/webdriverio/issues/722">참고1</a>,<a href="https://github.com/webdriverio/webdriverio/issues/1788">참고2</a>,<a href="https://github.com/webdriverio/webdriverio/issues/490">참고3</a>,<a href="https://stackoverflow.com/questions/21281106/how-to-check-if-an-alert-is-open-using-nodejs-webdriver-wd">참고4</a>,<a href="https://stackoverflow.com/questions/11467471/how-to-check-if-an-alert-exists-using-webdriver">참고5</a></p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/webdriverio-fileupload"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-like" data-toggle="tooltip" data-placement="top" title="Rails 좋아요 기능 만들기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-follow" data-toggle="tooltip" data-placement="top" title="Rails 팔로우(Follow) 기능 만들기">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

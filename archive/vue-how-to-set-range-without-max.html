@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Vue Slider Component에 시간(HH:MM:SS)을 설정하는 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/vue-how-to-set-range-without-max" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Vue Slider Component에 시간(HH:MM:SS)을 설정하는 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/vue-how-to-set-range-without-max">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Vue Slider Component에 시간(HH:MM:SS)을 설정하는 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, October 19, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/vue.js"><i class="fa fa-tag"></i> vue.js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>기본적인 vue-slider-component의 사용법은 <a href="https://jsfiddle.net/NightCatSama/2xy72dod/10547/">JSfield</a>를 참고</p>
+
+<h1 id="vue-slider-component에-시간을-설정하는-방법">Vue slider component에 시간을 설정하는 방법</h1>
+
+<p>아래 코드를 참조</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">vue</span><span class="o">-</span><span class="nx">slider</span>
+    <span class="nx">ref</span><span class="o">=</span><span class="dl">"</span><span class="s2">slider</span><span class="dl">"</span>
+    <span class="nx">v</span><span class="o">-</span><span class="nx">model</span><span class="o">=</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span>
+    <span class="nx">v</span><span class="o">-</span><span class="nx">bind</span><span class="o">=</span><span class="dl">"</span><span class="s2">options</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">min</span><span class="o">=</span><span class="dl">"</span><span class="s2">15</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">max</span><span class="o">=</span><span class="dl">"</span><span class="s2">360</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">interval</span><span class="o">=</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">tooltip</span><span class="o">=</span><span class="dl">"</span><span class="s2">'always'</span><span class="dl">"</span>
+    <span class="p">:</span><span class="nx">tooltip</span><span class="o">-</span><span class="nx">formatter</span><span class="o">=</span><span class="dl">"</span><span class="s2">Tformatter</span><span class="dl">"</span>
+  <span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sr">/vue-slider</span><span class="err">&gt;
+</span><span class="k">new</span> <span class="nx">Vue</span><span class="p">(</span> <span class="p">{</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">data</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">value</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+      <span class="na">Tformatter</span><span class="p">:</span> <span class="nx">val</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">min</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">val</span><span class="o">/</span><span class="mi">60</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">sec</span> <span class="o">=</span> <span class="nx">val</span><span class="o">%</span><span class="mi">60</span> <span class="o">&gt;</span> <span class="mi">9</span> <span class="p">?</span> <span class="nx">val</span><span class="o">%</span><span class="mi">60</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="o">+</span><span class="nx">val</span><span class="o">%</span><span class="mi">60</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">min</span><span class="o">+</span><span class="dl">'</span><span class="s1">:</span><span class="dl">'</span><span class="o">+</span><span class="nx">sec</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">tooltip-formatter</code>옵션이 포인트</p>
+
+<h1 id="동작확인">동작확인</h1>
+
+<p><a href="https://gyazo.com/ecfd14f384ec7e9a68c080ea20b6cac7"><img src="https://i.gyazo.com/ecfd14f384ec7e9a68c080ea20b6cac7.gif" alt="Image from Gyazo" /></a></p>
+
+<hr />
+
+<p><a href="https://stackoverflow.com/questions/64394866/how-to-set-range-without-max-values-in-vue-slider">Link</a></p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/vue-how-to-set-range-without-max"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/generator-chrome-extension-kickstart-typescript" data-toggle="tooltip" data-placement="top" title="TypeScript && Chrome Extension 개발환경 간단히 만드는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/depends-on-the-personality" data-toggle="tooltip" data-placement="top" title="개발자로 보는 인간의 사고회로">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

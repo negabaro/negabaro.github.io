@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="JS Function 함수 표현식 기명함수,익명함수,무명함수에 대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-function-sort-of-function-expressions" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>JS Function 함수 표현식 기명함수,익명함수,무명함수에 대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-function-sort-of-function-expressions">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>JS Function 함수 표현식 기명함수,익명함수,무명함수에 대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, February 14, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a> <a href="/archive/tags/concept"><i class="fa fa-tag"></i> concept</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="함수의-이름-있다없다에-따라-용어가-틀림">함수의 이름 있다,없다에 따라 용어가 틀림</h2>
+
+<p>함수의 이름이 있는 함수를 <code class="language-plaintext highlighter-rouge">기명 함수 표현식</code> 이라고 부름
+함수의 이름이 없는 함수를 <code class="language-plaintext highlighter-rouge">무명 함수 표현식</code>,<code class="language-plaintext highlighter-rouge">익명함수</code>, 심지어 <code class="language-plaintext highlighter-rouge">함수 표현식</code>이라고 부른다고함.
+게다가 <code class="language-plaintext highlighter-rouge">익명함수</code>는 <code class="language-plaintext highlighter-rouge">람다식</code>,<code class="language-plaintext highlighter-rouge">람다함수</code>라고도 말함..(뭐 이렇게 부르는게 많냐)</p>
+
+<p>이 포스트에서는 간단하게 기명이와 무명이라고 나눠서 부르기로 하자</p>
+
+<h2 id="함수표현식-안에-기명무명-이가-있다고-말할-수도-있을듯">함수표현식 안에 기명,무명 이가 있다고 말할 수도 있을듯</h2>
+
+<p><code class="language-plaintext highlighter-rouge">함수 표현식</code>이 더 넓은 의미의 용어이며, <code class="language-plaintext highlighter-rouge">기명 함수 표현식</code>은 함수 표현식 중 이름을 정의한 함수를 가리키는 구체적인 용어</p>
+
+<p>즉 함수표현식 안에 기명이와 무명이가 있고
+무명이를 그냥 함수표현식이라고 퉁쳐서 부른다는 의미인듯</p>
+
+<h3 id="기명-함수-표현식named-function-expression-예제">기명 함수 표현식(named function expression) 예제</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var add = function add(a, b) {
+  return a + b;
+};
+</code></pre></div></div>
+
+<p>function 뒤에 add라는 이름이 있다.</p>
+
+<h3 id="무명-함수-표현식unnamed-function-expressioin익명함수anonymous-function함수-표현식function-expression-예제">무명 함수 표현식(unnamed function expressioin),익명함수(anonymous function),함수 표현식(function expression) 예제</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var add = function (a, b) {
+  return a + b;
+};
+</code></pre></div></div>
+
+<p>function 뒤에 이름이 없다.</p>
+
+<h2 id="기명이와-무명이의-차이는">기명이와 무명이의 차이는?</h2>
+
+<p>거의 똑같지만 무명이로 정의한 함수 객체의 name프로퍼티가 빈 문자열이 된다는것이 가장 큰차이</p>
+
+<h2 id="name프로퍼티가-뭔데">name프로퍼티가 뭔데?</h2>
+
+<p>ECMA 표준은 아니지만 많은 실행환경에서 쓰임
+파이어버그와 같은 디버거를 사용시 함수 안에서 자기 자신을 재귀적으로 호출할때 유용히 씀.
+이러한 용도로 쓸게 아니면 생략해도 무방.</p>
+
+<p>예제를 봐보자</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function foo() { } // 함수 선언문
+var bar = function() { }; // 무명 함수 표현식
+var baz = function baz() { }; // 기명 함수 표현식
+
+foo.name; // "foo"
+bar.name; // ""
+baz.name; // "baz"
+</code></pre></div></div>
+
+<p>무명이만 name프로퍼티가 없음.</p>
+
+<p>참고로 브라우저별로 무명이로 선언시 name프로퍼티의 값이 다름
+IE에서는 undefined가 되고, 파이어폭스와 웹킷에서는 빈 문자열로 정의됨.(역시 IE!!!!!)</p>
+
+<h2 id="그래서-무명이-기명이-중에-뭐가-좋은데">그래서 무명이 기명이 중에 뭐가 좋은데??</h2>
+
+<p>뭐가 좋다고 분명히 말하긴 어려움</p>
+
+<p>기명이는 stack track가 함수의 이름을 포함하여 출력하기 때문에 에러를 찾기 쉬움</p>
+
+<p>무명이는 함수 이름 한자 더 안적어도 되니 팔이 덜 힘들겠지?(가독성도)</p>
+
+<h2 id="사실-함수표현식에서는-숨겨진-자식이">사실 함수표현식에서는 숨겨진 자식이..</h2>
+
+<p>이 포스트에서는 생략했지만 즉시실행함수(IIFE)도 함수표현식의 하나의 종류임</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://webclub.tistory.com/310
+https://beomy.tistory.com/9
+https://joshua1988.github.io/web-development/javascript/function-expressions-vs-declarations/
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-function-sort-of-function-expressions"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/js-callback-function" data-toggle="tooltip" data-placement="top" title="Js Callback Function">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-function" data-toggle="tooltip" data-placement="top" title="js Function 특징과 관련 용어정리">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

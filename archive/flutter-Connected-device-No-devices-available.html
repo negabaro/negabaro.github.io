@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Flutter doctor실행시 [!] Connected device ! No devices available메시지는 에러가 아니다." />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/flutter-Connected-device-No-devices-available" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Flutter doctor실행시 [!] Connected device ! No devices available메시지는 에러가 아니다. - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/flutter-Connected-device-No-devices-available">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Flutter doctor실행시 [!] Connected device ! No devices available메시지는 에러가 아니다.</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, April 6, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/flutter/error"><i class="fa fa-tag"></i> flutter/error</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="결론">결론</h2>
+
+<p><code class="language-plaintext highlighter-rouge">flutter doctor</code> 실행시</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] Connected device
+    ! No devices available
+</code></pre></div></div>
+
+<p>메시지가 나와도 당황하지말자. 단순히 에뮬레이터가 실행이 안되어있을 뿐이다.</p>
+
+<p><a href="https://negabaro.github.io/archive/how-to-open-only-ios-simulator">IOS 시뮬레이터만 기동하는 방법</a>를 참고해서 실행해주자.</p>
+
+<hr />
+
+<h2 id="에러가-발생한-경위">에러가 발생한 경위</h2>
+
+<p>필자의 경우 Flutter SDK 2.0.3버전과 fvm을 이용해 설치한 1.17.5의 두가지 버전이 있다.</p>
+
+<p>특정 프로젝트의 경우 1.17.5에서 밖에 돌아가지 않아 이러한 환경구축을 했는데</p>
+
+<p>이상하게 flutter doctor실행시 2.0.3에는 에러가 나지 않는데 1.17.5환경일때만 아래 경고가 발생했다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] Connected device
+    ! No devices available
+</code></pre></div></div>
+
+<h2 id="flutter-1x와-2x의-큰-차이">Flutter 1.x와 2.x의 큰 차이</h2>
+
+<p>이것은 필자가 Flutter1.x와 2.x의 차이에 대해 잘 몰랐기 때문에 착각한 부분이었다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Connected device ! No devices available</code>는 단순히 현재 사용가능한 에뮬레이터가 없다는 메시지일뿐 에러는 아니다.</p>
+
+<p>그런데 왜 2.x에서는 에러가 나지 않았냐하면 2.x부터는 web과 mac을 서포트해줬는데 이때 브라우저에서 빌드결과를 확인할 수 있는 기능이 늘어나서다.</p>
+
+<p>즉, 1.x이든 2.x이든 에뮬레이터는 올라가 있지 않지만 2.x에서는 chrome 에뮬레이터가 존재하기에 해당 메시지가 발생하지 않던것이었다.</p>
+
+<p>flutter doctor커맨드의 결과를 자세히보면</p>
+
+<h3 id="1x의-경우">1.x의 경우</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fvm flutter doctor
+Doctor summary (to see all details, run flutter doctor -v):
+[✓] Flutter (Channel unknown, v1.17.5, on Mac OS X 10.15.7 19H512, locale ko-JP)
+[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
+[✓] Xcode - develop for iOS and macOS (Xcode 12.4)
+[✓] Android Studio (version 4.1)
+[✓] Connected device (1 available)
+</code></pre></div></div>
+
+<h3 id="2x의-경우">2.x의 경우</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Chrome - develop for the web</code>이라는게 추가되어있는걸 확인할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flutter doctor
+Doctor summary (to see all details, run flutter doctor -v):
+[✓] Flutter (Channel stable, 2.0.3, on Mac OS X 10.15.7 19H512 darwin-x64, locale ko-JP)
+[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
+[✓] Xcode - develop for iOS and macOS
+[✓] Chrome - develop for the web
+[✓] Android Studio (version 4.1)
+[✓] Connected device (2 available)
+</code></pre></div></div>
+
+<h2 id="메모">메모</h2>
+
+<h3 id="flutter-devices">flutter devices</h3>
+
+<p>한편 <code class="language-plaintext highlighter-rouge">flutter devices</code>커맨드를 실행하면 현재 사용가능한 디바이스들을 확인가능하다.</p>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/flutter-Connected-device-No-devices-available"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/Flutter-plugin-not-installed-error" data-toggle="tooltip" data-placement="top" title="Flutter plugin not installed; this adds Flutter specific functionality. 에러">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/flutter-Debug-adapter-process-has-terminated-unexpectedly" data-toggle="tooltip" data-placement="top" title="flutter Debug adapter process has terminated unexpectedly (exit code: 1)　에러">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

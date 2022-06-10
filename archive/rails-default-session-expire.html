@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails6 cookie_store를 이용한 session관리시 유효기간에 대해" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-default-session-expire" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails6 cookie_store를 이용한 session관리시 유효기간에 대해 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-default-session-expire">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails6 cookie_store를 이용한 session관리시 유효기간에 대해</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by  on Monday, September 7, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/security"><i class="fa fa-tag"></i> rails/security</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="일시적-sessionsession의-디폴트-유효기간은-브라우저-종료시">일시적 Session(Session의 디폴트 유효기간은 브라우저 종료시)</h1>
+
+<p>rails6에서 session값은 디폴트로 cookie_store 방식을 사용해 저장한다.</p>
+
+<p>cookie_store는 rails의 secret_key_base라는 키값을 이용해 session정보를 암호화해
+클라이언트에 전송후 브라우저의 cookie에 저장하는 방식이다.</p>
+
+<p>cookie에 있는 session값을 제 3자에게 탈취당해도 서버의 secret_key_base값을 모르므로 복호화 할 수 없는 구조이다.</p>
+
+<p>이렇게 브라우저의 cookie에 저장된 session정보의 유효기간을 보면 Session이라고 적혀 있는것을 확인할 수 있는데
+이는 디폴트설정으로 <code class="language-plaintext highlighter-rouge">브라우저 종료시 Session값을 쿠키에서 삭제</code>한다는 의미이다.</p>
+
+<p>이러한 상태를 <code class="language-plaintext highlighter-rouge">일시적 Session</code>이라고 부른다.</p>
+
+<blockquote>
+  <p>By definition, sessions will expire after the browser is closed, they do not have timeout. If you open Chrome dev tools and look at the expiration date, it will say “Session” there instead of the date/time.</p>
+</blockquote>
+
+<p><a href="https://stackoverflow.com/questions/16214800/does-rails-provide-default-session-time-out-duration-if-yes-where-is-it-specif">stack over flow</a></p>
+
+<h1 id="유효기간을-설정하는-방법">유효기간을 설정하는 방법</h1>
+
+<p>cookie에 저장된 Session정보의 유효기간을 두기 위해서는 Rails의 설정에 expire_at을 추가할 필요가 있다.</p>
+
+<p>아래는 유효기간을 20년으로 설정한 예이다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/initializers/session_store.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">session_store</span> <span class="ss">:cookie_store</span><span class="p">,</span> <span class="ss">key: </span><span class="s1">'_appname_session'</span><span class="p">,</span> <span class="ss">expire_after: </span><span class="mi">20</span><span class="p">.</span><span class="nf">years</span>
+</code></pre></div></div>
+
+<h1 id="영구성-sessionparmant메소드">영구성 Session(parmant메소드)</h1>
+
+<p>위에서 20년의 유효기간을 설정하는 방법에 대해 소개했는데
+실제로 이러한 설정이 많이 사용되어 <code class="language-plaintext highlighter-rouge">parmant</code>라는 전용메소드가 만들어져 버렸다.</p>
+
+<p>그리고 20년의 유효기간은 실제 영구적인 효과를 가지므로 <code class="language-plaintext highlighter-rouge">영구성 Session</code>이라고도 부른다.</p>
+
+<p>이 메소드를 이용하면 위에서 <code class="language-plaintext highlighter-rouge">config/initializers/session_store.rb</code>설정한 것과 같은 효과를 볼 수 있다.</p>
+
+<p>코드는 아래와 같다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cookies</span><span class="p">.</span><span class="nf">permanent</span><span class="p">[</span><span class="ss">:remember_token</span><span class="p">]</span> <span class="o">=</span> <span class="n">remember_token</span>
+</code></pre></div></div>
+
+<p>실무에서는 아래와 같이 signed를 이용해 암호화 하는 작업도 많이 쓰인다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cookies</span><span class="p">.</span><span class="nf">permanent</span><span class="p">.</span><span class="nf">signed</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">]</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">id</span>
+</code></pre></div></div>
+
+<p>위에서 설정한 cookie값을 추출하는 방법은 아래와 같다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">cookies</span><span class="p">.</span><span class="nf">signed</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h1 id="유효기간-설정에-관한-문제점">유효기간 설정에 관한 문제점</h1>
+
+<p>위에서 설명한 유효기간 설정은 문제점이 존재한다.</p>
+
+<p>바로 cookie자체가 브라우저에 설정되어 있어 해당 값에 억세스만 가능해지면 누구라도 간단히 cookie의 기한을 연장할 수 있다는 것이다.</p>
+
+<p>https를 도입해 cookie값이 중간에 탈취되지 않게하는 대책이 있지만 이것은 중간 탈취 방지에 대한 대책일 뿐 근본적인 해결책은 아니다.</p>
+
+<h1 id="서버에-세션정보를-저장">서버에 세션정보를 저장</h1>
+
+<p>cookie자체가 브라우저에 설정되어 있어 생기는 문제점을 해결하는 방법으로 Session값을 서버에 보관하는 방법이 있다.</p>
+
+<p>사용자는 쿠키를 사용하되 서버에서 해당 쿠키를 받아 서버에 저장한 세션값과 대조하는 방식이다.
+유효기간과 같은 설정은 서버에 있으므로 브라우저에 있는 쿠키가 털린다 해도 문제가 없다.</p>
+
+<p>이러한 내용은 레일즈의 공식 도큐멘트 [레일즈 세큐리티 가이드]에도 설명되어있다.</p>
+
+<h1 id="서버에-session값을-저장하는-방법">서버에 Session값을 저장하는 방법</h1>
+
+<p>이 포스트에서 자세히 설명하지는 않겠지만 서버에 Session값을 저장하는 장소로
+RDS,memcached,redis등이 있다.</p>
+
+<p>각각의 장단점이 있지만 대체적으로 memcached를 이용하는 방법이 일반적이다.</p>
+
+<h1 id="메모">메모</h1>
+
+<h2 id="삽질한-부분">삽질한 부분</h2>
+
+<p>rails의 디폴트 설정으로 cookie에 저장된 Session값은 브라우저 종료시 사라지는게 맞는데
+필자가 만든 서비스는 브라우저를 닫아도 cookie값이 지워지지 않았다.</p>
+
+<p>이상하다 생각하고 회사 선배에게 물어봤더니 브라우저를 종료했다가 열어보라해 그대로 해보니
+cookie가 삭제된것을 확인했다.</p>
+
+<p>필자의 PC는 맥북인데 브라우저를 닫았다고 생각했는데 실제로는 닫기지 않았던것이다..</p>
+
+<h2 id="레일즈에서-session정보를-저장하는-방법">레일즈에서 session정보를 저장하는 방법</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">session</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">id</span>
+</code></pre></div></div>
+
+<h2 id="cookie_store-방식의-우수한-가성비">cookie_store 방식의 우수한 가성비</h2>
+
+<p>cookie_store 방식은 가성비가 좋은 인증방법이라고 생각한다.</p>
+
+<p>세큐리티 부분도 어느정도 걱정이 없고(문제가 없진 않다) cookie를 이용함으로 개발하기도 편하다.</p>
+
+<p>같은 도메인이고 같은 포트라면 API서버에서 따로 토큰방식으로 인증을 만들 필요없이
+cookie를 사용해 인증이 가능하기 때문이다.</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://techracho.bpsinc.jp/hachi8833/2018_10_23/62858
+https://railsguides.jp/security.html#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-default-session-expire"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-save_and_create" data-toggle="tooltip" data-placement="top" title="rails save메소드와 create메소드의 차이에 대해">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/vue-how-to-add-param-except-event" data-toggle="tooltip" data-placement="top" title="vue.js event핸들러 함수에 매개변수 넘기는 방법">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

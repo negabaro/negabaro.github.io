@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Autoprefixer Rails로CSS의 벤더프리픽스를 자동생성하기" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/vendor-prefix" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Autoprefixer Rails로CSS의 벤더프리픽스를 자동생성하기 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/vendor-prefix">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Autoprefixer Rails로CSS의 벤더프리픽스를 자동생성하기</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, April 30, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/css"><i class="fa fa-tag"></i> css</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="벤더프릭스란">벤더프릭스란</h3>
+
+<p>CSS 권고안에 포함되지 못한 기능이나, CSS 권고안에는 포함되어 있지만 아직 완벽하게 제정된 상태가 아닌 CSS의 기능을 사용하고자 할 때
+각 브라우저마다 고유의 벤더 프리픽스를 부여해서 사용하게 된다</p>
+
+<h4 id="주요-브라우저의-벤더프릭스">주요 브라우저의 벤더프릭스</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-moz-　　…… Firefox
+-webkit-　…… Google Chrome、Safari
+-o-　　　　…… Opera
+-ms-　　　…… Internet Explorer
+</code></pre></div></div>
+
+<p>이 벤더프릭스를 신경쓰면서 프로젝트를 진행하는것은 상당히 귀찮다.
+레일즈에서는 <code class="language-plaintext highlighter-rouge">autoprefixer-rails</code>라는 Gem을 이용하면 자동으로 벤더프릭스를 생성해준다.</p>
+
+<h4 id="gemfile">Gemfile</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'autoprefixer-rails'</span></code></pre></figure>
+
+<h4 id="configautoprefixeryml">config/autoprefixer.yml</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="ss">browsers:
+  </span><span class="o">-</span> <span class="s2">"&gt; 5%"</span> <span class="c1">#상위5%의 브라우저를 대상으로함 </span>
+  <span class="o">-</span> <span class="s2">"last 2 versions"</span> <span class="c1">#이하에 정의한 부분이외에는 최신 메이저브라우저의 2version만 서포트</span>
+  <span class="o">-</span> <span class="s2">"IE &gt;= 11"</span> <span class="c1"># IEは11이상</span>
+  <span class="o">-</span> <span class="s2">"Android &gt;= 4"</span> <span class="c1"># Android는4계열을 서포트</span></code></pre></figure>
+
+<p>위와 같은 설정을 하면
+상위 5%이상의 브라우저에 한해서 해당 브라우저의 과거 2version을 서포트하고
+IE11이상 Android4이상도 서포트한다는 의미가 됩니다.</p>
+
+<h4 id="캐쉬삭제">캐쉬삭제</h4>
+
+<p>도큐맨트에서는 캐쉬삭제를 권하고 있기때문에 실행
+development환경에서는 안해도 될듯</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">bin</span><span class="o">/</span><span class="n">rake</span> <span class="n">tmp</span><span class="ss">:clear</span></code></pre></figure>
+
+<h4 id="컴파일-결과">컴파일 결과</h4>
+
+<p>asset:precimpile을 실행하거나 development환경에서 <code class="language-plaintext highlighter-rouge">config/application.rb</code>에 <code class="language-plaintext highlighter-rouge">config.assets.compile: true</code>인경우 
+이하와 같은 결과가 나옴.</p>
+
+<h5 id="컴파일전-scss">컴파일전 SCSS</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">.</span><span class="nf">sample</span> <span class="p">{</span>
+  <span class="ss">animation: </span><span class="n">spin</span> <span class="mi">1</span><span class="n">s</span> <span class="n">infinite</span> <span class="n">linear</span><span class="p">;</span>
+
+  <span class="vi">@keyframes</span> <span class="n">spin</span> <span class="p">{</span>
+    <span class="n">from</span> <span class="p">{</span> <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="n">deg</span><span class="p">);</span> <span class="p">}</span>
+    <span class="n">to</span> <span class="p">{</span> <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">360</span><span class="n">deg</span><span class="p">);</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h5 id="컴파일후-scss">컴파일후 SCSS</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">.</span><span class="nf">sample</span> <span class="p">{</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="ss">animation: </span><span class="n">spin</span> <span class="mi">1</span><span class="n">s</span> <span class="n">infinite</span> <span class="n">linear</span><span class="p">;</span>
+          <span class="ss">animation: </span><span class="n">spin</span> <span class="mi">1</span><span class="n">s</span> <span class="n">infinite</span> <span class="n">linear</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err">@</span><span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">keyframes</span> <span class="n">spin</span> <span class="p">{</span>
+  <span class="n">from</span> <span class="p">{</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="n">deg</span><span class="p">);</span>
+            <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="n">deg</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">to</span> <span class="p">{</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">360</span><span class="n">deg</span><span class="p">);</span>
+            <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">360</span><span class="n">deg</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="vi">@keyframes</span> <span class="n">spin</span> <span class="p">{</span>
+  <span class="n">from</span> <span class="p">{</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="n">deg</span><span class="p">);</span>
+            <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="n">deg</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">to</span> <span class="p">{</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">360</span><span class="n">deg</span><span class="p">);</span>
+            <span class="ss">transform: </span><span class="n">rotate</span><span class="p">(</span><span class="mi">360</span><span class="n">deg</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/vendor-prefix"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-assets-pipeline" data-toggle="tooltip" data-placement="top" title="Rails assets:pipeline에대해서">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/paperclip-devise-profiles" data-toggle="tooltip" data-placement="top" title="Rails devise,paperclip을 이용해서 프로필 이미지 업로드하기">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

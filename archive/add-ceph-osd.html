@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="ceph scalable한 디스크 추가/삭제 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/add-ceph-osd" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>ceph scalable한 디스크 추가/삭제 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/add-ceph-osd">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>ceph scalable한 디스크 추가/삭제 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, May 20, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/ceph"><i class="fa fa-tag"></i> ceph</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        8 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>ceph는 scalable하게 무정지로 디스크 용량을 추가,삭제가 가능하다고 한다.
+실제로 그런지 테스트 해봤다.</p>
+
+<h3 id="테스트-환경">테스트 환경</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph <span class="nt">-v</span>
+ceph version 10.2.9</code></pre></figure>
+
+<p>기존의 ceph는 AWS위에  2대 클러스터로 구성(ceph1 ceph2)
+각각 30GB씩 osd추가한 상태</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">/dev/xvdb<span class="o">(</span>30GB<span class="o">)</span>
+/dev/xvdb<span class="o">(</span>30GB<span class="o">)</span></code></pre></figure>
+
+<h4 id="df--th-결과">df -Th 결과</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">df</span> <span class="nt">-Th</span>
+Filesystem              Type      Size  Used Avail Use% Mounted on
+10.1.10.66,10.1.30.71:/ ceph       20G   80M   20G   1% /blue</code></pre></figure>
+
+<h4 id="ceph-deploy-osd-list-ceph1-and-ceph2">ceph-deploy osd list ceph1 and ceph2</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd list ceph1
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ceph-0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ID             0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Name           osd.0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal_uuid   02c636de-37f5-44dc-b7b1-85b0d0cee998
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Device         /dev/xvdb1
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Whoami         0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal path   /dev/xvdb2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd list ceph2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ceph-1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ID             1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Name           osd.1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal_uuid   3f3a64c6-2ae7-4f65-8a66-6f71d8155dc8
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Device         /dev/xvdb1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Whoami         1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal path   /dev/xvdb2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span></code></pre></figure>
+
+<p>기존에 추가한 디바이스가 있는것을 확인</p>
+
+<h3 id="osd-추가해주기">osd 추가해주기</h3>
+
+<p>AWS콘솔에서 이하 볼륨을 생성해서 ceph1,ceph2인스턴스에 attach해줌</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">/dev/xvdf<span class="o">(</span>30GB<span class="o">)</span>  <span class="o">&lt;&lt;</span> <span class="no">ceph1</span><span class="sh">
+/dev/xvdf(30GB)  &lt;&lt; ceph2</span></code></pre></figure>
+
+<p>이하 커맨드 실행</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd create ceph1:/dev/xvdf</code></pre></figure>
+
+<h4 id="df--th결과">df -Th결과</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">df</span> <span class="nt">-Th</span>
+Filesystem              Type      Size  Used Avail Use% Mounted on
+10.1.10.66,10.1.30.71:/ ceph       45G  108M   45G   1% /blue</code></pre></figure>
+
+<p>추가하자마자 바로 용량이 늘어남!
+위 결과는 ceph cluster를 마운트한 어느 서버에서도 같은 결과를 확인할 수 있었다.</p>
+
+<h4 id="osd-list">osd list</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd list ceph1
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ceph-2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ID             2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Name           osd.2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal_uuid   d3b7be98-9f15-4c38-87ba-3785f49c9f42
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Device         /dev/xvdf1
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Whoami         2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal path   /dev/xvdf2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ceph-0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ID             0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Name           osd.0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal_uuid   02c636de-37f5-44dc-b7b1-85b0d0cee998
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Device         /dev/xvdb1
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Whoami         0
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Journal path   /dev/xvdb2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span></code></pre></figure>
+
+<p>ID2의 /dev/xvdf가 생긴걸 확인</p>
+
+<h4 id="ceph2도-추가해보자">ceph2도 추가해보자</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd create ceph2:/dev/xvdf</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd list ceph2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ceph-1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ID             1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Name           osd.1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal_uuid   3f3a64c6-2ae7-4f65-8a66-6f71d8155dc8
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Device         /dev/xvdb1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Whoami         1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal path   /dev/xvdb2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ceph-3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ID             3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Name           osd.3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Status         up
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Reweight       1.0
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal_uuid   482fa951-688a-4402-b15a-19dad42e9141
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Device         /dev/xvdf1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Whoami         3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal path   /dev/xvdf2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span></code></pre></figure>
+
+<p>ID 3의 /dev/xvdf가 추가된걸 확인</p>
+
+<h4 id="df--th결과-1">df -Th결과</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">df</span> <span class="nt">-Th</span>
+Filesystem              Type      Size  Used Avail Use% Mounted on
+10.1.10.66,10.1.30.71:/ ceph       70G  140M   70G   1% /blue</code></pre></figure>
+
+<p>추가한만큼 바로 용량이 늘어남을 확인</p>
+
+<h4 id="ceph--w-를-통해서도-확인가능">ceph -w 를 통해서도 확인가능</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph <span class="nt">-w</span>
+    cluster a284013b-68d0-4570-9956-6706442d066e
+     health HEALTH_OK
+     monmap e1: 2 mons at <span class="o">{</span><span class="nv">ceph1</span><span class="o">=</span>10.1.10.66:6789/0,ceph2<span class="o">=</span>10.1.30.71:6789/0<span class="o">}</span>
+            election epoch 4, quorum 0,1 ceph1,ceph2
+      fsmap e5: 1/1/1 up <span class="o">{</span><span class="nv">0</span><span class="o">=</span><span class="nv">ceph1</span><span class="o">=</span>up:active<span class="o">}</span>, 1 up:standby
+     osdmap e23: 4 osds: 4 up, 4 <span class="k">in
+            </span>flags sortbitwise,require_jewel_osds
+      pgmap v1611: 192 pgs, 3 pools, 3349 bytes data, 20 objects
+            142 MB used, 71488 MB / 71630 MB avail
+                 192 active+clean
+
+2018-05-21 15:51:38.225587 mon.0 <span class="o">[</span>INF] pgmap v1611: 192 pgs: 192 active+clean<span class="p">;</span> 3349 bytes data, 142 MB used, 71488 MB / 71630 MB avail</code></pre></figure>
+
+<h3 id="추가한-osd를-삭제하는-방법">추가한 osd를 삭제하는 방법</h3>
+
+<p>서두에 ceph에서는 자유롭게 디스크의 추가/삭제가 가능하다고 했는데
+삭제를 해본결과 추가에 비해서 그렇게 자유롭지는 않다.</p>
+
+<h4 id="삭제-대상의idname확보">삭제 대상의ID,NAME확보</h4>
+
+<p>삭제할 대상의 id,name을 먼저 확인해준다.
+ceph2의 /dev/xvdf 디바이스를 삭제한다고 하면</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph-deploy osd list ceph2
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> ID             3
+<span class="o">[</span>ceph1][INFO  <span class="o">]</span> Name           osd.3</code></pre></figure>
+
+<p>ID와 Name부분이다.
+ID와Name은 primary키로 중복된 값은 존재하지 않는다.</p>
+
+<h4 id="삭제한osd가-있는-서버로-이동">삭제한osd가 있는 서버로 이동</h4>
+
+<p>여기서 부터는 ceph-deploy가 설치된 서버가 아닌 해당 디스크가 있는 서버로 이동해서 작업해야 한다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh 해당서버<span class="o">(</span>ceph2<span class="o">)</span></code></pre></figure>
+
+<h4 id="해당osd-프로세스정지">해당osd 프로세스정지</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh 해당서버<span class="o">(</span>ceph2<span class="o">)</span>
+<span class="nb">sudo </span>systemctl stop ceph-osd@<span class="o">{</span>osd-num<span class="o">}</span>.service
+<span class="c">#for example</span>
+<span class="nb">sudo </span>systemctl stop ceph-osd@3.service</code></pre></figure>
+
+<h4 id="클러스터상에서-해당-디스크를-제외">클러스터상에서 해당 디스크를 제외</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph osd out <span class="o">{</span>osd-ID<span class="o">}</span>
+<span class="c">#for example</span>
+ceph osd out 3
+-&gt; result: marked out osd.3.</code></pre></figure>
+
+<h4 id="crush-map삭제">CRUSH map삭제</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph osd crush remove <span class="o">{</span>name<span class="o">}</span>
+<span class="c">#for example</span>
+ceph osd crush remove osd.3</code></pre></figure>
+
+<h4 id="authentication-key삭제">authentication key삭제</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph auth del osd.<span class="o">{</span>osd-num<span class="o">}</span>
+<span class="c">#for example</span>
+ceph auth del osd.3</code></pre></figure>
+
+<h4 id="최종osd삭제-커맨드">최종osd삭제 커맨드</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ceph osd <span class="nb">rm</span> <span class="o">{</span>osd-num<span class="o">}</span>
+<span class="c">#for example</span>
+ceph osd <span class="nb">rm </span>3
+-&gt; result: ceph osd crush remove osd.3</code></pre></figure>
+
+<p>까지 끝나면 삭제완료</p>
+
+<h4 id="ceph-list다시-확인">ceph list다시 확인</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ceph-3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span>
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Path           /var/lib/ceph/osd/ceph-3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> ID             None
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Name           None
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Status         None
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Reweight       None
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Magic          ceph osd volume v026
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal_uuid   482fa951-688a-4402-b15a-19dad42e9141
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Active         ok
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Device         /dev/xvdf1
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Whoami         3
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> Journal path   /dev/xvdf2
+<span class="o">[</span>ceph2][INFO  <span class="o">]</span> <span class="nt">----------------------------------------</span></code></pre></figure>
+
+<p>ID,Name이None으로 바뀌어있는걸 확인</p>
+
+<h3 id="정리느낀점">정리&amp;느낀점</h3>
+
+<p>ceph는 master,standby 관계가 아니므로 서버별로 디스크 용량을 따로 추가가 가능
+해보지 않았지만 각자 다른 용량을 추가해도 문제없을듯</p>
+
+<p>볼륨 추가만해주면 ceph-deploy커맨드로 간단히 용량추가가 가능하다.
+삭제는 조금 귀찮은 작업이 필요하다.</p>
+
+<h3 id="그외-기존의-볼륨을-추가하려면">그외 기존의 볼륨을 추가하려면?</h3>
+
+<p>위에서는 새로운 볼륨을 추가해서 osd에 더해줬는데
+기존의 볼륨 디스크 크기를 늘려주는 방법은 있을까?</p>
+
+<p>찾아본 결과 디폴트로는 없는거 같고,ceph lvm을 도입하면 가능할듯하다.(미검증)</p>
+
+<h3 id="관련-도큐멘트">관련 도큐멘트</h3>
+
+<p>http://docs.ceph.com/docs/master/rados/deployment/ceph-deploy-osd/
+http://docs.ceph.com/docs/master/rados/operations/add-or-rm-osds/#removing-osds-manual</p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/add-ceph-osd"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/pseudo-selector" data-toggle="tooltip" data-placement="top" title="css pseudo-selector(가상셀렉터)에 대해서">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/i18n" data-toggle="tooltip" data-placement="top" title="Rails I18n에 대해서">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

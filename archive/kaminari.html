@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails kaminari를 이용한 Pagination기능 추가" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/kaminari" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails kaminari를 이용한 Pagination기능 추가 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/kaminari">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails kaminari를 이용한 Pagination기능 추가</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, May 15, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/gem"><i class="fa fa-tag"></i> gem</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p><code class="language-plaintext highlighter-rouge">kaminari</code>라는 gem을 이용해서 레일즈에서 Pagination기능구현 하는법을 정리해봤다.</p>
+
+<p>Pagination이란 게시판에 100개의 글이 있을 경우 이글을 페이지 번호를 매겨 보기쉽게 표시하는 기능이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40083442-1b9c2b7e-58cf-11e8-9176-ac9f93a22848.png" alt="image" /></p>
+
+<p>사전에  <a href="https://negabaro.github.io/rails/2018/04/13/quiz-crud.html">rails로 퀴즈어플 만들어보기(CRUD편)</a>에서 만든 WritingQuiz모델의 
+index.html.erb에 이Pagination기능을 넣어보기로 하자.</p>
+
+<h3 id="kaminari-gem추가후-bundle-install">kaminari Gem추가후 bundle install</h3>
+
+<p>kaminari는 Rails에서 간단히 Pagination기능구현을 하기위해 사용되는 유명한 Gem이다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Gemfile</span>
+<span class="n">gem</span> <span class="s1">'kaminari'</span></code></pre></figure>
+
+<h3 id="컨트롤러-수정">컨트롤러 수정</h3>
+
+<p>지금까지 <code class="language-plaintext highlighter-rouge">WritingQuiz.all</code>를 이용해서 전체 데이터를 가져왔었는데
+해당 설정을 커맨트하고 이하 page메소드에 <code class="language-plaintext highlighter-rouge">params[:page]</code>를 얹혀서 보내준다.</p>
+
+<p>뒤에서 알았지만 xx.all과 동일한 데이터를 취득 가능했다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/controllers/writing_quizzes_controller.rb</span>
+  <span class="k">def</span> <span class="nf">index</span>
+      <span class="c1">#@wquizzes = WritingQuiz.all</span>
+      <span class="vi">@wquizzes</span> <span class="o">=</span> <span class="no">WritingQuiz</span><span class="p">.</span><span class="nf">page</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:page</span><span class="p">])</span>
+  <span class="k">end</span></code></pre></figure>
+
+<h3 id="뷰-설정인덱스-페이지에-페이지네이션-설정-추가">뷰 설정(인덱스 페이지에 페이지네이션 설정 추가)</h3>
+
+<p>뷰에서는 이하 2개의 설정을 추가해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="o">&lt;</span><span class="sx">%= page_entries_info @wquizzes %&gt;
+ &lt;%=</span> <span class="n">paginate</span> <span class="vi">@wquizzes</span> <span class="o">%&gt;</span> <span class="c1">#페이지네이션링크를 추가하는부분</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/writing_quizzes/index.html.erb</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"main posts-index"</span><span class="o">&gt;</span>
+ 
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"container"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sx">%= page_entries_info @wquizzes %&gt;
+    &lt;% @wquizzes.each do |w| %&gt;
+      &lt;div class=</span><span class="s2">"posts-index-item"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"post-left"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="sx">%= link_to w.id , writing_quiz_path(w.id) %&gt;
+        &lt;/div&gt;
+        &lt;div class=</span><span class="s2">"post-right"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"post-user-name"</span><span class="o">&gt;</span>
+           <span class="err">문제</span><span class="p">:</span> <span class="o">&lt;</span><span class="sx">%= w.question %&gt;
+          &lt;/div&gt;
+          정답: &lt;%=</span> <span class="n">w</span><span class="p">.</span><span class="nf">answer</span> <span class="sx">%&gt;
+        &lt;/div&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/div&gt;
+    &lt;% end %&gt;
+    &lt;%= paginate @wquizzes %&gt;
+  &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/div&gt;</span></code></pre></figure>
+
+<p>여기까지만 설정이 끝나고 Rails를 기동해준다.</p>
+
+<h4 id="-paginate-xx-">&lt;%= paginate @xx %&gt;</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= paginate @wquizzes %&gt;
+</code></pre></div></div>
+<p>설정에 의해 이하와 같은 페이지네이션 링크가  추가된걸 알 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40063399-3031d49e-5898-11e8-85bb-c00c22e30c2a.png" alt="image" /></p>
+
+<h4 id="page_entries_info란">page_entries_info란</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= page_entries_info @wquizzes %&gt;
+</code></pre></div></div>
+
+<p>뷰에서 추가한 위 설정으로 화면 상단에 이러한 페이징정보를 표시할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40083824-45f7821e-58d0-11e8-8de3-589c58a1f254.png" alt="image" /></p>
+
+<h3 id="kaminari-view커스텀">kaminari view커스텀</h3>
+
+<p>기존의 kaminari화면을 커스텀할때 이하 커맨드를 실행하면</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">g</span> <span class="n">kaminari</span><span class="ss">:views</span> <span class="n">default</span></code></pre></figure>
+
+<p>app/views/kaminari이하에 템플릿파일이 생성되므로 해당 부분을 커스텀 가능하게 한다.</p>
+
+<h3 id="kaminari커스텀-설정">kaminari커스텀 설정</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">g</span> <span class="n">kaminari</span><span class="ss">:config</span>
+      <span class="n">create</span>  <span class="n">config</span><span class="o">/</span><span class="n">initializers</span><span class="o">/</span><span class="n">kaminari_config</span><span class="p">.</span><span class="nf">rb</span></code></pre></figure>
+
+<p>코맨트 되있는 부분이 디폴트 설정이다.
+해당부분을 코맨트 아웃하고 수정하면 설정이 변경된다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># config/initializers/kaminari_config.rb</span>
+<span class="no">Kaminari</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># config.default_per_page = 25 # 1페이지당 항목수</span>
+  <span class="c1"># config.max_per_page = nil    # 1페이지당 최대수</span>
+  <span class="c1"># config.window = 4            # ex 값이 2일 경우 .. 2 3 (4) 5 6 ..</span>
+  <span class="c1"># config.outer_window = 0      # ex 값이 2일 경우 .. (4) .. 99 100</span>
+  <span class="c1"># config.left = 0              # ...로 표시될때 왼쪽 표시숫자</span>
+  <span class="c1"># config.right = 0             # ...로 표시될때 오른쪽 표시숫자</span>
+  <span class="c1"># config.page_method_name = :page # 메소드명</span>
+  <span class="c1"># config.param_name = :page    # pagination의 파라메터 명 </span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="모델별-설정">모델별 설정</h4>
+
+<p><code class="language-plaintext highlighter-rouge">config/initializers/kaminari_config.rb</code> 부분을 수정시에는 Rails프로젝트 전체에  적용되는데 이하와 같이 특정 모델에게만 적용하는 설정도 가능하다</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/writing_quiz.rb</span>
+
+<span class="k">class</span> <span class="nc">Shop</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">paginates_per</span> <span class="mi">5</span>  <span class="c1"># 1페지당 5항목 표시</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="뷰-설정">뷰 설정</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/writing_quizzes/index.html.erb</span>
+<span class="o">...</span>
+<span class="o">&lt;</span><span class="sx">%= paginate @wquizzes, outer_window: 4 %&gt;</span></code></pre></figure>
+
+<h4 id="그외">그외</h4>
+
+<p>컨트롤러 설정없이 view부분만 추가해보면 어떤 에러가 나올까.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">%= paginate @wquizzes %&gt;</span></code></pre></figure>
+
+<p>이하와 같은 에러가 발생했다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">undefined</span> <span class="nb">method</span> <span class="sb">`total_pages' for #&lt;WritingQuiz::ActiveRecord_Relation:0x007fc24ffe5ad8&gt;</span></code></pre></figure>
+
+<p><code class="language-plaintext highlighter-rouge">undefined method total_pages</code>에러가 발생하는걸 봐서는 메소드명의 디폴트값은 total인것 같다.</p>
+
+<p>간단히 kaminari에 대해서 알아봤다.</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/kaminari"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/ruby-safe-navigation-operator" data-toggle="tooltip" data-placement="top" title="ruby2.3의 신기능 Safe Navigation Operator(&.)과 Rails의 try,try!메소드에 대해서">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/css-flex" data-toggle="tooltip" data-placement="top" title="css flex에 대해서">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

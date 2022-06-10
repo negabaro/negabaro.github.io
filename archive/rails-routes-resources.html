@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails resource vs resources 차이" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-routes-resources" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails resource vs resources 차이 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-routes-resources">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails resource vs resources 차이</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, March 23, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/routing"><i class="fa fa-tag"></i> rails/routing</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="resources-users인-경우"><code class="language-plaintext highlighter-rouge">resources :users</code>인 경우</h3>
+
+<p>resources는 복수의 리소스를 위한 CRUD처리를 하는 루팅설정을 만들어줌.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+<span class="c1">#config/routes.rb</span>
+  <span class="n">resources</span> <span class="ss">:users</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="rake-routes실행결과">rake routes실행결과</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="no">Prefix</span> <span class="no">Verb</span>   <span class="no">URI</span> <span class="no">Pattern</span>               <span class="no">Controller</span><span class="c1">#Action</span>
+    <span class="n">users</span> <span class="no">GET</span>    <span class="sr">/users(.:format)          users#index
+          POST   /use</span><span class="n">rs</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>          <span class="n">users</span><span class="c1">#create</span>
+ <span class="n">new_user</span> <span class="no">GET</span>    <span class="sr">/users/ne</span><span class="n">w</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#new</span>
+<span class="n">edit_user</span> <span class="no">GET</span>    <span class="sr">/users/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span> <span class="n">users</span><span class="c1">#edit</span>
+     <span class="n">user</span> <span class="no">GET</span>    <span class="sr">/users/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#show</span>
+          <span class="no">PATCH</span>  <span class="sr">/users/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#update</span>
+          <span class="no">PUT</span>    <span class="sr">/users/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#update</span>
+          <span class="no">DELETE</span> <span class="sr">/users/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#destroy</span></code></pre></figure>
+
+<p><code class="language-plaintext highlighter-rouge">/users/:id</code>이부분 주목. 각각 유저의 id에 접속할 수 있도록 되어있는걸 알 수 있음.
+리소스가 복수이므로 /users에 GET리퀘스트를 보내면 유저의 일람(index)에 접근하게됨.</p>
+
+<h3 id="resource-users인-경우"><code class="language-plaintext highlighter-rouge">resource :users</code>인 경우</h3>
+
+<p>resource인 경우 하나의 리소스에 대한 CRUD처리를 위한 루팅설정을 만들어줌.</p>
+
+<p>예를들어 특정유저를 위한 CRUD처리를 하고 싶을때 사용</p>
+
+<p>필자의 경우 실수로 <code class="language-plaintext highlighter-rouge">resource :users</code>로 설정해버려서 이하와 같은 결과가 나왔음.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#config/routes.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">resource</span> <span class="ss">:users</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="rake-routes실행결과-1">rake routes실행결과</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="no">Prefix</span> <span class="no">Verb</span>   <span class="no">URI</span> <span class="no">Pattern</span>           <span class="no">Controller</span><span class="c1">#Action</span>
+ <span class="n">new_users</span> <span class="no">GET</span>    <span class="sr">/users/ne</span><span class="n">w</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>  <span class="n">users</span><span class="c1">#new</span>
+<span class="n">edit_users</span> <span class="no">GET</span>    <span class="sr">/users/e</span><span class="n">dit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span> <span class="n">users</span><span class="c1">#edit</span>
+     <span class="n">users</span> <span class="no">GET</span>    <span class="sr">/users(.:format)      users#show
+           PATCH  /use</span><span class="n">rs</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#update</span>
+           <span class="no">PUT</span>    <span class="sr">/users(.:format)      users#update
+           DELETE /use</span><span class="n">rs</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#destroy</span>
+           <span class="no">POST</span>   <span class="sr">/users(.:format)      users#create</span></code></pre></figure>
+
+<p>하나의 리소스 처리를 위한 CRUD이므로 /users에 id는 존재하지 않음
+복수의 유저 일람을 확인할 수 있는 index페이지도 존재하지 않음.</p>
+
+<p>rails에서 의도한 설정은 
+resource에는 단수문자를 resources에는 복수문자를 설정하는것이므로<code class="language-plaintext highlighter-rouge">resource :user</code>이렇게 설정해주는것이 맞을것 같다.</p>
+
+<h3 id="resource-user인-경우"><code class="language-plaintext highlighter-rouge">resource :user</code>인 경우</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#config/routes.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">resource</span> <span class="ss">:user</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="rake-routes결과">rake routes결과</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="no">Prefix</span> <span class="no">Verb</span>   <span class="no">URI</span> <span class="no">Pattern</span>          <span class="no">Controller</span><span class="c1">#Action</span>
+ <span class="n">new_user</span> <span class="no">GET</span>    <span class="sr">/user/ne</span><span class="n">w</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>  <span class="n">users</span><span class="c1">#new</span>
+<span class="n">edit_user</span> <span class="no">GET</span>    <span class="sr">/user/e</span><span class="n">dit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span> <span class="n">users</span><span class="c1">#edit</span>
+     <span class="n">user</span> <span class="no">GET</span>    <span class="sr">/user(.:format)      users#show
+          PATCH  /use</span><span class="n">r</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#update</span>
+          <span class="no">PUT</span>    <span class="sr">/user(.:format)      users#update
+          DELETE /use</span><span class="n">r</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">users</span><span class="c1">#destroy</span>
+          <span class="no">POST</span>   <span class="sr">/user(.:format)      users#create</span></code></pre></figure>
+
+<h3 id="공부하게된-계기">공부하게된 계기</h3>
+
+<p>resource와resources의 차이를 몰라서 <a href="https://negabaro.github.io/rails/2018/03/23/rails-form-for-mvc-easy.html">rails form_for이용해서 MVC모델 이해하기</a> 글을 쓸때 user등록후 <code class="language-plaintext highlighter-rouge">redirect_to</code>를 선언하니  이하와 같은 에러가 났었다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/37827902-a16b43ba-2edc-11e8-8add-72c7ee2ce0b0.png" alt="image" /></p>
+
+<p>조금 헤맸는데 원인은 <code class="language-plaintext highlighter-rouge">config/routes.rb</code>에 <code class="language-plaintext highlighter-rouge">resources :users</code> 가아닌 <code class="language-plaintext highlighter-rouge">resource :users</code>로 설정해놨었기 때문이었다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">resource :users</code> 일때 <code class="language-plaintext highlighter-rouge">redirect_to @user</code>의 <code class="language-plaintext highlighter-rouge">@user</code>은 <code class="language-plaintext highlighter-rouge">user_url</code>이 되는반면
+<code class="language-plaintext highlighter-rouge">resources :users</code> 인경우는 <code class="language-plaintext highlighter-rouge">users_url</code>이 되는것.</p>
+
+<p>보통 <code class="language-plaintext highlighter-rouge">rails g controller users</code>이런식으로 컨트롤러를  복수형으로 지정하므로</p>
+
+<p><code class="language-plaintext highlighter-rouge">config/routes.rb</code>에서도<code class="language-plaintext highlighter-rouge">resources :users</code>이렇게 복수형으로 맞춰줘야
+<code class="language-plaintext highlighter-rouge">@user</code>와 같은 값을 디폴트로도 쓸수 있을것 같다.</p>
+
+<p>참고로 <code class="language-plaintext highlighter-rouge">redirect_to xx_url</code> 이면 해당 컨트롤러의 index페이지로 이동한다.</p>
+
+<p>그당시는 이유를 몰라서 일단 에러를 회피하기 위한 방책으로 <code class="language-plaintext highlighter-rouge">redirect_to @user</code>를 이용하지 않고 <code class="language-plaintext highlighter-rouge">redirect_to users_url</code> 이런식으로 기술해서 에러를 회피했었음.
+@user -&gt; user(s)_url로 자동으로 바꿔주므로 바꿔진 부분을 현재 존재하는 컨트롤러에 맞게 적어주는 형식</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-routes-resources"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-relation-polymorphic" data-toggle="tooltip" data-placement="top" title="rails5.1에서 polymorphic관계형 모델 만들기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/scope-module-namespace" data-toggle="tooltip" data-placement="top" title="Rails의 scope,scope module,namespace의 차이">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="컴파일언어와 인터프리터언어의 차이" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/compile_lang__interpreter_lang" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>컴파일언어와 인터프리터언어의 차이 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/compile_lang__interpreter_lang">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>컴파일언어와 인터프리터언어의 차이</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, June 14, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/software"><i class="fa fa-tag"></i> software</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="프로그래밍-언어">프로그래밍 언어</h1>
+
+<p>모든 프로그래밍 언어는 컴퓨터에게 어떤 명령을 내리기 위해 존재한다.
+한편 프로그래밍 언어는 시대흐름에 따라 점점 진화해서 인간에게 친화적으로 바뀌어갔다.
+이렇게 인간 친화적인 언어를 하이레벨 언어라고 부른다.</p>
+
+<p>이 하이레벨 언어를 컴퓨터가 알아먹는 기계어로 바꿔주는 작업이 필요하다.
+이 작업을 언제하냐에 따라 인터프리터,컴파일 언어로 나누어진다.</p>
+
+<h1 id="용어정리">용어정리</h1>
+
+<h2 id="번역">번역</h2>
+
+<p>여기서 부터 하이레벨 언어를 기계어로 바꿔주는 작업을 
+<code class="language-plaintext highlighter-rouge">「번역」</code>이라고 부르겠다.</p>
+
+<h2 id="실행">실행</h2>
+
+<p>또한 메모리에 적재된 기계어를 컴퓨터가 읽어내고 어떠한 output을 내는 행위를 <code class="language-plaintext highlighter-rouge">「실행」</code>이라고 부르도록 하자.</p>
+
+<h1 id="컴파일-언어란">컴파일 언어란?</h1>
+
+<p><code class="language-plaintext highlighter-rouge">실행</code> 이전에 <code class="language-plaintext highlighter-rouge">번역</code>이라는 작업을 하는 언어를 컴파일 언어라고 부른다.
+<code class="language-plaintext highlighter-rouge">하이레벨 언어를 번역</code>과 <code class="language-plaintext highlighter-rouge">번역된 코드를 실행</code>하는 2개의 액션이 존재한다.</p>
+
+<h1 id="인터프리터-언어란">인터프리터 언어란?</h1>
+
+<p><code class="language-plaintext highlighter-rouge">번역</code>과 <code class="language-plaintext highlighter-rouge">실행</code>을 순차적으로 동작 시키는 언어를 인터프리터 언어라고 부른다.
+<code class="language-plaintext highlighter-rouge">번역</code>과 <code class="language-plaintext highlighter-rouge">실행</code>이 거의 동시에 실행되므로 1개의 액션이 존재한다.</p>
+
+<h1 id="컴파일언어의-장점">컴파일언어의 장점</h1>
+
+<h2 id="속도면">속도면</h2>
+
+<p>컴파일한 운영체제의 사양에 최적화되어 실행되므로 퍼포먼스가 뛰어나다.</p>
+
+<h2 id="버그-발견이-용이">버그 발견이 용이</h2>
+
+<p>간단한 미스가 컴파일시 발견되기 쉬움</p>
+
+<h1 id="컴파일언어의-단점">컴파일언어의 단점</h1>
+
+<h2 id="실행환경의-제약">실행환경의 제약</h2>
+
+<p>컴파일시 지정된 운영체제에 최적화 되게 움직이게끔 만들어져 있어서
+다른 운영체제에 실행하도록 하기 위해서는 재컴파일 할 필요가 있음.</p>
+
+<h2 id="코딩시간이-비효율적">코딩시간이 비효율적</h2>
+
+<p>하이레벨 언어 코드 일부가 바뀌어도 전체 코드를 컴파일할 필요가 있어
+잦은 수정시 비효율적이다.</p>
+
+<h1 id="인터프리터-언어의-장점">인터프리터 언어의 장점</h1>
+
+<h2 id="코딩시간이-효율적">코딩시간이 효율적</h2>
+
+<p>컴파일 언어에 비해 잦은 수정이 발생해도 매번 컴파일 할 필요가 없다는것이 장점</p>
+
+<h1 id="인터프리터-언어의-단점">인터프리터 언어의 단점</h1>
+
+<h2 id="속도면-1">속도면</h2>
+
+<p>번역과,실행을 하나의 액션에서 실행하므로 약간의 처리능력이 필요함</p>
+
+<h2 id="실행하기전에-버그를-발견할-수-없음">실행하기전에 버그를 발견할 수 없음</h2>
+
+<p>간단한 에러도 실행해보지 않으면 에러를 알 수 없음.</p>
+
+<h1 id="대표적인-컴파일-언어">대표적인 컴파일 언어</h1>
+
+<p>C,C++,JAVA,Erlang, Haskell, Rust, and Go</p>
+
+<h1 id="대표적인-인터프린터-언어">대표적인 인터프린터 언어</h1>
+
+<p>javascript,Ruby,Python,PHP</p>
+
+<h1 id="메모1">메모1.</h1>
+
+<p>컴파일 언어는 대게 정적타입을 가지지만 동적타입을 지원하는 언어도 있다.
+인터프리터 언어는 대게 동적타입만을 지원하지만 정적타입도 대응하는 추세이다.</p>
+
+<h1 id="메모2-jit">메모2. JIT</h1>
+
+<p>잦은 수정시 전체 하이레벨 코드를 기계어로 컴파일링 하는 단점을 상쇄시키는 목적으로 등장
+컴파일언어와 인터프리터의 중간 하이브리드 언어라고 불리우기도</p>
+
+<p>컴파일시 컴퓨터에서 실행될 기계어가 아닌 bytecode로 변환하고 실행될때 기계어로 번역</p>
+
+<p>같은 코드를 매번 해석하지 않고 실행할때 컴파일을 하면서 해당 코드를 캐싱하고 
+바뀐 부분만 새로 컴파일 하고 나머지는 캐싱한 코드를 사용</p>
+
+<h1 id="메모3-트랜스파일">메모3. 트랜스파일</h1>
+
+<p>특정 언어로 된 코드를 다른 언어로 바꾸는 것을 말함.
+기계어로 바꾸는 컴파일러와 차이가 있음.</p>
+
+<p>대표적인 예로 Typescript가 있다.</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://m.blog.naver.com/PostView.nhn?blogId=parkjy76&amp;logNo=220199093415&amp;proxyReferer=https:%2F%2Fwww.google.com%2F
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/compile_lang__interpreter_lang"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-polymorphic-association" data-toggle="tooltip" data-placement="top" title="rails6 polymorphic association(다형성 관계)이란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/software-polymorphism" data-toggle="tooltip" data-placement="top" title="다형성(polymorphism)을 이해해보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

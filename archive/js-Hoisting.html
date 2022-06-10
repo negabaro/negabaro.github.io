@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="javascript　Hoisting이란?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-Hoisting" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>javascript　Hoisting이란? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-Hoisting">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>javascript　Hoisting이란?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, February 14, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a> <a href="/archive/tags/concept"><i class="fa fa-tag"></i> concept</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        4 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="호이스팅이란">호이스팅이란?</h2>
+
+<p><span style="color: red"><strong>자바스크립트가 함수나 var로 선언한 변수를 맨 위로 끌어 올리는 현상(?)</strong></span> 을 호이스팅이라 일컬음</p>
+
+<p>인터프린터가 자바스크립트 코드를 해석함에 있어서 Global 영역의 선언된 코드블럭을 최상의 Scope로 끌어올리는 것</p>
+
+<p>즉 Global 영역에 선언된 변수(const/let제외한 var만) 또는 함수는 자바사크립트 엔진이 가장 먼저 해석하게 된다</p>
+
+<p><span style="color: red"><strong>단 할당구문은 런타임과정 이루어지기 때문에 hosting이 되지 않는다.</strong></span></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//#예제 1 : 함수선언에서의  호이스팅
+sana();
+function sana() {
+    console.log('샤샤샤');
+};
+&gt; 샤샤샤
+
+//#예제 2 : 함수표현(할당)에서의  호이스팅
+sana();
+var sana = function() {
+    console.log('샤샤샤'');
+};
+&gt; Syntax Error
+&gt;
+</code></pre></div></div>
+
+<h2 id="hoist영어의-의미">hoist영어의 의미</h2>
+
+<p>네이버 영어사전에서 검색해보면 hoist의 뜻은
+<code class="language-plaintext highlighter-rouge">[동사] (흔히 밧줄이나 장비를 이용하여) 들어[끌어]올리다</code>
+이라는 뜻!</p>
+
+<h2 id="맨위로-끌어-올린다는게-먼소리">맨위로 끌어 올린다는게 먼소리?</h2>
+
+<p>x행에 선언하더라도 그 코드를 1행(가장위로) 올린다는 의미</p>
+
+<h2 id="그게-어때서">그게 어때서??</h2>
+
+<p>30행에 선언한 <code class="language-plaintext highlighter-rouge">var x='hoge'</code>를 30행 이전에도 사용할 수 있다는 의미니까 중요
+위에서 밑으로 읽혀지는 특성을 역행하므로 <code class="language-plaintext highlighter-rouge">어 이게 왜 움직이지?</code>한 코드를 이해하기 위해 중요한 개념</p>
+
+<h2 id="왜-자바스크립트는-함수나-var을-맨위로-끌어올리지">왜 자바스크립트는 함수나 var을 맨위로 끌어올리지?</h2>
+
+<p>모르지 그건 이제 찾아봐야지</p>
+
+<h2 id="호이스팅-var-예제">호이스팅 var 예제</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x;  // undefined !?
+var x = 3;
+</code></pre></div></div>
+
+<p>음?undefined??못쓰는거 아냐?? 구라친거임?</p>
+
+<p>아니다..값을 못 읽어왔다는거지 선언한 x는 위에서 읽어온게 고무적임</p>
+
+<p>let으로 바꿔보면 차이를 암</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x;  // ReferenceError
+let x = 3;
+</code></pre></div></div>
+
+<p>let이나const의 경우 이렇게 x를 찾지 못하고 ReferenceError에러를 뱉음.</p>
+
+<h2 id="호이스팅-함수-예제">호이스팅 함수 예제</h2>
+
+<p>함수도 마찬가지</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f()                      // 'f'
+function f() {           // 함수 선언
+    console.log('f');
+}
+
+f2();                    // ReferrenceError
+let f2 = function() {    // 함수 할당
+    console.log('f')
+}
+</code></pre></div></div>
+
+<h2 id="스코프의-영역으로-hoisting을-설명">스코프의 영역으로 Hoisting을 설명</h2>
+
+<p>‘var’ 과 ‘함수의 선언’(Hoisting) 은 함수 레벨의 스코프
+‘let’ 과 ‘const’(!Hoisting) 는 블록 레벨의 스코프</p>
+
+<p>라고도 나눈다함</p>
+
+<h2 id="변수의-동작으로-보는-hoisting-설명">변수의 동작으로 보는 Hoisting 설명</h2>
+
+<p>변수의 선언(declaration)/초기화(initialization)/할당(assignment) 이라는
+세 단계 동작에서 선언부가 함수 스코프의 최상단으로 끌어올려진 듯한 현상을 Hoisting이라고 함</p>
+
+<h2 id="hoisting-언제쓰나">hoisting 언제쓰나?</h2>
+
+<p>음..js의 공식적인 개념도 아니고 하나의 부가적인 현상을 Hosting이라고 하기에
+그냥 움직임을 이해하기 위해 알고 있기만 하면 될듯?</p>
+
+<p>직관적인 코드를 짜기 위해서라도 블록 레벨 스코프, ‘let’과 ‘const’로 짜는게 좋을듯
+추가) 글로벌 변수,함수를 남발하면 hoisting에 의해서 main함수를 실행하는데 지연이 발생할 가능성이 있음.</p>
+
+<h2 id="블록스코프에서의-끌어올림">블록스코프에서의 끌어올림(?)</h2>
+
+<p>블록 스코프에 해당하는 let도 블록안에서 최상단으로 변수를 끌어올린다고 함
+끌어올리는 것 자체를 영어로 Hoist라고 부르니 블록 스코프도 Hoisting하네??</p>
+
+<p>라고 말할 수도 있지만 선언부 위에서 참조해도 ReferenceError에러가 발생하므로 JS세계에서 이 움직임에 대해
+Hoisting라고 표현하지는 않는듯?? 맞나..?</p>
+
+<h2 id="hoisting-단점">hoisting 단점</h2>
+
+<p>너무 많은 선언문이 남발되어 있는 자바스크립트 코드는 실행코드의 해석시점이 뒤로 밀리게 됨으로서
+자바스크립트 실행코드의 구동시점이 길어지는 좋지않는 결과를 가져오기도 한다.</p>
+
+<p>글로벌함수,변수를 너무 많이 정의해놓으면 hoisting에 의해 지연이 발생할 수 있다는 얘기</p>
+
+<h2 id="tip">TIP</h2>
+
+<p>호이스팅을 제대로 모르더라도 <span style="color: red"><strong>함수와 변수를 가급적 코드 상단부에서 선언하면, 호이스팅으로 인한 스코프 꼬임 현상은 방지</strong><span> 할 수 있다.</span></span></p>
+
+<h2 id="hoisting-관련-명언집by-brightparagon">hoisting 관련 명언집(by brightparagon)</h2>
+
+<ol>
+  <li>
+    <p>Hoisting 자체는 변수가 선언/할당으로 분리되는 것이라기 보다는 선언(declaration)/초기화(initialization)/할당(assignment) 세 단계에서 <span style="color: red"><strong>선언부가 함수 스코프의 최상단으로 끌어올려진 듯한 현상</strong><span> 을 일컫습니다. 끌어올려진다는 의미로 hoist 라는 단어를 씁니다.</span></span></p>
+  </li>
+  <li>
+    <p>Hoisting은 JS의 공식적인 개념이라기 보다는 자바스크립트 엔진이 js 파일을 읽고 <span style="color: red"><strong>Execution Context 객체를 만들때 선언된 변수들을 이 객체 안에(variable object) 먼저 모두 넣어둔 뒤 코드를 한줄씩 실행하면서 나타나는 하나의 부가적인 현상</strong></span> 입니다. 한줄씩 실행할때 연산 과정에 필요한 변수를 variable object에서 찾아서 활용하기 때문에 이 실행중인 함수나 변수가 이 시점에 선언되어 있지 않아도 에러없이 코드 실행(연산 작업)이 가능합니다.</p>
+  </li>
+  <li>
+    <p>TDZ도 위와 마찬가지로 JS의 공식적인 개념은 아니고 var와 다르게 let/const를 JS 엔진이 취급하는데, let/const도 var와 똑같이 선언/초기화/할당 세단계로 진행되지만 var는 선언과 초기화(undefined로)가 동시에 진행되어 var로 선언한 변수는 undefined라는 값으로 메모리에 등록되어 언제든 액세스할 수 있지만 let/const는 선언과 초기화가 동시에 진행되지 않습니다. 즉, 선언이 되면 할당문을 만나기 전까지 메모리에 아예 등록 자체가 되지를 않아서 Reference 에러를 냅니다. 이러한 차이를 일부러 쉽게 표현하기 위해서 개발자들이 TDZ라는 용어를 사용하게 됐다고 보면 됩니다.</p>
+  </li>
+</ol>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://jw910911.tistory.com/10?category=665935
+https://github.com/Jogeonsang/Hoisting/blob/master/README.md
+https://ja.stackoverflow.com/questions/21992/let%E3%81%A7%E3%81%AE%E5%A4%89%E6%95%B0%E5%AE%A3%E8%A8%80%E3%81%A7%E3%81%AF%E5%B7%BB%E3%81%8D%E4%B8%8A%E3%81%92%E3%81%8C%E8%A1%8C%E3%82%8F%E3%82%8C%E3%81%AA%E3%81%84
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-Hoisting"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/js-tdz" data-toggle="tooltip" data-placement="top" title="javascript　TDZ란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-object" data-toggle="tooltip" data-placement="top" title="javascript　Object란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

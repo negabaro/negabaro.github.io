@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="css flex에 대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/css-flex" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>css flex에 대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/css-flex">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>css flex에 대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, May 18, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/css"><i class="fa fa-tag"></i> css</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="flex란">flex란</h3>
+
+<p>flex가 등장하기전에는 값을 통해서 마진값을 조정해야하고 
+디바이스마다 표시되는 설정이 다르므로 작업해야할 내용이 많고 비효율적이었음</p>
+
+<p>flex를 이용하면 이런 부분이 개선됨</p>
+
+<h3 id="flex의-컨셉">flex의 컨셉</h3>
+
+<p>부모 element에게 <code class="language-plaintext highlighter-rouge">display: flex;</code>를 걸어주면  자식element에 flex설정이 적용됨</p>
+
+<p>다시한번 자식element에 flex를 적용하고 싶을때는 그 자식의 부모element에 설정을 줄것</p>
+
+<h3 id="flex의-옵션">flex의 옵션</h3>
+
+<p>flex에는 여러가지 옵션이 있는데 그중 사용빈도가 높은</p>
+
+<p>justify-content,align-items,flex-direction이 있다.</p>
+
+<p>일단 flex설정을 넣어주면 <code class="language-plaintext highlighter-rouge">display: inlike-block</code>이라 지정안해도 인라인 블록 방식처럼(가로) 출력됨</p>
+
+<p>flex-direction의 설정이 column일 경우 justify-content의 방향이 세로로, align-items의 뱡향이 가로로 바뀜.</p>
+
+<h4 id="flex-direction">flex-direction</h4>
+
+<ol>
+  <li>row: 요소들을 텍스트의 방향과 동일하게 정렬합니다.</li>
+  <li>row-reverse: 요소들을 텍스트의 반대 방향으로 정렬합니다.</li>
+  <li>column: 요소들을 위에서 아래로 정렬합니다.</li>
+  <li>column-reverse: 요소들을 아래에서 위로 정렬합니다.</li>
+</ol>
+
+<h4 id="justify-content">justify-content</h4>
+
+<p>좌우 정렬(flex-direction이 컬럼일 경우 상하 정렬)</p>
+
+<ol>
+  <li>flex-start: 요소들을 컨테이너의 왼쪽으로 정렬합니다.</li>
+  <li>flex-end: 요소들을 컨테이너의 오른쪽으로 정렬합니다.</li>
+  <li>center: 요소들을 컨테이너의 가운데로 정렬합니다.</li>
+  <li>space-between: 요소들 사이에 동일한 간격을 둡니다.</li>
+  <li>space-around: 요소들 주위에 동일한 간격을 둡니다.</li>
+</ol>
+
+<h4 id="align-items">align-items</h4>
+
+<p>상하 정렬(flex-direction이 컬럼일 경우 좌우 정렬)</p>
+
+<ol>
+  <li>flex-start: 요소들을 컨테이너의 꼭대기로 정렬합니다.</li>
+  <li>flex-end: 요소들을 컨테이너의 바닥으로 정렬합니다.</li>
+  <li>center: 요소들을 컨테이너의 세로선 상의 가운데로 정렬합니다.</li>
+  <li>baseline: 요소들을 컨테이너의 시작 위치에 정렬합니다.</li>
+  <li>stretch: 요소들을 컨테이너에 맞도록 늘립니다.</li>
+</ol>
+
+<h3 id="flex만져보기">flex만져보기</h3>
+
+<p>이하 코드를 이용해서 flex의 움직임을 이해해보자</p>
+
+<p>부모 자식관계는 이하와 같다.</p>
+
+<p>father -&gt; box</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"ie=edge"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Flex<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;style&gt;</span>
+  <span class="nt">html</span><span class="o">,</span><span class="nt">body</span><span class="p">{</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nc">.father</span><span class="p">{</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nc">.box</span><span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span><span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span><span class="no">white</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"father"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
+
+<h4 id="justify-content-flex-start">justify-content: flex-start;</h4>
+
+<p>요소들을 컨테이너의 왼쪽으로 정렬(디폴트 설정임)</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">justify-content: flex-start;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40274526-87524a28-5c13-11e8-8e57-a9a7110f2125.png" alt="image" /></p>
+
+<h4 id="justify-content-flex-end">justify-content: flex-end;</h4>
+
+<p>요소들을 컨테이너의 오른쪽으로 정렬</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">justify-content: flex-end;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40272535-b65ffe48-5be9-11e8-851c-3fdf30712b5d.png" alt="image" /></p>
+
+<h4 id="justify-content-space-around">justify-content: space-around;</h4>
+
+<p>요소들 주위에 동일한 간격을 둠</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">justify-content: space-around;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40272993-1d0ed502-5bf3-11e8-93bc-bc8169ec193e.gif" alt="flex-justify-space-around" /></p>
+
+<p>space-around는 가장 왼쪽,오른쪽 에도 간격이 있다.</p>
+
+<h4 id="justify-content-space-between">justify-content: space-between;</h4>
+
+<p>요소들 사이에 동일한 간격을 둠</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">justify-content: space-between;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40273000-282e4422-5bf3-11e8-96d2-de26e71a6927.gif" alt="flex-justify-space-between" /></p>
+
+<p>space-around와의 차이는 가장 왼쪽,오른쪽의 간격이 없다는걸 알 수 있다.</p>
+
+<hr />
+
+<h4 id="align-items-center">align-items: center;</h4>
+
+<p>요소들을 컨테이너의 세로선 상의 가운데로 정렬</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">align-items: center;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40274686-f19922c2-5c17-11e8-832d-7f32301bcc78.png" alt="image" /></p>
+
+<h4 id="align-items-flex-start">align-items: flex-start;</h4>
+
+<p>요소들을 컨테이너의 꼭대기로 정렬(디폴트 설정)</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">align-items: flex-start;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40274687-17ee6c16-5c18-11e8-877f-5be3b88499c4.png" alt="image" /></p>
+
+<h4 id="align-items-flex-end">align-items: flex-end;</h4>
+
+<p>요소들을 컨테이너의 바닥으로 정렬</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">align-items: flex-end;</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40274690-28447aec-5c18-11e8-8c7b-d70f8650fad0.png" alt="image" /></p>
+
+<hr />
+
+<p>다음은 <code class="language-plaintext highlighter-rouge">flex-direction: column</code> 설정에 대해 알아보자</p>
+
+<h4 id="디폴트-설정">디폴트 설정</h4>
+
+<p>이하 코드를 기준으로 동작확인을 해보자.
+먼저 아무것도 설정안해줬을 경우</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"ie=edge"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Flex<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;style&gt;</span>
+  <span class="nt">html</span><span class="o">,</span><span class="nt">body</span><span class="p">{</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nc">.father</span><span class="p">{</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nc">.box</span><span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span><span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span><span class="no">white</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"father"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>6<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>8<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>9<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>10<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40272967-976a8004-5bf2-11e8-86a8-b7b75ff3849b.gif" alt="no-flex" /></p>
+
+<p>이렇게 세로로 박스가 표시됨
+화면 크기를 줄여도 크기가 줄어들지 않음.</p>
+
+<h4 id="display-flex">display: flex;</h4>
+
+<p>flex설정을 주면</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">.father{
+  height: 100%;
+  display: flex;
+}</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40272974-be2779b8-5bf2-11e8-8cae-c056c4b3163c.gif" alt="flex" /></p>
+
+<p>가로로 박스가 표시됨 
+그리고 화면을 줄이면 크기에 맞게 박스도 작아짐</p>
+
+<h4 id="display-flex---flex-direction-column">display: flex +  flex-direction: column;</h4>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">flex-direction: column</code> 설정을 더해주면</p>
+
+<p>다시 세로로 바뀜 디폴트 설정과의 차이는 화면을 줄이면 크기에 맞게 박스가 작아짐</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">.father{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}</code></pre></figure>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40272981-e734a772-5bf2-11e8-934c-6f008a0a0c90.gif" alt="flex-add-column" /></p>
+
+<h4 id="flex-direction-column이-적용된순간-align-items과justify-content의-반대가됨">flex-direction: column이 적용된순간 align-items과justify-content의 반대가됨</h4>
+
+<p>flex-direction: column이 적용된순간 align-items은 좌우 -&gt; 상하 정렬로
+justify-content은 상하 -&gt; 좌우 정렬로 바뀌게됨</p>
+
+<h3 id="flex공부에-도움이-되는-사이트">flex공부에 도움이 되는 사이트</h3>
+
+<p>http://flexboxfroggy.com/#ko</p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/css-flex"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/kaminari" data-toggle="tooltip" data-placement="top" title="Rails kaminari를 이용한 Pagination기능 추가">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/css-inline-block-inlineblock" data-toggle="tooltip" data-placement="top" title="css inline,inline-block,block에 대해 알아보자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="cookie란 무엇인가?" />
+    <meta property="og:description" content="클라이언트(브라우저) 로컬에서 저장되는 특정 형식을 가진 값을 말한다." />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/security-cookie" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>cookie란 무엇인가? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/security-cookie">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>cookie란 무엇인가?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by  on Thursday, August 27, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/security"><i class="fa fa-tag"></i> security</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="cookie란">cookie란</h1>
+
+<p>클라이언트(브라우저) 로컬에서 저장되는 특정 형식을 가진 값을 말한다.</p>
+
+<h1 id="cookie의-특징">cookie의 특징</h1>
+
+<h2 id="유효기간">유효기간</h2>
+
+<p>유효기간을 지정할 수 있고 그 시간내에는 브라우저가 종료되어도 값이 사라지지 않는다.</p>
+
+<h2 id="용량">용량</h2>
+
+<p>전체 300개까지 저장가능</p>
+
+<p>하나의 도메인당 20개만 저장가능</p>
+
+<p>하나의 쿠키값은 4KB까지 저장가능</p>
+
+<h2 id="클라이언트에-쿠키-작성-방법">클라이언트에 쿠키 작성 방법</h2>
+
+<p>Response Header에 Set-Cookie 속성을 사용하여 만들 수 있다.</p>
+
+<h2 id="쿠키-구성">쿠키 구성</h2>
+
+<p>쿠키의 구성 요소</p>
+
+<p>이름 : 각각의 쿠키를 구별하는 데 사용되는 이름
+값 : 쿠키의 이름과 관련된 값
+유효시간 : 쿠키의 유지시간
+도메인 : 쿠키를 전송할 도메인
+경로 : 쿠키를 전송할 요청 경로</p>
+
+<h2 id="자동전송">자동전송</h2>
+
+<p>쿠키안에는 도메인정보가 있는데 해당 도메인에 request시 cookie를 Request Header에 자동으로 넣어서 전송한다.</p>
+
+<hr />
+
+<p>cookie에 대해서 간단히 알아봤다.
+그렇다면 왜 cookie에 대해 알아야할까?</p>
+
+<h1 id="cookie의-용도">cookie의 용도</h1>
+
+<p>보통 서버와 클라이언트간에서 리퀘스트한 대상이 누구인지 판단하기 위한 값을 cookie에 보관하고
+리퀘스트시 해당 cookie를 header에 담아서 리퀘스트한 사람이 누구다라는것을 알려주는 용도로 많이 사용한다.</p>
+
+<h1 id="왜-하필-cookie에-보관하는가">왜? 하필 cookie에 보관하는가</h1>
+
+<p>브라우저가 종료되어도 값이 사라지지 않고
+리퀘스트시 특별한 설정이 없어도 cookie정보를 알아서 담아 보내주기 때문에 편하다.</p>
+
+<h1 id="왜-서버에-cookie정보를-항상-담아서-보내줘야하는가">왜? 서버에 cookie정보를 항상 담아서 보내줘야하는가?</h1>
+
+<p>웹에서 서버와 클라이언트의 통신은 HTTP를 사용한다.
+그리고 이 HTTP는 <code class="language-plaintext highlighter-rouge">stateless하다는</code> 특징을 가지는데</p>
+
+<p>말그대로 어떤 상태를 가지지 않는다는 의미이다.</p>
+
+<p>이것은 /me라는 페이지에 누가 억세스했는지 모르는것을 의미하는데
+A유저에게만 보여주게 하고싶다거나 유저에 따라 다른 결과를 전달하고 싶을때 상당히 곤란하다.</p>
+
+<p>그러므로 클라이언트에서 cookie정보를 리퀘스트 마다 담아서 서버에 보내주면 아 얘가 xx구나 
+라는 판단이 가능하게 된다.</p>
+
+<h2 id="쿠키를-이용한-인증방식에서-쿠키는-놀이공원-티켓과-같은것">쿠키를 이용한 인증방식에서 쿠키는 놀이공원 티켓과 같은것</h2>
+
+<p>현실세계를 예로 생각해보자. 놀이공원에 가서 돈을 냈는지 안냈는지라는 상태를 확인하는 요소는 티켓(웹에선 cookie)이다.</p>
+
+<p>그런데 무료 놀이공원이라면 사용자(User)가 돈을 냈는지 여부에 대한 상태를 체크할 필요가 없으므로
+티켓을 발행해야할 이유도 체크해야할 이유도 없다.</p>
+
+<p>반대로 디즈니랜드에 가보면 사용자(User)가 돈을 내고 티켓을 구매했는지 확인하기 위해 각 어트랙션 앞에서 직원이 티켓을 확인한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">이 티켓을 확인하는 작업</code>을 웹에서는 <code class="language-plaintext highlighter-rouge">cookie를 header에 담아 리퀘스트 한다</code>로 치환해서 생각하면 될거 같다.</p>
+
+<h1 id="쿠키를-활용한-사용자-인증의-동작방식">쿠키를 활용한 사용자 인증의 동작방식</h1>
+
+<p>구체적으로 쿠키를 활용자 인증방식은 아래와 같다.</p>
+
+<ol>
+  <li>클라이언트가 서버에 리퀘스트</li>
+  <li>서버는 쿠키를 생성 /세션에 보관</li>
+  <li>서버는 생성한 쿠키를 HTTP헤더에 담아서 레스폰스</li>
+  <li>클라이언트는 해당 쿠키를 브라우저에 저장</li>
+  <li>클라이언트가 서버에 리퀘스트시 해당 쿠키를 담아서 보냄.</li>
+  <li>서버에서는 클라이언트가 보낸 쿠키의 정보가 서버의 세션정보와 비교해서 어떤 사용자인지 특정</li>
+  <li>해당 사용자만이 억세스가능한 정보를 담아서 클라이언트에 레스폰스</li>
+</ol>
+
+<p>주체를 무엇에 두느냐에 따라 용어가 바뀌는데 예를들어 서버를 주체로 두면 
+세션 베이스 인증방식이라고도 부른다.</p>
+
+<h1 id="쿠키-업데이트">쿠키 업데이트</h1>
+
+<p>클라이언트에게 전달받은 쿠키를 서버가 읽어보고 변경 할 필요가 있을때는 쿠키를 업데이트해서 
+변경된 쿠키를 HTTP헤더에 포함시켜 레스폰스함.</p>
+
+<h1 id="cookie를-이용한-통신은-stateful하다">cookie를 이용한 통신은 stateful하다.</h1>
+
+<p>위에서 http프로토콜은 stateless하다고 말했는데</p>
+
+<p>cookie를 이용한 통신은 stateless하다고 말할 수 없다.</p>
+
+<p>왜냐면 cookie에 인증을 위한 정보(상태)를 클라이언트가 가지고 있기 때문이다.</p>
+
+<p>그래서 cookie이용한 인증방식을 stateful하다 라고 말할 수 있다.</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://interconnection.tistory.com/74
+https://www.zerocho.com/category/HTML&amp;DOM/post/5918515b1ed39f00182d3048
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/security-cookie"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/rails-time_current_vs_time_now" data-toggle="tooltip" data-placement="top" title="Rails Time.current와 Time.now의 차이">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/security-stateless-stateful" data-toggle="tooltip" data-placement="top" title="세큐리티 시점에서의 stateless,stateful에 대해서 알아보자.">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

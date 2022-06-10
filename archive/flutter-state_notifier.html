@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="flutter state_notifier란?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/flutter-state_notifier" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>flutter state_notifier란? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/flutter-state_notifier">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>flutter state_notifier란?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, May 23, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/flutter"><i class="fa fa-tag"></i> flutter</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="state_notifierstatenotifer란">state_notifier(StateNotifer)란?</h2>
+
+<p>flutter에서 provider,riverpod등을 이용해 상태관리를 할때 코드를 심플하게 작성할 수 있게 해주는 패키지이다.</p>
+
+<h2 id="어떤점이-심플">어떤점이 심플??</h2>
+
+<p>밑에서 설명하겠지만 기존에 대체로 사용되어왔던 <code class="language-plaintext highlighter-rouge">change_notifier</code>와 비교해서 심플하게 작성이 가능하다.</p>
+
+<p>그 차이는 <code class="language-plaintext highlighter-rouge">change_notifier vs state_notifier</code>챕터에서 설명하도록 하겠다.</p>
+
+<h2 id="그-외-특징">그 외 특징</h2>
+
+<p><code class="language-plaintext highlighter-rouge">state_notifier</code>는<code class="language-plaintext highlighter-rouge">freezed</code>와 상성이 좋아 같이 사용한다.</p>
+
+<p>Provider패키지를 만든 <a href="https://twitter.com/remi_rousselet">Remi Rousselet</a>가 만들었다.</p>
+
+<h2 id="state_notifier와-비슷한-역할을-하는-라이브러리">state_notifier와 비슷한 역할을 하는 라이브러리</h2>
+
+<p><code class="language-plaintext highlighter-rouge">state_notifier</code>와 비슷한 역할을 하는것들로는 <code class="language-plaintext highlighter-rouge">change_notifier</code>,<code class="language-plaintext highlighter-rouge">flutter_state_notifier</code>가 있다.</p>
+
+<p>각 라이브러리의 차이점에 대해서는 아래에서 설명한다.</p>
+
+<h3 id="state_notifier-vs-flutter_state_notifier">state_notifier vs flutter_state_notifier</h3>
+
+<p>state_notifier자체는 flutter에 의존하지 않지만 flutter_state_notifer는 Flutter와 통합된형태(정확히는 Provider나 LocatorMixin을 결합해주는 부분)</p>
+
+<p>그러므로 Flutter내에서 사용할 경우 <code class="language-plaintext highlighter-rouge">flutter_state_notifier</code>를 이용하자.</p>
+
+<h3 id="change_notifier-vs-state_notifier">change_notifier vs state_notifier</h3>
+
+<p><a href="https://github.com/flutter/flutter/blob/master/packages/flutter/lib/src/foundation/change_notifier.dart">change_notifier</a>와 state_notifier의 차이에 대해 알아보자.</p>
+
+<h4 id="내부-vs-외부-라이브러리">내부 vs 외부 라이브러리</h4>
+
+<p><a href="https://github.com/flutter/flutter/blob/master/packages/flutter/lib/src/foundation/change_notifier.dart">change_notifier</a>는 flutter(foundation)내부에 있는 클래스이고 state_notifier는 외부 라이브러리이다.</p>
+
+<h4 id="state_notifier가-더좋음">state_notifier가 더좋음</h4>
+
+<p>전반적으로 change_notifier의 개선판이 state_notifier라고 생각해도 무방하다.</p>
+
+<p>크게 아래와 같은 부분이 개선되었다.</p>
+
+<ol>
+  <li>작성해야할 코드량이 줄어듬.</li>
+  <li>Widget계층이 깊어지는 문제 개선</li>
+  <li>사용하기 편함</li>
+  <li>일일이 <code class="language-plaintext highlighter-rouge">notifyListener()</code> 선언해줄 필요가 없음</li>
+  <li>state,Notifier를 분리되어있음</li>
+</ol>
+
+<h4 id="코드-비교">코드 비교</h4>
+
+<h5 id="change_notifier를-사용한-경우">change_notifier를 사용한 경우</h5>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">ChangeNotifier</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  
+  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">count</span><span class="o">++;</span>
+    <span class="n">notifyListeners</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h5 id="state_notifier를-사용한-경우">state_notifier를 사용한 경우</h5>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="n">CounterController</span><span class="o">():</span> <span class="k">super</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+
+  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">state</span><span class="o">++;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위에서 언급한대로 <code class="language-plaintext highlighter-rouge">state,Notifier를 분리되어있어서</code> 내부에서 변수선언을 할 필요없고 state라는 값만 가지고 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">extends StateNotifier&lt;int&gt; </code>의 <code class="language-plaintext highlighter-rouge">&lt;int&gt;</code> 부분이 state의 type이 되는데 하나의 object를 상태로 정의하려면 아래와 같이 state로 사용할 클래스를 정의하고 해당 클래스를 <code class="language-plaintext highlighter-rouge">&lt;int&gt;</code>부분에 넣어주면 된다.</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterState</span> <span class="o">{</span>
+  <span class="n">CounterState</span><span class="o">({</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span>
+  <span class="o">});</span>
+  <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+  <span class="kt">bool</span> <span class="n">isEnabled</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="o">&lt;</span><span class="n">CounterState</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="n">CounterController</span><span class="o">():</span> <span class="k">super</span><span class="o">(</span><span class="n">CounterState</span><span class="o">())</span>
+
+  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">..</span><span class="na">count</span><span class="o">++;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="n">disableCounter</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">..</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="메모">메모</h2>
+
+<h3 id="flutter에서의-상태관리">flutter에서의 상태관리</h3>
+
+<p>flutter에서의 상태관리 패턴은 아래와 같은것들이 있다.</p>
+
+<ol>
+  <li>setState(StatefulWidget)</li>
+  <li>Redux</li>
+  <li>BLoC(Stream + InheritedWidget/Scoped Model)</li>
+  <li>provider(ChangeNotifier)</li>
+  <li>riverpod</li>
+</ol>
+
+<p>이 포스트에서 소개한 <code class="language-plaintext highlighter-rouge">state_notifier</code>는 4,5패턴에서 조합해 사용이 가능하다</p>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/flutter-state_notifier"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/flutter-dart-collection" data-toggle="tooltip" data-placement="top" title="Dart collection패키지란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-default-scope" data-toggle="tooltip" data-placement="top" title="rails default scope은 웬만하면 쓰지말자">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

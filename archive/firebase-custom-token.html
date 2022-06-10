@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Firebase Custom Token이란?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/firebase-custom-token" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Firebase Custom Token이란? - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/firebase-custom-token">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Firebase Custom Token이란?</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, May 3, 2021
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/infra/firebase/authentication"><i class="fa fa-tag"></i> infra/firebase/authentication</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="firebase-custom-token이란">Firebase Custom Token이란?</h2>
+
+<p>유저 식별가능한 ID(UID)를 문자열로 넘겨주면 거기에 해당하는 token이 발행해주는데 그것을 Custom Token이라 부른다.</p>
+
+<h2 id="custom-token이-필요없는-경우">Custom Token이 필요없는 경우</h2>
+
+<p>IOS,Android,Web(front단)에서는 따로 인증을 하는 방법이 존재하므로 이 포스트에서 설명하는 <code class="language-plaintext highlighter-rouge">Custom Token</code>을 발행할 필요가 없다.</p>
+
+<h2 id="custom-token이-필요한-경우">Custom Token이 필요한 경우</h2>
+
+<p>주로 백엔드단 언어(Java,Python,Node.js)등을 사용할때  사용하는것 같다.</p>
+
+<h2 id="custom-token은-어디에서-사용함">Custom Token은 어디에서 사용함?</h2>
+
+<p>id token을 발행할때 필요하다.</p>
+
+<h2 id="custom-token발행을-위해-필요한것은">Custom Token발행을 위해 필요한것은?</h2>
+
+<p><code class="language-plaintext highlighter-rouge">firebase-admin-sdk.json</code>파일과 유저 식별을 위한 <code class="language-plaintext highlighter-rouge">UID</code>가 필요하다.</p>
+
+<h3 id="firebase-admin-sdkjson-다운로드-방법">firebase-admin-sdk.json 다운로드 방법</h3>
+
+<p>Firebase관리화면 -&gt; 프로젝트 설정 -&gt; Service Account -&gt; Firebase Admin SDK에서 새로운 키 작성 버튼을 누르면 다운로드 받을 수 있다.</p>
+
+<h3 id="uid-확인방법">UID 확인방법</h3>
+
+<p>Firebase관리화면 -&gt; Authentication -&gt; ID(email)에 해당하는 UID로 확인이가능</p>
+
+<h2 id="python코드를-이용해-custom-token발행하는-방법">Python코드를 이용해 custom token발행하는 방법</h2>
+
+<p>위에서 언급한대로 <code class="language-plaintext highlighter-rouge">firebase-adminsdk.json</code>을 다운받아두고
+uid를 수정할 필요가 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">firebase_admin</span>
+<span class="kn">from</span> <span class="nn">firebase_admin</span> <span class="kn">import</span> <span class="n">auth</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s">/firebase-adminsdk.json"</span>
+<span class="n">cred</span> <span class="o">=</span> <span class="n">firebase_admin</span><span class="p">.</span><span class="n">credentials</span><span class="p">.</span><span class="n">Certificate</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">firebase_admin</span><span class="p">.</span><span class="n">initialize_app</span><span class="p">(</span><span class="n">cred</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'auth'</span><span class="p">)</span>
+
+<span class="n">uid</span> <span class="o">=</span> <span class="s">'xx'</span>
+<span class="n">auth</span><span class="p">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">app</span><span class="p">)</span>
+<span class="n">custom_token</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">create_custom_token</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">custom_token</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="메모">메모</h2>
+
+<p>읽어는 봤는데 뭔소린지 잘 이해가 안되는 내용들</p>
+
+<blockquote>
+  <p>Firebase는 보안 JSON 웹 토큰(JWT)으로 사용자나 기기 인증이 가능해 인증 전 과정을 철저히 관리할 수 있습니다. 토큰을 서버에서 생성한 뒤 클라이언트 기기에 다시 전달하면 signInWithCustomToken() 메서드로 인증됩니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>이를 위해서는 먼저 사용자 이름과 비밀번호 등 로그인 사용자 인증 정보를 수신하는 서버 엔드포인트를 만들어야 합니다. 서버 엔드포인트는 사용자 인증 정보가 올바르면 커스텀 JWT를 반환합니다. 클라이언트 기기는 서버에서 반환된 커스텀 JWT를 사용하여 Firebase(iOS, Android, 웹)에 인증할 수 있습니다. 인증된 ID는 Firebase 실시간 데이터베이스, Cloud Storage 등의 다른 Firebase 서비스에 액세스하는 데 사용됩니다. 실시간 데이터베이스 규칙의 auth 객체 및 Cloud Storage 보안 규칙의 request.auth 객체에서 JWT의 내용을 확인할 수 있습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>Firebase Admin SDK로 커스텀 토큰을 만들거나, Firebase가 기본적으로 지원하는 않는 언어로 서버가 작성된 경우에는 타사 JWT 라이브러리를 사용할 수도 있습니다.</p>
+</blockquote>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/firebase-custom-token"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/ruby-gems-firebase_id_token" data-toggle="tooltip" data-placement="top" title="firebase_id_token gem에 대해 알아보자.">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/doorkeeper-invalid_grant-error" data-toggle="tooltip" data-placement="top" title="DoorKeeper사용시 invalid_grant에러(The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client)">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Netlify Functions에 대해 알아보자" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/netlify-functions" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Netlify Functions에 대해 알아보자 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/netlify-functions">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Netlify Functions에 대해 알아보자</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, November 15, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/devops/netlify"><i class="fa fa-tag"></i> devops/netlify</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="netlify-functions이란">Netlify Functions이란?</h1>
+
+<p>Netlify에서 제공하는 애드온중 하나</p>
+
+<p>FaaS（Function as a service）기능을 제공해주는 서비스로 내부적으로 AWS Lambda를 실행함</p>
+
+<p>Node.js 8.10가 디폴트 실행환경이라고 함.</p>
+
+<p>10.x를 사용하고 싶은경우, AWS_LAMBDA_JS_RUNTIME환경변수를 지정함으로 버전변경이 가능
+(해당환경변수는 AWS Lambda runtime에 기재된것)</p>
+
+<h1 id="비용">비용</h1>
+
+<p>무료 플랜에서는 월 100시간 내에 12만5000리퀘스트까지는 무료라고 한다.</p>
+
+<p>Lambda가 실행시간을 맥스인 10초로 잡으면 36000리퀘스트 커버가 가능하다고 보면된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/99153748-fd144200-26ed-11eb-85e3-fb105ce2963f.png" alt="image" /></p>
+
+<p>그 이상일 경우 월$25달러 플랜으로 변경해줘야한다.</p>
+
+<h1 id="써보고-느낀점">써보고 느낀점</h1>
+
+<p>AWS에 로그인하지 않고 lambda기능이 사용한걸 큰 메릿인거 같다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">SPA + Faas</code>환경구축시 Github Pages를 사용시 lambda를 따로 만들어주다 보면
+Grouping이 안되서 카오스가 되는 경우가 많았는데 이런 부분이 깔끔해져서 대만족 하고 있다.</p>
+
+<p>SPA 사이드 프로젝트 진행시 앞으로 자주 사용하게 될거 같다.</p>
+
+<p>사원이 아직 97명이라는데 이정도 퀄리티가 나오다니.. IPO하면 얼른 주식사고싶다..</p>
+
+<hr />
+
+<h1 id="환경구축">환경구축</h1>
+
+<p>Netlify Functions실행을 위한 환경구축 방법에 대해 알아보자.</p>
+
+<p>먼저 Netlify와Github을 연결해준다.
+자세한 방법은 <a href="netlify-deploy-using-vue-cli">vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법</a>을 참고바란다.</p>
+
+<h2 id="netlify의-설정파일-작성">Netlify의 설정파일 작성</h2>
+
+<p>Netlify의 설정파일인netlify.toml파일을 루트디렉토리에 작성해주자.</p>
+
+<p>이 설정은 Netlify관리페이지에서도 설정이 가능하지만 후술한 로컬에서 테스트를 위해 이 파일이 필요하다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="nx">netlify</span><span class="p">.</span><span class="nx">toml</span>
+<span class="p">[</span><span class="nx">build</span><span class="p">]</span>
+  <span class="nx">command</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">npm run build</span><span class="dl">"</span>
+  <span class="nx">functions</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">dist/functions</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<p>command = Netlify디플로이시 실행된 커맨드
+functions = Netlify Functions의 엔드포인트</p>
+
+<hr />
+
+<h3 id="로컬에서-테스트">로컬에서 테스트</h3>
+
+<p><code class="language-plaintext highlighter-rouge">netlify-lambda</code>를 사용하면 로컬에서 Netlify Functions의 에뮬레이트가 가능하다.</p>
+
+<p>이게 없으면 변경 -&gt; 커밋 -&gt; 디플로이 -&gt; 동작확인이라는 플로우를 반복실행해야하므로 비효율적이다.</p>
+
+<p>루트에서 아래 커맨드로 netlify-lambda인스톨 해주자.</p>
+
+<h3 id="netlify-lambda-install">netlify-lambda install</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npm</span> <span class="nx">init</span>
+<span class="nx">npm</span> <span class="nx">i</span> <span class="nx">netlify</span><span class="o">-</span><span class="nx">lambda</span>
+</code></pre></div></div>
+
+<h3 id="packagejson변경">package.json변경</h3>
+
+<p>인스톨후 아래와 같이 package.json을 변경</p>
+
+<p>소스 디렉토리가 src/functions 있다는 전제다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">dev</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">netlify-lambda serve src/functions</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">build</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">netlify-lambda build src/functions</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">netlify-lambda serve &lt;folder-name&gt;</code> 커맨드로 <code class="language-plaintext highlighter-rouge">netlify.toml</code>에서 지정한 디렉토리로 빌드 &amp; 로컬에서 확인가능한 서버를 실행해준다.</p>
+
+<p>디폴트 포트는 9000번이고 –port로 포트변경이 가능</p>
+
+<p>port지정예</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">dev</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">netlify-lambda serve resources/api --port 9001</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="hello-world작성">hello world작성</h3>
+
+<p><code class="language-plaintext highlighter-rouge">src/functions/index.js</code>에 아래와 같은 js파일을 추가 해주자</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">statusCode</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello World</span><span class="dl">"</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="동작확인">동작확인</h3>
+
+<p><code class="language-plaintext highlighter-rouge">npm run dev</code>로 <code class="language-plaintext highlighter-rouge">netlify-lambda</code>를 기동해주고</p>
+
+<p><code class="language-plaintext highlighter-rouge">http://localhost:9000/.netlify/functions/index</code></p>
+
+<p>에 억스세하면 <code class="language-plaintext highlighter-rouge">Hello World</code>가 표시되는걸 알 수 있다.</p>
+
+<hr />
+
+<p>로컬에서의 동작확인은 여기까지다.</p>
+
+<p><a href="netlify-deploy-using-vue-cli">vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법</a>가 설정된 전제에서 이제 실제 netlify functions에 동작하는지 확인해보자.</p>
+
+<p>지금까지의 코드를 github에 commit &amp; push 한뒤</p>
+
+<p>netlify의 dashboard가 아래와 같이 표시된다면 정상적으로 디플로이가 끝난것이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/100726016-bcb00600-3407-11eb-8e35-6934b62d00db.png" alt="image" /></p>
+
+<p>해당 functions을 클릭해주고 endpoint에 표시된 url에 억세스해주면 Function log가 아래처럼 표시된다.(새로고침 필요)</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/100726277-17496200-3408-11eb-9a23-85fc7ab30666.png" alt="image" /></p>
+
+<hr />
+
+<h1 id="환경변수">환경변수</h1>
+
+<p>API KEY와 같이 세큐어 하게 관리되는 정보는 환경변수에 넣어서 관리해야할 필요가 있다.</p>
+
+<h2 id="netlify에서-환경변수-추가">netlify에서 환경변수 추가</h2>
+
+<p>netlify는 아래 캡쳐와 같이 dashboard에서 간단히 환경변수를 추가할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/100727220-4b715280-3409-11eb-9d6b-d297d3ff241f.png" alt="image" /></p>
+
+<h2 id="netlifytoml에-추가하는것도-가능">netlify.toml에 추가하는것도 가능</h2>
+
+<p>세큐어 하지 않다면 <code class="language-plaintext highlighter-rouge">netlify.toml</code>에 직접 넣어줘도 괜찮다.(코드에 포함되므로)</p>
+
+<p>netlify.toml</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[build.environment]
+  NON_SECURE_KEY="test"
+</code></pre></div></div>
+
+<p>설정한 환경변수는 코드에서 <code class="language-plaintext highlighter-rouge">process.env.KEY</code>와 같은방법으로 가져올 수 있다.</p>
+
+<h2 id="dotenv-webpack-인스톨">dotenv-webpack 인스톨</h2>
+
+<p>로컬에서 동작확인을 위해서는 <code class="language-plaintext highlighter-rouge">dotenv-webpack</code>를 이용한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">npm i dotenv-webpack</code></p>
+
+<h2 id="webpackfunctionsjs추가">webpack.functions.js추가</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const Dotenv = require('dotenv-webpack')
+
+module.exports = {
+  plugins: [new Dotenv()],
+}
+</code></pre></div></div>
+
+<h2 id="env추가">.env추가</h2>
+
+<p>루트에 .env파일을 추가해서 필요한 환경변수를 추가해주자</p>
+
+<p>.env</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KEY=value
+</code></pre></div></div>
+
+<h2 id="command수정">command수정</h2>
+
+<p>추가해준 webpack설정을 적용하기 위해 아래와 같이 수정해주자</p>
+
+<p>package.json</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">dev</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">netlify-lambda serve resources/api --config ./webpack.functions.js</span><span class="dl">"</span><span class="p">,</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">statusCode</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="s2">`Hello World X_RAPIDAPI_KEY: </span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">X_RAPIDAPI_KEY</span><span class="p">}</span><span class="s2"> | NON_SECURE_KEY: </span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NON_SECURE_KEY</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="메모">메모</h1>
+
+<h2 id="nodejs610이-아닌-경우">Node.js6.10이 아닌 경우</h2>
+
+<p>async로 쓰면 더 간결하게 사용이 가능</p>
+
+<p>실행환경이 Nodejs6.10인 경우는 사용못하므로 주의</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">hello</span><span class="p">.</span><span class="nx">js</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">statusCode</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<p><a href="https://qiita.com/Sr_Bangs/items/7867853f5e71bd4ada56">Link</a></p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/netlify-functions"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/netlify-deploy-using-vue-cli" data-toggle="tooltip" data-placement="top" title="vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/netlify-introducing" data-toggle="tooltip" data-placement="top" title="정적 컨텐츠 호스팅 서비스 Netlify에 대해 알아보자.">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

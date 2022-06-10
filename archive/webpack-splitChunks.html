@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="webpack4에서 splitChunks 사용해서 중복된 모듈 없애기" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/webpack-splitChunks" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>webpack4에서 splitChunks 사용해서 중복된 모듈 없애기 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/webpack-splitChunks">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>webpack4에서 splitChunks 사용해서 중복된 모듈 없애기</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, April 11, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/webpack"><i class="fa fa-tag"></i> webpack</a> <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        13 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="목표">목표</h1>
+
+<p>webpack4에서 <code class="language-plaintext highlighter-rouge">splitChunks</code>을 사용해서 중복된 모듈을 없애보자</p>
+
+<h1 id="초기설정--webpack-install">초기설정 + webpack install</h1>
+
+<p><a href="/archive/webpack4-install">webpack4 install방법</a></p>
+
+<h1 id="momentlodash-npm-인스톨">moment,lodash npm 인스톨</h1>
+
+<p>후술할 <code class="language-plaintext highlighter-rouge">app/index.js</code>안에서 사용되는 외부 패키지를 설치</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">moment</span> <span class="nx">lodash</span> <span class="o">--</span><span class="nx">save</span>
+</code></pre></div></div>
+
+<h4 id="lodash">lodash</h4>
+
+<p>유틸리티 라이브러리로 array, collection, date, number, object 등이 있으며, 데이터를 쉽게 다룰 수 있도록 도와준다</p>
+
+<h4 id="moment">moment</h4>
+
+<p>날짜관련 작업을 위한 자바스크립트 라이브러리</p>
+
+<h1 id="테스트용-설정파일">테스트용 설정파일</h1>
+
+<h2 id="1-indexhtml">1. index.html</h2>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Libraries Code Splitting<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;header&gt;</span>
+      <span class="nt">&lt;h3&gt;</span>Libraries Code Splitting<span class="nt">&lt;/h3&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"p1"</span><span class="nt">&gt;&lt;strong&gt;</span>Moment JS : <span class="nt">&lt;/strong&gt;&lt;/label&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"p1"</span><span class="nt">&gt;</span>
+        not yet loaded
+      <span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"p2"</span><span class="nt">&gt;&lt;strong&gt;</span>Lodash JS : <span class="nt">&lt;/strong&gt;&lt;/label&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"p2"</span><span class="nt">&gt;</span>
+        not yet loaded
+      <span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"dist/vendor.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"dist/main.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="2-appindexjs">2. app/index.js</h2>
+
+<p>index.html의<code class="language-plaintext highlighter-rouge">not yet loaded</code>로 되어있는 부분안에 moment,loadash를 이용한 리턴값을 넣어주는 코드다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">moment</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">moment</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">lodash</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">ele</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">DOMContentLoaded</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">ele</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">().</span><span class="nx">format</span><span class="p">();</span>
+  <span class="nx">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">drop</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="3-webpackconfigjs">3. webpack.config.js</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">main</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./app/index.js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">vendor</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">moment</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">lodash</span><span class="dl">"</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dist</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>entry에 <code class="language-plaintext highlighter-rouge">app/index.js</code> 이외에 monet,lodash라는 외부패키지를 <code class="language-plaintext highlighter-rouge">vendor.js</code>라는 이름으로 번들링하는 예제이다.</p>
+
+<p>moment,lodash 이 부분은 npm install 해서 node_modules에 해당 패키지가 존재하지 않으면 추가가 불가능</p>
+
+<h1 id="webpack실행splitchunks-사용하기전">webpack실행(splitChunks 사용하기전)</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npx</span> <span class="nx">webpack</span>
+</code></pre></div></div>
+
+<h2 id="result">result</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Hash</span><span class="p">:</span> <span class="mi">8</span><span class="nx">cf75a53511be7a1ec91</span>
+<span class="nx">Version</span><span class="p">:</span> <span class="nx">webpack</span> <span class="mf">4.29</span><span class="p">.</span><span class="mi">6</span>
+<span class="nx">Time</span><span class="p">:</span> <span class="mi">505</span><span class="nx">ms</span>
+<span class="nx">Built</span> <span class="nx">at</span><span class="p">:</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">11</span> <span class="mi">15</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span><span class="mi">38</span>
+    <span class="nx">Asset</span>      <span class="nx">Size</span>  <span class="nx">Chunks</span>             <span class="nx">Chunk</span> <span class="nx">Names</span>
+  <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">1.12</span> <span class="nx">MiB</span>    <span class="nx">main</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">main</span>
+<span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">1.12</span> <span class="nx">MiB</span>  <span class="nx">vendor</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">vendor</span>
+<span class="nx">Entrypoint</span> <span class="nx">main</span> <span class="o">=</span> <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
+<span class="nx">Entrypoint</span> <span class="nx">vendor</span> <span class="o">=</span> <span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">multi</span> <span class="nx">moment</span> <span class="nx">lodash</span> <span class="mi">40</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="mi">253</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="nx">recursive</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span><span class="p">]</span> <span class="p">.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span> <span class="mi">3</span> <span class="nx">KiB</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">optional</span><span class="p">]</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span> <span class="mi">472</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span> <span class="mi">497</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+    <span class="o">+</span> <span class="mi">129</span> <span class="nx">hidden</span> <span class="nx">modules</span>
+</code></pre></div></div>
+
+<p>정상적으로 실행되면 dist/ 밑에 <code class="language-plaintext highlighter-rouge">main.js</code> 와 <code class="language-plaintext highlighter-rouge">vendor.js</code>가 생성되어 있을것이다</p>
+
+<h1 id="여기까지-문제점">여기까지 문제점</h1>
+
+<p>dist/ 밑에 <code class="language-plaintext highlighter-rouge">main.js</code> 와 <code class="language-plaintext highlighter-rouge">vendor.js</code>안에 각각 완벽하게 똑같은 lodash,moment 코드가 중복해서 들어가 있다.</p>
+
+<p>이 부분을 효율적으로 관리해주기 위해 <code class="language-plaintext highlighter-rouge">splitChunks</code> 를 사용해 중복되는 부분을 공통영역으로 만들어 줄 수 있다.</p>
+
+<h1 id="이하와-같이-webpackconfigjs-변경">이하와 같이 webpack.config.js 변경</h1>
+
+<p>optimization 부분을 추가</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">development</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">main</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./app/index.js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">vendor</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">moment</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">lodash</span><span class="dl">"</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dist</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="na">optimization</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">splitChunks</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vendor</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">chunks</span><span class="p">:</span> <span class="dl">"</span><span class="s2">initial</span><span class="dl">"</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="webpack실행splitchunks-사용후">webpack실행(splitChunks 사용후)</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npx</span> <span class="nx">webpack</span>
+</code></pre></div></div>
+
+<h2 id="result-1">result</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Hash</span><span class="p">:</span> <span class="nx">b6b89be7ea558d5f36b5</span>
+<span class="nx">Version</span><span class="p">:</span> <span class="nx">webpack</span> <span class="mf">4.29</span><span class="p">.</span><span class="mi">6</span>
+<span class="nx">Time</span><span class="p">:</span> <span class="mi">507</span><span class="nx">ms</span>
+<span class="nx">Built</span> <span class="nx">at</span><span class="p">:</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">11</span> <span class="mi">16</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">28</span>
+    <span class="nx">Asset</span>      <span class="nx">Size</span>  <span class="nx">Chunks</span>             <span class="nx">Chunk</span> <span class="nx">Names</span>
+  <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">21.8</span> <span class="nx">KiB</span>    <span class="nx">main</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">main</span>
+<span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">1.12</span> <span class="nx">MiB</span>  <span class="nx">vendor</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">vendor</span>
+<span class="nx">Entrypoint</span> <span class="nx">main</span> <span class="o">=</span> <span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span> <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">multi</span> <span class="nx">moment</span> <span class="nx">lodash</span> <span class="mi">40</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="mi">253</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="nx">recursive</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span><span class="p">]</span> <span class="p">.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span> <span class="mi">3</span> <span class="nx">KiB</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">optional</span><span class="p">]</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span> <span class="mi">472</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span> <span class="mi">497</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+    <span class="o">+</span> <span class="mi">129</span> <span class="nx">hidden</span> <span class="nx">modules</span>
+</code></pre></div></div>
+
+<p>실행결과만 봐도 splitChunks 사용전에는 main.js가 1.12MiB였는데 21.8KiB로 줄어들은걸 알 수 있다.
+dist/vendor.js에만 lodash,moment관련 패키지가 있고 dist/main.js에는 존재하지 않는다.</p>
+
+<h1 id="하나더runtimechunk나눠주기">하나더..runtimeChunk나눠주기</h1>
+
+<p>웹펙을 초기화할때 사용하는 부분(webpackBootstrap)도 <code class="language-plaintext highlighter-rouge">runtimeChunk</code>라는 옵션으로 따로 빼낼 수 있다.</p>
+
+<p>설정을 이하와 같이 변경</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">development</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">main</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./app/index.js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">vendor</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">moment</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">lodash</span><span class="dl">"</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dist</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="na">optimization</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">runtimeChunk</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">//추가 부분</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">runtime</span><span class="dl">"</span>
+    <span class="p">},</span>
+    <span class="na">splitChunks</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vendor</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">chunks</span><span class="p">:</span> <span class="dl">"</span><span class="s2">initial</span><span class="dl">"</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="webpack실행runtimechunk-적용후">webpack실행(runtimeChunk 적용후)</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npx</span> <span class="nx">webpack</span>
+</code></pre></div></div>
+
+<h2 id="result-2">result</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Hash</span><span class="p">:</span> <span class="mi">6</span><span class="nx">fb2c91d04c5f9bd3863</span>
+<span class="nx">Version</span><span class="p">:</span> <span class="nx">webpack</span> <span class="mf">4.29</span><span class="p">.</span><span class="mi">6</span>
+<span class="nx">Time</span><span class="p">:</span> <span class="mi">503</span><span class="nx">ms</span>
+<span class="nx">Built</span> <span class="nx">at</span><span class="p">:</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">11</span> <span class="mi">16</span><span class="p">:</span><span class="mi">43</span><span class="p">:</span><span class="mi">18</span>
+     <span class="nx">Asset</span>      <span class="nx">Size</span>   <span class="nx">Chunks</span>             <span class="nx">Chunk</span> <span class="nx">Names</span>
+   <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">15.7</span> <span class="nx">KiB</span>     <span class="nx">main</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">main</span>
+<span class="nx">runtime</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">6.04</span> <span class="nx">KiB</span>  <span class="nx">runtime</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">runtime</span>
+ <span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span>  <span class="mf">1.12</span> <span class="nx">MiB</span>   <span class="nx">vendor</span>  <span class="p">[</span><span class="nx">emitted</span><span class="p">]</span>  <span class="nx">vendor</span>
+<span class="nx">Entrypoint</span> <span class="nx">main</span> <span class="o">=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">js</span> <span class="nx">vendor</span><span class="p">.</span><span class="nx">js</span> <span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">multi</span> <span class="nx">moment</span> <span class="nx">lodash</span> <span class="mi">40</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="mi">253</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="nx">recursive</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span><span class="p">]</span> <span class="p">.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">moment</span><span class="o">/</span><span class="nx">locale</span> <span class="nx">sync</span> <span class="o">^</span><span class="err">\</span><span class="p">.</span><span class="err">\</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="nx">$</span> <span class="mi">3</span> <span class="nx">KiB</span> <span class="p">{</span><span class="nx">main</span><span class="p">}</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">optional</span><span class="p">]</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nb">global</span><span class="p">.</span><span class="nx">js</span> <span class="mi">472</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+<span class="p">[.</span><span class="o">/</span><span class="nx">node_modules</span><span class="o">/</span><span class="nx">webpack</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span><span class="p">]</span> <span class="p">(</span><span class="nx">webpack</span><span class="p">)</span><span class="o">/</span><span class="nx">buildin</span><span class="o">/</span><span class="nx">module</span><span class="p">.</span><span class="nx">js</span> <span class="mi">497</span> <span class="nx">bytes</span> <span class="p">{</span><span class="nx">vendor</span><span class="p">}</span> <span class="p">[</span><span class="nx">built</span><span class="p">]</span>
+    <span class="o">+</span> <span class="mi">129</span> <span class="nx">hidden</span> <span class="nx">modules</span>
+</code></pre></div></div>
+
+<p>runtime.js라는게 추가된걸 확인</p>
+
+<h1 id="etc">etc</h1>
+
+<h2 id="1-commonschunkplugin-is-dead">1. CommonsChunkPlugin is dead.</h2>
+
+<p>webpack 4 이전에는</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">plugins</span><span class="p">:</span> <span class="p">[</span>
+  <span class="k">new</span> <span class="nx">webpack</span><span class="p">.</span><span class="nx">optimize</span><span class="p">.</span><span class="nx">CommonsChunkPlugin</span><span class="p">({</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vendor</span><span class="dl">"</span> <span class="c1">// Specify the common bundle's name.</span>
+  <span class="p">})</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<p>이런식으로 추가해줬었는데 webpack4부터 <code class="language-plaintext highlighter-rouge">CommonsChunkPlugin</code>가 사라져서 위와 같은 방법으로 적어주면 이하와 같은 에러가 발생한다</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">webpack</span><span class="p">.</span><span class="nx">optimize</span><span class="p">.</span><span class="nx">CommonsChunkPlugin</span> <span class="nx">has</span> <span class="nx">been</span> <span class="nx">removed</span><span class="p">,</span> <span class="nx">please</span> <span class="nx">use</span> <span class="nx">config</span><span class="p">.</span><span class="nx">optimization</span><span class="p">.</span><span class="nx">splitChunks</span> <span class="nx">instead</span><span class="p">.</span>
+</code></pre></div></div>
+
+<hr />
+
+<blockquote>
+  <p>The CommonsChunkPlugin has been removed in v4.
+You better open a new issue, this thread is dead.
+Read this and tell me if it solves your problem.
+<a href="https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693">Link</a>
+—</p>
+</blockquote>
+
+<h2 id="2-당연한-얘기지만-npm-install하지않으면-entry에-패키지-추가-안됨">2. 당연한 얘기지만 npm install하지않으면 entry에 패키지 추가 안됨</h2>
+
+<p>lodash를 일부로 uninstall하고 webpack실행하면 이하와 같은 에러가 발생하게됨</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ERROR</span> <span class="k">in</span> <span class="nx">multi</span> <span class="nx">moment</span> <span class="nx">lodash</span>
+<span class="nx">Module</span> <span class="nx">not</span> <span class="nx">found</span><span class="p">:</span> <span class="nb">Error</span><span class="p">:</span> <span class="nx">Can</span><span class="dl">'</span><span class="s1">t resolve </span><span class="dl">'</span><span class="nx">lodash</span><span class="dl">'</span><span class="s1"> in </span><span class="dl">'</span><span class="o">/</span><span class="nx">Users</span><span class="o">/</span><span class="nx">sehwakim</span><span class="o">/</span><span class="nx">docker</span><span class="o">/</span><span class="nx">LearnWebpack</span><span class="o">/</span><span class="nx">example2</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nx">CommonsChunkPlugin</span><span class="dl">'</span><span class="s1">
+ @ multi moment lodash vendor[1]
+</span></code></pre></div></div>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="err">runtimeChunk:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="err">name:</span><span class="w"> </span><span class="err">'vendor'</span><span class="w">
+        </span><span class="p">}</span><span class="err">,</span><span class="w">
+</span></code></pre></div></div>
+
+<h1 id="코드">코드</h1>
+
+<h2 id="splitchunks-사용전-코드">splitChunks 사용전 코드</h2>
+
+<p><a href="https://github.com/negabaro/LearnWebpack/tree/master/example2-1-problem-output-duplicated">링크</a></p>
+
+<h2 id="splitchunks-적용후-코드">splitChunks 적용후 코드</h2>
+
+<p><a href="https://github.com/negabaro/LearnWebpack/tree/master/example2-2-SplitChunksPlugin">링크</a></p>
+
+<h2 id="runtimechunk-적용후-코드">runtimeChunk 적용후 코드</h2>
+
+<p><a href="https://github.com/negabaro/LearnWebpack/tree/master/example2-3-SplitChunksPlugin-runtimeChunk">링크</a></p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<p><a href="https://www.zerocho.com/category/Webpack/post/58ad4c9d1136440018ba44e7">link</a>
+<a href="https://qiita.com/soarflat/items/1b5aa7163c087a91877d">link2</a>
+<a href="https://www.inflearn.com/course/webpack-%EC%9B%B9%ED%8C%A9-%EA%B0%95%EC%A2%8C/%EC%8B%A4%EC%8A%B5-libraries-codes-splitting-1-bundling-libraries/">link3</a></p>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/webpack-splitChunks"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/webpack-ManifastPlugin" data-toggle="tooltip" data-placement="top" title="webpack4 manifest plugin도입">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-defer_vs_async" data-toggle="tooltip" data-placement="top" title="script의 async와 defer 속성">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="css viewport에 대해 알아보자." />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/css-viewport" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>css viewport에 대해 알아보자. - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/css-viewport">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>css viewport에 대해 알아보자.</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Friday, August 21, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/css"><i class="fa fa-tag"></i> css</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="반응형-웹responsive-web이란">반응형 웹(responsive web)이란?</h1>
+
+<p>디스플레이 크기가 다른 여러 디바이스에 알맞은 화면의 크기로 변환하는 웹사이트를 말한다.</p>
+
+<p>디바이스에는 태블릿,스마트폰,데스크톱등이 존재한다.</p>
+
+<h1 id="뷰포트viewport란">뷰포트(viewport)란?</h1>
+
+<p>뷰포트라는 용어자체는 웹페이지가 사용자에게 보여지는 영역을 말한다.</p>
+
+<p>영역은 사이즈를 말하는건데 디바이스에서 사용하는 브라우저의 스팩에 따라 이 영역이 다르다.</p>
+
+<p>웹킷 기반 브라우저 뷰포트는 980픽셀이고
+아이폰 사파리 브라우저의 뷰포트는 320픽셀이다.</p>
+
+<p>현업에서는 “뷰포트 설정 했어?” 라든지 어떠한 설정의 의미로 사용하는데
+정확히는 <code class="language-plaintext highlighter-rouge">뷰포트 메타태그</code>를 말한다.</p>
+
+<h1 id="뷰포트-메타태그란">뷰포트 메타태그란?</h1>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, user-scalable=no"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>이러한 태그를 의미한다. 신규 프로젝트에서 위와 같은 메타설정을 빠뜨리면 모바일 환경에서 페이지를 봤을때
+굉장히 축소된 상태로 화면이 보여지게 된다.</p>
+
+<h1 id="모바일-환경에서-페이지가-작게-보이는-이유는">모바일 환경에서 페이지가 작게 보이는 이유는?</h1>
+
+<p>두가지에 이유가 합쳐져 이러한 현상이 일어난다.</p>
+
+<h2 id="첫번째">첫번째</h2>
+
+<p>위에서 설명한 뷰포트(영역)가 디바이스에 따라 다르므로</p>
+
+<h2 id="두번째">두번째</h2>
+
+<p>모바일 브라우저는 웹페이지를 풀브라우징 하므로</p>
+
+<h1 id="풀브라우징이란">풀브라우징이란</h1>
+
+<p>모바일 환경에서도 데스크탑 환경처럼 웹화면 전체를 브라우징할 수 있는 환경을 말한다.</p>
+
+<p>풀브라우징이 아니라면 스마트폰에서는 320px에 맞는 부분만 표시하고 나머지 부분은 스크롤로 보게끔 되므로 사용자의 가독성을 떨어뜨린다.</p>
+
+<hr />
+
+<p>작은 화면의 스마트폰에 풀브라우징을 하려면 전체적인 페이지 배율 조정이 가해지는데</p>
+
+<p>이러한 이유로 전체화면이 브라우징되지만 컨텐츠가 작아지게 되는것이다.</p>
+
+<p>마치 팔만대장경을 스마트 웟치에 구겨넣어서 보는것과 비슷한 상황이다.</p>
+
+<h1 id="widthdevice-width">width=device-width</h1>
+
+<p>다시한번 뷰포트의 메타태그 설정을 보자</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, user-scalable=no"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">width=device-width</code>의 의미는 viewport를 디바이스의 width에 맞추겠다는 얘기다.</p>
+
+<p>이 설정에 의해 모바일 환경에서는 320px이 viewport</p>
+
+<p>이렇게 설정하면 뷰포트의 가로 너비와 단말기의 가로너비가 동일하기 때문에
+페이지의 배율 조정이 일어나지 않고 320 너비 만큼만 브라우저에 표시된다</p>
+
+<h3 id="reference">reference:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://offbyone.tistory.com/110
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/css-viewport"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/Ripley-Syndrome-and-nightmare" data-toggle="tooltip" data-placement="top" title="리플리 증후군?? 꿈에서 본 내용을 실제라고 믿어버린 에피소드 두가지">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-history-of-module" data-toggle="tooltip" data-placement="top" title="javascript 모듈의 역사">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

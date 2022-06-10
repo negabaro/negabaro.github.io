@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails User패스워드 변경,탈퇴 기능 만들기" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/profile.change-pw-resign" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails User패스워드 변경,탈퇴 기능 만들기 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/profile.change-pw-resign">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails User패스워드 변경,탈퇴 기능 만들기</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, May 3, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/devise"><i class="fa fa-tag"></i> devise</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        4 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>이 포스트에서는 웹서비스에 자주 사용되는 기능중 하나인
+유저 패스워드 변경과 회원탈퇴기능을 구현하는 방법을 알아보자.</p>
+
+<h3 id="유저-패스워드-변경하는-기능-만들기">유저 패스워드 변경하는 기능 만들기</h3>
+
+<h4 id="루트설정">루트설정</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">scope</span> <span class="ss">module: :front</span> <span class="k">do</span>
+    <span class="n">namespace</span> <span class="ss">:my</span> <span class="k">do</span>
+      <span class="n">resource</span> <span class="ss">:passwords</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span></code></pre></figure>
+
+<h4 id="모델설정">모델설정</h4>
+
+<p>디비에 컬럼을 추가할 필요가 없으므로 <code class="language-plaintext highlighter-rouge">rails g model xxx</code>을 사용하지 않고
+직접 <code class="language-plaintext highlighter-rouge">app/models/change_password.rb</code> 라는 파일을 만들어서
+이하와 같은 설정을 넣어준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#vim app/models/change_password.rb</span>
+
+<span class="k">class</span> <span class="nc">ChangePassword</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:current_password</span><span class="p">,</span> <span class="ss">:new_password</span><span class="p">,</span> <span class="ss">:new_password_confirmation</span> 
+
+  <span class="n">validates</span> <span class="ss">:current_password</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:new_password</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:new_password_confirmation</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+<span class="k">end</span></code></pre></figure>
+
+<h3 id="컨트롤러-설정">컨트롤러 설정</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">g</span> <span class="n">controller</span> <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">passwords</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># app/controllers/front/my/passwords_controller.rb</span>
+<span class="k">def</span> <span class="nf">edit</span>
+  <span class="vi">@change_password</span> <span class="o">=</span> <span class="no">ChangePassword</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span>
+  
+<span class="k">def</span> <span class="nf">update</span>
+  <span class="vi">@change_password</span> <span class="o">=</span> <span class="no">ChangePassword</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">password_params</span><span class="p">)</span>
+  <span class="vi">@change_password</span><span class="p">.</span><span class="nf">valid?</span>
+
+  <span class="k">unless</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">valid_password?</span><span class="p">(</span><span class="vi">@change_password</span><span class="p">.</span><span class="nf">current_password</span><span class="p">)</span>
+    <span class="vi">@change_password</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="ss">:current_password</span><span class="p">,</span> <span class="s1">'가 틀립니다.'</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">if</span> <span class="vi">@change_password</span><span class="p">.</span><span class="nf">new_password</span> <span class="o">!=</span> <span class="vi">@change_password</span><span class="p">.</span><span class="nf">new_password_confirmation</span>
+    <span class="vi">@change_password</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="ss">:new_password_confirmation</span><span class="p">,</span><span class="s1">'새로운 패스워드가 일치하지 않습니다.'</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">render</span> <span class="ss">action: :edit</span> <span class="n">and</span> <span class="k">return</span> <span class="k">if</span> <span class="vi">@change_password</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">any?</span>
+    
+  <span class="n">current_user</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="vi">@change_password</span><span class="p">.</span><span class="nf">new_password</span>
+  <span class="n">current_user</span><span class="p">.</span><span class="nf">save!</span>
+
+  <span class="n">redirect_to</span> <span class="ss">action: :edit</span>
+
+<span class="k">end</span>
+    
+<span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">password_params</span>
+    <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:change_password</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:new_password</span><span class="p">,</span><span class="ss">:new_password_confirmation</span><span class="p">,</span><span class="ss">:current_password</span><span class="p">)</span>
+  <span class="k">end</span></code></pre></figure>
+
+<h3 id="회원탈퇴-기능-만들기">회원탈퇴 기능 만들기</h3>
+
+<h4 id="routes설정">routes설정</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">scope</span> <span class="ss">module: :front</span> <span class="k">do</span>
+    <span class="n">namespace</span> <span class="ss">:my</span> <span class="k">do</span>
+      <span class="n">resource</span> <span class="ss">:passwords</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">]</span>
+      <span class="n">resource</span> <span class="ss">:resign</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+ </code></pre></figure>
+
+<p>resign을 추가해줬다.</p>
+
+<h4 id="컨트롤러">컨트롤러</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">g</span> <span class="n">controller</span> <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">resigns</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/controllers/front/my/resigns_controller.rb</span>
+  <span class="k">def</span> <span class="nf">edit</span>
+
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">destroy</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">destroy</span>
+    <span class="n">redirect_to</span> <span class="n">root_path</span><span class="p">,</span> <span class="ss">notice: </span><span class="s1">'탈퇴했습니다.'</span>
+  <span class="k">end</span></code></pre></figure>
+
+<h4 id="뷰설정">뷰설정</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/my/resigns/edit.html.erb</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"main users-edit"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"container"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"form-heading"</span><span class="o">&gt;</span><span class="err">회원탈퇴</span><span class="o">&lt;</span><span class="sr">/div&gt;
+    &lt;div class="form users-form"&gt;
+      &lt;div class="form-body"&gt;
+        &lt;% current_user.errors.full_messages.each do |message| %&gt;
+          &lt;div class="form-error"&gt;
+            &lt;%= message %&gt;
+          &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
+        <span class="o">&lt;</span><span class="sx">%= link_to "탈퇴", my_resigns_path, method: :delete,data: {confirm: '정말로 탈퇴하시겠습니까?'} %&gt;
+       
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</span></code></pre></figure>
+
+<h4 id="rake-routes결과">rake routes결과</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">edit_my_passwords</span> <span class="no">GET</span>    <span class="sr">/my/</span><span class="n">passwords</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>              <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">passwords</span><span class="c1">#edit</span>
+              <span class="n">my_passwords</span> <span class="no">PATCH</span>  <span class="sr">/my/</span><span class="n">passwords</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                   <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">passwords</span><span class="c1">#update</span>
+                           <span class="no">PUT</span>    <span class="sr">/my/</span><span class="n">passwords</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                   <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">passwords</span><span class="c1">#update</span>
+           <span class="n">edit_my_resigns</span> <span class="no">GET</span>    <span class="sr">/my/</span><span class="n">resigns</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">resigns</span><span class="c1">#edit</span>
+                <span class="n">my_resigns</span> <span class="no">GET</span>    <span class="sr">/my/</span><span class="n">resigns</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                     <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">resigns</span><span class="c1">#show</span>
+                           <span class="no">DELETE</span> <span class="sr">/my/</span><span class="n">resigns</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                     <span class="n">front</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">resigns</span><span class="c1">#destroy</span></code></pre></figure>
+
+<h4 id="프로필페이지에서의-링크">프로필페이지에서의 링크</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">      <span class="o">&lt;</span><span class="sx">%= link_to("비밀번호 변경", edit_my_passwords_path) %&gt;
+      &lt;%=</span> <span class="n">link_to</span><span class="p">(</span><span class="s2">"탈퇴"</span><span class="p">,</span> <span class="n">edit_my_resigns_path</span><span class="p">)</span> <span class="o">%&gt;</span></code></pre></figure>
+
+<p>웹서비스에서 자주 쓰이는 비밀번호 변경과 회원탈퇴 기능을 만들어봤다.</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/profile.change-pw-resign"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/paperclip-devise-profiles" data-toggle="tooltip" data-placement="top" title="Rails devise,paperclip을 이용해서 프로필 이미지 업로드하기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-flash-notice-alert" data-toggle="tooltip" data-placement="top" title="Rails flash오브젝트에 대해서">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="script의 async와 defer 속성" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-defer_vs_async" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>script의 async와 defer 속성 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-defer_vs_async">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>script의 async와 defer 속성</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, April 23, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="일반적인-실행인라인-실행">일반적인 실행(인라인 실행)</h1>
+
+<p>async와 defer의 동작에 대해 알아보기 전에 기본적인 <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>의 실행 과정에 대해 알아보자.
+웹 브라우저는 html을 랜더링하는 과정에서 css(<code class="language-plaintext highlighter-rouge">&lt;link type='text/css'&gt;</code>) 또는 js(<code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>) 를 만나면 동기적으로 처리한다.
+다시 말해 해당 내용이 해석되고 실행되기 전에는 뒤에 나오는 내용을 처리하지 않는다는 것이다. 이 부분은 화면의 랜더링 속도에 큰 영향을 줄 수 있다(사용자 경험 측면에서 큰 영향을 주며 SEO와도 관련된다).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="myScript.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>만약 엄청 무거운 script가 있다면 우선 해당 스크립트를 내려받아 해석하고 실행(execute)할 때까지 웹 문서의 HTML 코드 parsing 작업을 잠시 뒤로 미룬다.</p>
+
+<p>그래서 용량이 큰 스크립트를 문서 해석 초기에 만나게 되면 해당 페이지를 불러오는 속도마저 지체되는 현상을 일으키게 되어 결국 전체적 성능을 떨어뜨리는 결과를 가져오는데, 이런 성능의 병목 현상을 막기 위해 여러 다양한 꼼수들이 쓰여왔다. 이런 부작용을 근본적으로 막기 위해 소개된 것이 script 태그의 async와 defer 속성이다.</p>
+
+<h1 id="async와-defer의-공통점은-작업의-중단없이-script를-내려받는것">async와 defer의 공통점은 작업의 중단없이 script를 내려받는것</h1>
+
+<p><code class="language-plaintext highlighter-rouge">parsing작업의 중단 없이 script를 내려받는다</code>(즉 다운로드가 비동기로 움직인다.)</p>
+
+<p>인라인 방법에서 처럼 읽어오는데 시간이 걸리는 스크립트가 있더라도 구문 해석(parsing)은 그대로 실행시키고
+동시에 script도 내려받게 되므로 해당 스크립트 이후에 HTML구문이 해석되지 않아 브라우저에 표시되지 않는 현상은 없게된다.</p>
+
+<p>선택적으로 onload handler를 지정해서 일반적인 초기화 작업도 진행할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script async src="myAsyncScript.js" onload="myInit()"&gt;&lt;/script&gt;
+&lt;script defer src="myDeferScript.js" onload="myInit()"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="async과-defer의-차이점은-다운로드후-해당-스크립트를-실행하는-타이밍이다">async과 defer의 차이점은 다운로드후 해당 스크립트를 실행하는 타이밍이다.</h1>
+
+<p>스크립트가 실행되는 시점이 서로 다르다</p>
+
+<h2 id="async">async</h2>
+
+<p><code class="language-plaintext highlighter-rouge">async script</code>는 window의 load event 전 내려받는 즉시 바로 실행</p>
+
+<p>비동기로 다운로드가 완료되면 <code class="language-plaintext highlighter-rouge">스크립트가 실행될 수 있도록 구문 분석이 일시 중지 된다</code>.</p>
+
+<h2 id="defer">defer</h2>
+
+<p><code class="language-plaintext highlighter-rouge">defer script</code>는 문서의 parsing 작업이 끝난 후 DOMContentLoaded event 전에 문서에 삽입된 순서에 따라 실행</p>
+
+<p>HTML 구문 분석이 실행되는 동안 파일을 다운로드 할 수 있으나 <code class="language-plaintext highlighter-rouge">HTML 구문 분석이 완료되기 전에 스크립트 다운로드가 완료 되더라도 구문 분석이 완료 될 때까지 스크립트는 실행되지 않는다</code>. 또한, async와는 다르게 호출된 순서대로 실행된다.</p>
+
+<h1 id="사용-타이밍">사용 타이밍</h1>
+
+<p>script가 문서를 직접 만지고 조작하거나 서로 간 로딩 순서가 중요할 때에는 defer 속성을 쓰고,
+그렇지 않다면 async 속성을 써서 웹 페이지 로딩 속도를 줄일 수 있다.</p>
+
+<h2 id="defer를-사용하는-경우">defer를 사용하는 경우</h2>
+
+<h3 id="의존성이-있는-js">의존성이 있는 js</h3>
+
+<p>js에서 DOM을 조작하는등 의존성이 생기는 경우, 스크립트를 실행하기 전에 DOM이 완전히 해석되어야 정상적인 동작을 할 수 있다.
+일반적으로 이러한 스크립트 파일은 페이지의 맨 아래에 배치되어 모든 내용이 파싱된 후에 동작하도록 해야 한다.
+그러나 어떤 이유로 든 문제의 파일을 다른 위치에 배치해야 하는 상황에서는 defer 속성을 사용할 수 있다.</p>
+
+<h2 id="async을-사용하는-경우">async을 사용하는 경우</h2>
+
+<h3 id="종속성이-없는-js">종속성이 없는 js</h3>
+
+<p>다른 파일들에 종속적이지 않거나 종속성 자체가 없는 스크립트 파일의 경우 async 속성이 특히 유용하다.
+파일이 어느 지점에서 실행되는지 정확히 알 필요가 없기 때문에 비동기 로드가 가장 적합하다.</p>
+
+<h2 id="asyncdefer사용하지-않고-일반적인-인라인을-사용하는-경우">async,defer사용하지 않고 일반적인 인라인을 사용하는 경우</h2>
+
+<h3 id="종속성을-가지지만-스크립트-크기가-작은경우">종속성을 가지지만 스크립트 크기가 작은경우</h3>
+
+<p>다른 파일에 의존성을 가지지만 스크립트 크기가 비교적 작은 경우 인라인으로 정의하는 것이 더 유용 할 수 있다.
+인라인을 사용하면 HTML 문서의 구문 분석이 차단되지만 크기가 작으면 큰 문제가 되지 않는다.
+또한 다른 파일에 의존하는 경우 차단이 필요할 수 있다.</p>
+
+<hr />
+
+<h1 id="etc">etc</h1>
+
+<h2 id="기본적으로-css는-head-영역에-js는-body-바로-앞에-선언하는-것을-추천">기본적으로 css는 &lt;head&gt; 영역에 js는 &lt;/body&gt; 바로 앞에 선언하는 것을 추천</h2>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> 요소가 문서 맨 끝에 있지 않으면 스크립트의 비동기 및 지연 실행이 더 중요하다. HTML 문서는 첫 번째 여는 &lt;html&gt; 요소부터 닫히는 순서로 파싱됩니다. 외부 소스 JavaScript 파일이 닫는 &lt;/body&gt; 요소 바로 앞에 있으면, async 또는 defer 속성을 사용하는 것이 큰 효과가 없다(HTML 파서가 그 시점까지 문서의 대다수를 완성 했기 때문에 지연에 의미가 크게 없다는 것이다).</p>
+
+<h2 id="onload대신">onload대신</h2>
+
+<p>onload를 사용하지 않아도 script태그에 defer를 기술하거나 요소의 뒤에 <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>에 기술하면 동작함
+defer속성이 JS를 비동기로 읽어들여 실행자체는 dom을 읽어낸후로 지연가능시키므로</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://blog.asamaru.net/2017/05/04/script-async-defer/
+https://appletree.or.kr/blog/web-development/javascript/script-%ED%83%9C%EA%B7%B8%EC%9D%98-async%EC%99%80-defer-%EC%86%8D%EC%84%B1/
+https://qiita.com/FeET/items/9445b0518d7e66fa2a26
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-defer_vs_async"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/webpack-splitChunks" data-toggle="tooltip" data-placement="top" title="webpack4에서 splitChunks 사용해서 중복된 모듈 없애기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/electrn-hello-world" data-toggle="tooltip" data-placement="top" title="electron hello world">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

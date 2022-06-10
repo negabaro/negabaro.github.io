@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="jquery기초 문법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/jquery-syntax1" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>jquery기초 문법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/jquery-syntax1">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>jquery기초 문법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 23, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/jquery"><i class="fa fa-tag"></i> jquery</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        4 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="jquery란">jquery란?</h3>
+
+<p>jQuery란JavaScript의 라이브러리이다.
+유저의 클릭에 반응하는 폼이나 애니메이션등 HTML,CSS만으로 구현하기 어려웠던 것들을 간단히 만들어줄 수 있다.</p>
+
+<h4 id="사용방법">사용방법</h4>
+
+<p>jquery의 기본문법은 이하와 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터').메소드(변수);
+</code></pre></div></div>
+
+<p>문장으로 쓰면 
+무엇을(셀렉터) 어떻게 할것인가(메소드 부분) 순으로 정의를 한다.</p>
+
+<p>예제</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('h1').hide();
+</code></pre></div></div>
+
+<h5 id="셀렉터-부분-설명">셀렉터 부분 설명</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터')
+</code></pre></div></div>
+
+<p>이 부분이 실행되는것을 jquery오브젝트 작성 했다고도 한다.</p>
+
+<p>셀렉터에는 html태그명이나 class명을 지정하고
+해당HTML요소가 jquery오브젝트가 됨.</p>
+
+<h5 id="메소드-부분-설명">메소드 부분 설명</h5>
+
+<p>선택된 jquery오브젝트로 jquery에서 제공하는 여러가지 메소드에 접근할 수 있게된다.</p>
+
+<h4 id="숨기기-기능-hide">숨기기 기능 hide()</h4>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">&lt;h1&gt;Hello, World&lt;/h1&gt;</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery"> $(function() {
+  $('h1').hide();
+});</code></pre></figure>
+
+<p>결과: Hello, World가 사라짐</p>
+
+<h3 id="요소를-사라지게-하기">요소를 사라지게 하기</h3>
+
+<h5 id="fadeout적용-예">fadeOut적용 예</h5>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40338021-e10dff4e-5dad-11e8-814b-5c538eee45de.gif" alt="fade-in-out" /></p>
+
+<h5 id="slideup적용-예">slideUp적용 예</h5>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/40338009-ce45f286-5dad-11e8-9e59-4437285dd1c1.gif" alt="slideup" /></p>
+
+<h5 id="fadeoutslideup예제">fadeOut,SlideUp예제</h5>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://prog-8.com/images/html/beginner/wanko.jpg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;p&gt;</span>jQuery를 배우자.<span class="nt">&lt;/p&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$(function() {
+  $('img').fadeOut();
+  
+  $('p').slideUp();
+  
+});</code></pre></figure>
+
+<h4 id="classid를-이용해-jquery오브젝트-접근">class,id를 이용해 jquery오브젝트 접근</h4>
+
+<h5 id="id를-이용하는-법">id를 이용하는 법</h5>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('#list').css('margin','20px');</code></pre></figure>
+
+<h5 id="class를-이용하는-법">class를 이용하는 법</h5>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('.list-item').css('color','red');</code></pre></figure>
+
+<h3 id="요소를-표시하기">요소를 표시하기</h3>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"title"</span><span class="nt">&gt;</span>test<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">"image"</span> <span class="na">src=</span><span class="s">"https://prog-8.com/images/html/beginner/wanko.jpg"</span><span class="nt">&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$(function() {
+  $('#title').show();
+  
+  $('#image').fadeIn();
+  
+});</code></pre></figure>
+
+<h3 id="이벤트">이벤트</h3>
+
+<p>어떤 처리를 실행할 타이밍을 설정가능
+예) 유저가 버튼을 클릭했을때 어떤 처리를 한다든지</p>
+
+<h4 id="사용방법-1">사용방법</h4>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('셀렉터').이벤트명(function(){ });</code></pre></figure>
+
+<h4 id="예제">예제</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">id=</span><span class="s">"hide-text"</span><span class="nt">&gt;</span>설명을 삭제<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"text"</span><span class="nt">&gt;</span>Hello, World!<span class="nt">&lt;/h1&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('#hide-text').click(function(){
+  $('#text').slideUp();
+});</code></pre></figure>
+
+<p>설명을 삭제 버튼을 누르면 Hellow,World가 slideUp하게 사라진다.</p>
+
+<h3 id="css-메소드css속성-변경">css 메소드(css속성 변경)</h3>
+
+<p>기본 문법은 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('셀렉터').css('프로퍼티명','값');</code></pre></figure>
+
+<h4 id="예제-1">예제</h4>
+
+<p>CSS를 변경 버튼을 클릭하면 text의 문자 컬러를 빨간색으로 폰트크기를 50px로 변경하는 예제</p>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">&lt;div class="btn" id="change-css"&gt;CSS를 변경&lt;/div&gt;
+&lt;h1 id="text"&gt;Hello, World!&lt;/h1&gt;</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('#change-css').click(function() {
+  $('#text').css('color','red');
+  $('#text').css('font-size','50px');
+});</code></pre></figure>
+
+<p>위에서 배운 특정 요소 숨기기 기능인 hide와 같은 의미로 이하와 같이도 사용한다.</p>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$('셀렉터').css('display', 'none');</code></pre></figure>
+
+<h3 id="texthtml메소드문자-변경">text,html메소드(문자 변경)</h3>
+
+<p>textメソッドを用いることでHTMLそのものを変更することも出来ます。textメソッドは、$(‘セレクタ’).text(‘書き換える文字列’);のように記述します。</p>
+
+<p>텍스트 메소드는 HTML자체를 변경하는것이 가능하다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터').text('바꿀문자열');
+</code></pre></div></div>
+
+<p>html메소드는 요소를 HTML형식으로 바꾸는것이 가능하다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터').html('바꿀문자열');
+</code></pre></div></div>
+
+<h4 id="예제-2">예제</h4>
+
+<p>문자열을 변경 버튼을 클릭하면 Hello, World! -&gt; 텍스트입니다로 변경됨.
+HTML을 변경 버튼을 클릭하면 Hello, World! -&gt; <a>태그로 덮힌 html입니다라는 문자로 변경됨</a></p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">id=</span><span class="s">"change-text"</span><span class="nt">&gt;</span>문자열을 변경<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">id=</span><span class="s">"change-html"</span><span class="nt">&gt;</span>HTML을 변경<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"text"</span><span class="nt">&gt;</span>Hello, World!<span class="nt">&lt;/h1&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">  $('#change-text').click(function(){
+    $('#text').text("텍스트입니다.");
+  });
+  $('#change-html').click(function(){
+    
+    $('#text').html('&lt;a href="https://naver.com/"&gt;html입니다.&lt;/a&gt;');
+  });  </code></pre></figure>
+
+<h3 id="this">this</h3>
+
+<p>$(this)는 이벤트안에서  그이벤트가 일어난 요소를 취득하는것이 가능합니다.</p>
+
+<h4 id="예제-3">예제</h4>
+
+<p>클릭한 리스트의 색깔을 빨간색으로 변경하는 예제</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-item"</span><span class="nt">&gt;</span>리스트1<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-item"</span><span class="nt">&gt;</span>리스트2<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-item"</span><span class="nt">&gt;</span>리스트3<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-juqery" data-lang="juqery">$(function() {
+  $('.list-item').click(function(){
+   $(this).css("color", "red"); 
+  });
+});</code></pre></figure>
+
+<h3 id="변수">변수</h3>
+
+<h4 id="변수를-사용하지-않은경우">변수를 사용하지 않은경우</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"title"</span><span class="nt">&gt;</span>안녕하세요 타이틀입니다.<span class="nt">&lt;/h1&gt;</span>
+$('#title').css('color', 'red');
+$('#title').html('안녕하세요 타이틀입니다.');
+$('#title').fadeOut(1000);</code></pre></figure>
+
+<h4 id="변수를-사용한-경우">변수를 사용한 경우</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"title"</span><span class="nt">&gt;</span>안녕하세요 타이틀입니다.<span class="nt">&lt;/h1&gt;</span>
+var $t = $('#title');
+    
+$t.css('color', 'red');
+$t.html('안녕하세요 타이틀입니다.');
+$t.fadeOut(1000);</code></pre></figure>
+
+<h3 id="메소드-체인">메소드 체인</h3>
+
+<p>메소드 체인은 하나의 jQuery오브젝트에서 연속으로 메소드를 이용할 수 있는 구문이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터').メソッド().メソッド()...
+</code></pre></div></div>
+
+<p>이런식으로 사용가능하고 각각의 메소드가 적용됨</p>
+
+<h3 id="findchildren메소드자식요소의-취득">find,children메소드(자식요소의 취득)</h3>
+
+<p>find메소드는 모든 자식요소 중에 지정한 셀렉터을 가진 요소를 취득할때 사용한다.</p>
+
+<p>children메소드는 지정한 셀렉터가 가진 바로밑의 자식요소중에 지정한 셀렉터가 있는지 요소를 취득할떄 사용한다</p>
+
+<h4 id="예제-4">예제</h4>
+
+<p>find메소드 버튼을 클릭하면 링크1,2가 전부 빨간색이 되는데
+children메소드는 링크1만 fadeOut된다.</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">id=</span><span class="s">"find-method"</span><span class="nt">&gt;</span>find 메소드<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">id=</span><span class="s">"children-method"</span><span class="nt">&gt;</span>children 메소드<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"wrapper"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>링크1<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>링크2<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">  
+  $(function() {
+  $('#find-method').click(function() {
+    $('#wrapper').find('a').css('color','red');
+  });
+  
+  $('#children-method').click(function() {
+    $('#wrapper').children('a').fadeOut();
+  });
+});</code></pre></figure>
+
+<h3 id="hover">hover</h3>
+
+<p>hover메소드는 요소위에 마우스를 올렸을때와,마우스가 벗어낫을때에 어떤 처리를 할 수 있는 이벤트이다.</p>
+
+<p>hover이벤트는 이하와 같이 정의한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('셀렉터').hover(마우스를 올렸을때의 처리, 마우스가 벗어났을때의 처리);
+</code></pre></div></div>
+
+<p>클릭이벤트와 다르게 2개의 변수가 있는것이 특징 변수사이는 컴마로 구분한다.</p>
+
+<h5 id="예제-5">예제</h5>
+
+<p>language-wrapper div에 마우스를 올리면 텍스트가 서서히 나타나고 마우스를떼면 사라지는 예제</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"> 
+  <span class="nt">&lt;div</span> <span class="na">id = </span><span class="s">"language-wrapper"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"language-title"</span><span class="nt">&gt;</span>jQuery란?<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"language-text"</span><span class="nt">&gt;</span>
+      jQuery란JavaScript의 라이브러리이다.유저의 클릭에 반응하는 폼이나 애니메이션등 HTML,CSS만으로 구현하기 어려웠던 것들을 간단히 만들어줄 수 있다.
+    <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"> 
+$(function() {
+  $('#language-wrapper').hover(
+    function(){
+      $(this).find('.language-text').fadeIn();
+    },function(){
+      $(this).find('.language-text').fadeOut();
+    });
+});</code></pre></figure>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/jquery-syntax1"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/babel-handson" data-toggle="tooltip" data-placement="top" title="babel 기초">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/rails-change-project" data-toggle="tooltip" data-placement="top" title="rails new후에 프로젝트명 바꾸는 방법">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

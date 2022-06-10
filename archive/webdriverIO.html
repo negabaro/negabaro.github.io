@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="WebdriverIO란" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/webdriverIO" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>WebdriverIO란 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/webdriverIO">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>WebdriverIO란</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, June 9, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/webdriverio"><i class="fa fa-tag"></i> webdriverio</a> <a href="/archive/tags/node"><i class="fa fa-tag"></i> node</a> <a href="/archive/tags/e2e"><i class="fa fa-tag"></i> e2e</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="webdriverio란">WebdriverIO란</h3>
+
+<p>WebdriverIO란Node.js에서 Selenium WebDriver를 조작할 수 있는 npm package입니다.
+WebdriverIO를 사용하면 Node.js상에서 웹브라우저를 조작이 가능합니다.</p>
+
+<h3 id="인스톨-방법">인스톨 방법</h3>
+
+<h4 id="webdriverio의npm을-이용해서-인스톨">WebdriverIO의npm을 이용해서 인스톨</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p webdriverio-test
+cd webdriverio-test
+npm install webdriverio --save-dev
+</code></pre></div></div>
+
+<h4 id="selenium-webdriver2기동selenium-standalone-인스톨">Selenium WebDriver2기동&amp;selenium-standalone 인스톨</h4>
+
+<p>Selenium을 사용하기 위해서는 Selenium WebDriver2기동을 할필요가 있습니다.
+WebdriverIO와 각종 브라우저를 연결해주는 편리한 라이브러리입니다.
+그리고 npm패키지,Selenium인스톨,기동까지 간단히 실행가능한 selenium-standalone라는 wrapper가 있습니다.</p>
+
+<p>selenium-standalone을이용해서 Selenium을standalone mode로 기동합니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install selenium-standalone@latest -g
+selenium-standalone install
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>selenium-standalone start
+</code></pre></div></div>
+
+<h4 id="여기까지의-동작확인">여기까지의 동작확인</h4>
+
+<p>이하의 커맨드를 실행해서 크롬브라우저가 기동되면 정상입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./node_modules/.bin/wdio repl chrome
+</code></pre></div></div>
+
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/s/syanbi/20171010/20171010162202.png" alt="image" /></p>
+
+<h3 id="테스트의-샘플코드">테스트의 샘플코드</h3>
+
+<p><a href="https://github.com/TomoyukiAota/webdriverio-standalone-experiment">webdriverio-standalone-experiment</a></p>
+
+<p><img src="https://camo.qiitausercontent.com/c994d7c3dea24b3d0acc284d1bdf06aa9173ab7e/68747470733a2f2f6a2e676966732e636f6d2f674c365270442e676966" alt="image" /></p>
+
+<p><a href="https://github.com/TomoyukiAota/webdriverio-wdio-experiment">webdriverio-wdio-experiment</a></p>
+
+<p><img src="https://camo.qiitausercontent.com/7ff2ca64488bf48869b5dc9430db31b5f06251f3/68747470733a2f2f6a2e676966732e636f6d2f4735673156792e676966" alt="image" /></p>
+
+<h3 id="두개의-동작모드">두개의 동작모드</h3>
+
+<p>테스트에는 이하와 같은 두개의 동작모드가 있습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th>용도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standalone</td>
+      <td>스크래핑(혹은 WebdriverIO에 내장된 라이브러리 작성)</td>
+    </tr>
+    <tr>
+      <td>WDIO</td>
+      <td>E2E테스트</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="standalone-mode">Standalone mode</h3>
+
+<p>Standalone mode의 경우 src/main.js의 내용은단순히 브라우저를 조작할 뿐입니다.
+GIF를 보면 알 수 있듯 단순히 브라우저 조작만을 하고 있는것을 알 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">//vim src/main.js
+const webdriverio = require('webdriverio');
+const options = { desiredCapabilities: { browserName: 'chrome' } };
+const client = webdriverio.remote(options);
+
+client
+    .init()
+    .url('https://duckduckgo.com/')
+    .setValue('#search_form_input_homepage', 'WebdriverIO')
+    .click('#search_button_homepage')
+    .getTitle().then(function(title) {
+        console.log('Title is: ' + title);
+        // outputs: "Title is: WebdriverIO (Software) at DuckDuckGo"
+    })
+    .end();
+    
+const assert = require('assert');
+
+describe('Google', function() {
+  it('should display the title', function() {
+      browser.url('https://www.google.co.jp/');
+      assert(browser.getTitle() === 'Google');
+  });  
+});</code></pre></figure>
+
+<h3 id="wdio-mode">WDIO mode</h3>
+
+<p>WDIO mode의 경우 <code class="language-plaintext highlighter-rouge">test/specs/test.js</code>에서 테스트 항목을 기술하고 있습니다.
+GIF에서도 웹브라우저에 조작후, 콘솔 테스트의 결과에서 1 passing 이라는 결과가</p>
+
+<figure class="highlight"><pre><code class="language-node" data-lang="node">//vim test/specs/test.js
+const assert = require('assert');
+
+describe('Google', function() {
+  it('should display the title', function() {
+      browser.url('https://www.google.co.jp/');
+      assert(browser.getTitle() === 'Google');
+  });  
+});</code></pre></figure>
+
+<p>WDIO mode의 경우,내장된 test runner을 사용해서 테스트를 실행합니다.
+test runner는 여러가지 선택지가 있지만, 이번 포스트에서는 Mocha를 사용했습니다.
+자세한 내용은 공식사이트의 <a href="http://webdriver.io/guide/getstarted/modes.html">WebdriverIO - How to use WebdriverIO</a> 를 참고해주세요.</p>
+
+<h3 id="설정">설정</h3>
+
+<p>샘플코드에서는 디폴트설정인 chrome으로 동작합니다.
+그 외에도Firefox등의 타 브라우저를 사용하는 것도 가능합니다.
+여러가지 설정들이 있고 공식사이트의 <a href="http://webdriver.io/guide/getstarted/configuration.html">WebdriverIO - Configuration</a> 에 자세히 기술되어 있습니다.
+이 포스트에서 소개한 샘플코드의 경우,
+Standalone mode의 경우<code class="language-plaintext highlighter-rouge">src/main.js</code>のoptions오브젝트WDIO mode의 경우<code class="language-plaintext highlighter-rouge">wdio.conf.js</code>에 정의되어 있습니다.</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/webdriverIO"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/terraform-split-joinr" data-toggle="tooltip" data-placement="top" title="Terraform의join,split메소드에 대해서">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/webdriverio-controll-dom-pattern" data-toggle="tooltip" data-placement="top" title="webdriverIO에서 돔조작 패턴">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

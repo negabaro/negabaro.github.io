@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="js 비동기처리의  동작구조에 대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/js-async-detail" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>js 비동기처리의  동작구조에 대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/js-async-detail">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>js 비동기처리의  동작구조에 대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, March 2, 2019
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/js"><i class="fa fa-tag"></i> js</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p><a href="/archive/js-sync-async">js 동기 처리,비동기 처리</a> 에 이어서
+js에서의 비동기처리의 동작구조에 대해서 알아보자.</p>
+
+<h2 id="동작이해를-위해">동작이해를 위해</h2>
+
+<p>javascript에서 비동기처리가 어떤식으로 동작하기 위해서는 <code class="language-plaintext highlighter-rouge">javascript 엔진</code>,<code class="language-plaintext highlighter-rouge">call stack</code>, <code class="language-plaintext highlighter-rouge">Web API</code>, <code class="language-plaintext highlighter-rouge">Task Queue</code>, <code class="language-plaintext highlighter-rouge">Event Loop</code>
+등의 용어를 이해할 필요가 있음.</p>
+
+<h1 id="javascript-엔진">javascript 엔진</h1>
+
+<p>자바스크립트 엔진은 메모리힙(Memory Heap)과 단일 호출 스택 (Call Stack)을 가지고 있음.</p>
+
+<p>자바스크립트 엔진 중 유명한 것이 구글의 V8엔진. V8엔진은 크롬과 노드js에서 사용됨.</p>
+
+<h1 id="메모리힙memory-heap">메모리힙(Memory Heap)</h1>
+
+<p>메모리할당이 이루어지는 곳
+동적으로 생성된 객체(인스턴스)는 이곳에 할당됨</p>
+
+<h1 id="call-stack">call stack</h1>
+
+<p>call stack에 작업이 하나씩 쌓이고(PUSH) 쌓인 작업을 하나씩 실행(PUSH)하는 곳</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function a() {
+	b()
+	console.log("a")
+}
+
+function b() {
+	console.log("b")
+}
+
+a()
+</code></pre></div></div>
+
+<p>위 코드를 실행하면 이하와 같이 Call Stack에 PUSH,POP이 실행된다(추가되는 현상이 PUSH임)</p>
+
+<p>[a()] -&gt; [a(),b()] -&gt; [a(),b(),console.log(“b”)] -&gt; <code class="language-plaintext highlighter-rouge">console.log("b")</code> POP실행
+-&gt; [a(),b()] -&gt; <code class="language-plaintext highlighter-rouge">b()</code> POP실행(b안에서 할거 다했으므로) -&gt; [a()] -&gt; [a(),console.log(“a”)]
+-&gt; <code class="language-plaintext highlighter-rouge">console.log("a")</code> POP실행 -&gt; [a()] -&gt; <code class="language-plaintext highlighter-rouge">a()</code> POP실행(a안에서 할거 다했으므로) -&gt; <code class="language-plaintext highlighter-rouge">[]</code> 작업완료!</p>
+
+<h1 id="javascript-실행환경javascript-runtime">Javascript 실행환경(Javascript Runtime)</h1>
+
+<p>javascript가 실행되는 전체환경을 의미
+javascript 실행환경에서는 <code class="language-plaintext highlighter-rouge">javascript engine</code>외에 <code class="language-plaintext highlighter-rouge">Web API</code>와 <code class="language-plaintext highlighter-rouge">Task Queue</code>, <code class="language-plaintext highlighter-rouge">Event Loop</code>
+가 존재함.</p>
+
+<h1 id="webpapi">WebpAPI</h1>
+
+<p>Web API 는 브라우저에서 제공되는 API
+<code class="language-plaintext highlighter-rouge">AJAX</code>나 <code class="language-plaintext highlighter-rouge">Timeout</code> 등의 비동기 작업을 실행함.</p>
+
+<p>예를들어 setTimeout 과 같은 함수를 실행하면 <code class="language-plaintext highlighter-rouge">javascript engine</code>은 <code class="language-plaintext highlighter-rouge">Web API</code>에 <code class="language-plaintext highlighter-rouge">setTimeout</code>을 요청하고 동시에 setTimeout에 넣어준 Callback 까지 전달함.
+<code class="language-plaintext highlighter-rouge">javascript engine</code>의 <code class="language-plaintext highlighter-rouge">Callstack</code>에서는 <code class="language-plaintext highlighter-rouge">Web API</code> 요청 이후(Web API에게 작업을 넘긴후)setTimeout 작업이 완료되어 제거된다.
+즉 Web API가 setTimeOut작업을 하지만 자바스크립트 엔진 입장에서는 그작업을 본인 스스로하는게 아닌 WebAPI에게 부탁만 하는것이므로
+이거부탁해 라는 명령만으로 자신의 작업이 끝났다고 넘기는것 (그다음 작업이 있으면 그걸 실행)
+이것이 javascript 비동기처리의 핵심</p>
+
+<p>Web API는 방금 요청받은 setTimeout을 완료하고, 동시에 전달받은 Callback 을 Task Queue라는 곳에 넘겨줌.</p>
+
+<h1 id="task-queuecallback-queue">Task Queue(Callback Queue)</h1>
+
+<p>Task Queue 는 Callback Queue 라고도 함.
+큐 형태로 Web API에서 넘겨받은 Callback 함수를 저장함.</p>
+
+<p>이 Callback 함수들은 자바스크립트 엔진의 Call Stack의 모든 작업이 완료되면 순서대로 Call Stack에 추가됨.</p>
+
+<h1 id="event-loop">Event Loop</h1>
+
+<p>자바스크립트 엔진의 Call Stack의 모든 작업이 완료되면 Task Queue 의 작업을 순서대로 Call Stack에 옮기는 작업을 반복해서 실행함.</p>
+
+<p>Call Stack 가 비어있지 않은지 (실행중인 작업이 존재하는지) 와 Task Queue 에 Task가 존재하는지 를 판단후, Task Queue 의 작업을 Call Stack 에 옮김</p>
+
+<p>Event Loop 는 이 작업을 처음부터 끝까지 계속 반복하여 실행함. 그래서 Event ‘Loop’ 인것</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (queue.waitForMessage()) {
+    queue.processNextMessage();
+}
+</code></pre></div></div>
+
+<p>MDN은 Event Loop의 작업을 위와같은 가상의 코드로 설명하고 있음</p>
+
+<h2 id="여기까지-결론">여기까지 결론</h2>
+
+<p>결국 여기서 알 수 있는 점은 Javascript 엔진은 그저 주어진 코드를 실행하는 온디맨드 (on demand) 실행 환경이라는 것과
+코드 실행의 스케줄링은 Javascript 엔진이 호스팅된 런타임 환경이 맡게되는 것임.</p>
+
+<h2 id="interval이-0이라면">Interval이 0이라면?</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>setTimeout(function() {
+    console.log("Bye, World!");
+}, 0);
+console.log("Hello, World!")
+</code></pre></div></div>
+
+<p>위 코드는 <code class="language-plaintext highlighter-rouge">Hello, World!</code>,<code class="language-plaintext highlighter-rouge">Bye, World!</code>순으로 실행된다.
+Interval이 0이면 <code class="language-plaintext highlighter-rouge">Bye, World!</code>,가 먼저 실행되야 하는것 아닌가 하고 생각할 수 있지만</p>
+
+<p>setTimeout Call Stack등록후 실행 -&gt; WebAPI에 작업을 부탁한후 Call Stack에서 setTimeout 작업 제거 -&gt;
+console.log(“Hello, World!”) 작업 등록 -&gt; console.log(“Hello, World!”) 작업 완료 -&gt;
+Task Queue 에서 대기중인 console.log(“Bye, World!”) 작업이 Call Stack으로 전달되어 실행 -&gt; 프로그램 종료</p>
+
+<p>순으로 실행되므로 <code class="language-plaintext highlighter-rouge">Hello, World!</code>,<code class="language-plaintext highlighter-rouge">Bye, World!</code>로 출력하게 된다.</p>
+
+<h2 id="settimeout함수에-값을-얼마를-넣어도-interval은-정확하지-않음">setTimeout함수에 값을 얼마를 넣어도 Interval은 정확하지 않음</h2>
+
+<p>이 부분도 포인트인데
+task queue가 javascript engine의 call stack에 전달되려면 <code class="language-plaintext highlighter-rouge">call stack이 비어 있는것</code>이 조건이다.
+즉 어떤 이유로 call stack이 비어있지 않은 동안에는 task queue에서 call stack으로의 이주를 오매불망 기다리는
+콜백함수는 지연될수 밖에 없다.</p>
+
+<p>그래서 setTimeOut이 5초로 지정한다 하더라도 이러한 이유로인해 5초를 넘길수 있는것.</p>
+
+<h3 id="reference-link">Reference Link:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://hudi.kr/%EB%B9%84%EB%8F%99%EA%B8%B0%EC%A0%81-javascript-%EC%8B%B1%EA%B8%80%EC%8A%A4%EB%A0%88%EB%93%9C-%EA%B8%B0%EB%B0%98-js%EC%9D%98-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC-%EB%B0%A9%EB%B2%95/
+</code></pre></div></div>
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/js-async-detail"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/js-sync-async" data-toggle="tooltip" data-placement="top" title="js 동기 처리,비동기 처리">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/js-callstack" data-toggle="tooltip" data-placement="top" title="콜스택 용어 정리">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails assets:pipeline에대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-assets-pipeline" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails assets:pipeline에대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-assets-pipeline">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails assets:pipeline에대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, April 30, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/css"><i class="fa fa-tag"></i> css</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        5 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>Rails Assets pipeline관련한 커맨드와 특징들,production환경에서는 어떤 설정을 해주는게 좋은지와  자주 삽질하는 포인트들을 정리해봤다.</p>
+
+<h3 id="rails-asset-pipeline이란">Rails Asset Pipeline이란</h3>
+
+<p>자바스크립트와 CSS를 합치고 압축할 수 있는 프레임웤을 제공한다
+그리고 CoffeeScript, SASS, ERB와 같은 타 컴파일 언어를 이용할 수 있게 해준다. Rails 4에서는 더이상 기본으로 제공되지 않으며 
+sprockets-rail gem에서 가져올 수 있다</p>
+
+<h4 id="주요기능">주요기능</h4>
+
+<h5 id="병합concatenate">병합(concatenate)</h5>
+
+<p>js와css를 하나의 파일로 합쳐준다
+production에서 레일즈는 MD5 지문(fingerprint)를 각 파일 이름에 넣어서 브라우저가 이 파일들을 캐시할 수 있게 한다
+파일의 내용이 바뀔때마다 지문이 바뀌므로 내용이 바뀔때만 브라우저가 새로운 파일을 받아온다.</p>
+
+<p>이것은 웹페이지를 렌더링하기 위해서 브라우저가 요청하는 수를 줄일 수 있고 이로서 로딩 시간을 줄여주는 효과를 갖게된다.</p>
+
+<h5 id="압축minify">압축(minify)</h5>
+
+<p>asset 파일내에서 불필요한 스페이스와 코멘트를 제거해 준다. 이것은 파일크기를 줄여주고 결과적으로 asset의 로딩 시간을 중려주는 효과를 가져온다.</p>
+
+<h5 id="사전컴파일precompile">사전컴파일(precompile)</h5>
+
+<p>커피 스크립트, SASS 등과 같은 상위 레벨 언어를 CSS파일로 컴파일해 준다.</p>
+
+<h3 id="asset경로">Asset경로</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>app/assets</td>
+      <td>개발자가 만든 image, Javascript, stylesheet 파일들이 위치하는 디렉토리</td>
+    </tr>
+    <tr>
+      <td>lib/assets</td>
+      <td>어플리케이션에 국한되는 않는 라이브러리나 다수의 어플리케이션에서 함께 사용할 수 있는 라이브러리에서 사용하는 asset들이 위치하는 디렉토리</td>
+    </tr>
+    <tr>
+      <td>vendor/assets</td>
+      <td>JavaScript 플러그인과 CSS 프레일워크에서 사용하는 asset들이 위치하는 디렉토리</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="manifest-파일">manifest 파일</h3>
+
+<p>asset pipeline의 핵심은 바로 manifest 파일이다. 
+레일스는 디폴트로 stylesheet용 파일(app/assets/stylesheets/application.css) 하나와 
+JavaScript용 파일(app/assets/javascripts/application.js) 하나를 만들어 준다</p>
+
+<p>이하 링크 참고
+http://tomkim.tistory.com/entry/%EB%A0%88%EC%9D%BC%EC%A6%88-Asset-Pipeline
+https://rorlab.org/rblogs/152</p>
+
+<h3 id="asset폴더에-중복된-파일이-존재하면">asset폴더에 중복된 파일이 존재하면?</h3>
+
+<p>예를 들어, 예를 다른 경로상에 동일한 이름을 가진 두개의 asset 파일이 있다고 가정해 보자. 
+이 두개의 파일을 <code class="language-plaintext highlighter-rouge">app/assets/stylesheets/style.css.scss</code> 과 <code class="language-plaintext highlighter-rouge">vendor/assets/stylesheets/style.css.scss</code> 라고 하자.
+asset이 컴파일될 때 asset 경로상에서 발견되는 첫번째 파일 이후의 모든 중복 파일들은 포함되지 않게 된다
+rails console에서 asset 경로의 확인이가능하다</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rails c 
+Rails.application.config.assets.paths
+</code></pre></div></div>
+
+<h3 id="asset-pipeline이-사용하지-않는-경로상에-있는-asset들은-사전컴파일-하는-방법은">asset pipeline이 사용하지 않는 경로상에 있는 asset들은 사전컴파일 하는 방법은?</h3>
+
+<p>예를 들어, other/assets 폴더를 asset pipeline에 포함해서 사전 컴파일을 하고자 한다고 가정하자. 
+application.rb 파일이나 환경 config 파일(config/environments/ 폴더 내의 development.rb, productionrb, test.rb 파일)에 아래의 코드라인을 간단히 추가하면 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.assets.paths &lt;&lt; "#{Rails.root}/other/assets"
+</code></pre></div></div>
+
+<h3 id="사전컴파일-대상을-추가하는-방법">사전컴파일 대상을 추가하는 방법</h3>
+
+<p><code class="language-plaintext highlighter-rouge">config/initializers/assets.rb</code>에 이하와 같은 설정을 추가해주면 된다.</p>
+
+<h4 id="예제1">예제1</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rails.application.config.assets.precompile &lt;&lt; 'xx.js'
+</code></pre></div></div>
+
+<h4 id="예제2">예제2</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rails.application.config.assets.precompile += %w(
+  application-pc.scss
+  application-sp.scss
+)
+</code></pre></div></div>
+
+<h3 id="사전컴파일-대상에서-제외하는-방법">사전컴파일 대상에서 제외하는 방법</h3>
+
+<p><code class="language-plaintext highlighter-rouge">config/initializers/assets.rb</code>에 이하와 같은 설정을 추가해주면 된다.</p>
+
+<h4 id="js-css-html-json파일을-컴파일-대상에서-제외하는-예제">.js .css .html .json파일을 컴파일 대상에서 제외하는 예제</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>precompile_target = lambda do |filename, path|
+  puts filename
+  path =~ /app\/assets/ &amp;&amp; !%w(.js .css .html .json).include?(File.extname(filename))
+end
+Rails.application.config.assets.precompile = [
+  precompile_target,
+  /(?:\/|\\|\A)application\.(css|js)$/
+]
+</code></pre></div></div>
+
+<h3 id="rails의css설정이-반영안될떄">Rails의CSS설정이 반영안될떄</h3>
+
+<p>development환경에서는 <code class="language-plaintext highlighter-rouge">app/assets/stylesheets</code>하위의
+모든 스타일파일은 디폴트로 전부 읽어오므로 <code class="language-plaintext highlighter-rouge">app/assets/stylesheets</code> 하위의 파일을 
+수정하면 즉시 서비스에 반영된다.
+development tool등을 통해서 사이트의 요소를 보면 스타일 파일의 갯수만큼 읽어오는걸 알 수 있다.</p>
+
+<p>실제 서비스 운영시에는 복수의 스타일파일을 읽어올경우 퍼포먼스가 떨어지므로 복수의 파일들을 하나로 묶는 작업을 하는데
+Rails에서는 그것을 <code class="language-plaintext highlighter-rouge">assets:precompile</code> 이 해준다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle exec rake assets:precompile
+</code></pre></div></div>
+
+<p>위 커맨드를  실행하면 <code class="language-plaintext highlighter-rouge">public/assets/</code> 에 하나로 묶어진 <code class="language-plaintext highlighter-rouge">application.css</code> 가 생성되고 Rails에서는
+한번 <code class="language-plaintext highlighter-rouge">precompile</code>해서 <code class="language-plaintext highlighter-rouge">public/assets</code>파일이 만들어지면 그것을 우선해서 읽어오게 된다.</p>
+
+<p>즉 평소처럼  <code class="language-plaintext highlighter-rouge">app/assets/stylesheets</code>을 수정해도 <code class="language-plaintext highlighter-rouge">public/assets</code>하위의 스타일파일을 읽게되는것.</p>
+
+<p>이러한 구조를 이해못하면 “어 왜 스타일설정이 왜 반영이 안되지??” 하고 얼탱이를 탈 수 있다.(필자가 그랬다)</p>
+
+<h3 id="binrake-assetsclobber">bin/rake assets:clobber</h3>
+
+<p><code class="language-plaintext highlighter-rouge">assets:precompile</code>한 결과를 삭제해주는 커맨드</p>
+
+<p>rails 4.0이전에는</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle exec rake assets:clean
+</code></pre></div></div>
+<p>이었다.</p>
+
+<h3 id="binrake-assetsprecompile">bin/rake assets:precompile</h3>
+
+<p>위에서도  설명했지만 사전컴파일을 실행하는 커맨드</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle exec rake assets:precompile RAILS_ENV=production
+</code></pre></div></div>
+
+<h3 id="configassetscompile--true">config.assets.compile = true</h3>
+
+<p><code class="language-plaintext highlighter-rouge">config.assets.compile = true</code>를 해주면</p>
+
+<p>실행중에 컴파일을 실행하므로 assets:precompile커맨드를 일일이 실행하지 않아도 된다. 
+다만 퍼포먼스가 떨어지는 단점이 있어 production에서는 절대 사용하지 않는게 좋다.</p>
+
+<p>development에서도 <code class="language-plaintext highlighter-rouge">app/assets/stylesheets</code>하위의 스타일파일을 자동으로 읽어오므로 
+아직  <code class="language-plaintext highlighter-rouge">asset:precompile</code>을 실행하지 않으면 안될 타이밍을 만나지 못했지만 
+만약에 그럴경우 유용한 옵션이 될지도 모르겠다.</p>
+
+<h3 id="configassetscss_compressor--sass">config.assets.css_compressor = :sass</h3>
+
+<p>압축방법을 지정한다.</p>
+
+<p>sass-rails gem을 사용하고 있는 경우</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.assets.css_compressor = :sass
+</code></pre></div></div>
+
+<p>이고 yui-compressor사용시에는</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.assets.css_compressor = :yui
+</code></pre></div></div>
+
+<p>로 지정해준다.</p>
+
+<h3 id="configassetsdebug">config.assets.debug</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.assets.debug = true
+</code></pre></div></div>
+
+<p>assets are served individually, organized just as you see them in development. 
+Preprocessed languages like SASS or CoffeeScript will still show up as their target languages (i.e., CSS and JS, respectively).</p>
+
+<p>※application.css/js개별 파일의 이중으로 읽어집니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.assets.debug = false
+</code></pre></div></div>
+
+<p>assets are bundled into files like application.css and application.js. 
+Error stack traces will likely not have the correct line number any more and it is harder to map those back to your original code.</p>
+
+<p>https://stackoverflow.com/questions/16357785/what-exactly-config-assets-debug-setting-does</p>
+
+<h3 id="configassetsenabled--false">config.assets.enabled = false</h3>
+
+<p>을 이용하면 asset pipeline기능자체를 off할 수 있다.</p>
+
+<h3 id="configserve_static_assets">config.serve_static_assets</h3>
+
+<p>Nginx등의 Web서버를 사용하지 않고 assets파일등을 읽어오게할때 설정 true설정을 해준다.</p>
+
+<p>rails 4.1까지는 이하와같이 사용했는데</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#config/environments/production.rb
+config.serve_static_assets = true
+</code></pre></div></div>
+
+<p>rails5에서는</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#config/environments/production.rb
+config.public_file_server.enabled = true
+</code></pre></div></div>
+
+<p>로 변경되었다.</p>
+
+<h4 id="퍼포먼스를-생각한다면-true쓰면-안됨">퍼포먼스를 생각한다면 true쓰면 안됨</h4>
+
+<p>true설정을 하면 nginx에서 정적 컨텐츠파일을 찾지 못하면  unicorn과 같은 레일즈 서버로 리퀘스트가 가는데
+Unicorn은 아키텍쳐상 정적컨텐츠를 처리하는데 적합하지 않기때문에 효율이 굉장히 떨어진다.</p>
+
+<p>그러므로 false설정해서 nginx에서 정적컨텐츠 파일에 접근할 수 있게하는것이 좋다.
+가장 베스트는 CDN처리하는것이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.serve_static_assets = false
+</code></pre></div></div>
+
+<p>를 추천!</p>
+
+<h3 id="결론">결론</h3>
+
+<p>그래서 현재 프로젝트의  production환경 설정은 이하와 같이 설정하였다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.serve_static_assets = false
+config.assets.compress = true
+config.assets.compile = false
+config.assets.digest = false
+config.assets.debug = false
+</code></pre></div></div>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-assets-pipeline"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/sass_scss_less" data-toggle="tooltip" data-placement="top" title="css의 전처리 도구SASS,SCSS,Less의 차이">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/vendor-prefix" data-toggle="tooltip" data-placement="top" title="Autoprefixer Rails로CSS의 벤더프리픽스를 자동생성하기">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

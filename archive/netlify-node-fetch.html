@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Netlify에서 node-fetch 사용시 주의사항" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/netlify-node-fetch" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Netlify에서 node-fetch 사용시 주의사항 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/netlify-node-fetch">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Netlify에서 node-fetch 사용시 주의사항</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, December 3, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/devops/netlify"><i class="fa fa-tag"></i> devops/netlify</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        2 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="선-결론">선 결론</h1>
+
+<p>Netlify에서 node-fetch사용시 <code class="language-plaintext highlighter-rouge">npm i encoding</code> 해주자</p>
+
+<hr />
+
+<h1 id="에러cannot-find-module-encoding">에러(Cannot find module ‘encoding’)</h1>
+
+<p><code class="language-plaintext highlighter-rouge">netlify-lambda</code>를 이용해 Netlify Functions로직을 작성할때 
+로컬에서는 node-fetch가 문제없이 동작하는데 디플로이시 아래와 같은 에러가 발생했다.</p>
+
+<p>※ netlify-lambda에 대해 알고싶다면 <a href="https://negabaro.github.io/archive/netlify-functions">Netlify Functions에 대해 알아보자</a>를 참고</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>────────────────────────────────────────────────────────────────
+10:17:36 AM:   Dependencies installation error                               
+10:17:36 AM: ────────────────────────────────────────────────────────────────
+10:17:36 AM: 
+10:17:36 AM:   Error message
+10:17:36 AM:   A Netlify Function failed to require one of its dependencies.
+10:17:36 AM:   If the dependency is a Node module, please make sure it is present in the site's top-level "package.json".
+  If it is a local file instead, please make sure the file exists and its filename is correctly spelled.
+10:17:36 AM: 
+10:17:36 AM:   In file "/opt/build/repo/dist/functions/index.js"
+10:17:36 AM:   Cannot find module 'encoding'
+10:17:36 AM:   Require stack:
+10:17:36 AM:   - /opt/buildhome/.netlify-build-
+</code></pre></div></div>
+
+<h1 id="원인">원인</h1>
+
+<p><code class="language-plaintext highlighter-rouge">Cannot find module 'encoding'</code> 포인트는 이 메시지인데 
+이 에러의 원인은 아래와 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A module my project depends on conditionally imports the encoding module, and also does not include encoding in it's own package.json. This resulted in my build (with netlify-lambda build) to succeed, but the zip (with @netlify/zip-it-and-ship-it) to not include encoding, so the import would fail.
+One annoying thing is that I had to add encoding to my top-level package, which is my frontend app. Adding encoding only to the package.json in my functions folder still fails, probably because that's not where zip-it-and-ship-it is looking? Not sure 😕 I'll probably end up giving node-fetch the boot and use a different request client that hopefully doesn't necessitate this workaround!
+</code></pre></div></div>
+
+<p>node-fetch package자체에는 encoding패키지에 대한 디펜더시 설정이 되어있는데 
+netlify상에서 디플로이시 동작하는 <code class="language-plaintext highlighter-rouge">@netlify/zip-it-and-ship-it</code>패키지에 encoding이 포함되어 있지 않아 동작하지 않는다고 한다.</p>
+
+<p>그래서 로컬에서는 정상동작하고 netlify상에서 동작을 안했던거구나~</p>
+
+<p>자세한 내용은 <a href="https://github.com/netlify/netlify-lambda/issues/201#issuecomment-569453218">Link</a>를 참조</p>
+
+<h1 id="해결방법">해결방법</h1>
+
+<p>실제로 안쓰여도 netlify상에서 정상작동하게 하기위해 encoding을 추가해주자</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i encoding
+</code></pre></div></div>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/netlify-node-fetch"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/aws-cli-update" data-toggle="tooltip" data-placement="top" title="mac에서 aws-cli커맨드 버전확인 & 버전 업그레이드 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/how-to-get-youtube-caption" data-toggle="tooltip" data-placement="top" title="Youtube get_video_info로 유투브 자막 정보가져오기">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

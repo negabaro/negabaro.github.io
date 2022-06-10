@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="[미국주식 REST API] ALPHA VANTAGE에 대해서" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/what-is-alphavantage" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>[미국주식 REST API] ALPHA VANTAGE에 대해서 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/what-is-alphavantage">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>[미국주식 REST API] ALPHA VANTAGE에 대해서</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, December 9, 2020
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/openapi/alphavantage"><i class="fa fa-tag"></i> openapi/alphavantage</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        3 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="alpha-vantage란">ALPHA VANTAGE란?</h1>
+
+<p>REST형식으로 미국주식 정보를 제공하고 있다.</p>
+
+<p>무료로 사용이 가능하다.(회원가입후 free api key를 받아서 사용가능)</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/101610638-de367080-3a4b-11eb-8936-cd87b5d55119.png" alt="image" /></p>
+
+<h1 id="장점">장점</h1>
+
+<p>무료!!</p>
+
+<p>REST API이므로 실행환경에 의존하지 않고 실행가능</p>
+
+<p><a href="https://www.alphavantage.co/documentation/">도큐멘트</a>가 읽기쉽다.(왜인지 모르겠지만 IBM주식을 예제로 apikey없이 간단히 레스폰스를 확인할 수 있어서 좋았다.)</p>
+
+<p>단순 주가뿐만 아니라 기업정보(Fundamental Data)랑 기술적지표(Technical Indicators)도 확인할 수 있다.</p>
+
+<h1 id="단점">단점</h1>
+
+<p>주가정보(Time Series Stock APIs) 같은 경우 실시간 데이터를 확인할 수 없다.(가장 치명적)
+하루전 데이터만 볼 수 있음.</p>
+
+<p>개장폐장 시간이 없는 <code class="language-plaintext highlighter-rouge">Foreign Exchange (FX)</code>나 <code class="language-plaintext highlighter-rouge">Digital &amp; Crypto Currencies</code>는 실시간 정보를 확인할 수 있는것 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This API returns the realtime exchange rate for any pair of digital currency (e.g., Bitcoin) or physical currency (e.g., USD).
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="주의사항">주의사항</h2>
+
+<p>예전 가격정책과 현재 정책이 바뀐듯하다.
+그로인해 잘못된 정보들이 있었다. 예를들어 실시간으로 stock data확인이 가능하다는 등..</p>
+
+<p><a href="https://towardsdatascience.com/best-5-free-stock-market-apis-in-2019-ad91dddec984">Best 5 free stock market APIs in 2020</a>를 보면 Alpha Vantage를 아래와 같이 소개하고 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/101610038-0bceea00-3a4b-11eb-8c67-40e739c6cedd.png" alt="image" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alpha Vantage Inc. is a leading provider of various free APIs. It provides APIs to gain access to historical and real-time stock data, FX-data, and cryptocurrency data.
+With Alphavantage you can perform up to 5 API-requests per minute and 500 API requests per day. 30 API requests per minute with $29.9/month.
+</code></pre></div></div>
+
+<p>톱 페이지에서도 리얼타임을 언급하는걸 보면 예전에는 실시간 데이터도 확인이 가능했던것 같다.</p>
+
+<p>현재 톱페이지는 아래와 같음(리얼타임 언급이 사라짐)</p>
+
+<p><img src="https://user-images.githubusercontent.com/4640346/101610638-de367080-3a4b-11eb-8936-cd87b5d55119.png" alt="image" /></p>
+
+<h2 id="실시간-데이터-제공이-멈추게-된-이유">실시간 데이터 제공이 멈추게 된 이유</h2>
+
+<p>도큐멘트에 실시간 데이터가 필요하다면 <code class="language-plaintext highlighter-rouge">Polygon.io</code>를 사용하라고 권하고 있다.</p>
+
+<p>제휴관계에 있는듯?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>If you are interested in realtime intraday data for US stocks and ETFs, we have partnered with Polygon.io, a leading provider of realtime market data that counts Google and Robinhood as its customers. Specifically, this Intraday Time Series API maps directly to Polygon's Aggregates API.
+
+Alpha Vantage users will enjoy a lifetime 10% discount for their Polygon subscriptions. To unlock the discount, simply sign up for Polygon using your Alpha Vantage user email and enter the code ALPHAV on the subscription page.
+</code></pre></div></div>
+
+<p>찾아보니 StackOverFlow에 같은 의문을가진 현자분이 계셨다.</p>
+
+<p><a href="https://stackoverflow.com/a/62800260/8229332">Alpha Vantage가 실시간데이터 제공을 그만둔 이유</a> «링크</p>
+
+<p>요약하면 라이센스 폴리시 문제로 Alpha Vantage는 실시간 데이터 제공을 그만둔 듯하다.
+<code class="language-plaintext highlighter-rouge">Polygon.io</code>는 NASDAQ에서 공인한 리얼타임 데이터를 싼 가격에 제공하는 프로바이더 중 하나라고 함.
+이거 보다 더싼 프로바이더들은 위법적으로 데이터를 수집하고 있을 가능성이 있어 이후에 사용이 불가능해질 수도 있다고</p>
+
+<hr />
+
+<h1 id="메모">메모</h1>
+
+<h2 id="도큐멘트">도큐멘트</h2>
+
+<p><a href="https://www.alphavantage.co/documentation/">도큐멘트</a>를 보면 아래 5가지 레이어로 나누어져 있는데</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Time Series Stock APIs
+2. Fundamental Data
+3. Foreign Exchange (FX)
+4. Digital &amp; Crypto Currencies
+5. Technical Indicators
+</code></pre></div></div>
+
+<p>자주 사용되는 부분은 <code class="language-plaintext highlighter-rouge">High Uses</code>라고 표기되어 있어서 알기쉬웠음</p>
+
+<h2 id="api-key없어도-됨버그">api key없어도 됨??(버그?)</h2>
+
+<p>api key에 <code class="language-plaintext highlighter-rouge">undefined</code>넣어도 실행됨 ㅋㅋ 뭐지</p>
+
+<h2 id="symbol이-틀려도-apikey없다고-에러가나옴">symbol이 틀려도 apikey없다고 에러가나옴</h2>
+
+<p>symbol값 지정이 잘못되거나 파라메터가 틀려도 일률적으로 아래와 같은 메시지가 나오므로 주의가 필요</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "Error Message": "the parameter apikey is invalid or missing. Please claim your free API key on (https://www.alphavantage.co/support/#api-key). It should take less than 20 seconds."
+}
+</code></pre></div></div>
+
+<hr />
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/what-is-alphavantage"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/how-to-get-youtube-caption" data-toggle="tooltip" data-placement="top" title="Youtube get_video_info로 유투브 자막 정보가져오기">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/github-action" data-toggle="tooltip" data-placement="top" title="Github Action이란">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

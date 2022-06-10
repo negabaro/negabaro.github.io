@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="Rails 팔로우(Follow) 기능 만들기" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/rails-follow" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>Rails 팔로우(Follow) 기능 만들기 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/rails-follow">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Rails 팔로우(Follow) 기능 만들기</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Tuesday, May 8, 2018
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        22 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p><img src="https://user-images.githubusercontent.com/4640346/39975910-25a29d88-576c-11e8-9244-d275bb2bc36d.gif" alt="follow" /></p>
+
+<p>Rails에서 팔로우 기능을 만들어 봤다.
+사전에 <a href="https://negabaro.github.io/rails/2018/04/27/devise-install.html">Rails devise인스톨 방법</a>에서 만든 User모델과 <a href="https://negabaro.github.io/rails/2018/04/13/quiz-crud.html">rails로 퀴즈어플 만들어보기(CRUD편)</a>에서 만든 WritingQuiz모델이 필요하다.</p>
+
+<p>※이때까지 공부한내용중 이해하기가 가장 어려웠던것 같다.
+이유로는 관련용어의 의미를 이해하기 어려웠던점과 특수한 N:N형모델링 이라는점이다.</p>
+
+<h3 id="특수한-nn형모델링에-대해서">특수한 N:N형모델링에 대해서</h3>
+
+<p><a href="https://negabaro.github.io/rails/2018/03/15/rails-relation-N-N.html">rails5.1에서 N:N 관계형 모델 만들기</a>에서 공부한 N:N형 모델링에는 A와B라는 모델 그리고 중간 테이블이 존재했는데
+팔로우 기능 같은 경우는 User모델 하나로 N:N형을 구현해야한다는 점이 특이한점이다.</p>
+
+<h3 id="팔로우-관련-용어설명">팔로우 관련 용어설명</h3>
+
+<p>자주 등장하는 용어에 대한 설명이다.</p>
+
+<ol>
+  <li>팔로우(Follow)는 어떤 유저를 팔로우했을때 쓰는 의미</li>
+  <li>팔로워(Follower)는 나를 팔로우한 사람을 칭함</li>
+  <li>팔로잉(Following)은 내가 누군가를 팔로잉한것을 의미</li>
+</ol>
+
+<p>보통 인스타그램이나 트위터에서</p>
+
+<p>내 정보가</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Follower 127 Following 467
+</code></pre></div></div>
+
+<p>이면</p>
+
+<p>나를 팔로잉 하고 있는 사람이 127명이고
+내가 팔로잉 하고 있는 사람이 467명이라고 말한다.</p>
+
+<p>한국어로 보면 둘다 팔로잉 하다라서 살짝 위화감이 있는데
+Follower가 수동태고 Following이 능동태이다.</p>
+
+<p>나말고 다른 유저의 프로필에</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Follower 5960 Following 420
+</code></pre></div></div>
+
+<p>이라고 적혀있으면</p>
+
+<p>이 유저를 팔로우한 사람은 5960명이고 
+이 유저가 팔로우 한 사람은 420명인것 이다.</p>
+
+<p>User모델 입장에서는 위에 적은대로 이해하면 되는데
+이뒤에 설명할 Relationship의 모델입장에서는 나라는 주체가 아닌 중립입장 이기에
+팔로우 한사람 팔로우 된사람으로 표현된다.
+이때는 Follower를 팔로우 한사람으로
+Following을 팔로우 당한사람,된사람으로 표현한다.</p>
+
+<h3 id="중간테이블-relationship생성">중간테이블 Relationship생성</h3>
+
+<p>본격적으로 팔로우 기능을 만들어보자.
+제일 먼저해야할것은 누가 누구를 팔로우 했는지에 대한 정보를 알수 있는 중간테이블을 만드는것이다.
+컬럼에는 팔로우 한사람의 user.id가 들어있는 follower_id와 
+팔로우 된사람의 user.id 가 알 수 있는 following_id를 추가해준다.</p>
+
+<p>이하 커맨드를 실행해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">generate</span> <span class="n">model</span> <span class="no">Relationship</span> <span class="n">follower_id</span><span class="ss">:integer</span> <span class="n">following_id</span><span class="ss">:integer</span></code></pre></figure>
+
+<p>만들어진 migrate파일에 이하와 같이 인덱스 파일을 추가해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#db/migrate/20180509020125_create_relationships.rb</span>
+<span class="k">class</span> <span class="nc">CreateRelationships</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">5.1</span><span class="p">]</span>
+  <span class="k">def</span> <span class="nf">change</span>
+    <span class="n">create_table</span> <span class="ss">:relationships</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+      <span class="n">t</span><span class="p">.</span><span class="nf">integer</span> <span class="ss">:follower_id</span>
+      <span class="n">t</span><span class="p">.</span><span class="nf">integer</span> <span class="ss">:following_id</span>
+
+      <span class="n">t</span><span class="p">.</span><span class="nf">timestamps</span>
+    <span class="k">end</span>
+    <span class="n">add_index</span> <span class="ss">:relationships</span><span class="p">,</span> <span class="ss">:follower_id</span>
+    <span class="n">add_index</span> <span class="ss">:relationships</span><span class="p">,</span> <span class="ss">:following_id</span>
+    <span class="n">add_index</span> <span class="ss">:relationships</span><span class="p">,</span> <span class="p">[</span><span class="ss">:follower_id</span><span class="p">,</span> <span class="ss">:following_id</span><span class="p">],</span> <span class="ss">unique: </span><span class="kp">true</span>
+    <span class="c1">#follower_id와followed_id의 조합은 반드시 유니크임을 의미하는 설정</span>
+    <span class="c1">#이 설정에 의해 어떤 유저가 똑같은 유저를 2회이상 팔로우하는것을 막습니다.</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="db에-반영">db에 반영</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span></code></pre></figure>
+
+<h3 id="동작확인용-데이터-추가">동작확인용 데이터 추가</h3>
+
+<p>먼저 동작확인을 위한 데이터를 추가해보자.</p>
+
+<h5 id="동작확인용-데이터15번-유저가-6번을-팔로우">동작확인용 데이터1(5번 유저가 6번을 팔로우)</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">following_id: </span><span class="mi">6</span><span class="p">)</span>  
+<span class="n">rs</span><span class="p">.</span><span class="nf">save</span></code></pre></figure>
+
+<h5 id="동작확인용-데이터28번-유저가-9번유저를-팔로우">동작확인용 데이터2(8번 유저가 9번유저를 팔로우)</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">8</span><span class="p">,</span> <span class="ss">following_id: </span><span class="mi">9</span><span class="p">)</span>
+<span class="n">rs</span><span class="p">.</span><span class="nf">save</span></code></pre></figure>
+
+<h5 id="동작확인용-데이터38번-유저가-5번유저를-팔로우">동작확인용 데이터3(8번 유저가 5번유저를 팔로우)</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">8</span><span class="p">,</span> <span class="ss">following_id: </span><span class="mi">5</span><span class="p">)</span>
+<span class="n">rs</span><span class="p">.</span><span class="nf">save</span></code></pre></figure>
+
+<p>여기까지 동작확인용 데이터추가가 끝나면 
+아직 화면은 없지만 이하와 같은 상태가 된다.</p>
+
+<h5 id="5번-유저">5번 유저</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>follower 1   following 1
+</code></pre></div></div>
+
+<h5 id="6번-유저">6번 유저</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>follower 1   following 0
+</code></pre></div></div>
+
+<h5 id="8번-유저">8번 유저</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>follower 0   following 2
+</code></pre></div></div>
+
+<h5 id="9번-유저">9번 유저</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>follower 1   following 0
+</code></pre></div></div>
+
+<h3 id="관계만들기">관계만들기</h3>
+
+<p>서두에 설명한대로 Relationship모델은 팔로우 한사람(follower_id)과  팔로우 된사람(following_id)의 정보가 있다.
+누가 팔로우했고 누가 팔로잉 당했는가의 관계에 대한 설명을 쉽게 할 수 있게
+팔로우 한사람에  대한 정보를 얻는것을 능동적 관계  (Active Relationship)라고 하고 
+팔로우 당한사람(된사람)에 대한 정보를 얻는것을 수동적 관계  (Passive Relationship)라고 부르도록 하자.</p>
+
+<p>예)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>내가 아이유를 팔로우한것은(나 -&gt; 아이유) 능동적 관계이고 
+아이유 입장에서 나에게 팔로우 당한것이므로(아이유 -&gt; 나) 수동적 관계이다.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>G드레곤이 아이유를 팔로우한것은(G드레곤 -&gt; 아이유) 능동적 관계이고 
+아이유입장에서 G드레곤에게 팔로우 당한것이므로(아이유 -&gt; G드레곤) 수동적 관계이다.
+</code></pre></div></div>
+
+<h4 id="능동적-관계에-대한-모델">능동적 관계에 대한 모델</h4>
+
+<p>Relationship에 능동적 관계 시점으로 접근할 수 있는 설정을 추가해보자. 이하 설정을 User모델에 추가해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:active_relationships</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"follower_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span></code></pre></figure>
+
+<h4 id="동작확인">동작확인</h4>
+
+<p>위 설정으로 능동적 관계 시점으로 Relationship에 접근이 가능해졌다.
+Rails console에서 동작확인을 해보자</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">active_relationships</span></code></pre></figure>
+
+<p>5번유저의 능동적 관계시점으로  Relationship에 접근한다.</p>
+
+<h5 id="result">result</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="no">Relationship</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">9.9</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`relationships`</span> <span class="no">WHERE</span> <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">`</span><span class="n">following_id</span><span class="sb">` = 6 LIMIT 11
+=&gt; #&lt;ActiveRecord::Associations::CollectionProxy [#&lt;Relationship id: 2, follower_id: 5, following_id: 6, created_at: "2018-05-09 02:23:06", updated_at: "2018-05-09 02:23:06"&gt;]&gt;</span></code></pre></figure>
+
+<p>위와같이 팔로우 한사람(follower_id) 5번의 정보가 나왔다. following_id가6번이므로 5번은 6번은 팔로우 했다는걸 알 수 있다.</p>
+
+<h4 id="동작확인2">동작확인2</h4>
+
+<p>user = User.find_by(id:8)
+user.active_relationships
+=&gt; #&lt;ActiveRecord::Associations::CollectionProxy 
+[#&lt;Relationship id: 4, follower_id: 8, following_id: 5, created_at: “2018-05-09 02:52:38”, updated_at: “2018-05-09 02:52:38”&gt;, 
+#&lt;Relationship id: 3, follower_id: 8, following_id: 9, created_at: “2018-05-09 02:43:20”, updated_at: “2018-05-09 02:43:20”&gt;]&gt;</p>
+
+<p>8번 유저의 능동적 관계시점은 어떨까.</p>
+
+<p>2행이 있는걸 알 수 있다.
+각각 5번과 9번유저를 팔로우 하고 있다는걸 알 수 있다.</p>
+
+<h4 id="수동적-관계에-대한-모델">수동적 관계에 대한 모델</h4>
+
+<p>이번엔 반대로 팔로우 된사람을 기준으로 Relationship에 접근하는 수동적 관계시점이다.</p>
+
+<p>이하 설정을  똑같이 User모델에 추가해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:passive_relationships</span><span class="p">,</span> <span class="ss">class_name:  </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"following_id"</span><span class="p">,</span> <span class="ss">dependent:   :destroy</span></code></pre></figure>
+
+<h4 id="동작확인1">동작확인1</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">passive_relationships</span></code></pre></figure>
+
+<p>6번 유저의 수동적 관계시점에서의 결과를 확인해보자.
+누구에게 팔로우 되었을까.</p>
+
+<h5 id="result-1">result</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="no">Relationship</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">9.9</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`relationships`</span> <span class="no">WHERE</span> <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">`</span><span class="n">following_id</span><span class="sb">` = 6 LIMIT 11
+=&gt; #&lt;ActiveRecord::Associations::CollectionProxy [#&lt;Relationship id: 2, follower_id: 5, following_id: 6, created_at: "2018-05-09 02:23:06", updated_at: "2018-05-09 02:23:06"&gt;]&gt;</span></code></pre></figure>
+
+<p>6번유저는 follower_id:5번인 유저에게 팔로우 됬다는걸 알 수 있다.</p>
+
+<h3 id="특정-유저가-누구를-팔로우-했는지-확인하는-로직-추가">특정 유저가 누구를 팔로우 했는지 확인하는 로직 추가</h3>
+
+<p>여기까지 유저가 능동적,수동적 관계시점으로  Relationship에 접근하는 설정을 추가했다.
+passive_relationships은 following_id를 기준으로 active_relationships은 follower_id 기준으로
+where문을 실행하므로 위에서 본 결과가 나오는것이다.</p>
+
+<p>지금부터는 JOIN문을 실행해서 실제 능동적,수동적 관계시점에서 본 User정보를 표시하는 설정을 추가해보자.</p>
+
+<h3 id="능동적-관계-join">능동적 관계 JOIN</h3>
+
+<p>Relationship과User모델에 각각 이하의 설정을 추가해준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/relationship.rb</span>
+<span class="n">belongs_to</span> <span class="ss">:following</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span><span class="p">,</span> <span class="ss">foreign_key: :following_id</span><span class="p">,</span> <span class="ss">primary_key: :id</span>
+<span class="n">validates</span> <span class="ss">:following_id</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:active_relationships</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"follower_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span>
+<span class="n">has_many</span> <span class="ss">:followings</span><span class="p">,</span> <span class="ss">through: :active_relationships</span><span class="p">,</span> <span class="ss">source: :following</span>  <span class="c1">#&lt;&lt;&lt; 추가 해주는 부분</span></code></pre></figure>
+
+<p><a href="https://negabaro.github.io/rails/2018/03/15/rails-relation-N-N.html">rails5.1에서 N:N 관계형 모델 만들기</a>에서 공부한 설정과 비교해보면 능동적 관계시점으로 중간테이블에 접근하는 active_relationships
+설정을 경유하는것을 알 수 있다.</p>
+
+<h4 id="동작확인-1">동작확인</h4>
+
+<p>8번유저가 팔로우 하고 있는 유저의 정보 확인해보자.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">c</span>
+<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">followings</span>
+  <span class="no">User</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">0.7</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`users`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`users`</span> <span class="no">INNER</span> <span class="no">JOIN</span> <span class="sb">`relationships`</span> <span class="no">ON</span> <span class="sb">`users`</span><span class="p">.</span><span class="nf">`</span><span class="nb">id</span><span class="sb">` = `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">following_id</span><span class="sb">` WHERE `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">follower_id</span><span class="sb">` = 8 LIMIT 11
+=&gt; #&lt;ActiveRecord::Associations::CollectionProxy [
+#&lt;User id: 5, email: "kaka2@naver.com", created_at: "2018-04-28 15:26:27", updated_at: "2018-05-07 05:46:30", nickname: "kaka2", avatar_file_name: "2pWUcQg.png", avatar_content_type: "image/png", avatar_file_size: 2297463, avatar_updated_at: "2018-05-03 00:19:39"&gt;,
+#&lt;User id: 9, email: "kaka7@naver.com", created_at: "2018-04-28 15:39:17", updated_at: "2018-04-28 15:39:17", nickname: "kaka7", avatar_file_name: nil, avatar_content_type: nil, avatar_file_size: nil, avatar_updated_at: nil&gt;
+]&gt;</span></code></pre></figure>
+
+<p>8번 유저가 팔로우 한사람인 5,9번 유저의 정보가 표시되는걸 알 수 있다.</p>
+
+<h3 id="수동적-관계-join">수동적 관계 JOIN</h3>
+
+<p>수동적관계 시점에서도 똑같이 JOIN을 이용해 유저정보를 취득하는 방법이다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/relationship.rb</span>
+<span class="n">belongs_to</span> <span class="ss">:follower</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span>
+<span class="n">validates</span> <span class="ss">:follower_id</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:passive_relationships</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"following_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span>
+<span class="n">has_many</span> <span class="ss">:followers</span><span class="p">,</span> <span class="ss">through: :passive_relationships</span><span class="p">,</span> <span class="ss">source: :follower</span> <span class="c1">#&lt;&lt; 추가 해주는부분 </span></code></pre></figure>
+
+<h4 id="동작확인-2">동작확인</h4>
+
+<p>8번 유저가 어떤 유저에게 팔로우 되어있는 확인해보자.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">c</span>
+<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">followers</span>
+ <span class="no">User</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">0.8</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`users`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`users`</span> <span class="no">INNER</span> <span class="no">JOIN</span> <span class="sb">`relationships`</span> <span class="no">ON</span> <span class="sb">`users`</span><span class="p">.</span><span class="nf">`</span><span class="nb">id</span><span class="sb">` = `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">follower_id</span><span class="sb">` WHERE `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">following_id</span><span class="sb">` = 8 LIMIT 11
+=&gt; #&lt;ActiveRecord::Associations::CollectionProxy [#&lt;User id: 5, email: "kaka2@naver.com", created_at: "2018-04-28 15:26:27", updated_at: "2018-05-07 05:46:30", nickname: "kaka2", avatar_file_name: "2pWUcQg.png", avatar_content_type: "image/png", avatar_file_size: 2297463, avatar_updated_at: "2018-05-03 00:19:39"&gt;&gt;</span></code></pre></figure>
+
+<p>8번 유저는 5번유저에게 팔로우 되어 있는것을 알 수 있다.</p>
+
+<p>여기까지 설정이 끝나면 팔로우의 핵심설정은 끝났다.
+다음은 실제 화면을 만들기 위한 설정을 추가해보자.</p>
+
+<h3 id="화면-설계">화면 설계</h3>
+
+<p>화면설계에서 필요한 요건들은 이하와 같다.</p>
+
+<ol>
+  <li>각 유저의 팔로워/팔로잉 정보를 알 수 있는 프로필 페이지가 존재한다.</li>
+  <li>팔로워/팔로잉한 유저의 일람을 확인 가능한 페이지가 존재한다.</li>
+  <li>프로필 페이지에는 유저를 팔로우하는 버튼이 있다.</li>
+  <li>팔로우한 상태일경우 언팔로우 버튼이 보이게 한다.</li>
+  <li>자신을 팔로우 하지 않도록 자신의 프로필 페이지에는 팔로우/언팔로우 버튼을 보이지 않게한다.</li>
+</ol>
+
+<h3 id="루트설정">루트설정</h3>
+
+<p>루트 설정은 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">scope</span> <span class="ss">module: :front</span> <span class="k">do</span>
+  <span class="n">scope</span> <span class="ss">module: :users</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:relationships</span><span class="p">,</span>       <span class="ss">only: </span><span class="p">[</span><span class="ss">:create</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">]</span> <span class="c1">#팔로우/언팔로우시 처리로직 (화면설계 5에 해당)</span>
+  <span class="k">end</span>
+   <span class="n">resources</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">nickname: </span><span class="sr">/[^\/]+/</span> <span class="p">},</span> <span class="ss">only: </span><span class="p">[]</span> <span class="k">do</span>
+      <span class="n">scope</span> <span class="ss">module: :users</span> <span class="k">do</span>
+        <span class="n">resources</span> <span class="ss">:top</span><span class="p">,</span>       <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">],</span> <span class="ss">as: </span><span class="s2">"top"</span><span class="p">,</span> <span class="ss">path: </span><span class="s2">""</span> <span class="c1"># 프로필 페이지TOP(화면설계 1,3,4에해당)</span>
+        <span class="n">resources</span> <span class="ss">:followers</span><span class="p">,</span>  <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">]</span> <span class="c1"># Follower일람 페이지(화면설계 2에해당)</span>
+        <span class="n">resources</span> <span class="ss">:followings</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">]</span> <span class="c1"># Following일람 페이지(화면설계 2에해당)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="rake-routes결과">rake routes결과</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">          <span class="n">relationships</span> <span class="no">POST</span>   <span class="sr">/relationships(.:format)                  front/use</span><span class="n">rs</span><span class="o">/</span><span class="n">relationships</span><span class="c1">#create</span>
+          <span class="n">relationship</span> <span class="no">DELETE</span> <span class="sr">/relationships/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>              <span class="n">front</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">relationships</span><span class="c1">#destroy</span>
+          <span class="n">user_top_index</span> <span class="no">GET</span>    <span class="sr">/users/</span><span class="ss">:user_id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                 <span class="n">front</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">top</span><span class="c1">#index</span>
+          <span class="n">user_followers</span> <span class="no">GET</span>    <span class="sr">/users/</span><span class="ss">:user_id</span><span class="o">/</span><span class="n">followers</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>       <span class="n">front</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">followers</span><span class="c1">#index</span>
+          <span class="n">user_followings</span> <span class="no">GET</span>    <span class="sr">/users/</span><span class="ss">:user_id</span><span class="o">/</span><span class="n">followings</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">front</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">followings</span><span class="c1">#index</span></code></pre></figure>
+
+<p>http://xxx.com/users/user_id
+에 억세스하면 각 유저의 프로필 페이지가 표시되게 된다.</p>
+
+<h3 id="user모델에-메소드-추가">User모델에 메소드 추가</h3>
+
+<p>화면을 완성하기 위해 User모델에 추가 설정이 필요하다.
+이하와 같은설정을 추가해주자.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+
+ <span class="c1">#해당유저가 other_user를 팔로우 하고 있는지 true/false(화면설계 4에서 설명한 팔로우한 상태일경우 언팔로우 버튼을 보여주기 위해)</span>
+ <span class="k">def</span> <span class="nf">following?</span><span class="p">(</span><span class="n">other_user</span><span class="p">)</span>
+   <span class="n">active_relationships</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">following_id: </span><span class="n">other_user</span><span class="p">.</span><span class="nf">id</span><span class="p">)</span>
+ <span class="k">end</span>
+
+ <span class="c1">#특정유저가 other_user를 팔로우(팔로우 버튼을 클릭시 Relationship에 해당 정보를 insert하는 로직)</span>
+ <span class="k">def</span> <span class="nf">follow!</span><span class="p">(</span><span class="n">other_user</span><span class="p">)</span>
+   <span class="n">active_relationships</span><span class="p">.</span><span class="nf">create!</span><span class="p">(</span><span class="ss">following_id: </span><span class="n">other_user</span><span class="p">.</span><span class="nf">id</span><span class="p">)</span>
+ <span class="k">end</span>
+
+ <span class="c1">#특정유저가 other_user를 언팔로우(언팔로우 버튼을 클릭시 Relationship에 해당 정보를 delete하는 로직)</span>
+ <span class="k">def</span> <span class="nf">unfollow!</span><span class="p">(</span><span class="n">other_user</span><span class="p">)</span>
+   <span class="n">active_relationships</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">following_id: </span><span class="n">other_user</span><span class="p">.</span><span class="nf">id</span><span class="p">).</span><span class="nf">destroy</span>
+ <span class="k">end</span></code></pre></figure>
+
+<h4 id="여기까지의-설정-정리">여기까지의 설정 정리</h4>
+
+<p>여기까지의 설정을 바탕으로
+팔로우,언팔로우 기능과 팔로잉 중인지를 판별하기 위한 순서는 이하와 같다.</p>
+
+<h5 id="팔로우언팔로우-기능">팔로우/언팔로우 기능</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>relationships_controller(create,destroy) -&gt; 
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create -&gt; follow! -&gt; active_relationships.create!(following_id: other_user.id) #팔로우 기능 
+destroy -&gt; unfollow! -&gt; active_relationships.find_by(following_id: other_user.id).destroy #언팔로우 기능
+</code></pre></div></div>
+
+<h5 id="팔로잉중인지-판별">팔로잉중인지 판별</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>following? -&gt; active_relationships.find_by(following_id: other_user.id)
+</code></pre></div></div>
+
+<p>다음은 뷰페이지에 대한 설명이다.</p>
+
+<h3 id="프로필-페이지">프로필 페이지</h3>
+
+<p>유저간의 프로필 페이지에 html설정은 이하와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/top/index.html.erb</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"main user-show"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"container"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"user"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sx">%= image_tag @user.avatar(:thumb) %&gt;
+      &lt;h2&gt;&lt;%=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">nickname</span> <span class="sx">%&gt;&lt;/h2&gt;</span>
+      <span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&lt;</span><span class="sx">%= @user.email %&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;%=</span> <span class="n">render</span> <span class="s1">'follow_form'</span> <span class="o">%&gt;&lt;</span><span class="sr">/p&gt;
+      &lt;p&gt;&lt;%= render 'stats' %&gt;&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/div&gt;
+  &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/div&gt;</span></code></pre></figure>
+
+<p>각 render의 역할은 이하와 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>follow_form -&gt; 팔로우 /언팔로우 버튼을 표시
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stats -&gt; 
+-&gt; 해당유저의 팔로우/팔로워 카운트수를 표시
+-&gt; 해당 버튼을 클릭시 팔로우/팔로워한 유저의 일람을 표시하는 링크
+</code></pre></div></div>
+
+<h4 id="_statshtmlerb">_stats.html.erb</h4>
+
+<p>팔로잉/팔로워 카운트수 표시와 팔로잉/팔로워한 유저 일람을 표시하는 링크</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/top/_stats.html.erb</span>
+<span class="o">&lt;</span><span class="sx">% @user </span><span class="o">||=</span> <span class="n">current_user</span> <span class="sx">%&gt;
+&lt;div class="stats"&gt;</span>
+  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">"&lt;%= user_followings_path %&gt;"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">strong</span> <span class="nb">id</span><span class="o">=</span><span class="s2">"following"</span> <span class="k">class</span><span class="o">=</span><span class="s2">"stat"</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="sx">%= @user.followings.count %&gt;
+    &lt;/strong&gt;
+    following
+  &lt;/a&gt;
+  &lt;a href=</span><span class="s2">"&lt;%= user_followers_path %&gt;"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">strong</span> <span class="nb">id</span><span class="o">=</span><span class="s2">"followers"</span> <span class="k">class</span><span class="o">=</span><span class="s2">"stat"</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="sx">%= @user.followers.count %&gt;
+    &lt;/strong&gt;
+    followers
+  &lt;/a&gt;
+&lt;/div&gt;</span></code></pre></figure>
+
+<h4 id="_follow_formhtmlerb">_follow_form.html.erb</h4>
+
+<p>해당 유저를 팔로우/언팔로우하는 버튼을 표시하고 있다.
+현재 로그인한 유저가 팔로잉한 유저인지 판별해서 true일 경우,
+언팔로우 버튼을 false일경우 팔로우 버튼을 표시한다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/top/_follow_form.html.erb</span>
+<span class="o">&lt;</span><span class="sx">% unless </span><span class="n">current_user</span> <span class="o">==</span> <span class="vi">@user</span> <span class="o">%&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="nb">id</span><span class="o">=</span><span class="s2">"follow_form"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_user</span><span class="p">.</span><span class="nf">following?</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span> <span class="o">%&gt;</span>
+    <span class="o">&lt;</span><span class="sx">%= render 'unfollow' %&gt;
+  &lt;% else %&gt;
+    &lt;%=</span> <span class="n">render</span> <span class="s1">'follow'</span> <span class="o">%&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
+  <span class="o">&lt;</span><span class="sr">/div&gt;
+&lt;% end %&gt;</span></code></pre></figure>
+
+<p>_follow_form에서 다시 2개의 파일을 render하고 있다.
+각 render의 의미는 이하와 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unfollow -&gt; 언팔로우 버튼,클릭시 Relationship에 delete가 실행됨  
+follow -&gt;  팔로우 버튼,클릭시 Relationship에 insert가 실행됨 
+</code></pre></div></div>
+
+<h4 id="_followhtmlerb">_follow.html.erb</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/top/_follow.html.erb</span>
+ <span class="o">&lt;</span><span class="sx">%= form_for(current_user.active_relationships.build(following_id: @user.id)) do |f| %&gt;
+  &lt;div&gt;&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">hidden_field</span> <span class="ss">:following_id</span> <span class="o">%&gt;&lt;</span><span class="sr">/div&gt;
+  &lt;%= f.submit "Follow", class: "btn btn-large btn-primary follow-btn" %&gt;
+&lt;% end %&gt;</span></code></pre></figure>
+
+<h4 id="_unfollowhtmlerb">_unfollow.html.erb</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/top/_unfollow.html.erb</span>
+<span class="o">&lt;</span><span class="sx">%= form_for(current_user.active_relationships.find_by(following_id: @user.id), html: { method: :delete }) do |f| %&gt;
+  &lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">submit</span> <span class="s2">"Unfollow"</span><span class="p">,</span> <span class="ss">class: </span><span class="s2">"btn btn-large follow-btn"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span></code></pre></figure>
+
+<h4 id="relationships_controllerrb">relationships_controller.rb</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/controllers/front/users/relationships_controller.rb</span>
+<span class="k">class</span> <span class="nc">RelationshipsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+   <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:relationship</span><span class="p">][</span><span class="ss">:following_id</span><span class="p">])</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">follow!</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+    <span class="n">redirect_to</span> <span class="vi">@user</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">destroy</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">]).</span><span class="nf">following</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">unfollow!</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+    <span class="n">redirect_to</span> <span class="vi">@user</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>_follow.html.erb,_unfollow.html.erb에서 relationships_controller.rb의 create,destroy를 실행하는 부분이 이해하기 어려운데</p>
+
+<p>active_relationships의model설정에 <code class="language-plaintext highlighter-rouge">class_name: "Relationship"</code>에 의해서 relationship컨트롤러를 실행하는것이 아닌가 생각해 본다.</p>
+
+<h3 id="팔로워팔로잉한-유저-리스트-페이지-만들기">팔로워/팔로잉한 유저 리스트 페이지 만들기</h3>
+
+<p>마지막으로 _stats.html.erb에서 각 유저의 팔로워/팔로잉 링크를 클릭하면 팔로워/팔로잉한 유저의 정보를 표시해보자.
+이하의 설정을 추가하기만 하면된다.</p>
+
+<h5 id="팔로워-일람-컨트롤러">팔로워 일람 컨트롤러</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/controllers/front/users/followers_controller.rb</span>
+<span class="k">class</span> <span class="nc">Front::Users::FollowersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="c1">#@user  = User.find(params[:id])</span>
+    <span class="vi">@user</span>  <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">nickname: </span><span class="n">params</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">])</span>
+    <span class="vi">@users</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">followers</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="팔로잉-일람-컨트롤러">팔로잉 일람 컨트롤러</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/controllers/front/users/followings_controller.rb</span>
+<span class="k">class</span> <span class="nc">Front::Users::FollowingsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+      <span class="vi">@user</span>  <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">nickname: </span><span class="n">params</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">])</span>
+      <span class="vi">@users</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">followings</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<h5 id="팔로워-일람-뷰">팔로워 일람 뷰</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/followers/index.html.erb</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"main users-index"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"container"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">h1</span> <span class="k">class</span><span class="o">=</span><span class="s2">"users-heading"</span><span class="o">&gt;</span><span class="n">followers</span><span class="err">일람</span><span class="o">&lt;</span><span class="sr">/h1&gt;
+    &lt;% @users.each do |user| %&gt;
+      &lt;div class="users-index-item"&gt;
+        &lt;div class="user-left"&gt;
+          &lt;%= user.id %&gt;
+          &lt;img src="&lt;%= user.avatar(:thumb) %&gt;"&gt;
+        &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"user-right"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="sx">%= link_to(user.nickname, "/users/#{user.nickname}") %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</span></code></pre></figure>
+
+<h5 id="팔로잉-일람-뷰">팔로잉 일람 뷰</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/views/front/users/followings/index.html.erb</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"main users-index"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"container"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">h1</span> <span class="k">class</span><span class="o">=</span><span class="s2">"users-heading"</span><span class="o">&gt;</span><span class="n">followings</span><span class="err">일람</span><span class="o">&lt;</span><span class="sr">/h1&gt;
+    &lt;% @users.each do |user| %&gt;
+      &lt;div class="users-index-item"&gt;
+        &lt;div class="user-left"&gt;
+          &lt;%= user.id %&gt;
+          &lt;img src="&lt;%= user.avatar(:thumb) %&gt;"&gt;
+        &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="o">=</span><span class="s2">"user-right"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="sx">%= link_to(user.nickname, "/users/#{user.nickname}") %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</span></code></pre></figure>
+
+<p>http://xxx.com/users/:user_id/followers
+http://xxx.com/users/:user_id/followings</p>
+
+<p>와 같은 페이지에 억세스하면 해당 유저가 팔로우 한/된 유저정보를 확인할 수 있다.</p>
+
+<h3 id="그외">그외</h3>
+
+<h4 id="복수의-행이-존재할때-belongs_to에-정의한-메소드를-사용할-수-없음">복수의 행이 존재할때 belongs_to에 정의한 메소드를 사용할 수 없음.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Relationship</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:following</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span>
+  <span class="n">validates</span> <span class="ss">:following_id</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>상태에서 이하 커맨드를 실행시 에러가 났다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">8</span><span class="p">)</span>
+<span class="n">rs</span><span class="p">.</span><span class="nf">following</span>
+<span class="no">NoMethodError</span><span class="p">:</span>   <span class="no">Relationship</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">1.1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`relationships`</span> <span class="no">WHERE</span> <span class="sb">`relationships`</span><span class="p">.</span><span class="nf">`</span><span class="n">follower_id</span><span class="sb">` = 8 LIMIT 11
+undefined method `</span><span class="n">following</span><span class="err">'</span> <span class="k">for</span> <span class="c1">#&lt;Relationship::ActiveRecord_Relation:0x007f0d28d127e8&gt;</span>
+        <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">80</span></code></pre></figure>
+
+<h5 id="원인">원인</h5>
+
+<p>8번유저는 두명을 팔로우했기에 복수의 행이 존재한다.
+그리고 Relationship모델에서는 belongs_to로 설정되어 있기때문에 한행만을 특정해서 사용해야한다.</p>
+
+<p>고로 where을 사용할 경우 복수행이 존재하면 그대로 가져오므로 first등으로 한행을 제한하든지</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">8</span><span class="p">).</span><span class="nf">first</span></code></pre></figure>
+
+<p>또는 find_by를 사용해야한다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span> <span class="o">=</span> <span class="no">Relationship</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">follower_id: </span><span class="mi">8</span><span class="p">)</span></code></pre></figure>
+
+<p>다시</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rs</span><span class="p">.</span><span class="nf">following</span></code></pre></figure>
+
+<p>해주면 유저 정보가 표시되는걸 알 수 있다.</p>
+
+<h4 id="has_many옵션에-대해서">has_many옵션에 대해서</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">has_many</span> <span class="ss">:active_relationships</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"follower_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span></code></pre></figure>
+
+<p>class_name에 해당하는 테이블에 forien_key에 지정한 컬럼을  이용해 where를 실행한다.</p>
+
+<h4 id="이너-조인을-위해서는-조인할-모델에-belongs_to설정이-있어야한다">이너 조인을 위해서는 조인할 모델에 belongs_to설정이 있어야한다.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/relationship.rb</span>
+<span class="n">belongs_to</span> <span class="ss">:following</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span></code></pre></figure>
+
+<p>위 설정을 지우고</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user</span><span class="p">.</span><span class="nf">followings</span></code></pre></figure>
+
+<p>해보면 이하의 에러가 발생한다</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">user</span><span class="p">.</span><span class="nf">followings</span>
+<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">HasManyThroughSourceAssociationNotFoundError</span><span class="p">:</span> <span class="no">Could</span> <span class="n">not</span> <span class="n">find</span> <span class="n">the</span> <span class="n">source</span> <span class="n">association</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="s2">"following"</span> <span class="n">or</span> <span class="ss">:followings</span> <span class="k">in</span> <span class="n">model</span> <span class="no">Relationship</span><span class="o">.</span> <span class="no">Try</span> <span class="s1">'has_many :followings, :through =&gt; :following_relationships_xx, :source =&gt; &lt;name&gt;'</span><span class="o">.</span> <span class="no">Is</span> <span class="n">it</span> <span class="n">one</span> <span class="n">of</span> <span class="p">?</span>
+        <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">2</span></code></pre></figure>
+
+<p>Relationship모델에 following혹은followings가 존재하지 않는다는 얘기</p>
+
+<p>고로 이너조인을 사용하려면 조인할 모델에 belongs_to설정이 있어야된다는계 규칙같다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">belongs_to</span> <span class="ss">:followings</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span></code></pre></figure>
+
+<p>위와같이 일부로 복수형을 넣고<code class="language-plaintext highlighter-rouge">user.followings</code>을 실행하면 다른 에러가 나온다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="no">User</span> <span class="no">Load</span> <span class="p">(</span><span class="mf">3.7</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span>  <span class="sb">`users`</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="sb">`users`</span> <span class="no">INNER</span> <span class="no">JOIN</span> <span class="sb">`relationships`</span> <span class="no">ON</span> <span class="sb">`users`</span><span class="p">.</span><span class="nf">`</span><span class="nb">id</span><span class="sb">` = `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">followings_id</span><span class="sb">` WHERE `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">follower_id</span><span class="sb">` = 8 LIMIT 11
+ActiveRecord::StatementInvalid: Mysql2::Error: Unknown column 'relationships.followings_id' in 'on clause': SELECT  `</span><span class="n">users</span><span class="sb">`.* FROM `</span><span class="n">users</span><span class="sb">` INNER JOIN `</span><span class="n">relationships</span><span class="sb">` ON `</span><span class="n">users</span><span class="sb">`.`</span><span class="nb">id</span><span class="sb">` = `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">followings_id</span><span class="sb">` WHERE `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">follower_id</span><span class="sb">` = 8 LIMIT 11</span></code></pre></figure>
+
+<p>followings_id아이디가 없다고 나온다.</p>
+
+<p>이 결과를 보면 알 수 있듯이 belongs_to의 첫번째 옵션은 실제컬럼명에  의존한다는것을 알 수 있다.
+belongs_to의 첫번째 옵션명 + _id를 relationship테이블에서 찾는다.</p>
+
+<h4 id="has_manybelongs_to의-첫번째-옵션명은-자유롭게-변경가능하다">has_many,belongs_to의 첫번째 옵션명은 자유롭게 변경가능하다.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:active_relationships_xx</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"follower_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span></code></pre></figure>
+
+<p>위와 같이
+active_relationships
+부분을 
+active_relationships_xx
+로 변경해도 동작상 문제가 없다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/relationship.rb</span>
+<span class="c1">#belongs_to :following, class_name: "User"</span>
+<span class="n">belongs_to</span> <span class="ss">:following22</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span><span class="p">,</span> <span class="ss">foreign_key: :following_id</span><span class="p">,</span> <span class="ss">primary_key: :id</span>
+<span class="n">validates</span> <span class="ss">:following_id</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/user.rb</span>
+<span class="n">has_many</span> <span class="ss">:active_relationships</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="s2">"follower_id"</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"Relationship"</span><span class="p">,</span> <span class="ss">dependent: :destroy</span>
+<span class="n">has_many</span> <span class="ss">:followings33</span><span class="p">,</span> <span class="ss">through: :active_relationships</span><span class="p">,</span> <span class="ss">source: :following22</span></code></pre></figure>
+
+<p>이렇게 써도 문제가 없었다.</p>
+
+<h4 id="belongs_to의-옵션에-대해서">belongs_to의 옵션에 대해서</h4>
+
+<p>belongs_to에 있는 foreign_key와class_name옵션은 실제 SQL에서 어떻게 사용될까?</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#app/models/relationship.rb</span>
+<span class="n">belongs_to</span> <span class="ss">:following</span><span class="p">,</span> <span class="ss">class_name: </span><span class="s2">"User"</span><span class="p">,</span> <span class="ss">foreign_key: :following_test_id</span><span class="p">,</span> <span class="ss">primary_key: :test_kaka_id</span></code></pre></figure>
+
+<p>위처럼 멋대로 foreign_key와 primary_key설정을 바꾼후 SQL쿼리를 확인해봤다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ActionView</span><span class="o">::</span><span class="no">Template</span><span class="o">::</span><span class="no">Error</span> <span class="p">(</span><span class="no">Mysql2</span><span class="o">::</span><span class="no">Error</span><span class="p">:</span> <span class="no">Unknown</span> <span class="n">column</span> <span class="s1">'users.test_kaka_id'</span> <span class="k">in</span> <span class="s1">'on clause'</span><span class="p">:</span> 
+<span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="sb">`users`</span> 
+<span class="no">INNER</span> <span class="no">JOIN</span> <span class="sb">`relationships`</span> 
+<span class="no">ON</span> <span class="sb">`users`</span><span class="p">.</span><span class="nf">`</span><span class="n">test_kaka_id</span><span class="sb">` = `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">following_test_id</span><span class="sb">` 
+WHERE `</span><span class="n">relationships</span><span class="sb">`.`</span><span class="n">follower_id</span><span class="sb">` = 4):</span></code></pre></figure>
+
+<p>조인시 class_name.primary_key를 user.id로 사용하고 foreign_key는 join할 중간테이블 Relationship의 컬럼명으로 사용하는걸 알 수 있다.</p>
+
+<p>여기까지 Rails에서 팔로우 기능을 만드는 방법에 대해서 알아봤다.</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/rails-follow"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/webdriverio-fileupload" data-toggle="tooltip" data-placement="top" title="webdriverIO 에서의 파일업로드 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/ruby-safe-navigation-operator" data-toggle="tooltip" data-placement="top" title="ruby2.3의 신기능 Safe Navigation Operator(&.)과 Rails의 try,try!메소드에 대해서">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2022</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>
