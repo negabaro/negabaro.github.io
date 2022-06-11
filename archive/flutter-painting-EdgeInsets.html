@@ -175,6 +175,27 @@ Creates insets from offsets from the left, top, right, and bottom.
 Creates insets with symmetrical vertical and horizontal offsets. [...]
 </code></pre></div></div>
 
+<h2 id="edgeinsets끼리-병합이-가능">EdgeInsets끼리 병합(?)이 가능</h2>
+
+<p>verticalMargin과 sideMargin를 더해서 지정이 가능</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span> <span class="n">verticalMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="o">(</span><span class="nl">vertical:</span> <span class="mf">10.0</span><span class="o">);</span>
+<span class="n">EdgeInsets</span> <span class="n">sideMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="o">(</span><span class="nl">horizontal:</span> <span class="mf">20.0</span><span class="o">);</span>
+
+<span class="k">return</span> <span class="nf">Column</span><span class="p">(</span>
+  <span class="nl">children:</span> <span class="n">List</span><span class="o">.</span><span class="na">generate</span><span class="o">(</span>
+    <span class="mi">5</span><span class="o">,</span>
+    <span class="o">(</span><span class="n">index</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">Card</span><span class="o">(</span>
+      <span class="nl">color:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">orangeAccent</span><span class="o">,</span>
+      <span class="nl">margin:</span> <span class="n">verticalMargin</span> <span class="o">+</span> <span class="n">sideMargin</span><span class="o">,</span>
+      <span class="nl">child:</span> <span class="n">Container</span><span class="o">(</span><span class="nl">height:</span> <span class="mi">100</span><span class="o">),</span>
+    <span class="o">),</span>
+  <span class="o">),</span>
+<span class="o">);</span>
+</code></pre></div></div>
+
+<p>써야될 타이밍이 언제인지 모르겠지만..</p>
+
 <hr />
 
 
