@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://negabaro.github.io/archive/github-action-draft-blogging-with-jekyll</loc>
+    </url>
+    
+    <url>
         <loc>https://negabaro.github.io/archive/rails-grape-entity</loc>
     </url>
     

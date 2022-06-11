@@ -10,5 +10,5 @@ group :jekyll_plugins do
   gem 'jekyll-debug'
   gem 'jekyll-watch'
   gem 'jekyll-sitemap'
-  # gem 'webrick'
+  gem 'webrick'
 end

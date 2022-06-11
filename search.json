@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Github Action,jekyll을 이용해 다른 리포지토리에 Push하기",
+      "category" : "",
+      "tags"     : "ci_cd/github-action",
+      "url"      : "//archive/github-action-draft-blogging-with-jekyll",
+      "date"     : "Friday, June 10, 2022",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails grape-entity(Grape::Entity)에 대해알아보자",
       "category" : "",
       "tags"     : "rails",
