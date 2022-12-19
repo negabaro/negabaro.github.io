@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://negabaro.github.io/archive/2022zirumshin</loc>
+    </url>
+    
+    <url>
         <loc>https://negabaro.github.io/archive/github-action-draft-blogging-with-jekyll</loc>
     </url>
     
@@ -2162,23 +2166,7 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/archive/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
-        <loc>https://negabaro.github.io/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
-        <loc>https://negabaro.github.io/category/</loc>
+        <loc>https://negabaro.github.io/search/</loc>
     </url>
     
     
@@ -2194,7 +2182,23 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/search/</loc>
+        <loc>https://negabaro.github.io/category/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
+        <loc>https://negabaro.github.io/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/</loc>
     </url>
     
     

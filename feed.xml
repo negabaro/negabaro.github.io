@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Fri, 10 Jun 2022 00:00:00 -0500</lastBuildDate>
+        <lastBuildDate>Sun, 18 Dec 2022 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>2022년 지름신강림 회고</title>
+                        
+                
+                    <description>&lt;p&gt;올해 11월말 사이타마로 이사를 가게되면서 단기간 인생 역대급 지름신이 강림했습니다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Sun, 18 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/2022zirumshin</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/2022zirumshin</guid>
+            </item>
         
             <item>
                 <title>Github Action,jekyll을 이용해 다른 리포지토리에 Push하기</title>
@@ -124,19 +137,6 @@
                 <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/ruby-gems-firebase_id_token</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/ruby-gems-firebase_id_token</guid>
-            </item>
-        
-            <item>
-                <title>FirebaseIdToken::Exceptions::NoCertificatesError: There&apos;s no certificates in Redis database. 에러</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;에러내용&quot;&gt;에러내용&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/firebase_id_token-Theres-no-certificates-in-Redis-database</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/firebase_id_token-Theres-no-certificates-in-Redis-database</guid>
             </item>
         
     </channel>

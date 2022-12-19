@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "2022년 지름신강림 회고",
+      "category" : "",
+      "tags"     : "life",
+      "url"      : "//archive/2022zirumshin",
+      "date"     : "Sunday, December 18, 2022",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Github Action,jekyll을 이용해 다른 리포지토리에 Push하기",
       "category" : "",
       "tags"     : "ci_cd/github-action",
