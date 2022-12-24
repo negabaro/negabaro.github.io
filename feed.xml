@@ -8,6 +8,19 @@
         <lastBuildDate>Sat, 24 Dec 2022 00:00:00 -0600</lastBuildDate>
         
             <item>
+                <title>rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;what-i-want-to-do&quot;&gt;What i want to do&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sat, 24 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/how-to-dynamic-class-name-has-one</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-dynamic-class-name-has-one</guid>
+            </item>
+        
+            <item>
                 <title>alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러</title>
                         
                 
@@ -124,19 +137,6 @@
                 <pubDate>Tue, 04 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</guid>
-            </item>
-        
-            <item>
-                <title>Firebase Custom Token이란?</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;firebase-custom-token이란&quot;&gt;Firebase Custom Token이란?&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/firebase-custom-token</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/firebase-custom-token</guid>
             </item>
         
     </channel>

@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러" />
+    <meta property="og:title" content="rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/google-protobuf-error" />
+    <meta property="og:url" content="/archive/how-to-dynamic-class-name-has-one" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러 - Negabaro`s Blog</title>
+    <title>rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법 - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/google-protobuf-error">
+    <link rel="canonical" href="/archive/how-to-dynamic-class-name-has-one">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러</h1>
+                    <h1>rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법</h1>
                     
                     <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, December 24, 2022
                     </span>
@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        1 minute read
+                        2 minute read
                     </span>
                 </div>
             </div>
@@ -122,58 +122,88 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2 id="문제">문제</h2>
+                <h2 id="what-i-want-to-do">What i want to do</h2>
 
-<p>rails에서 firestore연동시 사용했던 gem(아마 google-datastore)의 의존성gem으로 <code class="language-plaintext highlighter-rouge">google-protobuf</code> 가 있는데 이녀석 같은경우 c libaray 공유오브젝트를 사용해서 apline과 상성이 좋지 않다.</p>
+<p>노래라는 모델이 있고 이 노래모델을 수정하는 사람이 작곡가, 가수, 작사가가 있다고 해보자</p>
 
-<p>apline에서 사용시 ld- 세그맨트 버그로 시스템이 떨어지는 문제가 발생함.</p>
+<p>이 노래 모델을 마지막에 수정한 사람이 누구인지 체크하기 위해</p>
 
-<p>에러내용:</p>
+<p>latest_modified_by라는 테이블이 있고</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[BUG] Segmentation fault at 0x000000000005f6e6 ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux-musl]  grpc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>modified_by_user_type
+modified_by_user_id
 </code></pre></div></div>
 
-<h2 id="원인">원인</h2>
+<p>라는 정보가 있다고 해보자</p>
 
-<p>alpine은 GNU C Library를 사용하지 않는데 gem중에 google-protobuf가 x86_64 공유 오브젝트와의 의존성이 강함</p>
+<p>modified_by모델에 <code class="language-plaintext highlighter-rouge">has_one :modified_by_user</code>를 지정하고 수정한 사람이 누구냐에 따라(modified_by_user_type) 다른 모델을 참고하게 할 수 있는 방법이 없을까?</p>
 
-<h2 id="해결방법">해결방법</h2>
+<h2 id="선결론">선결론</h2>
 
-<p>alpine을 버린다.</p>
+<p>has_one에 지정하는 class_name을 조건에 따라 동적으로 바꿔주면 가능하다고 생각했다.</p>
 
-<p>grpc와 google-protobuf을 Alpine Linux환경용으로 소스 빌드시킨다.</p>
+<p>proc등을 선언하면 왠지 될법 싶었는데 의외로 class_name에는 proc사용이 안됨</p>
 
-<p>bundle시스템에는 BUNDLE_FORCE_RUBY_PLATFORM 환경변수가 존재해
-이 값을 1로 하면 소스빌드함.</p>
+<p>결론 class_name을 동적으로 바꾸는건 불가능</p>
 
-<h3 id="해결">해결</h3>
+<p>대안으로 아래와 같이 3개의 has_one을 선언하고 modified_by_user메소드를 선언해서 type에 따라 어느 has_one을 선택할지 바꿔주도록 했다.</p>
 
-<p>필자의 경우 Dockerfile에 아래와 같이 기술해서 해결</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">has_one</span> <span class="p">:</span><span class="err">가수</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span>
+<span class="n">has_one</span> <span class="p">:</span><span class="err">작사가</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span>
+<span class="n">has_one</span> <span class="p">:</span><span class="err">작곡가</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span>
+<span class="kp">private</span> <span class="p">:</span><span class="err">가수</span><span class="p">,</span> <span class="p">:</span><span class="err">작사가</span><span class="p">,</span> <span class="p">:</span><span class="err">작곡가</span>  <span class="c1"># 직접 참조 못하게끔 강제하기 위해</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apk add --no-cache gcompat
-bundle config set --local force_ruby_platform true
-bundle config build.grpc --with-cflags=-D__va_copy=va_copy
-bundle config build.google-protobuf --with-cflags=-D__va_copy=va_copy
-bundle install --force (or bundle install)
+<span class="k">def</span> <span class="nf">modified_by_user</span>
+  <span class="k">return</span> <span class="kp">nil</span> <span class="k">if</span> <span class="n">modified_by_user_type</span><span class="p">.</span><span class="nf">nil?</span>
+  <span class="k">return</span> <span class="err">가수</span> <span class="k">if</span> <span class="n">modified_by_user_type</span> <span class="o">==</span> <span class="s1">'가수'</span>
+  <span class="k">return</span> <span class="err">작사가</span> <span class="k">if</span> <span class="n">modified_by_user_type</span> <span class="o">==</span> <span class="s1">'작사가'</span> 
+  <span class="k">return</span> <span class="err">작곡가</span> <span class="k">if</span> <span class="n">modified_by_user_type</span> <span class="o">==</span> <span class="s1">'작곡가'</span>
+  <span class="kp">nil</span>
+<span class="k">end</span>
 </code></pre></div></div>
 
-<p><a href="https://github.com/protocolbuffers/protobuf/issues/4460#issuecomment-768402578">참고</a></p>
+<p>위와같이 선언후</p>
 
-<h2 id="메모">메모</h2>
+<p><code class="language-plaintext highlighter-rouge">노래.first.latest_modified_by.modified_by_user</code>방법으로 다이나믹하게 수정한 유저의 모델을 가져올 수 있었다.(가수 or 작사가 or 작곡가)</p>
 
-<p>필자의 경우 gax,datastore의 경우 손대지 않았는데
-google-gax , google-protobuf , google-cloud-datastore셋다 소스빌드해서 해결했다는 글도 있었음.</p>
+<h2 id="여러가지-삽질">여러가지 삽질</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>google-gax , google-protobuf , google-cloud-datastore の三つについても、 BUNDLE_FORCE_RUBY_PLATFORM を用いてプラットフォームに依存しない強制的なインストールを行う必要がありました。
+<h3 id="삼항연산자는-사용가능">삼항연산자는 사용가능</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">has_one</span> <span class="ss">:test5</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span><span class="p">,</span> <span class="ss">class_name: </span><span class="kp">false</span>  <span class="p">?</span> <span class="s1">'가수'</span> <span class="p">:</span> <span class="s1">'작곡가'</span>
 </code></pre></div></div>
+
+<p>삼항연산자 자체는 사용이 가능한데 false부분에 self지정이 불가능..(의미가 없잖아)</p>
+
+<h3 id="선언한-메소드를-참조-못함">선언한 메소드를 참조 못함</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">has_one</span> <span class="ss">:test3</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span><span class="p">,</span> <span class="ss">class_name: </span><span class="n">xx</span>
+<span class="k">def</span> <span class="nf">xx</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>와 같은 방법으로는 xx를 찾을 수 없다고 나옴. class_name은 모델만 참조하기 때문</p>
+
+<h3 id="lambda">lambda</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">has_one</span> <span class="ss">:test7</span><span class="p">,</span> <span class="ss">primary_key: :modified_by_user_id</span><span class="p">,</span> <span class="ss">foreign_key: :id</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">-&gt;</span> <span class="n">klass</span> <span class="p">{</span> <span class="n">klass</span><span class="p">.</span><span class="nf">is_a?</span><span class="p">(</span><span class="no">User</span><span class="p">)</span> <span class="p">?</span> <span class="ss">:phone_number</span> <span class="p">:</span> <span class="ss">:mobile_number</span>
+</code></pre></div></div>
+
+<p>x같은 문법이라고 혼남</p>
+
+<h3 id="class_name은-안돼지만">class_name은 안돼지만..</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">has_one</span> <span class="ss">:yy</span>
+<span class="k">def</span> <span class="nf">yy</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><a href="https://stackoverflow.com/questions/3812667/rails-create-association-if-none-is-found-to-avoid-nil-errors">참고</a></p>
+
+<p>이런 방법은 선언이가능</p>
 
 <hr />
 
-<p><a href="https://techblog.gmo-ap.jp/2019/10/01/alpine_ruby_datastore/"></a>
-<a href="https://gdgd-shinoyu.hatenablog.com/entry/2019/10/24/124729"></a>
-<a href="https://tech.zeals.co.jp/entry/2019/11/13/114023"></a>
-<a href="https://qiita.com/takkeybook/items/5eae085d902957f0fe5b"></a></p>
-
+<p><a href="https://discuss.rubyonrails.org/t/question-is-there-any-way-to-define-class-name-dynamically-in-has-many-relation/68382/8"></a></p>
 
                 <br>
                 <!-- _includes/utterances-comment.html -->
@@ -183,7 +213,7 @@ google-gax , google-protobuf , google-cloud-datastore셋다 소스빌드해서 �
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/google-protobuf-error"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/how-to-dynamic-class-name-has-one"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -194,13 +224,9 @@ google-gax , google-protobuf , google-cloud-datastore셋다 소스빌드해서 �
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/2022zirumshin" data-toggle="tooltip" data-placement="top" title="2022년 지름신강림 회고">&larr; Previous Post</a>
+                        <a href="/archive/google-protobuf-error" data-toggle="tooltip" data-placement="top" title="alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/archive/how-to-dynamic-class-name-has-one" data-toggle="tooltip" data-placement="top" title="rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
