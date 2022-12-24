@@ -3502,9 +3502,9 @@
     } ,
   
     {
-      "title"    : "xx",
+      "title"    : "webpack이란",
       "category" : "",
-      "tags"     : "xx",
+      "tags"     : "front",
       "url"      : "//archive/webpack",
       "date"     : "Sunday, February 3, 2019",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"

@@ -19,14 +19,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="xx" />
+    <meta property="og:title" content="webpack이란" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="/archive/webpack" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>xx - Negabaro`s Blog</title>
+    <title>webpack이란 - Negabaro`s Blog</title>
 
     <link rel="canonical" href="/archive/webpack">
 
@@ -101,15 +101,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>xx</h1>
+                    <h1>webpack이란</h1>
                     
                     <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, February 3, 2019
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/xx"><i class="fa fa-tag"></i> xx</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/front"><i class="fa fa-tag"></i> front</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        1 minute read
+                        2 minute read
                     </span>
                 </div>
             </div>
@@ -193,31 +193,33 @@ ex) JS minification, file extraction, alias(별칭)</p>
 
 <h1 id="mode">mode</h1>
 
-<p>モード（webpack 4 から追加された項目）の設定。
-モードは development、production、none が存在する。</p>
+<p>webpack4에서 추가된 기능</p>
 
-<p>development か production を指定すると、様々な設定が有効になって webpack が実行される。
-例えば、production にすれば optimization.minimizer という設定が有効になり、圧縮されたファイルが出力される。</p>
+<p>모드에는 development、production、none가 존재</p>
 
-<p>設定は上書き可能であり、上書きしたい項目は webpack.config.js に記述する（詳細は後述）。</p>
+<p>development,production을 지정하면 여러가지 설정이 ON되는데 
+예를들어 production으로 기동하면 optimization.minimizer라는 설정이 ON되어 압축된 파일을 출력함</p>
+
+<p>설정은 webpack.config.js에 기술하면 덮어쓰기 가능</p>
 
 <h1 id="entry-1">entry</h1>
 
-<p>エントリーポイントの設定。複数設定することも可能。
-エントリーポイントとはモジュール間の依存関係の解析を開始する地点のこと。
-各モジュールを読み込んでメインの処理をする JavaScript ファイルだと認識しておけば良い。</p>
+<p>엔트리 포인트 설정
+복수의 설정이 가능</p>
+
+<p>엔트리 포인트는 모듈간의 의존관계를 해석을 시작하는 시작점같은곳
+각 모듈을 읽어서 메인 처리를 하는 JavaScript파일에 임포트하는 방식이 좋음</p>
 
 <h1 id="output-1">output</h1>
 
-<p>出力の設定。
-出力するファイル名や出力先のパスを指定する。
-OS によってパスが異なることを防ぐために、出力先のパスの指定には path.join()を利用する。</p>
+<p>출력관련 설정
+출력은 파일명이 패스등을 지정가능
+OS에 따른 의존성을 막기위해 path.join()을 사용</p>
 
-<h3 id="reference-link">Reference Link:</h3>
+<hr />
 
-<p>https://qiita.com/soarflat/items/28bf799f7e0335b68186
-https://www.inflearn.com/course/webpack-%EC%9B%B9%ED%8C%A9-%EA%B0%95%EC%A2%8C/webpack-%EC%9D%B45%EB%9E%80/
-https://qiita.com/sakiyama0101/items/530630870bc9f16eeab6</p>
+<p><a href="https://qiita.com/soarflat/items/28bf799f7e0335b68186"></a>
+<a href="https://qiita.com/sakiyama0101/items/530630870bc9f16eeab6"></a></p>
 
                 <br>
                 <!-- _includes/utterances-comment.html -->
