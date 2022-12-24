@@ -1461,7 +1461,7 @@
     {
       "title"    : "rails6 has_many를 has_one처럼 사용하는 방법",
       "category" : "",
-      "tags"     : "rails/model/association",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-association-how-to-use-has-many-like-has-one",
       "date"     : "Tuesday, October 6, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -1938,7 +1938,7 @@
     {
       "title"    : "rails6 has_one belongs_to관계에 대해  여러가지 실험",
       "category" : "",
-      "tags"     : "rails, rails/model",
+      "tags"     : "rails/active_record/association, rails/model",
       "url"      : "//archive/rails-has-one__belongs_to",
       "date"     : "Wednesday, July 15, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -2136,7 +2136,7 @@
     {
       "title"    : "rails6 has_many,has_one에서 바로 select컬럼 지정하는 법",
       "category" : "",
-      "tags"     : "rails, rails/model",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-association-select-name",
       "date"     : "Tuesday, June 23, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -2244,7 +2244,7 @@
     {
       "title"    : "rails6 polymorphic association(다형성 관계)이란?",
       "category" : "",
-      "tags"     : "rails, rails/model",
+      "tags"     : "rails/active_record/polymorphic",
       "url"      : "//archive/rails-polymorphic-association",
       "date"     : "Sunday, June 14, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -2253,7 +2253,7 @@
     {
       "title"    : "rails6 STI(단일 테이블 상속)에 대해서 알아보자",
       "category" : "",
-      "tags"     : "rails, rails/model",
+      "tags"     : "rails, rails/active_record/model",
       "url"      : "//archive/rails-sti",
       "date"     : "Sunday, June 14, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -3990,7 +3990,7 @@
     {
       "title"    : "rails5.1에서 polymorphic관계형 모델 만들기",
       "category" : "",
-      "tags"     : "rails, handson",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-relation-polymorphic",
       "date"     : "Friday, March 23, 2018",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -3999,7 +3999,7 @@
     {
       "title"    : "rails5.1에서 N:N 관계형 모델 만들기",
       "category" : "",
-      "tags"     : "rails, handson",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-relation-N-N",
       "date"     : "Thursday, March 15, 2018",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -4008,7 +4008,7 @@
     {
       "title"    : "rails5.1에서 1:N 관계형 모델 만들기",
       "category" : "",
-      "tags"     : "rails, handson",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-relation-1-N",
       "date"     : "Thursday, March 15, 2018",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
@@ -4017,7 +4017,7 @@
     {
       "title"    : "rails5.1에서 1:1 관계형 모델 만들기",
       "category" : "",
-      "tags"     : "rails, handson",
+      "tags"     : "rails/active_record/association",
       "url"      : "//archive/rails-relation-1-1",
       "date"     : "Thursday, March 15, 2018",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
