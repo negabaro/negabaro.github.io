@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sun, 18 Dec 2022 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Sat, 24 Dec 2022 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sat, 24 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/google-protobuf-error</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/google-protobuf-error</guid>
+            </item>
         
             <item>
                 <title>2022년 지름신강림 회고</title>
@@ -124,19 +137,6 @@
                 <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/firebase-custom-token</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/firebase-custom-token</guid>
-            </item>
-        
-            <item>
-                <title>firebase_id_token gem에 대해 알아보자.</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;firebase_id_token-gem이란&quot;&gt;firebase_id_token gem이란?&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Mon, 03 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/ruby-gems-firebase_id_token</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/ruby-gems-firebase_id_token</guid>
             </item>
         
     </channel>
