@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Archive" />
-    <meta property="og:description" content="!!SHOWTAGSINSTEADOFDESCRIPTION!!" />
+    <meta property="og:title" content="rails constantize메소드란" />
+    <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/page19/" />
+    <meta property="og:url" content="/archive/rails-constantize" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
-    <meta property="og:image" content="img/yy.jpg" />
+    <meta property="og:image" content="" />
 
-    <title>Archive - Negabaro`s Blog</title>
+    <title>rails constantize메소드란 - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/page19/">
+    <link rel="canonical" href="/archive/rails-constantize">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -95,39 +95,21 @@
 </nav>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/yy.jpg')">
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Archive</h1>
+                <div class="post-heading">
+                    <h1>rails constantize메소드란</h1>
                     
-                      <hr class="small">
-                    
-
-                    <span class="subheading">
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 25, 2022
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/ruby"><i class="fa fa-tag"></i> ruby</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
                         
-                            
-                                <a href="/archive/tags/Rails" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Rails</a>  
-                            
-                                <a href="/archive/tags/Ruby" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Ruby</a>  
-                            
-                                <a href="/archive/tags/Javascript" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Javascript</a>  
-                            
-                                <a href="/archive/tags/Typescript" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Typescript</a>  
-                            
-                                <a href="/archive/tags/React.js" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>React.js</a>  
-                            
-                                <a href="/archive/tags/Vue.js" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Vue.js</a>  
-                            
-                                <a href="/archive/tags/AWS" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>AWS</a>  
-                            
-                                <a href="/archive/tags/Terraform" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>Terraform</a>  
-                            
-                                <a href="/archive/tags/HTML/CSS" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>HTML/CSS</a>  
-                            
-                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        1 minute read
                     </span>
                 </div>
             </div>
@@ -135,153 +117,59 @@
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="constantize란">constantize란?</h2>
 
-<div class="post-preview">
-    <a href="/archive/ruby-to_proc">
-        <h2 class="post-title">
-            Ruby To_proc
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 4, 2018</p>
-</div>
-<hr>
+<p>Rails3부터 추가된 메소드로 문자열에 해당하는 정수가 있는지 찾고, 존재한다면 그 값을 반환해주는 메소드</p>
 
+<p>클래스는 정수이므로 ActiveRecord를 상속받아 정의된 클래스는 그대로 DB레코드에 억세스도 가능</p>
 
-<div class="post-preview">
-    <a href="/archive/ruby-proc">
-        <h2 class="post-title">
-            Ruby Proc
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 4, 2018</p>
-</div>
-<hr>
+<h2 id="예">예</h2>
 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">constantize</span><span class="p">(</span><span class="s1">'Module'</span><span class="p">)</span>
+<span class="c1"># Module</span>
 
-<div class="post-preview">
-    <a href="/archive/ruby-styleguide">
-        <h2 class="post-title">
-            Ruby Styleguide
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 4, 2018</p>
-</div>
-<hr>
+<span class="n">constantize</span><span class="p">(</span><span class="s1">'Test::Unit'</span><span class="p">)</span>
+<span class="c1"># Test::Unit</span>
+</code></pre></div></div>
 
-
-<div class="post-preview">
-    <a href="/archive/ruby-sort-of-method">
-        <h2 class="post-title">
-            Ruby Sort Of Method
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<div class="post-preview">
-    <a href="/archive/ruby-read-file-pattern">
-        <h2 class="post-title">
-            Ruby Read File Pattern
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<div class="post-preview">
-    <a href="/archive/ruby-keyword-valable">
-        <h2 class="post-title">
-            Ruby Keyword Valable
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<div class="post-preview">
-    <a href="/archive/ruby-join-matome">
-        <h2 class="post-title">
-            Ruby Join Matome
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<div class="post-preview">
-    <a href="/archive/ruby-file-xx">
-        <h2 class="post-title">
-            Ruby File Xx
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<div class="post-preview">
-    <a href="/archive/ruby-file-io-dir">
-        <h2 class="post-title">
-            Ruby File Io Dir
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by negabaro on February 3, 2018</p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/archive/page18">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
-
-
-            <br>
-            <!-- _layouts/page.html -->
-            <!-- _includes/utterances-comment.html -->
+                <br>
+                <!-- _includes/utterances-comment.html -->
 
 
 <script src="https://utteranc.es/client.js"
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/page19/"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/rails-constantize"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
 
 
-            
-            <br>
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/how-to-dynamic-class-name-has-one" data-toggle="tooltip" data-placement="top" title="rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/ruby-three-way-comparison" data-toggle="tooltip" data-placement="top" title="ruby 우주선 연산자(<=>)란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
         </div>
     </div>
-</div>
-
+</article>
 <hr>
 
 

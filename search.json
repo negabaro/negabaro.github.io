@@ -1,6 +1,24 @@
 [
   
     {
+      "title"    : "ruby 우주선 연산자(&lt;=&gt;)란?",
+      "category" : "",
+      "tags"     : "ruby/comparable",
+      "url"      : "//archive/ruby-three-way-comparison",
+      "date"     : "Sunday, December 25, 2022",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "rails constantize메소드란",
+      "category" : "",
+      "tags"     : "ruby",
+      "url"      : "//archive/rails-constantize",
+      "date"     : "Sunday, December 25, 2022",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법",
       "category" : "",
       "tags"     : "",

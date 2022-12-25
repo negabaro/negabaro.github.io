@@ -5,7 +5,33 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sat, 24 Dec 2022 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Sun, 25 Dec 2022 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>ruby 우주선 연산자(&lt;=&gt;)란?</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;우주선-연산자란&quot;&gt;우주선 연산자란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sun, 25 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/ruby-three-way-comparison</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/ruby-three-way-comparison</guid>
+            </item>
+        
+            <item>
+                <title>rails constantize메소드란</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;constantize란&quot;&gt;constantize란?&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sun, 25 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/rails-constantize</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-constantize</guid>
+            </item>
         
             <item>
                 <title>rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법</title>
@@ -109,34 +135,6 @@
                 <pubDate>Sun, 23 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/flutter-state_notifier</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/flutter-state_notifier</guid>
-            </item>
-        
-            <item>
-                <title>Dart collection패키지란?</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;dart-collection패키지란&quot;&gt;Dart collection패키지란?&lt;/h2&gt;
-
-&lt;p&gt;[How can I compare Lists for equality in Dart?
-]: https://stackoverflow.com/questions/10404516/how-can-i-compare-lists-for-equality-in-dart&lt;/p&gt;
-</description>
-                
-                <pubDate>Fri, 07 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/flutter-dart-collection</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/flutter-dart-collection</guid>
-            </item>
-        
-            <item>
-                <title>DoorKeeper사용시 invalid_grant에러(The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client)</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;에러-내용&quot;&gt;에러 내용&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Tue, 04 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/doorkeeper-invalid_grant-error</guid>
             </item>
         
     </channel>

@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://negabaro.github.io/archive/ruby-three-way-comparison</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/rails-constantize</loc>
+    </url>
+    
+    <url>
         <loc>https://negabaro.github.io/archive/how-to-dynamic-class-name-has-one</loc>
     </url>
     
