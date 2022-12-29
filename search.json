@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "[사투리]저가베,주그메라는 말의 정체",
+      "category" : "",
+      "tags"     : "language/korea",
+      "url"      : "//archive/saturi-juabe-juemi",
+      "date"     : "Thursday, December 29, 2022",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "ruby 우주선 연산자(&lt;=&gt;)란?",
       "category" : "",
       "tags"     : "ruby/comparable",

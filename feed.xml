@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sun, 25 Dec 2022 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Thu, 29 Dec 2022 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>[사투리]저가베,주그메라는 말의 정체</title>
+                        
+                
+                    <description>&lt;p&gt;크리스마스 이브 재일교포3세인 장인어른과 식사중, 다른 사람의 아버지,어머니라는 뜻으로 저가베,주그메라는 뜻이 있다는 얘기가 나왔다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Thu, 29 Dec 2022 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/saturi-juabe-juemi</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/saturi-juabe-juemi</guid>
+            </item>
         
             <item>
                 <title>ruby 우주선 연산자(&lt;=&gt;)란?</title>
@@ -122,19 +135,6 @@
                 <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/rails-default-scope</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/rails-default-scope</guid>
-            </item>
-        
-            <item>
-                <title>flutter state_notifier란?</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;state_notifierstatenotifer란&quot;&gt;state_notifier(StateNotifer)란?&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Sun, 23 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/flutter-state_notifier</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/flutter-state_notifier</guid>
             </item>
         
     </channel>
