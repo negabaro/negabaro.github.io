@@ -39,7 +39,7 @@
     {
       "title"    : "alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "rails, gem",
       "url"      : "//archive/google-protobuf-error",
       "date"     : "Saturday, December 24, 2022",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
