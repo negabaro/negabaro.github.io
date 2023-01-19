@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Thu, 29 Dec 2022 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Mon, 09 Jan 2023 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>일본의 풋살매칭 시스템</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;일본의-풋살매칭-시스템&quot;&gt;일본의 풋살매칭 시스템&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Mon, 09 Jan 2023 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/footsal-matching-in-japan</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/footsal-matching-in-japan</guid>
+            </item>
         
             <item>
                 <title>[사투리]저가베,주그메라는 말의 정체</title>
@@ -122,19 +135,6 @@
                 <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/rails-scope</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/rails-scope</guid>
-            </item>
-        
-            <item>
-                <title>rails default scope은 웬만하면 쓰지말자</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;결론&quot;&gt;결론&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/rails-default-scope</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-default-scope</guid>
             </item>
         
     </channel>
