@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="일본의 풋살매칭 시스템" />
+    <meta property="og:title" content="rails ActiveJob::SerializationError - Unsupported argument type에러" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/footsal-matching-in-japan" />
+    <meta property="og:url" content="/archive/active-job-serialization-error" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>일본의 풋살매칭 시스템 - Negabaro`s Blog</title>
+    <title>rails ActiveJob::SerializationError - Unsupported argument type에러 - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/footsal-matching-in-japan">
+    <link rel="canonical" href="/archive/active-job-serialization-error">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,11 +101,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>일본의 풋살매칭 시스템</h1>
+                    <h1>rails ActiveJob::SerializationError - Unsupported argument type에러</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Monday, January 9, 2023
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, January 28, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/business"><i class="fa fa-tag"></i> business</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/active_job"><i class="fa fa-tag"></i> rails/active_job</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
@@ -122,58 +122,31 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2 id="일본의-풋살매칭-시스템">일본의 풋살매칭 시스템</h2>
+                <h2 id="activejobserializationerror---unsupported-argument-type-xx">ActiveJob::SerializationError - Unsupported argument type: xx</h2>
 
-<h3 id="labola">LaBOLA</h3>
+<p>ActiveJob에서 변수 넘길때는 서포트 불가능한 값이 있음</p>
 
-<p><img width="837" alt="image" src="https://user-images.githubusercontent.com/4640346/213335436-dd94eaee-cde7-4271-a4c6-7a49459ea5a6.png" /></p>
+<p>예를들어 Date,Time등 ActiveJob외에서는 문제없지만 아래와 같은 에러가 발생함.</p>
 
-<p>일본에서 풋살매칭을 검색하면 가장 상위에 뜨는 사이트
-<a href="https://labola.jp/recruits/futsal/opponent">LaBOLA</a></p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">ActiveJob</span><span class="o">::</span><span class="no">SerializationError</span><span class="p">:</span> <span class="no">Unsupported</span> <span class="n">argument</span> <span class="ss">type: </span><span class="no">Date</span>
+<span class="no">ActiveJob</span><span class="o">::</span><span class="no">SerializationError</span> <span class="o">-</span> <span class="no">Unsupported</span> <span class="n">argument</span> <span class="ss">type: </span><span class="no">Time</span> <span class="o">/</span> <span class="no">DateTime</span>
+</code></pre></div></div>
 
-<p>풋살 뿐만아니라 야구,수영,농구등 다양한 스포츠분야의 지역별 매칭 게시판을 제공</p>
+<h2 id="해결방법">해결방법</h2>
 
-<p>매칭뿐만 아니라 멤버 모집,참가 게시물도 가능(개인 참가도 )</p>
+<p>json으로 만들어서 넘기고 JSON.parse해서 사용가능</p>
 
-<p>풋살의 개인참가의 경우 총 3484건의 게시물에 현재 모집중 건수는 138건정도(풋살전체로 16만건)</p>
-
-<p>어플은 없고 웹페이지만 제공</p>
-
-<h3 id="soocer">SOOCER</h3>
-
-<p><img width="1006" alt="image" src="https://user-images.githubusercontent.com/4640346/213337715-777da464-6a27-4190-adda-08eadf5002e4.png" /></p>
-
-<p>어플로만 제공(그런데 다운로드가 안되는데??;)
-팀 만들고 매칭, 대회 매칭, 대전관리, 시합스코어 관리등
-<a href="https://fortuna-inc.jp/soocer/">SOOCER</a></p>
-
-<h3 id="footlink">footlink</h3>
-
-<p><img width="1089" alt="image" src="https://user-images.githubusercontent.com/4640346/213337539-b8595a36-1a2b-49e5-8537-48db98e72af5.png" /></p>
-
-<p>LaBOLA는 단순게시판인점에 비해 여기는 팀을 등록해서 ソサイチ(소사이치)에 팀끼리 매칭을 해주는듯 시합신청이라든지
-※ソサイチ(소사이치) = Football Society 브라질에서 많이하는 7명 체제 축구</p>
-
-<p><a href="https://footlink.net/">footlink</a></p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">yy</span> <span class="o">=</span> <span class="n">xx</span><span class="p">.</span><span class="nf">to_json</span>
+<span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">yy</span><span class="p">)</span>
+  <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">yy</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div></div>
 
 <hr />
 
-<h2 id="쉐어율">쉐어율</h2>
+<p><a href="https://zenn.dev/k_kind/articles/rails-job-args"></a></p>
 
-<p>자료같은건 찾을 수 없지만 구글 검색률등을 비교하면 매칭 사이트로는 LaBOLA가 80%이상이지 않을까 싶음
-특히 개인참가의 경우 구글 검색에 의존할 수 밖에 없으므로</p>
-
-<p>LaBOLA가 아니더라도 각 풋살장의 홈페이지에서 매칭하는 게시판이 존재함</p>
-
-<p>SOOCER어플 다운로드가 안되서 자세히 못찾아봄</p>
-
-<p>footlink는 최근에 만들어져서 쉐어율 1%미만이지 않을까 싶음</p>
-
-<h2 id="그-외">그 외</h2>
-
-<p><a href="https://prtimes.jp/main/html/rd/p/000000018.000013507.html">V-ELEVEN</a> 오더 메이드 유니폼 만들어주는 서비스</p>
-
-<hr />
+<p><a href="https://stackoverflow.com/questions/40894727/activejobserializationerror-unsupported-argument-type-time-datetime"></a></p>
 
 
                 <br>
@@ -184,7 +157,7 @@
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/footsal-matching-in-japan"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/active-job-serialization-error"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -195,13 +168,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/saturi-juabe-juemi" data-toggle="tooltip" data-placement="top" title="[사투리]저가베,주그메라는 말의 정체">&larr; Previous Post</a>
+                        <a href="/archive/footsal-matching-in-japan" data-toggle="tooltip" data-placement="top" title="일본의 풋살매칭 시스템">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/archive/active-job-serialization-error" data-toggle="tooltip" data-placement="top" title="rails ActiveJob::SerializationError - Unsupported argument type에러">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

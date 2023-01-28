@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "rails ActiveJob::SerializationError - Unsupported argument type에러",
+      "category" : "",
+      "tags"     : "rails/active_job",
+      "url"      : "//archive/active-job-serialization-error",
+      "date"     : "Saturday, January 28, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "일본의 풋살매칭 시스템",
       "category" : "",
       "tags"     : "business",

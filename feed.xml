@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Mon, 09 Jan 2023 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Sat, 28 Jan 2023 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>rails ActiveJob::SerializationError - Unsupported argument type에러</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;activejobserializationerror---unsupported-argument-type-xx&quot;&gt;ActiveJob::SerializationError - Unsupported argument type: xx&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Sat, 28 Jan 2023 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/active-job-serialization-error</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/active-job-serialization-error</guid>
+            </item>
         
             <item>
                 <title>일본의 풋살매칭 시스템</title>
@@ -122,19 +135,6 @@
                 <pubDate>Fri, 28 May 2021 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/rails-grape-entity</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/rails-grape-entity</guid>
-            </item>
-        
-            <item>
-                <title>rails model에서의 scope이란</title>
-                        
-                
-                    <description>&lt;h3 id=&quot;rails-model-scope이란&quot;&gt;rails model scope이란&lt;/h3&gt;
-
-</description>
-                
-                <pubDate>Thu, 27 May 2021 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/rails-scope</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-scope</guid>
             </item>
         
     </channel>

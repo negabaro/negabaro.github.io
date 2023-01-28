@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://negabaro.github.io/archive/active-job-serialization-error</loc>
+    </url>
+    
+    <url>
         <loc>https://negabaro.github.io/archive/footsal-matching-in-japan</loc>
     </url>
     
@@ -2186,22 +2190,6 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/category/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
-        <loc>https://negabaro.github.io/search/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
         <loc>https://negabaro.github.io/about/</loc>
     </url>
     
@@ -2218,7 +2206,23 @@
     
     
     <url>
+        <loc>https://negabaro.github.io/search/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
         <loc>https://negabaro.github.io/archive/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
+        <loc>https://negabaro.github.io/category/</loc>
     </url>
     
     
