@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        7 minute read
+                        8 minute read
                     </span>
                 </div>
             </div>
@@ -254,38 +254,39 @@ this: window,
 함수 컨텍스트
 그 후 (7)번에서 say();를 하는 순간 새로운 컨텍스트인 say 함수 컨텍스트가 생깁니다. 아까 전역 컨텍스트는 그대로 있고요. arguments는 없고, variable은 name뿐이네요. scope chain은 say 변수객체와 상위의 전역 변수객체입니다. this는 따로 설정해준 적이 없으니까 window입니다.</p>
 
-<p>‘say 컨텍스트’: {
-변수객체: {
-arguments: null,
-variable: [‘name’], // 초기화 후 [{ name: ‘nero’ }]가 됨
-},
-scopeChain: [‘say 변수객체’, ‘전역 변수객체’],
-this: window,
-}
-say를 호출한 후 위에서부터 차례대로((8)~(10) 실행하는데요. variable의 name에 nero를 대입해주고 나서 console.log(name);이 있습니다. name 변수는 say 컨텍스트 안에서 찾으면 됩니다. variable에 name이 nero라고 되어 있네요. name이 콘솔에 찍힙니다. 그 다음엔 wow(‘hello’)가 있는데요. say 컨텍스트 안에서 wow 변수를 찾을 수 없습니다. 찾을 수 없다면 scope chain을 따라 올라가 상위 변수객체에서 찾습니다. 그래서 전역 변수객체에서 찾습니다. 전역 변수객체의 variable에 wow라는 함수가 있네요. 이걸 호출합니다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">say 컨텍스트</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+<span class="nl">변수객체</span><span class="p">:</span> <span class="p">{</span>
+<span class="na">arguments</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="na">variable</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">],</span> <span class="c1">// 초기화 후 [{ name: 'nero' }]가 됨</span>
+<span class="p">},</span>
+<span class="nx">scopeChain</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">say 변수객체</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">전역 변수객체</span><span class="dl">'</span><span class="p">],</span>
+<span class="k">this</span><span class="p">:</span> <span class="nb">window</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>say를 호출한 후 위에서부터 차례대로((8)~(10) 실행하는데요. variable의 name에 nero를 대입해주고 나서 console.log(name);이 있습니다. name 변수는 say 컨텍스트 안에서 찾으면 됩니다. variable에 name이 nero라고 되어 있네요. name이 콘솔에 찍힙니다. 그 다음엔 wow(‘hello’)가 있는데요. say 컨텍스트 안에서 wow 변수를 찾을 수 없습니다. 찾을 수 없다면 scope chain을 따라 올라가 상위 변수객체에서 찾습니다. 그래서 전역 변수객체에서 찾습니다. 전역 변수객체의 variable에 wow라는 함수가 있네요. 이걸 호출합니다.</p>
 
 <p>(10)번에서 wow함수가 호출되었으니 wow 컨텍스트도 생기겠죠? arguments는 word = ‘hello’고, scope chain은 wow 스코프와 전역 스코프입니다. 여기서 중요한 게 lexical scoping에 따라 wow 함수의 스코프 체인은 선언 시에 이미 정해져 있습니다. 따라서 say 스코프는 wow 컨텍스트의 scope chain이 아닙니다. variable은 없고, this는 window입니다.</p>
 
-<p>‘wow 컨텍스트’: {
-변수객체: {
-arguments: [{ word : ‘hello’ }],
-variable: null,
-},
-scopeChain: [‘wow 변수객체’, ‘전역 변수객체’],
-this: window,
-}
-이제 컨텍스트가 생긴 후 함수가 실행 되는데요. 나중에 생긴 wow가 가장 먼저 실행됩니다. wow 함수 안에서 console.log(word + ‘ ‘ + name);이 있는데요. word랑 name 변수는 wow 컨텍스트에서 찾으시면 됩니다. word는 arguments에서 찾을 수 있고, name은 wow 변수객체에는 값이 없으니, scope chain을 따라 전역 스코프에서 찾으시면 됩니다. 전역 변수객체로 올라가니 variable에 name이 zero라고 되어 있네요. 그래서 hello zero가 되는 겁니다. hello nero가 아니라요. wow 컨텍스트에 따르면 wow 함수는 애초에 say 컨텍스트와 일절 관련이 없었던 겁니다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">wow 컨텍스트</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+<span class="nl">변수객체</span><span class="p">:</span> <span class="p">{</span>
+<span class="na">arguments</span><span class="p">:</span> <span class="p">[{</span> <span class="na">word</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span> <span class="p">}],</span>
+<span class="na">variable</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">},</span>
+<span class="nx">scopeChain</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">wow 변수객체</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">전역 변수객체</span><span class="dl">'</span><span class="p">],</span>
+<span class="k">this</span><span class="p">:</span> <span class="nb">window</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>이제 컨텍스트가 생긴 후 함수가 실행 되는데요. 나중에 생긴 wow가 가장 먼저 실행됩니다. wow 함수 안에서 console.log(word + ‘ ‘ + name);이 있는데요. word랑 name 변수는 wow 컨텍스트에서 찾으시면 됩니다. word는 arguments에서 찾을 수 있고, name은 wow 변수객체에는 값이 없으니, scope chain을 따라 전역 스코프에서 찾으시면 됩니다. 전역 변수객체로 올라가니 variable에 name이 zero라고 되어 있네요. 그래서 hello zero가 되는 겁니다. hello nero가 아니라요. wow 컨텍스트에 따르면 wow 함수는 애초에 say 컨텍스트와 일절 관련이 없었던 겁니다.</p>
 
 <p>이제 wow 함수 종료 후 wow 컨텍스트가 사라지고, say 함수의 실행이 마무리됩니다. 따라서 say 컨텍스트도 사라지고, 마지막에 전역 컨텍스트도 사라집니다. 함수 실행, 변수 선언 등 모든 게 다 논리적입니다. 그래서 컨텍스트 개념을 이해하면 자바스크립트의 모든 문제들을 풀 수 있습니다. 추가적으로 이벤트 루프까지 아신다면 완벽합니다. 이벤트 루프 강좌도 꼭 봐주세요.</p>
 
-<h3 id="reference-link">Reference Link:</h3>
+<hr />
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://poiemaweb.com/js-execution-context
-https://webclub.tistory.com/9
-https://jinbroing.tistory.com/78
-http://maeharin.hatenablog.com/entry/20130313/javascript_scopechain
-https://www.zerocho.com/category/JavaScript/post/5741d96d094da4986bc950a0
-</code></pre></div></div>
+<p><a href="https://poiemaweb.com/js-execution-context"></a>
+<a href="https://webclub.tistory.com/9"></a>
+<a href="https://jinbroing.tistory.com/78"></a>
+<a href="https://www.zerocho.com/category/JavaScript/post/5741d96d094da4986bc950a0"></a></p>
 
                 <br>
                 <!-- _includes/utterances-comment.html -->

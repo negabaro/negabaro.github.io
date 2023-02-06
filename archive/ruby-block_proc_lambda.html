@@ -309,6 +309,21 @@
 <span class="n">sample</span> <span class="n">proc1</span> <span class="c1"># 5.rb:1:in `sample': wrong number of arguments (given 1, expected 0) (ArgumentError)</span>
 </code></pre></div></div>
 
+<h2 id="audited에서">audited에서</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">::</span><span class="no">Audited</span><span class="p">.</span><span class="nf">store</span><span class="p">[</span><span class="ss">:current_user</span><span class="p">]</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="no">User</span><span class="p">.</span><span class="nf">last</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Proc:0x000055f0fde26fa0@(pry):47&gt;</span>
+<span class="p">[</span><span class="mi">38</span><span class="p">]</span> <span class="n">pry</span><span class="p">(</span><span class="n">main</span><span class="p">)</span><span class="o">&gt;</span> <span class="o">::</span><span class="no">Audited</span><span class="p">.</span><span class="nf">store</span><span class="p">[</span><span class="ss">:current_user</span><span class="p">].</span><span class="nf">try!</span><span class="p">(</span><span class="ss">:call</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>return적으면 에러</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">::</span><span class="no">Audited</span><span class="p">.</span><span class="nf">store</span><span class="p">[</span><span class="ss">:current_user</span><span class="p">]</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="k">return</span> <span class="no">User</span><span class="p">.</span><span class="nf">last</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Proc:0x000055f0fde26fa0@(pry):47&gt;</span>
+<span class="p">[</span><span class="mi">38</span><span class="p">]</span> <span class="n">pry</span><span class="p">(</span><span class="n">main</span><span class="p">)</span><span class="o">&gt;</span> <span class="o">::</span><span class="no">Audited</span><span class="p">.</span><span class="nf">store</span><span class="p">[</span><span class="ss">:current_user</span><span class="p">].</span><span class="nf">try!</span><span class="p">(</span><span class="ss">:call</span><span class="p">)</span>
+<span class="no">LocalJumpError</span><span class="p">:</span> <span class="n">unexpected</span> <span class="k">return</span>
+</code></pre></div></div>
+
 <hr />
 
 <h2 id="참고">참고</h2>
