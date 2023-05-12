@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "rails joins 메소드의 특징에 대해 알아보자",
+      "category" : "",
+      "tags"     : "rails/model",
+      "url"      : "//archive/rails-join-query-detail",
+      "date"     : "Wednesday, May 10, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails ActiveJob::SerializationError - Unsupported argument type에러",
       "category" : "",
       "tags"     : "rails/active_job",

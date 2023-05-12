@@ -103,7 +103,7 @@
                 <div class="post-heading">
                     <h1>rails joins 메소드의 특징에 대해 알아보자</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, July 16, 2020
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 10, 2023
                     </span>
                     <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/model"><i class="fa fa-tag"></i> rails/model</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
@@ -153,6 +153,7 @@
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">select</span><span class="p">(</span><span class="s1">'owners.*, cats.name'</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'xx'</span><span class="p">)</span>
 </code></pre></div></div>
+
 <p>하면 join대상 테이블에 where조건의 타겟이 Owner인지Cats인지 판단이 안되므로(디폴트로는 Owner를 선택해버림)</p>
 
 <p>join 대상 테이블에 조건을 걸고 싶을때는 아래와 같은 문법으로 실행해줘야한다.</p>
@@ -242,6 +243,18 @@
 아래와 같은 방식으로 레코드를 가져올 수 있다.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">cats: </span><span class="p">[</span><span class="ss">cat_children: :hamster</span><span class="p">])</span>
+<span class="n">or</span>
+<span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span><span class="ss">cat_children: :hamster</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>대괄호든 중괄호든 상관없다.</p>
+
+<h2 id="좀-더-nested한-테이블에-join건-상태에서-where쓰는법">좀 더 nested한 테이블에 join건 상태에서 where쓰는법</h2>
+
+<p>최근 이것도 찾아보느라 시간이 걸렸기에 메모해둔다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">User</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">posts: </span><span class="p">{</span> <span class="ss">comments: :likes</span> <span class="p">})</span>
+    <span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">likes: </span><span class="p">{</span> <span class="ss">user_id: </span><span class="n">current_user</span><span class="p">.</span><span class="nf">id</span><span class="p">,</span> <span class="ss">liked: </span><span class="kp">true</span> <span class="p">})</span>
 </code></pre></div></div>
 
 <hr />
@@ -266,13 +279,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/ruby-base64url" data-toggle="tooltip" data-placement="top" title="ruby Base64URL encoding이란?">&larr; Previous Post</a>
+                        <a href="/archive/active-job-serialization-error" data-toggle="tooltip" data-placement="top" title="rails ActiveJob::SerializationError - Unsupported argument type에러">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/archive/rails-join-select-query-tip" data-toggle="tooltip" data-placement="top" title="rails joins 메소드 사용시 자동으로 select 지정하는 방법">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
