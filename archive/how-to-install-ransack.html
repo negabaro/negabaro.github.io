@@ -19,14 +19,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7 ransack&hotwire을 이용해 검색기능 구현하기" />
+    <meta property="og:title" content="Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="/archive/how-to-install-ransack" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7 ransack&hotwire을 이용해 검색기능 구현하기 - Negabaro`s Blog</title>
+    <title>Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기 - Negabaro`s Blog</title>
 
     <link rel="canonical" href="/archive/how-to-install-ransack">
 
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7 ransack&hotwire을 이용해 검색기능 구현하기</h1>
+                    <h1>Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기</h1>
                     
                     <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 24, 2023
                     </span>
@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        2 minute read
+                        6 minute read
                     </span>
                 </div>
             </div>
@@ -124,10 +124,18 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <h2 id="ransack">ransack</h2>
 
-<p>ransack은 검색기능을 간단히 구현가능한 gem이다.
-hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능</p>
+<p>ransack은 검색기능을 간단히 구현가능한 gem이다.</p>
 
-<h3 id="how-to-install">how to install</h3>
+<p>이 포스트에서는 ransack의 간단한 설정방법과
+아래 4단계로 검색기능을 구현하는 방법을 정리해봤다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. ransack만 사용해서 서버사이드 랜더링 검색
+2. hotwire의 turbo_frame을 이용해 페이지 리로드없이 검색결과 구현
+3. hotwire의 stimulus을 이용해 검색버튼 클릭하지않고 form input시 검색되게끔 구현
+4. 쿼리부하를 줄이기 위해 Debounce
+</code></pre></div></div>
+
+<h3 id="how-to-install">How to install</h3>
 
 <p>issue라는 모델에title, content컬럼이 있다는 가정하에 도입순서를 정리해봤다.</p>
 
@@ -145,6 +153,10 @@ hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능
   <span class="k">end</span>
 </code></pre></div></div>
 
+<p><code class="language-plaintext highlighter-rouge">params[:q]</code>부분이 검색 키워드이다.</p>
+
+<p>ransack class의 경우 result로 리스트 확인이가능 result이후는 기존의 레일즈 설정과 동일하다.</p>
+
 <h3 id="model설정">model설정</h3>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Issue</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -153,6 +165,8 @@ hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
+
+<p>이 설정이 없으면 <code class="language-plaintext highlighter-rouge">ransackで"Ransack needs attributes explicitly allowlisted..</code>에러 발생</p>
 
 <h3 id="view설정">view설정</h3>
 
@@ -164,30 +178,150 @@ hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능
       &lt;/</span><span class="n">button</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="sr">/div&gt;
 &lt;% end %&gt;
-</span></code></pre></div></div>
+&lt;%= render 'issues' %&gt; &lt;&lt;/</span><span class="o">/</span><span class="err">이</span> <span class="err">부분은</span> <span class="err">검색결과</span> <span class="err">부분</span>
+</code></pre></div></div>
 
 <p>여기서 포인트는 <code class="language-plaintext highlighter-rouge">title_cont</code>부분인데 검색 대상컬럼 뒤에 <code class="language-plaintext highlighter-rouge">_cont</code>를 붙이는게 규칙이다.</p>
 
 <p>이 예제에서는 title의 내용을 검색하므로 <code class="language-plaintext highlighter-rouge">title_cont</code>로 설정해줬다.</p>
 
-<h3 id="hotwire설정">hotwire설정</h3>
+<h3 id="1단계-구현부분-정리">1단계 구현부분 정리</h3>
 
-<p>이 부분은 필수설정은 아니지만 검색한 결과의 내용을 표시하는 부분을 turbo_frame_tag로 묶어주면 SPA처럼 페이지 갱신없이 검색내용을 보여준다.</p>
+<p>여기까지만 구현하면 <code class="language-plaintext highlighter-rouge">ransack만 사용해서 서버사이드 랜더링 검색</code>의 완성이다.
+검색 키워드를 입력후 검색버튼을 클릭하면 정상동작할것이다.</p>
+
+<h3 id="2단계-구현부분정리">2단계 구현부분정리</h3>
+
+<p>다음단계로 검색시 페이지 리로드가 없게끔 해보자.</p>
+
+<p>hotwire의 turbo_frame을 사용하면 간단히 구현이 가능하다.
+검색결과 부분을 turbo_frame으로 묶어주기만 하면된다.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="sx">%= turbo_frame_tag 'issues' do %&gt;
     &lt;%=</span> <span class="n">render</span> <span class="s1">'issues'</span> <span class="o">%&gt;</span>
   <span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
 </code></pre></div></div>
 
-<h3 id="완성된-화면">완성된 화면</h3>
+<p>여기까지 설정이 끝나면 아래화면과 같이 페이지 리로드없이 검색이 가능해진다.</p>
 
 <p><a href="https://gyazo.com/9162c6075b03b839d2257adcedf1f0cb"><img src="https://i.gyazo.com/9162c6075b03b839d2257adcedf1f0cb.gif" alt="Image from Gyazo" /></a></p>
 
+<p>혹시 turbo_frame추가후 검색동작이 안될경우 <code class="language-plaintext highlighter-rouge">html: { data: { turbo_frame: "issues" } }</code>설정을 추가해보자(memo2를 참고)</p>
+
+<h3 id="3단계-구현부분정리">3단계 구현부분정리</h3>
+
+<p>3단계로 검색버튼을 클릭하지 않고 검색폼에 키워드 입력시 자동으로 검색결과가 표시되게끔 구현해보자.</p>
+
+<p>항상 javascript,jquery,vue,react로 input의 이벤트를 취득해서 해당form의 값을 api로 보내서 검색결과 돔을 갱신하는 일련의 작업이 필요한데 hotwire의 stimulus기능을 이용하면 최소한의 js로 구현이 가능하다</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">stimulus</span> <span class="n">search</span><span class="o">-</span><span class="n">form</span>
+</code></pre></div></div>
+
+<p>커맨드로 필요한js파일을 만들어주자.
+<code class="language-plaintext highlighter-rouge">app/javascript/controllers/search_form_controller.js</code>
+파일을 아래와 같이 변경해주자</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Controller</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@hotwired/stimulus</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="kd">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+  <span class="nx">submit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">submit</span><span class="dl">"</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">requestSubmit</span><span class="p">();</span> <span class="c1">//requestSubmit을 쓰는 이유는 memo4,5를 참고</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">app/javascript/controllers/index.js</code>에 위에서 생성한 search_form_controller를 추가해주자.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">SearchFormController</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./search_form_controller.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">application</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="dl">"</span><span class="s2">searchForm</span><span class="dl">"</span><span class="p">,</span> <span class="nx">SearchFormController</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>마지막으로 search_form view를 아래와 같이 바꿔주자</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= search_form_for @q, url: issues_path,
+  html:{
+    data: {
+      turbo_frame: "issues",
+      controller: "searchForm",
+      action: "input-&gt;searchForm#submit"
+    } } do |f| %&gt;
+
+&lt;div class=</span><span class="s2">"input-group"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sx">%= f.search_field :title_cont, class: "input input-bordered w-full", placeholder: "Search…" %&gt;
+&lt;/div&gt;
+
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<p>검색아이콘은 필요없어져서 지우고 search_form_for하위에
+<code class="language-plaintext highlighter-rouge">turbo_frame,controller,action</code>을 추가해준게 끝이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">controller: "searchForm"</code> -&gt; 위에서 선언해준 js가 attach됨</p>
+
+<p><code class="language-plaintext highlighter-rouge">action: "input-&gt;searchForm#submit"</code> -&gt; input이벤트시 searchForm의 submit함수를 실행하라는 의미 c(ffeescript냄새가 나는 루비스러운 문법이다.)</p>
+
+<p>위 설정만으로 3단계 설정은 끝이다.</p>
+
+<p>아래와 같이 동작함.</p>
+
+<p><a href="https://gyazo.com/6ca368aefe9dded3de34ce6fe060f6a3"><img src="https://i.gyazo.com/6ca368aefe9dded3de34ce6fe060f6a3.gif" alt="Image from Gyazo" /></a></p>
+
+<h3 id="4단계-구현부분정리">4단계 구현부분정리</h3>
+
+<p>4단계로 키워드 입력시 쿼리가 발생하므로 간단히 Debounce시켜주자</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Controller</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@hotwired/stimulus</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="kd">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+  <span class="nx">submit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">clearTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">requestSubmit</span><span class="p">();</span>
+    <span class="p">},</span> <span class="mi">200</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>포스트는 여기까지다. 읽어주셔서 감사하무니다.</p>
+
 <h2 id="memo">memo</h2>
+
+<h3 id="1">1.</h3>
 
 <p>위에서 설명한 <code class="language-plaintext highlighter-rouge">self.ransackable_attributes</code>설정이 없으면 <code class="language-plaintext highlighter-rouge">ransackで"Ransack needs attributes explicitly allowlisted..</code>에러 발생</p>
 
-<hr />
+<h3 id="2">2.</h3>
+
+<p>view설정시 주의할 부분은 다른 turbo_frame하위에 검색폼이 있을 경우</p>
+
+<p><code class="language-plaintext highlighter-rouge">html: { data: { turbo_frame: "issues" } }</code>설정을 추가해줘야 정상적으로 검색이 가능해짐</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= search_form_for @q, url: issues_path, html: { data: { turbo_frame: "issues" } } do |f| %&gt;
+</span></code></pre></div></div>
+
+<p>필자의 경우 new버튼을 누르면 검색폼이 사라지게끔 구현하고 싶었기 때문에 검색폼 위에 다른 turbo_frame_tag가 필요했음.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= turbo_frame_tag "new_issue" do %&gt;
+  &lt;%=</span> <span class="n">render</span> <span class="s1">'search_form'</span> <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3">3.</h3>
+
+<p><code class="language-plaintext highlighter-rouge">importmap-rails</code>사용시 Stimulus컨트롤러가 자동으로 등록되므로 index.js에 추가해주는 부분도 필요없어진다고</p>
+
+<h3 id="4">4.</h3>
+
+<p>submit이 아니고 requestSubmit을 쓴 이유
+submit의 경우 직접 폼에 리퀘스트를 해버려서 turbo리퀘스트의 인터셉트가 동작하지않음.</p>
+
+<h3 id="5">5.</h3>
+
+<p>safari에서 requestSubmit은 동작하지 않지만 Turbo polyfill이 들어가 있어서 문제없이 동작함.</p>
+
+<h3 id="6">6.</h3>
+
+<p>Debounce란? -&gt; 반복되는 처리를 1단계로 묶어서 처리하는방식</p>
 
 <h2 id="references">references</h2>
 

@@ -10,7 +10,7 @@
     } ,
   
     {
-      "title"    : "Rails7 ransack&amp;hotwire을 이용해 검색기능 구현하기",
+      "title"    : "Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기",
       "category" : "",
       "tags"     : "rails",
       "url"      : "//archive/how-to-install-ransack",
@@ -1990,15 +1990,6 @@
     } ,
   
     {
-      "title"    : "rails joins 메소드의 특징에 대해 알아보자",
-      "category" : "",
-      "tags"     : "rails/model",
-      "url"      : "//archive/rails-join-query-detail",
-      "date"     : "Thursday, July 16, 2020",
-      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
-    } ,
-  
-    {
       "title"    : "ruby Base64URL encoding이란?",
       "category" : "",
       "tags"     : "ruby, security",
@@ -2723,15 +2714,6 @@
       "category" : "",
       "tags"     : "",
       "url"      : "//archive/rails-debug-tip",
-      "date"     : "Friday, May 1, 2020",
-      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
-    } ,
-  
-    {
-      "title"    : "Rails6.0 devise login/logout header페이지 만들기",
-      "category" : "",
-      "tags"     : "rails, handson",
-      "url"      : "//archive/rails-devise-login-header",
       "date"     : "Friday, May 1, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
