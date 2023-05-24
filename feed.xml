@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Wed, 10 May 2023 00:00:00 -0500</lastBuildDate>
+        <lastBuildDate>Wed, 24 May 2023 00:00:00 -0500</lastBuildDate>
+        
+            <item>
+                <title>Rails7 ransack&amp;hotwire을 이용해 검색기능 구현하기</title>
+                        
+                
+                    <description>&lt;h2 id=&quot;ransack&quot;&gt;ransack&lt;/h2&gt;
+
+</description>
+                
+                <pubDate>Wed, 24 May 2023 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/how-to-install-ransack</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-install-ransack</guid>
+            </item>
         
             <item>
                 <title>rails joins 메소드의 특징에 대해 알아보자</title>
@@ -121,19 +134,6 @@
                 <pubDate>Sat, 24 Dec 2022 00:00:00 -0600</pubDate>
                 <link>https://negabaro.github.io/archive/google-protobuf-error</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/google-protobuf-error</guid>
-            </item>
-        
-            <item>
-                <title>2022년 지름신강림 회고</title>
-                        
-                
-                    <description>&lt;p&gt;2022년이라고 적었지만 거의 10월~12월사이에 산것들이네요.&lt;/p&gt;
-
-</description>
-                
-                <pubDate>Sun, 18 Dec 2022 00:00:00 -0600</pubDate>
-                <link>https://negabaro.github.io/archive/2022zirumshin</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/2022zirumshin</guid>
             </item>
         
     </channel>
