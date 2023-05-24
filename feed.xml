@@ -21,6 +21,18 @@
             </item>
         
             <item>
+                <title>Rails6.0 devise login/logout header페이지 만들기</title>
+                        
+                
+                    <description>&lt;p&gt;test&lt;/p&gt;
+</description>
+                
+                <pubDate>Mon, 01 May 2023 00:00:00 -0500</pubDate>
+                <link>https://negabaro.github.io/archive/rails-devise-login-header</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-devise-login-header</guid>
+            </item>
+        
+            <item>
                 <title>rails ActiveJob::SerializationError - Unsupported argument type에러</title>
                         
                 
@@ -122,19 +134,6 @@
                 <pubDate>Sun, 18 Dec 2022 00:00:00 -0600</pubDate>
                 <link>https://negabaro.github.io/archive/2022zirumshin</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/2022zirumshin</guid>
-            </item>
-        
-            <item>
-                <title>Github Action,jekyll을 이용해 다른 리포지토리에 Push하기</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;할-내용&quot;&gt;할 내용&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Fri, 10 Jun 2022 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/github-action-draft-blogging-with-jekyll</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/github-action-draft-blogging-with-jekyll</guid>
             </item>
         
     </channel>

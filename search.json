@@ -10,6 +10,15 @@
     } ,
   
     {
+      "title"    : "Rails6.0 devise login/logout header페이지 만들기",
+      "category" : "",
+      "tags"     : "rails, handson",
+      "url"      : "//archive/rails-devise-login-header",
+      "date"     : "Monday, May 1, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails ActiveJob::SerializationError - Unsupported argument type에러",
       "category" : "",
       "tags"     : "rails/active_job",
