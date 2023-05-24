@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Rails7에서 tailwind-css추가",
+      "category" : "",
+      "tags"     : "rails, handson",
+      "url"      : "//archive/how-to-install-tailwindcss",
+      "date"     : "Wednesday, May 24, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Rails7 ransack&amp;hotwire을 이용해 검색기능 구현하기",
       "category" : "",
       "tags"     : "rails",

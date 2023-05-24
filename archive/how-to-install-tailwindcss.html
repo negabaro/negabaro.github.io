@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7 ransack&hotwire을 이용해 검색기능 구현하기" />
+    <meta property="og:title" content="Rails7에서 tailwind-css추가" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/how-to-install-ransack" />
+    <meta property="og:url" content="/archive/how-to-install-tailwindcss" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7 ransack&hotwire을 이용해 검색기능 구현하기 - Negabaro`s Blog</title>
+    <title>Rails7에서 tailwind-css추가 - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/how-to-install-ransack">
+    <link rel="canonical" href="/archive/how-to-install-tailwindcss">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,11 +101,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7 ransack&hotwire을 이용해 검색기능 구현하기</h1>
+                    <h1>Rails7에서 tailwind-css추가</h1>
                     
                     <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 24, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
@@ -122,72 +122,99 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2 id="ransack">ransack</h2>
+                <p>rails7에서 css템플릿인 tailwind-css를 추가하는 방법에 대해 정리해봤다.</p>
 
-<p>ransack은 검색기능을 간단히 구현가능한 gem이다.
-hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능</p>
+<h2 id="how-to-install">how to install</h2>
 
-<h3 id="how-to-install">how to install</h3>
+<h3 id="add-tailwind">add tailwind</h3>
 
-<p>issue라는 모델에title, content컬럼이 있다는 가정하에 도입순서를 정리해봤다.</p>
+<h4 id="새로운-프로젝트일-경우">새로운 프로젝트일 경우</h4>
 
-<h4 id="gemfile추가">Gemfile추가</h4>
+<p>새로 프로젝트를 만들경우 <code class="language-plaintext highlighter-rouge">--css</code>지정으로 간단히 css template를 추가할 수 있게되었다.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'ransack'</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">install</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">new</span> <span class="n">myapp</span> <span class="o">--</span><span class="n">css</span> <span class="n">tailwind</span>
 </code></pre></div></div>
 
-<h3 id="controller설정">controller설정</h3>
+<h4 id="기존-프로젝트일경우">기존 프로젝트일경우</h4>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">index</span>
-    <span class="vi">@q</span> <span class="o">=</span> <span class="no">Issue</span><span class="p">.</span><span class="nf">ransack</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">])</span>
-    <span class="vi">@issues</span> <span class="o">=</span> <span class="vi">@q</span><span class="p">.</span><span class="nf">result</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">id: :desc</span><span class="p">).</span><span class="nf">page</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:page</span><span class="p">]).</span><span class="nf">per</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-  <span class="k">end</span>
+<p>기존 프로젝트일경우 아래와 같이 추가해주자</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'cssbundling-rails'</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">css</span><span class="ss">:install:tailwind</span>
+<span class="n">gem</span> <span class="s2">"tailwindcss-rails"</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
+<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:install</span>
+<span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:build</span>
 </code></pre></div></div>
 
-<h3 id="model설정">model설정</h3>
+<h3 id="서버기동">서버기동</h3>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Issue</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
-  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">ransackable_attributes</span><span class="p">(</span><span class="n">auth_object</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
-    <span class="p">[</span><span class="s2">"title"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">]</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<p>webpack대신 tailwindcss:watch라는 커맨드를 기동해줘야한다.</p>
+
+<p>즉 아래 2개의 커맨드를 실행할 필요가 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bundle exec rails s</code> + <code class="language-plaintext highlighter-rouge">bin/rails tailwindcss:watch</code>
+필자의 경우 supervisord를 이용해 위 2개의 커맨드를 실행,관리해주었다.</p>
+
+<h3 id="동작확인">동작확인</h3>
+
+<p>아래와 같은 scaffold를 실행후 /posts 억세스 해보면 tailwindcss가 적용된 화면 확인이 가능했다.</p>
+
+<p><a href="https://gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c"><img src="https://i.gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c.gif" alt="Image from Gyazo" /></a></p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">scaffold</span> <span class="n">post</span> <span class="nb">name</span><span class="ss">:string</span> <span class="n">limit</span><span class="ss">:date</span>
 </code></pre></div></div>
 
-<h3 id="view설정">view설정</h3>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= search_form_for @q, url: issues_path do |f| %&gt;
-    &lt;div class=</span><span class="s2">"input-group"</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="sx">%= f.search_field :title_cont, class: "input input-bordered w-full", placeholder: "Search…" %&gt;
-      &lt;button class=</span><span class="s2">"btn btn-square"</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">svg</span> <span class="n">xmlns</span><span class="o">=</span><span class="s2">"http://www.w3.org/2000/svg"</span> <span class="k">class</span><span class="o">=</span><span class="s2">"h-6 w-6"</span> <span class="n">fill</span><span class="o">=</span><span class="s2">"none"</span> <span class="n">viewBox</span><span class="o">=</span><span class="s2">"0 0 24 24"</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">"currentColor"</span><span class="o">&gt;&lt;</span><span class="n">path</span> <span class="n">stroke</span><span class="o">-</span><span class="n">linecap</span><span class="o">=</span><span class="s2">"round"</span> <span class="n">stroke</span><span class="o">-</span><span class="n">linejoin</span><span class="o">=</span><span class="s2">"round"</span> <span class="n">stroke</span><span class="o">-</span><span class="n">width</span><span class="o">=</span><span class="s2">"2"</span> <span class="n">d</span><span class="o">=</span><span class="s2">"M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"</span> <span class="o">/&gt;&lt;</span><span class="sr">/svg&gt;
-      &lt;/</span><span class="n">button</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="sr">/div&gt;
-&lt;% end %&gt;
-</span></code></pre></div></div>
-
-<p>여기서 포인트는 <code class="language-plaintext highlighter-rouge">title_cont</code>부분인데 검색 대상컬럼 뒤에 <code class="language-plaintext highlighter-rouge">_cont</code>를 붙이는게 규칙이다.</p>
-
-<p>이 예제에서는 title의 내용을 검색하므로 <code class="language-plaintext highlighter-rouge">title_cont</code>로 설정해줬다.</p>
-
-<h3 id="hotwire설정">hotwire설정</h3>
-
-<p>이 부분은 필수설정은 아니지만 검색한 결과의 내용을 표시하는 부분을 turbo_frame_tag로 묶어주면 SPA처럼 페이지 갱신없이 검색내용을 보여준다.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="sx">%= turbo_frame_tag 'issues' do %&gt;
-    &lt;%=</span> <span class="n">render</span> <span class="s1">'issues'</span> <span class="o">%&gt;</span>
-  <span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
-</code></pre></div></div>
-
-<h3 id="완성된-화면">완성된 화면</h3>
-
-<p><a href="https://gyazo.com/9162c6075b03b839d2257adcedf1f0cb"><img src="https://i.gyazo.com/9162c6075b03b839d2257adcedf1f0cb.gif" alt="Image from Gyazo" /></a></p>
+<p>create 버튼이 하얀색이라 잘 안보임.</p>
 
 <h2 id="memo">memo</h2>
 
-<p>위에서 설명한 <code class="language-plaintext highlighter-rouge">self.ransackable_attributes</code>설정이 없으면 <code class="language-plaintext highlighter-rouge">ransackで"Ransack needs attributes explicitly allowlisted..</code>에러 발생</p>
+<h3 id="1">1.</h3>
 
-<hr />
+<p>얼마전만해도 <code class="language-plaintext highlighter-rouge">yarn add tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9</code> 등등 설치할것도 많고 postcss7이 버전의존성이 있어 설치가 까다로웠었는데 엄청 심플해졌다.</p>
+
+<p>webpack실행할 필요도 없고 (bin/rails tailwindcss:watch는 필요)</p>
+
+<h3 id="2">2.</h3>
+
+<p><code class="language-plaintext highlighter-rouge">bin/rails css:install:tailwind</code>은
+실행환경에 nodejs가 있다는 전제하에 움직인다.
+필자의 경우 alpine에서 실행했는데 node.js가 없어서 아래 커맨드로 추가해줬다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apk add --update nodejs npm
+</code></pre></div></div>
+
+<h3 id="3">3.</h3>
+
+<p>필자가 사용하는 supervisord.conf설정</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">program</span>:<span class="n">rails</span>]
+<span class="n">command</span>=<span class="n">bundle</span> <span class="n">exec</span> <span class="n">puma</span>
+<span class="c">#command=bundle exec rails s -b 0.0.0.0
+</span><span class="n">user</span>=<span class="n">root</span>
+<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
+<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
+<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
+<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
+<span class="n">autostart</span>=<span class="n">true</span>
+<span class="n">autorestart</span>=<span class="n">true</span>
+<span class="n">redirect_stderr</span>=<span class="n">true</span>
+<span class="n">exitcodes</span>=<span class="m">1</span>
+
+
+[<span class="n">program</span>:<span class="n">css</span>]
+<span class="n">command</span>=<span class="n">bin</span>/<span class="n">rails</span> <span class="n">tailwindcss</span>:<span class="n">watch</span>
+<span class="n">user</span>=<span class="n">root</span>
+<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
+<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
+<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
+<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
+<span class="n">autostart</span>=<span class="n">true</span>
+<span class="n">autorestart</span>=<span class="n">true</span>
+<span class="n">redirect_stderr</span>=<span class="n">true</span>
+<span class="n">exitcodes</span>=<span class="m">1</span>
+</code></pre></div></div>
 
 <h2 id="references">references</h2>
 
@@ -200,7 +227,7 @@ hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/how-to-install-ransack"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/how-to-install-tailwindcss"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -211,13 +238,9 @@ hotwire과 같이 사용하면 SPA와 같이 다이나믹하게 구현이 가능
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/rails-join-query-detail" data-toggle="tooltip" data-placement="top" title="rails joins 메소드의 특징에 대해 알아보자">&larr; Previous Post</a>
+                        <a href="/archive/how-to-install-ransack" data-toggle="tooltip" data-placement="top" title="Rails7 ransack&hotwire을 이용해 검색기능 구현하기">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/archive/how-to-install-tailwindcss" data-toggle="tooltip" data-placement="top" title="Rails7에서 tailwind-css추가">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
