@@ -1,7 +1,7 @@
 [
   
     {
-      "title"    : "Rails7에서 tailwind-css추가",
+      "title"    : "Rails7에서 tailwind-css인스톨 방법",
       "category" : "",
       "tags"     : "rails, handson",
       "url"      : "//archive/how-to-install-tailwindcss",
@@ -2161,19 +2161,19 @@
     } ,
   
     {
-      "title"    : "OOP 추상클래스와 인터페이스의 차이는?",
+      "title"    : "javascript에서 if문  한줄로 쓰는법",
       "category" : "",
-      "tags"     : "oop, software",
-      "url"      : "//archive/oop-abstract_class_vs_interface",
+      "tags"     : "js",
+      "url"      : "//archive/js-if-one-line",
       "date"     : "Thursday, June 25, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
-      "title"    : "javascript에서 if문  한줄로 쓰는법",
+      "title"    : "OOP 추상클래스와 인터페이스의 차이는?",
       "category" : "",
-      "tags"     : "js",
-      "url"      : "//archive/js-if-one-line",
+      "tags"     : "oop, software",
+      "url"      : "//archive/oop-abstract_class_vs_interface",
       "date"     : "Thursday, June 25, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
@@ -2233,24 +2233,6 @@
     } ,
   
     {
-      "title"    : "OOP concreate class란?",
-      "category" : "",
-      "tags"     : "oop, software",
-      "url"      : "//archive/oop-concreate_class",
-      "date"     : "Monday, June 15, 2020",
-      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
-    } ,
-  
-    {
-      "title"    : "OOP 추상화 클래스란?",
-      "category" : "",
-      "tags"     : "oop, software",
-      "url"      : "//archive/oop-abstract_class",
-      "date"     : "Monday, June 15, 2020",
-      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
-    } ,
-  
-    {
       "title"    : "영어 Pros and Cons",
       "category" : "",
       "tags"     : "english",
@@ -2282,6 +2264,24 @@
       "category" : "",
       "tags"     : "term",
       "url"      : "//archive/db-term-Sparse",
+      "date"     : "Monday, June 15, 2020",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "OOP concreate class란?",
+      "category" : "",
+      "tags"     : "oop, software",
+      "url"      : "//archive/oop-concreate_class",
+      "date"     : "Monday, June 15, 2020",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "OOP 추상화 클래스란?",
+      "category" : "",
+      "tags"     : "oop, software",
+      "url"      : "//archive/oop-abstract_class",
       "date"     : "Monday, June 15, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,

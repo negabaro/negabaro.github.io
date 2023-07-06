@@ -323,6 +323,25 @@ submit의 경우 직접 폼에 리퀘스트를 해버려서 turbo리퀘스트의
 
 <p>Debounce란? -&gt; 반복되는 처리를 1단계로 묶어서 처리하는방식</p>
 
+<h3 id="7">7.</h3>
+
+<p>선언한 stimulus와 DOM이 attach한 상태인지 확인하는법</p>
+
+<p>data-controller에 stimulus에서 선언한 컨트롤러명이 들어가 있어야함</p>
+
+<p>ex)</p>
+
+<p>images라는 컨트롤러명일 경우</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">multiple=</span><span class="s">"multiple"</span> <span class="na">data-controller=</span><span class="s">"images"</span> <span class="err">...</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>stimulus의 connect()가 호출되면 attach된 상태이다.</p>
+
+<h3 id="8">8.</h3>
+
+<p>Missing target element “preview” for “images” controller</p>
+
 <h2 id="references">references</h2>
 
 
@@ -350,7 +369,7 @@ submit의 경우 직접 폼에 리퀘스트를 해버려서 turbo리퀘스트의
                     
                     
                     <li class="next">
-                        <a href="/archive/how-to-install-tailwindcss" data-toggle="tooltip" data-placement="top" title="Rails7에서 tailwind-css추가">Next Post &rarr;</a>
+                        <a href="/archive/how-to-install-tailwindcss" data-toggle="tooltip" data-placement="top" title="Rails7에서 tailwind-css인스톨 방법">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

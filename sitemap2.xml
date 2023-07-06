@@ -962,11 +962,11 @@
     </url>
     
     <url>
-        <loc>https://negabaro.github.io/archive/oop-abstract_class_vs_interface</loc>
+        <loc>https://negabaro.github.io/archive/js-if-one-line</loc>
     </url>
     
     <url>
-        <loc>https://negabaro.github.io/archive/js-if-one-line</loc>
+        <loc>https://negabaro.github.io/archive/oop-abstract_class_vs_interface</loc>
     </url>
     
     <url>
@@ -994,14 +994,6 @@
     </url>
     
     <url>
-        <loc>https://negabaro.github.io/archive/oop-concreate_class</loc>
-    </url>
-    
-    <url>
-        <loc>https://negabaro.github.io/archive/oop-abstract_class</loc>
-    </url>
-    
-    <url>
         <loc>https://negabaro.github.io/archive/eng-pros_cons</loc>
     </url>
     
@@ -1015,6 +1007,14 @@
     
     <url>
         <loc>https://negabaro.github.io/archive/db-term-Sparse</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/oop-concreate_class</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/oop-abstract_class</loc>
     </url>
     
     <url>
@@ -2198,7 +2198,7 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/archive/</loc>
+        <loc>https://negabaro.github.io/search/</loc>
     </url>
     
     
@@ -2214,7 +2214,15 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/search/</loc>
+        <loc>https://negabaro.github.io/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/</loc>
     </url>
     
     
@@ -2223,14 +2231,6 @@
     
     <url>
         <loc>https://negabaro.github.io/category/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
-        <loc>https://negabaro.github.io/</loc>
     </url>
     
     

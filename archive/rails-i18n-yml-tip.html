@@ -122,13 +122,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h1 id="개요">개요</h1>
+                <h2 id="개요">개요</h2>
 
 <p>이 포스트에서는 I18n으로 yaml사용시 여러가지 팁에 대해 정리해보았다.</p>
 
 <p>주로 rails의 I18n사용시 얻은 팁들이나 yaml자체에서 사용가능한 것들도 있으니 참고바란다.</p>
 
-<h1 id="변수-사용하는-방법">변수 사용하는 방법</h1>
+<h2 id="변수-사용하는-방법">변수 사용하는 방법</h2>
 
 <p>I18n.t에서 아래와 같이 변수를 사용하는것이 가능하다.</p>
 
@@ -142,7 +142,7 @@
 <span class="c1"># =&gt; 신규포스팅</span>
 </code></pre></div></div>
 
-<h1 id="array사용하는-방법">array사용하는 방법</h1>
+<h2 id="array사용하는-방법">array사용하는 방법</h2>
 
 <p>array를 사용하면 복수의 정보를 가져올 수 있다.</p>
 
@@ -156,7 +156,7 @@
 <span class="c1"># =&gt; 신규포스팅</span>
 </code></pre></div></div>
 
-<h1 id="헬퍼-메소드-사용하는-방법">헬퍼 메소드 사용하는 방법</h1>
+<h2 id="헬퍼-메소드-사용하는-방법">헬퍼 메소드 사용하는 방법</h2>
 
 <p>헬퍼 메소드를 경유해서 I18n.t를 호출하는 방법도 있다.</p>
 
@@ -169,7 +169,7 @@
 <span class="c1"># =&gt; 신규포스팅</span>
 </code></pre></div></div>
 
-<h1 id="alias별칭">alias(별칭)</h1>
+<h2 id="alias별칭">alias(별칭)</h2>
 
 <p>별칭 지정이 가능하다.</p>
 
@@ -181,7 +181,7 @@
 
 <p>즉 Comment,Comments 어느쪽도 커맨트라는 값을 가져온다.</p>
 
-<h1 id="createupdate의-로케일-디폴트-설정">create,update의 로케일 디폴트 설정</h1>
+<h2 id="createupdate의-로케일-디폴트-설정">create,update의 로케일 디폴트 설정</h2>
 
 <p>create,update등 디폴트 로케일 설정은 <code class="language-plaintext highlighter-rouge">helpers: submit:</code>이하에 설정하면 자동으로 불러와진다.</p>
 
@@ -194,7 +194,21 @@
       <span class="na">submit</span><span class="pi">:</span> <span class="s">저장</span>
 </code></pre></div></div>
 
-<h1 id="모델마다-다른값으로-변경할떄">모델마다 다른값으로 변경할떄</h1>
+<p>위 상태에서
+<code class="language-plaintext highlighter-rouge">&lt;%= form.submit %&gt;</code>만 해줘도 helpers.submit를 참조해준다.</p>
+
+<p>여기에 더해서 form에 해당하는 모델값도 사용할 수 있는데</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ko</span><span class="pi">:</span>
+  <span class="na">helpers</span><span class="pi">:</span>
+    <span class="na">submit</span><span class="pi">:</span>
+      <span class="na">create</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${model}을</span><span class="nv"> </span><span class="s">등록"</span>
+</code></pre></div></div>
+
+<p>이라고 해주면 해당 모델명도 사용가능하다.
+예를들어 issue라는 모델이면 <code class="language-plaintext highlighter-rouge">activerecord.models.issue</code>의 값을 참조한다.</p>
+
+<h2 id="모델마다-다른값으로-변경할떄">모델마다 다른값으로 변경할떄</h2>
 
 <p>모델에따라 변경하고 싶을때는 model_name이하에 재정의하면 해당모델의 버튼 텍스트가 model_name이하에 정의한 부분으로 적용된다.</p>
 
@@ -210,25 +224,27 @@
         <span class="na">update</span><span class="pi">:</span> <span class="s">변경</span>
 </code></pre></div></div>
 
-<h1 id="postupdate후-flash메시지-공통정의-하는방법">post,update후 flash메시지 공통정의 하는방법</h1>
+<h2 id="memo">memo</h2>
+
+<h3 id="1-postupdate후-flash메시지-공통정의-하는방법">1. post,update후 flash메시지 공통정의 하는방법</h3>
 
 <p><a href="https://github.com/heartcombo/responders">responders</a> gem을 이용</p>
 
-<h1 id="yesno는-더블-쿼테이션이-반드시-필요함">Yes,No는 더블 쿼테이션이 반드시 필요함</h1>
+<h3 id="2-yesno는-더블-쿼테이션이-반드시-필요함">2. Yes,No는 더블 쿼테이션이 반드시 필요함</h3>
 
-<h3 id="동작안함">동작안함</h3>
+<h4 id="동작안함">동작안함</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Yes: 예
+No: 아니오
+</code></pre></div></div>
+
+<h4 id="동작함">동작함</h4>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Yes": 예
 "No": 아니오
 </code></pre></div></div>
 
-<h3 id="동작함">동작함</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Yes": 예
-"No": 아니오
-</code></pre></div></div>
-
-<h3 id="reference">reference:</h3>
+<hr />
 
 <p><a href="https://qiita.com/tomomomo1217/items/858f290a0dc1a817985c">Link</a>
 <a href="https://stackoverflow.com/questions/2522422/converting-a-javascript-string-to-a-html-object">Link2</a>
