@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7에서 tailwind-css인스톨 방법" />
+    <meta property="og:title" content="rails7 hotwire이란?" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/how-to-install-tailwindcss" />
+    <meta property="og:url" content="/archive/hotwire-rails7" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7에서 tailwind-css인스톨 방법 - Negabaro`s Blog</title>
+    <title>rails7 hotwire이란? - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/how-to-install-tailwindcss">
+    <link rel="canonical" href="/archive/hotwire-rails7">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,11 +101,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7에서 tailwind-css인스톨 방법</h1>
+                    <h1>rails7 hotwire이란?</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 24, 2023
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 3, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/hotwire"><i class="fa fa-tag"></i> rails/hotwire</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
@@ -122,101 +122,101 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>rails7에서 css템플릿인 tailwind-css를 추가하는 방법에 대해 정리해봤다.</p>
+                <h2 id="hotwire이란rails7-hotwire이란">hotwire이란?(rails7 hotwire이란?)</h2>
 
-<h2 id="how-to-install">how to install</h2>
+<p>BaseCamp에서 발표한 모던Web개발을 위한 어프로치이다.(모바일 개발에 대한 어프로치도 있는데 아직 미공개)</p>
 
-<h3 id="add-tailwind">add tailwind</h3>
+<p>DHH의 새로운 프로젝트로 javascript사용을 극도로 제한해서 모던한 프론트 구현을 하는것이 특징</p>
 
-<h4 id="새로운-프로젝트일-경우">새로운 프로젝트일 경우</h4>
+<p>Hotwire자체는「HTML-over-the-wire」이라는 포괄적인 컨셉일뿐
+모던 웹개발을 위한 기능들은 필요에 따라 Hotwire내에 있는 turbo,stimulus등을 조합해서 개발</p>
 
-<p>새로 프로젝트를 만들경우 <code class="language-plaintext highlighter-rouge">--css</code>지정으로 간단히 css template를 추가할 수 있게되었다.</p>
+<h3 id="기존의-방법과-뭐가-좋은가">기존의 방법과 뭐가 좋은가?</h3>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">new</span> <span class="n">myapp</span> <span class="o">--</span><span class="n">css</span> <span class="n">tailwind</span>
+<p>js코드량이 줄어 빠르게 모던웹 개발이 가능</p>
+
+<h3 id="기존의-방법과-뭐가-틀린가">기존의 방법과 뭐가 틀린가?</h3>
+
+<p>기존의 웹개발은 SPA에서 API를 호출해서 받아온 정보를 통해 랜더링을 한다 거기에 반해 hotwire에서는 HTML을 직접 전송해서 iframe같은 영역을 바꿔치기 하는 방식에 가까움</p>
+
+<p>빠른 페이지로딩, 서버 렌더링, SPA의 속도와 반응성을 희생하지 않으면서 서버쪽에서 다양한 언어 사용 가능</p>
+
+<h3 id="언제-쓰면-좋은가">언제 쓰면 좋은가?</h3>
+
+<p>Progressive Enhancement한 개발을 하고 싶을때
+빠르게 초기개발해서 유저반응을 보고 서비스를 발전/폐기 시킬때 유용
+초기 스타트업에 유용
+혼자 개발할때 유용(사이드 프로젝트 개발)</p>
+
+<h3 id="처음부터-reactvue쓰면-되잖아">처음부터 react,vue쓰면 되잖아?</h3>
+
+<p>vue,react를 사용하면 어떤 사양이라도 모던한 웹 개발이 가능하다는 장점이 있는 반면, 
+적어야 하는 코드량, 환경구축(webpack, api서버,인증 등)의 코스트가 발생함.</p>
+
+<p>필자의 경험상 js로 인한 운영코스트(버그수정, 테스트코드 작성)가 어마어마함</p>
+
+<p>특히 비지니스적으로 가능성이 있는지 검증되지 않는 상태에서 이 코스트를 안고 가는건 리스크</p>
+
+<p>이때, hotwire을 이용하면 js코드량이 줄어들고,환경구축 비용이 들지 않기 때문에 로우 리스크로 웹 개발을 진행할 수 있음.</p>
+
+<p>특히 빠르게 초기 릴리스해서 비지니스적 수요를 확인할때 유용함.</p>
+
+<p>비지니스적 요건이 있는걸 확인후 클라이언트 단에서 복잡한 상태처리/유저경험을 필요로 한다면 SPA를 도입하면됨.</p>
+
+<h3 id="hotwire안에-속한개념기능">hotwire안에 속한개념/기능</h3>
+
+<p>turbo,stimulus라는게 있고 turbo안에 아래 4가지 기능이 있음</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Turbo Drive
+2. Turbo Frames
+3. Turbo Streams
+4. Turbo Native
 </code></pre></div></div>
 
-<h4 id="기존-프로젝트일경우">기존 프로젝트일경우</h4>
+<p>기능에 대한 설명은 다른 포스트에서 하겠지만 위 기능등을 조합해서 모던웹 개발이 가능</p>
 
-<p>기존 프로젝트일경우 아래와 같이 추가해주자</p>
+<h3 id="비슷한-컨셉">비슷한 컨셉</h3>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'cssbundling-rails'</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">css</span><span class="ss">:install:tailwind</span>
-<span class="n">gem</span> <span class="s2">"tailwindcss-rails"</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:install</span>
-<span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:build</span>
-</code></pre></div></div>
+<p>Phoenix LiveView(Elixir)
+Laravel Livewire(PHP)
+StimulusReflex
+React Server Components</p>
 
-<h3 id="서버기동">서버기동</h3>
+<h3 id="아래와-같은-서버사이드-언에서도-사용가능">아래와 같은 서버사이드 언에서도 사용가능</h3>
 
-<p>webpack대신 tailwindcss:watch라는 커맨드를 기동해줘야한다.</p>
+<p>Phoenix
+https://github.com/en30/hotwire-phoenix-demo-chat
+Django
+https://github.com/hotwire-django/turbo-django
+Laravel
+https://github.com/tonysm/turbo-laravel
+정적 사이트에서도 Turbo Drive, Turbo Frames는 바로 사용가능</p>
 
-<p>즉 아래 2개의 커맨드를 실행할 필요가 있다.</p>
+<h3 id="hotwire도입시-주의해야할점">hotwire도입시 주의해야할점??</h3>
 
-<p><code class="language-plaintext highlighter-rouge">bundle exec rails s</code> + <code class="language-plaintext highlighter-rouge">bin/rails tailwindcss:watch</code>
-필자의 경우 supervisord를 이용해 위 2개의 커맨드를 실행,관리해주었다.</p>
+<p>turbo_frame내에서 link_to,form사용시 통상적인 동작과 다른경우가 많음
+예를들어 method,confirm사용하면 동작안하고 data-turbo-confirm, data-turbo-method 이런식으로 써줘야 한다던가
+link_to로 다른 페이지로 이동시 <code class="language-plaintext highlighter-rouge">data-turbo-frame="\_top"</code> or <code class="language-plaintext highlighter-rouge">target=”\_blank”</code> 같이 써줘야 한다던가</p>
 
-<h3 id="동작확인">동작확인</h3>
+<p>이 부분은 여러검증&amp;조사를 통해 체크해야할 부분</p>
 
-<p>아래와 같은 scaffold를 실행후 /posts 억세스 해보면 tailwindcss가 적용된 화면 확인이 가능했다.</p>
-
-<p><a href="https://gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c"><img src="https://i.gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c.gif" alt="Image from Gyazo" /></a></p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">scaffold</span> <span class="n">post</span> <span class="nb">name</span><span class="ss">:string</span> <span class="n">limit</span><span class="ss">:date</span>
-</code></pre></div></div>
-
-<p>create 버튼이 하얀색이라 잘 안보임.</p>
+<p>영어 자료도 꽤 부족하고 최신기술이기 떄문에 chatGPT를 너무 신용하지 말것</p>
 
 <h2 id="memo">memo</h2>
 
-<h3 id="1">1.</h3>
+<h3 id="1-link_to-delete사용시-주의">1. link_to DELETE사용시 주의</h3>
 
-<p>얼마전만해도 <code class="language-plaintext highlighter-rouge">yarn add tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9</code> 등등 설치할것도 많고 postcss7이 버전의존성이 있어 설치가 까다로웠었는데 엄청 심플해졌다.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= link_to t("sign_out"), sign_out_path, method: :delete %&gt;
+</span></code></pre></div></div>
 
-<p>webpack실행할 필요도 없고 (bin/rails tailwindcss:watch는 필요)</p>
+<p>동작안함</p>
 
-<h3 id="2">2.</h3>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= link_to t("sign_out"), sign_out_path, data: { turbo_method: :delete } %&gt;
+</span></code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">bin/rails css:install:tailwind</code>은
-실행환경에 nodejs가 있다는 전제하에 움직인다.
-필자의 경우 alpine에서 실행했는데 node.js가 없어서 아래 커맨드로 추가해줬다.</p>
+<p>으로 적어줘야 동작함</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apk add --update nodejs npm
-</code></pre></div></div>
-
-<h3 id="3">3.</h3>
-
-<p>필자가 사용하는 supervisord.conf설정</p>
-
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">program</span>:<span class="n">rails</span>]
-<span class="n">command</span>=<span class="n">bundle</span> <span class="n">exec</span> <span class="n">puma</span>
-<span class="c">#command=bundle exec rails s -b 0.0.0.0
-</span><span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-
-
-[<span class="n">program</span>:<span class="n">css</span>]
-<span class="n">command</span>=<span class="n">bin</span>/<span class="n">rails</span> <span class="n">tailwindcss</span>:<span class="n">watch</span>
-<span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-</code></pre></div></div>
-
-<h2 id="references">references</h2>
+<hr />
 
 
                 <br>
@@ -227,7 +227,7 @@
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/how-to-install-tailwindcss"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/hotwire-rails7"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -238,12 +238,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/how-to-install-ransack" data-toggle="tooltip" data-placement="top" title="Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기">&larr; Previous Post</a>
+                        <a href="/archive/how-to-install-tailwindcss" data-toggle="tooltip" data-placement="top" title="Rails7에서 tailwind-css인스톨 방법">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/archive/hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 hotwire이란?">Next Post &rarr;</a>
+                        <a href="/archive/stimulus-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 Hotwire Stimulus란?">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

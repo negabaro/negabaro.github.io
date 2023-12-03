@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7에서 tailwind-css인스톨 방법" />
+    <meta property="og:title" content="strada란?(Rails7 hotwire strada란?)" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/how-to-install-tailwindcss" />
+    <meta property="og:url" content="/archive/strada-hotwire-rails7" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7에서 tailwind-css인스톨 방법 - Negabaro`s Blog</title>
+    <title>strada란?(Rails7 hotwire strada란?) - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/how-to-install-tailwindcss">
+    <link rel="canonical" href="/archive/strada-hotwire-rails7">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,15 +101,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7에서 tailwind-css인스톨 방법</h1>
+                    <h1>strada란?(Rails7 hotwire strada란?)</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 24, 2023
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 3, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/hotwire"><i class="fa fa-tag"></i> rails/hotwire</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        2 minute read
+                        1 minute read
                     </span>
                 </div>
             </div>
@@ -122,101 +122,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>rails7에서 css템플릿인 tailwind-css를 추가하는 방법에 대해 정리해봤다.</p>
+                <h2 id="stradarails7-hotwire-strada">strada(rails7 hotwire strada)</h2>
 
-<h2 id="how-to-install">how to install</h2>
+<p>Hotwire을 구성하는 하나의 요소</p>
 
-<h3 id="add-tailwind">add tailwind</h3>
+<p>Hotwire Turbo Native과 함께 모바일 어플리에키션을 개발할때 사용한다.</p>
 
-<h4 id="새로운-프로젝트일-경우">새로운 프로젝트일 경우</h4>
+<p>현재는 미발표 기술이라고하고 baseCamp내부에서 사용중이라고 함.(HEY어플에서는 사용중이라고)</p>
 
-<p>새로 프로젝트를 만들경우 <code class="language-plaintext highlighter-rouge">--css</code>지정으로 간단히 css template를 추가할 수 있게되었다.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">new</span> <span class="n">myapp</span> <span class="o">--</span><span class="n">css</span> <span class="n">tailwind</span>
-</code></pre></div></div>
-
-<h4 id="기존-프로젝트일경우">기존 프로젝트일경우</h4>
-
-<p>기존 프로젝트일경우 아래와 같이 추가해주자</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'cssbundling-rails'</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">css</span><span class="ss">:install:tailwind</span>
-<span class="n">gem</span> <span class="s2">"tailwindcss-rails"</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:install</span>
-<span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:build</span>
-</code></pre></div></div>
-
-<h3 id="서버기동">서버기동</h3>
-
-<p>webpack대신 tailwindcss:watch라는 커맨드를 기동해줘야한다.</p>
-
-<p>즉 아래 2개의 커맨드를 실행할 필요가 있다.</p>
-
-<p><code class="language-plaintext highlighter-rouge">bundle exec rails s</code> + <code class="language-plaintext highlighter-rouge">bin/rails tailwindcss:watch</code>
-필자의 경우 supervisord를 이용해 위 2개의 커맨드를 실행,관리해주었다.</p>
-
-<h3 id="동작확인">동작확인</h3>
-
-<p>아래와 같은 scaffold를 실행후 /posts 억세스 해보면 tailwindcss가 적용된 화면 확인이 가능했다.</p>
-
-<p><a href="https://gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c"><img src="https://i.gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c.gif" alt="Image from Gyazo" /></a></p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">scaffold</span> <span class="n">post</span> <span class="nb">name</span><span class="ss">:string</span> <span class="n">limit</span><span class="ss">:date</span>
-</code></pre></div></div>
-
-<p>create 버튼이 하얀색이라 잘 안보임.</p>
-
-<h2 id="memo">memo</h2>
-
-<h3 id="1">1.</h3>
-
-<p>얼마전만해도 <code class="language-plaintext highlighter-rouge">yarn add tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9</code> 등등 설치할것도 많고 postcss7이 버전의존성이 있어 설치가 까다로웠었는데 엄청 심플해졌다.</p>
-
-<p>webpack실행할 필요도 없고 (bin/rails tailwindcss:watch는 필요)</p>
-
-<h3 id="2">2.</h3>
-
-<p><code class="language-plaintext highlighter-rouge">bin/rails css:install:tailwind</code>은
-실행환경에 nodejs가 있다는 전제하에 움직인다.
-필자의 경우 alpine에서 실행했는데 node.js가 없어서 아래 커맨드로 추가해줬다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apk add --update nodejs npm
-</code></pre></div></div>
-
-<h3 id="3">3.</h3>
-
-<p>필자가 사용하는 supervisord.conf설정</p>
-
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">program</span>:<span class="n">rails</span>]
-<span class="n">command</span>=<span class="n">bundle</span> <span class="n">exec</span> <span class="n">puma</span>
-<span class="c">#command=bundle exec rails s -b 0.0.0.0
-</span><span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-
-
-[<span class="n">program</span>:<span class="n">css</span>]
-<span class="n">command</span>=<span class="n">bin</span>/<span class="n">rails</span> <span class="n">tailwindcss</span>:<span class="n">watch</span>
-<span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-</code></pre></div></div>
-
-<h2 id="references">references</h2>
+<hr />
 
 
                 <br>
@@ -227,7 +141,7 @@
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/how-to-install-tailwindcss"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/strada-hotwire-rails7"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -238,12 +152,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/how-to-install-ransack" data-toggle="tooltip" data-placement="top" title="Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기">&larr; Previous Post</a>
+                        <a href="/archive/stimulus-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 Hotwire Stimulus란?">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/archive/hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 hotwire이란?">Next Post &rarr;</a>
+                        <a href="/archive/turbo-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 turbo란?(Rails7 hotwire turbo란?)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

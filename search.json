@@ -1,10 +1,46 @@
 [
   
     {
+      "title"    : "Rails7 hotwire Turbo Native란?",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/turbo-native-hotwire-rails7",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "rails7 turbo란?(Rails7 hotwire turbo란?)",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/turbo-hotwire-rails7",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "strada란?(Rails7 hotwire strada란?)",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/strada-hotwire-rails7",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails7 Hotwire Stimulus란?",
       "category" : "",
       "tags"     : "rails/hotwire",
       "url"      : "//archive/stimulus-hotwire-rails7",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "rails7 hotwire이란?",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/hotwire-rails7",
       "date"     : "Sunday, December 3, 2023",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,

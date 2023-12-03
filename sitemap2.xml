@@ -2,7 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://negabaro.github.io/archive/turbo-native-hotwire-rails7</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/turbo-hotwire-rails7</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/strada-hotwire-rails7</loc>
+    </url>
+    
+    <url>
         <loc>https://negabaro.github.io/archive/stimulus-hotwire-rails7</loc>
+    </url>
+    
+    <url>
+        <loc>https://negabaro.github.io/archive/hotwire-rails7</loc>
     </url>
     
     <url>

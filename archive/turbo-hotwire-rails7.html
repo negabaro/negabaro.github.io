@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7에서 tailwind-css인스톨 방법" />
+    <meta property="og:title" content="rails7 turbo란?(Rails7 hotwire turbo란?)" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/how-to-install-tailwindcss" />
+    <meta property="og:url" content="/archive/turbo-hotwire-rails7" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7에서 tailwind-css인스톨 방법 - Negabaro`s Blog</title>
+    <title>rails7 turbo란?(Rails7 hotwire turbo란?) - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/how-to-install-tailwindcss">
+    <link rel="canonical" href="/archive/turbo-hotwire-rails7">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,11 +101,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7에서 tailwind-css인스톨 방법</h1>
+                    <h1>rails7 turbo란?(Rails7 hotwire turbo란?)</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Wednesday, May 24, 2023
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 3, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails"><i class="fa fa-tag"></i> rails</a> <a href="/archive/tags/handson"><i class="fa fa-tag"></i> handson</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/hotwire"><i class="fa fa-tag"></i> rails/hotwire</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
@@ -122,101 +122,96 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>rails7에서 css템플릿인 tailwind-css를 추가하는 방법에 대해 정리해봤다.</p>
+                <h2 id="turbo">turbo</h2>
 
-<h2 id="how-to-install">how to install</h2>
+<p>Hotwire을 구성하는 세가지 요소중 하나</p>
 
-<h3 id="add-tailwind">add tailwind</h3>
+<p>Turbo를 사용하면 js을 쓰지않고 SPA어플리에키션을 개발할 수 있음.</p>
 
-<h4 id="새로운-프로젝트일-경우">새로운 프로젝트일 경우</h4>
+<p>Turbo는 아래 4개기능으로 나눠짐</p>
 
-<p>새로 프로젝트를 만들경우 <code class="language-plaintext highlighter-rouge">--css</code>지정으로 간단히 css template를 추가할 수 있게되었다.</p>
+<ol>
+  <li>Turbo Drive</li>
+  <li>Turbo Frames</li>
+  <li>Turbo Streams</li>
+  <li>Turbo Native</li>
+</ol>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">new</span> <span class="n">myapp</span> <span class="o">--</span><span class="n">css</span> <span class="n">tailwind</span>
-</code></pre></div></div>
+<p>사용빈도로서는 Turbo Frames &gt; Turbo Streams &gt; Turbo Drive인듯</p>
 
-<h4 id="기존-프로젝트일경우">기존 프로젝트일경우</h4>
+<p>Turbo Native는 모바일 어플개발때만 사용</p>
 
-<p>기존 프로젝트일경우 아래와 같이 추가해주자</p>
+<h3 id="1-turbo-drive">1. Turbo Drive</h3>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'cssbundling-rails'</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">css</span><span class="ss">:install:tailwind</span>
-<span class="n">gem</span> <span class="s2">"tailwindcss-rails"</span>
-<span class="n">bin</span><span class="o">/</span><span class="n">bundle</span> <span class="n">install</span>
-<span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:install</span>
-<span class="n">rails</span> <span class="n">tailwindcss</span><span class="ss">:build</span>
-</code></pre></div></div>
+<p>Turbo Drive는 화면이동시 속도를 올려주는 기능으로 이전에 Turbolinks라는 이름으로 쓰여왔음
+퍼포먼스 관련 기능으로 보면됨</p>
 
-<h3 id="서버기동">서버기동</h3>
+<p>구체적으로는</p>
 
-<p>webpack대신 tailwindcss:watch라는 커맨드를 기동해줘야한다.</p>
+<p>・브라우저 이동하지 않고 javascript fetch
+・레스폰스의 html로 부터 head내에 필요한 부분 처리
+・body에서 필요한 부분만 바꿔줌
+・History API로 location갱신</p>
 
-<p>즉 아래 2개의 커맨드를 실행할 필요가 있다.</p>
+<p>등으로 SPA와 같이 화면전이가 가능하게 함</p>
 
-<p><code class="language-plaintext highlighter-rouge">bundle exec rails s</code> + <code class="language-plaintext highlighter-rouge">bin/rails tailwindcss:watch</code>
-필자의 경우 supervisord를 이용해 위 2개의 커맨드를 실행,관리해주었다.</p>
+<p>한계로는 페이지의 특정 부분만 갱신하는 기능은 없음(Turbo Frame,Streams이 해줌)</p>
 
-<h3 id="동작확인">동작확인</h3>
+<h3 id="2-turbo-frames">2. Turbo Frames</h3>
 
-<p>아래와 같은 scaffold를 실행후 /posts 억세스 해보면 tailwindcss가 적용된 화면 확인이 가능했다.</p>
+<p>Turbo Drive에서 불가능했던 부분적 갱신이 가능함
+페이지 일부분의 지연읽기 기능이 가능</p>
 
-<p><a href="https://gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c"><img src="https://i.gyazo.com/3ce7f97a3395ec9ce24b6fb2434eb44c.gif" alt="Image from Gyazo" /></a></p>
+<p>한계로는 link,form등 송신처리에 기인한 돔처리 불가능
+예를들어 POST후 특정돔을 삭제하고 싶다던가.(이때는 Turbo Streams을 활용해야함)
+복수의 dom을 동시 갱신 불가능(Turbo Streams으로 해결가능?)</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">scaffold</span> <span class="n">post</span> <span class="nb">name</span><span class="ss">:string</span> <span class="n">limit</span><span class="ss">:date</span>
-</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">&lt;turbo-frame&gt;</code>으로 선언한 부분만 갱신해줌</p>
 
-<p>create 버튼이 하얀색이라 잘 안보임.</p>
+<h3 id="3-turbo-streams">3. Turbo Streams</h3>
+
+<p>Turbo Frames보다 유연하게 DOM조작이 가능하다.
+예를들어 POST후 특정돔을 삭제/수정 하게 한다거나</p>
+
+<p>append,prepend,replace,remove등의 action도 존재해 특정dom에 추가하는것도 가능</p>
+
+<p>Turbo Streams을 사용해 DOM조작을 하는건 2가지 패턴이 있음</p>
+
+<p>form송신등 Turbo를 이용한 HTTP리퀘스트 레스폰스MIME type이 Turbo Stream인 경우
+Turbo Streams에 접속한 source가 메시지를 받았을때(WebSocket, Sever Sent Events, Web Push등을 활용)</p>
+
+<p>Turbo Stream을 이용하면 리얼타임 갱신이 필요한경우도 대응이 가능</p>
+
+<h4 id="4-turbo-native">4. Turbo Native</h4>
+
+<p>모바일 어플개발시 사용.
+이 포스트에서는 생략</p>
+
+<p>여기까지 hotwire의 핵심 기능중 하나인 turbo에 대해 간단히 알아봤다.</p>
 
 <h2 id="memo">memo</h2>
 
-<h3 id="1">1.</h3>
+<h3 id="websocket을-사용하는-부분">WebSocket을 사용하는 부분</h3>
 
-<p>얼마전만해도 <code class="language-plaintext highlighter-rouge">yarn add tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9</code> 등등 설치할것도 많고 postcss7이 버전의존성이 있어 설치가 까다로웠었는데 엄청 심플해졌다.</p>
+<p>Hotwire은 Websocket을 사용한다는 글을 본적이 있는데</p>
 
-<p>webpack실행할 필요도 없고 (bin/rails tailwindcss:watch는 필요)</p>
+<p><code class="language-plaintext highlighter-rouge">Turbo Streams</code>외에는 관계없음 <code class="language-plaintext highlighter-rouge">Turbo Streams</code>을 안쓴다면 websocket을 안쓰는거고
+<code class="language-plaintext highlighter-rouge">Turbo Streams</code>을 사용한다고 해서 무조건 websocket을 사용하는것도 아님</p>
 
-<h3 id="2">2.</h3>
-
-<p><code class="language-plaintext highlighter-rouge">bin/rails css:install:tailwind</code>은
-실행환경에 nodejs가 있다는 전제하에 움직인다.
-필자의 경우 alpine에서 실행했는데 node.js가 없어서 아래 커맨드로 추가해줬다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apk add --update nodejs npm
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Turbo Drive → 関係なし
+Turbo Frames → 関係なし
+Turbo Streams → 使う可能性がある
+Turbo Native → 関係なし
+Stimulus → 関係なし
+Strada → 未公開だけどかなりの確度で関係なし
 </code></pre></div></div>
 
-<h3 id="3">3.</h3>
+<p>もし Rails で turbo-rails を使い、turbo_stream_from を使うなら、ActionCable が使われているので WebSocket を使うことになる。
+しかし、Turbo Streams 自体は WebSocket であることを要求していないので、サーバからのプッシュで更新したいという場合でも Server Sent Events でも Web Push でもよい。</p>
 
-<p>필자가 사용하는 supervisord.conf설정</p>
-
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">program</span>:<span class="n">rails</span>]
-<span class="n">command</span>=<span class="n">bundle</span> <span class="n">exec</span> <span class="n">puma</span>
-<span class="c">#command=bundle exec rails s -b 0.0.0.0
-</span><span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-
-
-[<span class="n">program</span>:<span class="n">css</span>]
-<span class="n">command</span>=<span class="n">bin</span>/<span class="n">rails</span> <span class="n">tailwindcss</span>:<span class="n">watch</span>
-<span class="n">user</span>=<span class="n">root</span>
-<span class="n">stdout_logfile</span>=/<span class="n">dev</span>/<span class="n">stdout</span>
-<span class="n">stdout_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">stderr_logfile</span>=/<span class="n">dev</span>/<span class="n">stderr</span>
-<span class="n">stderr_logfile_maxbytes</span>=<span class="m">0</span>
-<span class="n">autostart</span>=<span class="n">true</span>
-<span class="n">autorestart</span>=<span class="n">true</span>
-<span class="n">redirect_stderr</span>=<span class="n">true</span>
-<span class="n">exitcodes</span>=<span class="m">1</span>
-</code></pre></div></div>
-
-<h2 id="references">references</h2>
+<p>↓ 実際に WebSocket ではないもので、Turbo Streams を使っている例
+https://zenn.dev/en30/articles/ca5329390aeb20
+—</p>
 
 
                 <br>
@@ -227,7 +222,7 @@
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/how-to-install-tailwindcss"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/turbo-hotwire-rails7"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -238,12 +233,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/how-to-install-ransack" data-toggle="tooltip" data-placement="top" title="Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기">&larr; Previous Post</a>
+                        <a href="/archive/strada-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="strada란?(Rails7 hotwire strada란?)">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/archive/hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 hotwire이란?">Next Post &rarr;</a>
+                        <a href="/archive/turbo-native-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="Rails7 hotwire Turbo Native란?">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
