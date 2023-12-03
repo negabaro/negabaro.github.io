@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        2 minute read
+                        1 minute read
                     </span>
                 </div>
             </div>
@@ -198,21 +198,15 @@ Turbo Streams에 접속한 source가 메시지를 받았을때(WebSocket, Sever 
 <p><code class="language-plaintext highlighter-rouge">Turbo Streams</code>외에는 관계없음 <code class="language-plaintext highlighter-rouge">Turbo Streams</code>을 안쓴다면 websocket을 안쓰는거고
 <code class="language-plaintext highlighter-rouge">Turbo Streams</code>을 사용한다고 해서 무조건 websocket을 사용하는것도 아님</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Turbo Drive → 関係なし
-Turbo Frames → 関係なし
-Turbo Streams → 使う可能性がある
-Turbo Native → 関係なし
-Stimulus → 関係なし
-Strada → 未公開だけどかなりの確度で関係なし
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Turbo Drive → 관계없음
+Turbo Frames → 관계없음
+Turbo Streams → 관계가 있을지도
+Turbo Native → 관계없음
+Stimulus → 관계없음
+Strada → 미공개지만 관계없음
 </code></pre></div></div>
 
-<p>もし Rails で turbo-rails を使い、turbo_stream_from を使うなら、ActionCable が使われているので WebSocket を使うことになる。
-しかし、Turbo Streams 自体は WebSocket であることを要求していないので、サーバからのプッシュで更新したいという場合でも Server Sent Events でも Web Push でもよい。</p>
-
-<p>↓ 実際に WebSocket ではないもので、Turbo Streams を使っている例
-https://zenn.dev/en30/articles/ca5329390aeb20
-—</p>
-
+<hr />
 
                 <br>
                 <!-- _includes/utterances-comment.html -->

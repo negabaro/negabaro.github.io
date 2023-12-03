@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        4 minute read
+                        5 minute read
                     </span>
                 </div>
             </div>
@@ -233,27 +233,54 @@ ex) button클릭시 이러한 dom이 되어야함 같은 경우 button클릭시�
 
 <p>을 추가해서</p>
 
-<p><button id="1" data-action="click-&gt;button#next">1</button></p>
-
-<p>Stimulus をクリックした要素を取得する方法</p>
-
-<p>Rails7 でデフォルトでインストールされるようになった Stimulus でクリックした要素を取得する方法を忘備録として残しておきます。</p>
-
-<p>ボタンが４つあり特定のボタンをクリックした時だけ、アクションを発動させる時、通常なら data-target を利用することで javascript 側で要素を取得できます。
-ですが、それが使えないときは Stimulus のメソッドの引数を利用することで取得できます。</p>
-
-<p>button.html</p>
-
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">data-controller=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"1"</span> <span class="na">data-action=</span><span class="s">"click-&gt;search-form#submit"</span><span class="nt">&gt;</span>search<span class="nt">&lt;/button&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 <p>이런식으로 기술해주고 버튼을 클릭하면 위에 선언한 submit()이 호출된다.
-coffie script냄새가 나는 문법인데
+coffie script향기가 나는 문법인데
 <code class="language-plaintext highlighter-rouge">click-&gt;</code>부분이 사용할 이벤트이다. <code class="language-plaintext highlighter-rouge">hover-&gt;</code>이런식으로도 사용가능함.
 <code class="language-plaintext highlighter-rouge">search-form</code>부분이 register시 등록한 부분 <code class="language-plaintext highlighter-rouge">#submit</code>이 해당 controller에서 선언된 함수명이다.</p>
 
 <h2 id="memo">memo</h2>
+
+<h3 id="applicationregister없이-등록하는-방법">application.register없이 등록하는 방법</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">SearchFormController</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./search_form_controller</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">application</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="dl">"</span><span class="s2">search-form</span><span class="dl">"</span><span class="p">,</span> <span class="nx">SearchFormController</span><span class="p">);</span>
+</code></pre></div></div>
+<p>매번 등록하는게 귀찮을때 아래와 같이 설정해주는 방법도 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">eagerLoadControllersFrom</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@hotwired/stimulus-loading</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">eagerLoadControllersFrom</span><span class="p">(</span><span class="dl">"</span><span class="s2">controllers</span><span class="dl">"</span><span class="p">,</span> <span class="nx">application</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>eagerLoadControllersFrom을 사용하면 file명을 보고 controller명을 유추해낸다.
+예를들어 <code class="language-plaintext highlighter-rouge">app/javascript/controllers/search_form2_controller.js</code> 이면
+controller에 search-form2를 지정해주면 attach가 가능</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= search_form_for @q, url: root_path,
+    data: {
+      turbo_frame: "search_results_ptRAgvtb",
+      controller: "search-form2",
+      action: "input-&gt;search-form2#submit"
+    } do |f| %&gt;
+</span></code></pre></div></div>
+
+<p>주의할점은 파일명 바꾸줬을때 재기동이 필요하다. 재기동 안하면 인식 안하는듯</p>
+
+<h3 id="controller와-action양쪽에-선언해줘야함">controller와 action양쪽에 선언해줘야함</h3>
+
+<p>왜 둘다 써줘야되지 싶은데 어느 한쪽이라도 없으면 attach동작 안함..
+controller,action양쪽에 컨트롤러명(<code class="language-plaintext highlighter-rouge">search-form</code>)을 선언해주자</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= search_form_for @q, url: root_path,
+    data: {
+      turbo_frame: "search_results_ptRAgvtb",
+      controller: "search-form",
+      action: "input-&gt;search-form#submit"
+    } do |f| %&gt;
+</span></code></pre></div></div>
 
 <h3 id="stimulus의미는">stimulus의미는?</h3>
 
