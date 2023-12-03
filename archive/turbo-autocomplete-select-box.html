@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   __ ___   __  __               __
+  / // (_) / /_/ /  ___ _______ / /
+ / _  / / / __/ _ \/ -_) __/ -_)_/ 
+/_//_/_/  \__/_//_/\__/_/  \__(_)  
+
+  _      ____        __                                              __     ___ 
+ | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
+ | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
+ |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
+                                       /___/                /_/                 
+-->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+
+    <meta property="og:title" content="rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="/archive/turbo-autocomplete-select-box" />
+    <meta property="og:site_name" content="Negabaro`s Blog" />
+    <meta property="og:image" content="" />
+
+    <title>rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법 - Negabaro`s Blog</title>
+
+    <link rel="canonical" href="/archive/turbo-autocomplete-select-box">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/archive/">archive</a>
+                </li>
+                <li>
+                    <a href="/category/">category</a>
+                </li>
+                <li>
+                    <a href="/about/">about</a>
+                </li>
+                <li>
+                    <a href="/search/" class="nav-search-link" title="SEARCH">
+                        <span class="fa fa-search nav-search-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
+                        <span class="fa fa-rss nav-rss-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법</h1>
+                    
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 3, 2023
+                    </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/hotwire"><i class="fa fa-tag"></i> rails/hotwire</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'>
+                        
+                        <i class="fa fa-clock-o"></i>&nbsp;
+                        4 minute read
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>hotwire(turbo-stream,turbo-frame,stimuls)를 이용해 자동완성 셀렉트폼을 구현하는 방법을 알아보자.</p>
+
+<p><img src="https://github.com/negabaro/rails7-turbo-autocomplete-select-box/assets/4640346/d8f03d3d-cb9a-4a89-b9b8-af9af8db3b62" alt="77696d049e762090792ac6f9bb187ab5" /></p>
+
+<p><img src="https://github.com/negabaro/rails7-turbo-autocomplete-select-box/assets/4640346/bbfb06a1-5b44-4c2e-a311-d61c6409f687" alt="12cc8417d65f1eeb1915cb39e29474f6" /></p>
+
+<p>전체 코드는<a href="https://github.com/negabaro/rails7-turbo-autocomplete-select-box">rails7-turbo-autocomplete-select-box</a>을 참고</p>
+
+<p>크게 아래 4가지 챕터로 구현했다.</p>
+
+<ol>
+  <li>ransack으로 검색기능 구현</li>
+  <li>input이벤트시 -&gt; turbo_frame 사용(search_results_22222을 갱신)</li>
+  <li>자동완성된 내용을 선택시 update(patch) 발생 -&gt; turbo_stream으로 search_form_11111을 갱신</li>
+  <li>존재하지 않는 키워드 검색시 신규추가 버튼 클릭 -&gt; create(post) 발생 -&gt; turbo_stream으로 search_form_11111갱신</li>
+</ol>
+
+<p>텍스트 입력시 자동완성 부분만 turbo_frame으로 바꿔주고 자동완성된 내용중 선택시 update경유해서 turbo_stream으로 자동완성 + 검색 폼을 갱신 신규추가시에도 create경유해서 turbo_stream으로 동일하게 갱신해줬다.</p>
+
+<p>각 챕터별 핵심 구현 코드는 아래를 참고</p>
+
+<h3 id="1">1.</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'ransack'</span> <span class="o">-&gt;</span> <span class="n">bundle</span> <span class="n">i</span>
+<span class="vi">@qq</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">]</span>
+<span class="vi">@q</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">ransack</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">])</span>
+<span class="vi">@persons</span> <span class="o">=</span> <span class="vi">@q</span><span class="p">.</span><span class="nf">result</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">id: :desc</span><span class="p">)</span>
+<span class="vi">@assign_person</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">person</span>
+</code></pre></div></div>
+
+<h3 id="2">2.</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= turbo_frame_tag 'search_form_11111' do %&gt;
+&lt;%=</span> <span class="n">search_form_for</span> <span class="vi">@q</span><span class="p">,</span> <span class="ss">url: </span><span class="n">root_path</span><span class="p">,</span>
+    <span class="ss">data: </span><span class="p">{</span>
+      <span class="ss">turbo_frame: </span><span class="s2">"search_results_22222"</span><span class="p">,</span>
+      <span class="ss">controller: </span><span class="s2">"search-form"</span><span class="p">,</span>
+      <span class="ss">action: </span><span class="s2">"input-&gt;search-form#submit"</span>
+    <span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="sx">%&gt;
+
+&lt;div class="input-group"&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= f.search_field :name_cont, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md h-10", placeholder: "Search…", value: @assign_person.present? ? @assign_person.name : nil  %&gt;
+&lt;/div&gt;
+
+&lt;%=</span> <span class="n">turbo_frame_tag</span> <span class="s1">'search_results_22222'</span> <span class="k">do</span> <span class="sx">%&gt;
+ autocomplete되는 부분
+&lt;% end %&gt;</span>
+<span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Controller</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@hotwired/stimulus</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Connects to data-controller="search-form"</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="kd">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+  <span class="nx">submit</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">clearTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">requestSubmit</span><span class="p">();</span>
+    <span class="p">},</span> <span class="mi">200</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h3 id="3">3.</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= button_to person.name, post_assign_people_update_path(person), method: :patch, form: {data: {turbo_frame: "search_form_tQPUuzjH"}}  %&gt;
+</span></code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">update</span>
+    <span class="n">new_assign_person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:person_id</span><span class="p">])</span>
+
+    <span class="vi">@qq</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">]</span>
+    <span class="vi">@q</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">ransack</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">])</span>
+    <span class="vi">@persons</span> <span class="o">=</span> <span class="vi">@q</span><span class="p">.</span><span class="nf">result</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">id: :desc</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="no">Post</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">person: </span><span class="n">new_assign_person</span><span class="p">)</span>
+      <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">turbo_stream</span> <span class="k">do</span>
+          <span class="vi">@qq</span> <span class="o">=</span> <span class="kp">nil</span>
+          <span class="vi">@assign_person</span> <span class="o">=</span> <span class="n">new_assign_person</span>
+          <span class="n">render</span> <span class="ss">turbo_stream: </span><span class="n">turbo_stream</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s2">"search_form_11111"</span><span class="p">,</span> <span class="ss">partial: </span><span class="s2">"search/search_form_turbo"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">person: </span><span class="vi">@person</span> <span class="p">})</span>
+        <span class="k">end</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">html</span> <span class="p">{</span> <span class="n">redirect_to</span> <span class="n">root_path</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">else</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="4">4.</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= button_to post_assign_people_create_path, method: :post, params: { new_person: @qq[:name_cont] }, form: {data: {turbo_frame: "search_form_tQPUuzjH"}}, class: "flex items-center justify-center" do %&gt;
++
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@qq</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">]</span>
+    <span class="vi">@q</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">ransack</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:q</span><span class="p">])</span>
+    <span class="vi">@persons</span> <span class="o">=</span> <span class="vi">@q</span><span class="p">.</span><span class="nf">result</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">id: :desc</span><span class="p">)</span>
+
+    <span class="n">new_person_name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:new_person</span><span class="p">]</span>
+    <span class="n">new_person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="n">new_person_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="no">Post</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">person: </span><span class="n">new_person</span><span class="p">)</span>
+      <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">turbo_stream</span> <span class="k">do</span>
+          <span class="vi">@qq</span> <span class="o">=</span> <span class="kp">nil</span>
+          <span class="vi">@assign_person</span> <span class="o">=</span> <span class="n">new_person</span>
+          <span class="n">render</span> <span class="ss">turbo_stream: </span><span class="n">turbo_stream</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s2">"search_form_11111"</span><span class="p">,</span> <span class="ss">partial: </span><span class="s2">"search/search_form_turbo"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">person: </span><span class="vi">@person</span> <span class="p">})</span>
+        <span class="k">end</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">html</span> <span class="p">{</span> <span class="n">redirect_to</span> <span class="n">root_path</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">else</span>
+      <span class="c1"># エラーハンドリング</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<p>@qq가 nil이면 자동완성폼을 안보여주므로 create성공시 @qq = nil을 넣어주는게 포인트</p>
+
+
+                <br>
+                <!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/turbo-autocomplete-select-box"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+                
+                <br>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/archive/hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 hotwire이란?">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/archive/stimulus-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 Hotwire Stimulus란?">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/negabaro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="mailto:negabaro@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                
+                
+                    <br><br> Copyright &copy; negabaro 2023</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js"></script>
+
+
+</body>
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+    
+</html>

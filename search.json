@@ -37,6 +37,15 @@
     } ,
   
     {
+      "title"    : "rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/turbo-autocomplete-select-box",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "rails7 hotwire이란?",
       "category" : "",
       "tags"     : "rails/hotwire",

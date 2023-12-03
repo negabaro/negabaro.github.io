@@ -60,6 +60,19 @@
             </item>
         
             <item>
+                <title>rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법</title>
+                        
+                
+                    <description>&lt;p&gt;hotwire(turbo-stream,turbo-frame,stimuls)를 이용해 자동완성 셀렉트폼을 구현하는 방법을 알아보자.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Sun, 03 Dec 2023 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/turbo-autocomplete-select-box</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/turbo-autocomplete-select-box</guid>
+            </item>
+        
+            <item>
                 <title>rails7 hotwire이란?</title>
                         
                 
@@ -121,19 +134,6 @@
                 <pubDate>Mon, 01 May 2023 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/rails-devise-login-header</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/rails-devise-login-header</guid>
-            </item>
-        
-            <item>
-                <title>rails ActiveJob::SerializationError - Unsupported argument type에러</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;activejobserializationerror---unsupported-argument-type-xx&quot;&gt;ActiveJob::SerializationError - Unsupported argument type: xx&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Sat, 28 Jan 2023 00:00:00 -0600</pubDate>
-                <link>https://negabaro.github.io/archive/active-job-serialization-error</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/active-job-serialization-error</guid>
             </item>
         
     </channel>
