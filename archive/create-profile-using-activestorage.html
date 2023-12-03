@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        2 minute read
+                        3 minute read
                     </span>
                 </div>
             </div>
@@ -122,20 +122,35 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h1 id="active-storage란">active storage란</h1>
+                <h2 id="active-storage란">active storage란</h2>
+
+<h2 id="active_storage">active_storage</h2>
 
 <p>rails5.2부터 추가된 파일 업로드를 간단히 실행해주는 기능
 유사gem으로 paperclib,carrierwave 등이 있다.</p>
 
-<h1 id="설정방법">설정방법</h1>
+<h2 id="설정방법">설정방법</h2>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">active_storage</span><span class="ss">:install</span>
 <span class="n">rails</span> <span class="n">db</span><span class="ss">:migrate</span>
 </code></pre></div></div>
 
+<p>マイグレーションを実行すると以下 3 つのテーブルが作成されます。</p>
+
+<p>テーブル名 内容
+active_storage_blobs アップロードしたファイル（画像）を保存するテーブル（blob 型）
+active_storage_attachments アップロードしたファイルと Active Record を紐付けるための中間テーブル
+active_storage_variant_records アップロードしたファイルの Variant に関する情報を保存するテーブル</p>
+
+<p>blob とは】
+DB のデータ型の一つで、画像や音声、圧縮ファイルなどのデータを保存するためのもの。</p>
+
+<p>【variant とは】
+Rails の blob 型のデータに対して使えるメソッドの一つで、画像を呼び出したときに、ビューの中で画像サイズを変換することができる。</p>
+
 <h1 id="모델설정">모델설정</h1>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>  
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_one_attached</span> <span class="ss">:avatar</span>
 <span class="k">end</span>
 </code></pre></div></div>
@@ -144,6 +159,9 @@
 
 <p>avatar라는 컬럼을 따로 추가할 필요가 없고 모델에 <code class="language-plaintext highlighter-rouge">has_one_attached</code>를 추가해주기만 하면
 사용가능. :avatar말고 다른 이름으로 해도 됨.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>has_many_attached :images # ←複数枚画像の場合。1枚のみの場合は has_one_attached :image
+</code></pre></div></div>
 
 <h1 id="컨트롤러-설정">컨트롤러 설정</h1>
 
@@ -173,7 +191,7 @@ active storage를 이용시 variant를 이용해서 사이즈를 줄여준다든
 
 <h1 id="메모1vs-paperclipcarrierwave">메모1(vs paperclip,carrierwave)</h1>
 
-<p>paperclip,carrierwave와 비교하면 
+<p>paperclip,carrierwave와 비교하면
 rails default로 들어가 있어서 추가gem을 넣을 필요없음(도입이 간단)
 cache나varidation기능이 없음.</p>
 
@@ -227,11 +245,10 @@ Attachment모델은 Blob와Active Record간의 중간테이블 역할이다.</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">current_user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="n">combine_options</span><span class="p">:{</span><span class="n">resize</span><span class="ss">:'200x200'</span><span class="p">,</span><span class="n">border</span><span class="ss">:'5'</span><span class="p">,</span><span class="n">bordercolor</span><span class="ss">:'red'</span><span class="p">}).</span><span class="nf">processed</span>
 </code></pre></div></div>
 
-<h3 id="reference">reference:</h3>
+<h3 id="rails7에서의-active-storage">rails7에서의 Active Storage</h3>
+<p>Active Storageの画像処理でlibvipsを使用するように
+Active Storageで画像処理に使われるGemで、以前のバージョンではmini_magickが使用されていましたが、Rails 7からはvipsが標準になりました。</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://qiita.com/kazuomatz/items/3cdbd2c40576c2e9d89b
-https://qiita.com/hmmrjn/items/7cc5e5348755c517458a
-</code></pre></div></div>
 
                 <br>
                 <!-- _includes/utterances-comment.html -->

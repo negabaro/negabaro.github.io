@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "rails7 Hotwire Stimulus란?",
+      "category" : "",
+      "tags"     : "rails/hotwire",
+      "url"      : "//archive/stimulus-hotwire-rails7",
+      "date"     : "Sunday, December 3, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Rails7에서 tailwind-css인스톨 방법",
       "category" : "",
       "tags"     : "rails, handson",
@@ -1837,19 +1846,19 @@
     } ,
   
     {
-      "title"    : "리플리 증후군?? 꿈에서 본 내용을 실제라고 믿어버린 에피소드 두가지",
+      "title"    : "Rails6 devise &amp;&amp; omniauth &amp;&amp; google-oauth2를 이용해 인증로직을 구현해보자",
       "category" : "",
-      "tags"     : "philosophy",
-      "url"      : "//archive/Ripley-Syndrome-and-nightmare",
+      "tags"     : "rails, devise",
+      "url"      : "//archive/rails-devise-with-google-oauth2",
       "date"     : "Wednesday, August 19, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
-      "title"    : "Rails6 devise &amp;&amp; omniauth &amp;&amp; google-oauth2를 이용해 인증로직을 구현해보자",
+      "title"    : "리플리 증후군?? 꿈에서 본 내용을 실제라고 믿어버린 에피소드 두가지",
       "category" : "",
-      "tags"     : "rails, devise",
-      "url"      : "//archive/rails-devise-with-google-oauth2",
+      "tags"     : "philosophy",
+      "url"      : "//archive/Ripley-Syndrome-and-nightmare",
       "date"     : "Wednesday, August 19, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
@@ -2026,19 +2035,19 @@
     } ,
   
     {
-      "title"    : "인간 존엄성과 저출산 문제",
+      "title"    : "rails factoryBot create_list",
       "category" : "",
-      "tags"     : "philosophy",
-      "url"      : "//archive/problem_low_birth_rate_human_dignity",
+      "tags"     : "rails/factorybot",
+      "url"      : "//archive/rails-factorybot-create-list",
       "date"     : "Saturday, July 11, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
-      "title"    : "rails factoryBot create_list",
+      "title"    : "인간 존엄성과 저출산 문제",
       "category" : "",
-      "tags"     : "rails/factorybot",
-      "url"      : "//archive/rails-factorybot-create-list",
+      "tags"     : "philosophy",
+      "url"      : "//archive/problem_low_birth_rate_human_dignity",
       "date"     : "Saturday, July 11, 2020",
       "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
