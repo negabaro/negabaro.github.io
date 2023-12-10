@@ -3889,15 +3889,6 @@
     } ,
   
     {
-      "title"    : "Rails kaminari를 이용한 Pagination기능 추가",
-      "category" : "",
-      "tags"     : "rails, gem",
-      "url"      : "//archive/kaminari",
-      "date"     : "Tuesday, May 15, 2018",
-      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
-    } ,
-  
-    {
       "title"    : "ruby2.3의 신기능 Safe Navigation Operator(&amp;.)과 Rails의 try,try!메소드에 대해서",
       "category" : "",
       "tags"     : "ruby, tip, rails",
