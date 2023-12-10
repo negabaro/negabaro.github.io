@@ -109,7 +109,7 @@
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        2 minute read
+                        6 minute read
                     </span>
                 </div>
             </div>
@@ -158,7 +158,7 @@
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">nav</span> <span class="k">class</span><span class="o">=</span><span class="s2">"pagination join"</span> <span class="n">role</span><span class="o">=</span><span class="s2">"navigation"</span> <span class="n">aria</span><span class="o">-</span><span class="n">label</span><span class="o">=</span><span class="s2">"pager"</span><span class="o">&gt;</span>
 </code></pre></div></div>
 
-<h4 id="그-외">그 외</h4>
+<h4 id="공통">공통</h4>
 
 <p><code class="language-plaintext highlighter-rouge">_first_page</code>,<code class="language-plaintext highlighter-rouge">_last_page</code>,<code class="language-plaintext highlighter-rouge">_next_page</code>,<code class="language-plaintext highlighter-rouge">_page</code>,<code class="language-plaintext highlighter-rouge">_prev_page</code>를 보면</p>
 
@@ -170,6 +170,137 @@
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"first rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
 </code></pre></div></div>
 
+<h4 id="_pagehtmlerb변경">_page.html.erb변경</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"btn page&lt;%= ' current' if page.current? %&gt;"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= link_to_unless page.current?, page, url, {remote: remote, rel: page.rel} %&gt;
+&lt;/button&gt;
+</span></code></pre></div></div>
+<p>위와 같이 태그 밑에 있는 link_to_unless부분을 그대로 쓰면 버튼 클릭시 동작하는게 아닌 버튼 안에 텍스트에만 link가 반응하므로 아래와 같이 바꿔줬다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">page</span><span class="p">.</span><span class="nf">current?</span> <span class="sx">%&gt;
+&lt;%= content_tag :span, page, class: "btn-active rounded-md join-item btn btn-xs btn-outline" %&gt;</span>
+<span class="o">&lt;</span><span class="sx">% else </span><span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote, rel: page.rel do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= page %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<p>현재 페이지에 해당하는 부분에 btn-active를 넣어줌</p>
+
+<h4 id="공통2">공통2</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"rounded-md join-item btn btn-xs next btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote %&gt;
+&lt;/button&gt;
+</span></code></pre></div></div>
+
+<p>이 부분도 마찬가지로 link_to_unless를 버튼위에 위치시키기 위해 수정해줘야함.
+_next_page.html.erb를 예로들면 아래와 같이 바꿔준다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_page</span><span class="p">.</span><span class="nf">last?</span> <span class="sx">%&gt;
+&lt;% else %&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote, rel: 'next' do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= t('views.pagination.next').html_safe %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<h2 id="완성된파일">완성된파일</h2>
+
+<p>각 파일의 완성된결과는 아래와 같다.</p>
+
+<h3 id="_first_pagehtmlerb">_first_page.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_page</span><span class="p">.</span><span class="nf">first?</span> <span class="sx">%&gt;
+&lt;% else %&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= t('views.pagination.first').html_safe %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<h3 id="_gaphtmlerb">_gap.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">button</span>
+  <span class="k">class</span><span class="o">=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline page gap"</span><span class="o">&gt;&lt;</span><span class="sx">%= t('views.pagination.truncate').html_safe %&gt;&lt;/button&gt;
+</span></code></pre></div></div>
+
+<h3 id="_last_pagehtmlerb">_last_page.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_page</span><span class="p">.</span><span class="nf">last?</span> <span class="sx">%&gt;
+&lt;% else %&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= t('views.pagination.last').html_safe %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<h3 id="_next_pagehtmlerb">_next_page.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_page</span><span class="p">.</span><span class="nf">last?</span> <span class="sx">%&gt;
+&lt;% else %&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote, rel: 'next' do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= t('views.pagination.next').html_safe %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<h3 id="_pagehtmlerb">_page.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">page</span><span class="p">.</span><span class="nf">current?</span> <span class="sx">%&gt;
+&lt;%= content_tag :span, page, class: "btn-active rounded-md join-item btn btn-xs btn-outline" %&gt;</span>
+<span class="o">&lt;</span><span class="sx">% else </span><span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote, rel: page.rel do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= page %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
+
+<h3 id="_paginatorhtmlerb">_paginator.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">%= paginator.render do -%&gt;
+&lt;nav class=</span><span class="s2">"pagination join"</span> <span class="n">role</span><span class="o">=</span><span class="s2">"navigation"</span> <span class="n">aria</span><span class="o">-</span><span class="n">label</span><span class="o">=</span><span class="s2">"pager"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= first_page_tag unless current_page.first? %&gt;
+  &lt;%=</span> <span class="n">prev_page_tag</span> <span class="k">unless</span> <span class="n">current_page</span><span class="p">.</span><span class="nf">first?</span> <span class="sx">%&gt;
+  &lt;% each_page do |page| -%&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% if </span><span class="n">page</span><span class="p">.</span><span class="nf">display_tag?</span> <span class="o">-</span><span class="sx">%&gt;
+  &lt;%= page_tag page %&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% elsif </span><span class="o">!</span><span class="n">page</span><span class="p">.</span><span class="nf">was_truncated?</span> <span class="o">-</span><span class="sx">%&gt;
+  &lt;%= gap_tag %&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% end </span><span class="o">-</span><span class="sx">%&gt;
+  &lt;% end -%&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% unless </span><span class="n">current_page</span><span class="p">.</span><span class="nf">out_of_range?</span> <span class="sx">%&gt;
+  &lt;%= next_page_tag unless current_page.last? %&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= last_page_tag unless current_page.last? %&gt;
+  &lt;% end %&gt;
+&lt;/nav&gt;
+&lt;% end -%&gt;
+</span></code></pre></div></div>
+<h3 id="_prev_pagehtmlerb">_prev_page.html.erb</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="sx">% if </span><span class="n">current_page</span><span class="p">.</span><span class="nf">first?</span> <span class="sx">%&gt;
+&lt;% else %&gt;</span>
+<span class="o">&lt;</span><span class="sx">%= link_to url, remote: remote, rel: 'prev' do %&gt;
+&lt;button class=</span><span class="s2">"rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= t('views.pagination.previous').html_safe %&gt;
+&lt;/button&gt;
+&lt;% end %&gt;
+&lt;% end %&gt;
+</span></code></pre></div></div>
 <h3 id="최종결과">최종결과</h3>
 
 <p>이런식으로 바꿔주면 아래와 같이 pagination이 바뀐걸 확인할 수 있었다.
