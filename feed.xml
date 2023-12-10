@@ -5,7 +5,33 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sun, 03 Dec 2023 00:00:00 -0600</lastBuildDate>
+        <lastBuildDate>Sat, 09 Dec 2023 00:00:00 -0600</lastBuildDate>
+        
+            <item>
+                <title>Rails7 kaminari를 이용한 Pagination기능 추가</title>
+                        
+                
+                    <description>&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kaminari&lt;/code&gt;라는 gem을 이용해서 레일즈에서 Pagination기능구현 하는법을 정리해봤다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Sat, 09 Dec 2023 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/kaminari</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/kaminari</guid>
+            </item>
+        
+            <item>
+                <title>Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기</title>
+                        
+                
+                    <description>&lt;p&gt;이 포스트에서는 kaminari의 디폴트 디자인에 tailwindcss daisyUI적용하는 방법에 대해 알아보자.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Sat, 09 Dec 2023 00:00:00 -0600</pubDate>
+                <link>https://negabaro.github.io/archive/kaminari-custom-tailwindcss</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/kaminari-custom-tailwindcss</guid>
+            </item>
         
             <item>
                 <title>Rails7 hotwire Turbo Native란?</title>
@@ -109,31 +135,6 @@
                 <pubDate>Wed, 24 May 2023 00:00:00 -0500</pubDate>
                 <link>https://negabaro.github.io/archive/how-to-install-ransack</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-install-ransack</guid>
-            </item>
-        
-            <item>
-                <title>rails joins 메소드의 특징에 대해 알아보자</title>
-                        
-                
-                    <description>&lt;h1 id=&quot;joins-메소드란&quot;&gt;joins 메소드란?&lt;/h1&gt;
-
-</description>
-                
-                <pubDate>Wed, 10 May 2023 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/rails-join-query-detail</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-join-query-detail</guid>
-            </item>
-        
-            <item>
-                <title>Rails6.0 devise login/logout header페이지 만들기</title>
-                        
-                
-                    <description>&lt;p&gt;test&lt;/p&gt;
-</description>
-                
-                <pubDate>Mon, 01 May 2023 00:00:00 -0500</pubDate>
-                <link>https://negabaro.github.io/archive/rails-devise-login-header</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-devise-login-header</guid>
             </item>
         
     </channel>

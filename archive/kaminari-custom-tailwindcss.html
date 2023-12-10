@@ -19,16 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hello World">
 
-    <meta property="og:title" content="Rails7 hotwire Turbo Native란?" />
+    <meta property="og:title" content="Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="" />
-    <meta property="og:url" content="/archive/turbo-native-hotwire-rails7" />
+    <meta property="og:url" content="/archive/kaminari-custom-tailwindcss" />
     <meta property="og:site_name" content="Negabaro`s Blog" />
     <meta property="og:image" content="" />
 
-    <title>Rails7 hotwire Turbo Native란? - Negabaro`s Blog</title>
+    <title>Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기 - Negabaro`s Blog</title>
 
-    <link rel="canonical" href="/archive/turbo-native-hotwire-rails7">
+    <link rel="canonical" href="/archive/kaminari-custom-tailwindcss">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,15 +101,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Rails7 hotwire Turbo Native란?</h1>
+                    <h1>Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기</h1>
                     
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Sunday, December 3, 2023
+                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Saturday, December 9, 2023
                     </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/hotwire"><i class="fa fa-tag"></i> rails/hotwire</a>  </span>
+                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/rails/kaminari"><i class="fa fa-tag"></i> rails/kaminari</a>  </span>
                     <span class="meta" style='margin-top:0.5em;'>
                         
                         <i class="fa fa-clock-o"></i>&nbsp;
-                        1 minute read
+                        2 minute read
                     </span>
                 </div>
             </div>
@@ -122,9 +122,91 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2 id="turbo-nativerails7-hotwire-turbo-native란">Turbo Native(Rails7 hotwire Turbo Native란?)</h2>
+                <p>이 포스트에서는 kaminari의 디폴트 디자인에 tailwindcss daisyUI적용하는 방법에 대해 알아보자.</p>
 
-<p>Turbo의 방식을 iOS/Android 하이브리드 앱에 사용 가능하게 지원</p>
+<h3 id="kaminari-custom-view생성">kaminari custom view생성</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rails</span> <span class="n">g</span> <span class="n">kaminari</span><span class="ss">:views</span> <span class="n">default</span> <span class="o">-</span><span class="n">e</span> <span class="n">erb</span>
+</code></pre></div></div>
+
+<p>를 실행해서 custom용 디자인을 생성시켜주자.</p>
+
+<p>tailwindcss사용시 <code class="language-plaintext highlighter-rouge">-e erb</code>는 붙여줘야한다. 안붙이면 생성안됨</p>
+
+<h3 id="생성된-파일확인">생성된 파일확인</h3>
+
+<p><code class="language-plaintext highlighter-rouge">app/views/kaminari/</code> 디렉토리에 아래와 같은 파일이 생성된걸 확인할 수 있다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_first_page</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_gap</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_last_page</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_next_page</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_page</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_paginator</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+<span class="n">_prev_page</span><span class="p">.</span><span class="nf">html</span><span class="p">.</span><span class="nf">erb</span>
+</code></pre></div></div>
+
+<h3 id="tailwindcss를-적용해주자">tailwindcss를 적용해주자.</h3>
+
+<h4 id="_paginatorhtmlerb변경">_paginator.html.erb변경</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">nav</span> <span class="k">class</span><span class="o">=</span><span class="s2">"pagination"</span> <span class="n">role</span><span class="o">=</span><span class="s2">"navigation"</span> <span class="n">aria</span><span class="o">-</span><span class="n">label</span><span class="o">=</span><span class="s2">"pager"</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>부분에 join class를 추가해주자</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">nav</span> <span class="k">class</span><span class="o">=</span><span class="s2">"pagination join"</span> <span class="n">role</span><span class="o">=</span><span class="s2">"navigation"</span> <span class="n">aria</span><span class="o">-</span><span class="n">label</span><span class="o">=</span><span class="s2">"pager"</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h4 id="그-외">그 외</h4>
+
+<p><code class="language-plaintext highlighter-rouge">_first_page</code>,<code class="language-plaintext highlighter-rouge">_last_page</code>,<code class="language-plaintext highlighter-rouge">_next_page</code>,<code class="language-plaintext highlighter-rouge">_page</code>,<code class="language-plaintext highlighter-rouge">_prev_page</code>를 보면</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;span&gt;</code>으로 되어있는 부분을 <code class="language-plaintext highlighter-rouge">&lt;button&gt;</code>으로 바꾸고 <code class="language-plaintext highlighter-rouge">rounded-md join-item btn btn-xs btn-outline</code> 클래스를 추가해주자.
+기존에 있는 class(first,next등)은 지우지 말고 그대로두자</p>
+
+<p>_first_page의 경우 아래와 같다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">button</span> <span class="k">class</span><span class="o">=</span><span class="s2">"first rounded-md join-item btn btn-xs btn-outline"</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h3 id="최종결과">최종결과</h3>
+
+<p>이런식으로 바꿔주면 아래와 같이 pagination이 바뀐걸 확인할 수 있었다.
+daisyUI의 pastel템플릿을 사용했다.</p>
+
+<p><img width="207" alt="image" src="https://github.com/negabaro/negabaro.github.io/assets/4640346/a609693d-e7c0-4ccc-ad7f-a92439348a3b" /></p>
+
+<h2 id="memo">memo</h2>
+
+<h3 id="kaminari의-기본-locals설정-바꿔주는-법">kaminari의 기본 locals설정 바꿔주는 법</h3>
+
+<p>config/application.rb에 <code class="language-plaintext highlighter-rouge">config.i18n.default_locale = :ko</code>추가</p>
+
+<p><code class="language-plaintext highlighter-rouge">confing/locals/kaminari_ko.yml</code>에 아래 설정 추가</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="ss">ja:
+  views:
+    pagination:
+      first: </span><span class="s2">"&amp;laquo;"</span>
+      <span class="ss">last: </span><span class="s2">"&amp;raquo;"</span>
+      <span class="ss">previous: </span><span class="s2">"&amp;lsaquo;"</span>
+      <span class="ss">next: </span><span class="s2">"&amp;rsaquo;"</span>
+      <span class="ss">truncate: </span><span class="s2">"..."</span>
+  <span class="ss">helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: </span><span class="s2">""</span>
+          <span class="ss">one: </span><span class="s2">"&lt;strong&gt;1-1&lt;/strong&gt;/1건중"</span>
+          <span class="ss">other: </span><span class="s2">"&lt;strong&gt;1-%{count}&lt;/strong&gt;/%{count}건중"</span>
+      <span class="ss">more_pages:
+        display_entries: </span><span class="s2">"&lt;strong&gt;%{first}-%{last}&lt;/strong&gt;/%{total}건중"</span>
+  <span class="ss">activerecord:
+  errors:
+    messages:
+      record_invalid: </span><span class="s2">"validation에 실패했습니다.: %{errors}"</span>
+</code></pre></div></div>
 
                 <br>
                 <!-- _includes/utterances-comment.html -->
@@ -134,7 +216,7 @@
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/turbo-native-hotwire-rails7"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/kaminari-custom-tailwindcss"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>
@@ -145,12 +227,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/archive/turbo-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="rails7 turbo란?(Rails7 hotwire turbo란?)">&larr; Previous Post</a>
+                        <a href="/archive/turbo-native-hotwire-rails7" data-toggle="tooltip" data-placement="top" title="Rails7 hotwire Turbo Native란?">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/archive/kaminari-custom-tailwindcss" data-toggle="tooltip" data-placement="top" title="Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기">Next Post &rarr;</a>
+                        <a href="/archive/kaminari" data-toggle="tooltip" data-placement="top" title="Rails7 kaminari를 이용한 Pagination기능 추가">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

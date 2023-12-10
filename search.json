@@ -1,6 +1,24 @@
 [
   
     {
+      "title"    : "Rails7 kaminari를 이용한 Pagination기능 추가",
+      "category" : "",
+      "tags"     : "rails/kaminari",
+      "url"      : "//archive/kaminari",
+      "date"     : "Saturday, December 9, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기",
+      "category" : "",
+      "tags"     : "rails/kaminari",
+      "url"      : "//archive/kaminari-custom-tailwindcss",
+      "date"     : "Saturday, December 9, 2023",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Rails7 hotwire Turbo Native란?",
       "category" : "",
       "tags"     : "rails/hotwire",
