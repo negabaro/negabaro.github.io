@@ -176,51 +176,51 @@
 
 <h5 id="change_notifier를-사용한-경우">change_notifier를 사용한 경우</h5>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">ChangeNotifier</span> <span class="o">{</span>
-  <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">ChangeNotifier</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   
-  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">count</span><span class="o">++;</span>
-    <span class="n">notifyListeners</span><span class="o">();</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+  <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">notifyListeners</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h5 id="state_notifier를-사용한-경우">state_notifier를 사용한 경우</h5>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">{</span>
-  <span class="n">CounterController</span><span class="o">():</span> <span class="k">super</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="n">CounterController</span><span class="p">()</span><span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">state</span><span class="o">++;</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+  <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">state</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>위에서 언급한대로 <code class="language-plaintext highlighter-rouge">state,Notifier를 분리되어있어서</code> 내부에서 변수선언을 할 필요없고 state라는 값만 가지고 있다.</p>
 
 <p><code class="language-plaintext highlighter-rouge">extends StateNotifier&lt;int&gt; </code>의 <code class="language-plaintext highlighter-rouge">&lt;int&gt;</code> 부분이 state의 type이 되는데 하나의 object를 상태로 정의하려면 아래와 같이 state로 사용할 클래스를 정의하고 해당 클래스를 <code class="language-plaintext highlighter-rouge">&lt;int&gt;</code>부분에 넣어주면 된다.</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterState</span> <span class="o">{</span>
-  <span class="n">CounterState</span><span class="o">({</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span>
-  <span class="o">});</span>
-  <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
-  <span class="kt">bool</span> <span class="n">isEnabled</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CounterState</span> <span class="p">{</span>
+  <span class="n">CounterState</span><span class="p">({</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">});</span>
+  <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">isEnabled</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="o">&lt;</span><span class="n">CounterState</span><span class="o">&gt;</span> <span class="o">{</span>
-  <span class="n">CounterController</span><span class="o">():</span> <span class="k">super</span><span class="o">(</span><span class="n">CounterState</span><span class="o">())</span>
+<span class="kd">class</span> <span class="nc">CounterController</span> <span class="kd">extends</span> <span class="n">StateNotifier</span><span class="p">&lt;</span><span class="n">CounterState</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="n">CounterController</span><span class="p">()</span><span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="n">CounterState</span><span class="p">())</span>
 
-  <span class="kt">void</span> <span class="n">increment</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">..</span><span class="na">count</span><span class="o">++;</span>
-  <span class="o">}</span>
+  <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="p">.</span><span class="o">.</span><span class="na">count</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  <span class="kt">void</span> <span class="n">disableCounter</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">..</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+  <span class="kt">void</span> <span class="n">disableCounter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="p">.</span><span class="o">.</span><span class="na">isEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="메모">메모</h2>
@@ -332,7 +332,7 @@
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

@@ -142,9 +142,9 @@
 
 <p><code class="language-plaintext highlighter-rouge">컴파일 타임</code>에서 확인할 수 없는 값(<code class="language-plaintext highlighter-rouge">런타임</code>시 확인가능한것)으로는 <code class="language-plaintext highlighter-rouge">DateTime.now()</code>가 있다.</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">){</span>
-    <span class="kd">final</span> <span class="n">d</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
-<span class="o">}</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kd">final</span> <span class="n">d</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">now</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h3 id="const">const</h3>
@@ -155,9 +155,9 @@
 
 <p>아래와 같이 <code class="language-plaintext highlighter-rouge">런타임</code>시에만 확인가능한 값을 const에 대입하면 const는 <code class="language-plaintext highlighter-rouge">컴파일 타임</code>에 변수할당을 하므로 에러가 발생한다.</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">){</span>
-    <span class="kd">const</span> <span class="n">d</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span> <span class="c1">//error</span>
-<span class="o">}</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kd">const</span> <span class="n">d</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">now</span><span class="p">();</span> <span class="c1">//error</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h4 id="전체에러">전체에러</h4>
@@ -256,7 +256,7 @@ Try using a constructor or factory that is 'const'.
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

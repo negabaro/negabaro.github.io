@@ -245,6 +245,15 @@
 
 <p>@qq가 nil이면 자동완성폼을 안보여주므로 create성공시 @qq = nil을 넣어주는게 포인트</p>
 
+<h3 id="5">5.</h3>
+
+<p>엄청난 문제점에 봉착</p>
+
+<p>form하위에서 <code class="language-plaintext highlighter-rouge">search_form_for</code>를 사용할 수 없음(form하위에 form을 만들어버리므로)
+고로 form안에서 쓰지말거나 search_form_for을 포기하거나 둘중하나는 해야할듯..</p>
+
+<p>다른 포스트에서 <code class="language-plaintext highlighter-rouge">search_form_for</code>을 사용하지 않고 자동완성 기능을 만드는법에 대해 정리 예정</p>
+
 
                 <br>
                 <!-- _includes/utterances-comment.html -->
@@ -336,7 +345,7 @@
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

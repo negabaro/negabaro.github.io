@@ -136,7 +136,7 @@
 
 <p>ex)</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">all</span><span class="o">(</span><span class="mf">8.0</span><span class="o">)</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">all</span><span class="p">(</span><span class="mf">8.0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="edgeinsetsonly">EdgeInsets.only</h2>
@@ -145,10 +145,10 @@
 
 <p>ex)</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">only</span><span class="o">(</span><span class="nl">bottom:</span> <span class="mi">5</span><span class="o">)</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">only</span><span class="p">(</span><span class="nl">bottom:</span> <span class="mi">5</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">only</span><span class="o">(</span><span class="nl">left:</span> <span class="mf">40.0</span><span class="o">)</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span><span class="o">.</span><span class="na">only</span><span class="p">(</span><span class="nl">left:</span> <span class="mf">40.0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="edgeinsetsfromltrb">EdgeInsets.fromLTRB</h2>
@@ -160,7 +160,7 @@ Creates insets from offsets from the left, top, right, and bottom.
 </code></pre></div></div>
 
 <div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nf">Padding</span><span class="p">(</span>
-      <span class="nl">padding:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">fromLTRB</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">),</span>
+      <span class="nl">padding:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">fromLTRB</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
 </code></pre></div></div>
 
 <h2 id="edgeinsetssymmetricvertical-80">EdgeInsets.symmetric(vertical: 8.0)</h2>
@@ -179,19 +179,19 @@ Creates insets with symmetrical vertical and horizontal offsets. [...]
 
 <p>verticalMargin과 sideMargin를 더해서 지정이 가능</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span> <span class="n">verticalMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="o">(</span><span class="nl">vertical:</span> <span class="mf">10.0</span><span class="o">);</span>
-<span class="n">EdgeInsets</span> <span class="n">sideMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="o">(</span><span class="nl">horizontal:</span> <span class="mf">20.0</span><span class="o">);</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EdgeInsets</span> <span class="n">verticalMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="p">(</span><span class="nl">vertical:</span> <span class="mf">10.0</span><span class="p">);</span>
+<span class="n">EdgeInsets</span> <span class="n">sideMargin</span> <span class="o">=</span> <span class="n">EdgeInsets</span><span class="o">.</span><span class="na">symmetric</span><span class="p">(</span><span class="nl">horizontal:</span> <span class="mf">20.0</span><span class="p">);</span>
 
 <span class="k">return</span> <span class="nf">Column</span><span class="p">(</span>
-  <span class="nl">children:</span> <span class="n">List</span><span class="o">.</span><span class="na">generate</span><span class="o">(</span>
-    <span class="mi">5</span><span class="o">,</span>
-    <span class="o">(</span><span class="n">index</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">Card</span><span class="o">(</span>
-      <span class="nl">color:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">orangeAccent</span><span class="o">,</span>
-      <span class="nl">margin:</span> <span class="n">verticalMargin</span> <span class="o">+</span> <span class="n">sideMargin</span><span class="o">,</span>
-      <span class="nl">child:</span> <span class="n">Container</span><span class="o">(</span><span class="nl">height:</span> <span class="mi">100</span><span class="o">),</span>
-    <span class="o">),</span>
-  <span class="o">),</span>
-<span class="o">);</span>
+  <span class="nl">children:</span> <span class="kt">List</span><span class="o">.</span><span class="na">generate</span><span class="p">(</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Card</span><span class="p">(</span>
+      <span class="nl">color:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">orangeAccent</span><span class="p">,</span>
+      <span class="nl">margin:</span> <span class="n">verticalMargin</span> <span class="o">+</span> <span class="n">sideMargin</span><span class="p">,</span>
+      <span class="nl">child:</span> <span class="n">Container</span><span class="p">(</span><span class="nl">height:</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="p">),</span>
+  <span class="p">),</span>
+<span class="p">);</span>
 </code></pre></div></div>
 
 <p>써야될 타이밍이 언제인지 모르겠지만..</p>
@@ -289,7 +289,7 @@ Creates insets with symmetrical vertical and horizontal offsets. [...]
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

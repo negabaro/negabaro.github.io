@@ -212,6 +212,18 @@ link_to로 다른 페이지로 이동시 <code class="language-plaintext highlig
 
 <p>으로 적어줘야 동작함</p>
 
+<h3 id="2-hotwire로-프로젝트-진행중-느낀점">2. hotwire로 프로젝트 진행중 느낀점</h3>
+
+<p>browser에서의 state관리 보다는 되도록 state값을 db데이터에 저장하게끔 하는 충동이 일어남.</p>
+
+<p>예를들어 체크박스가 체크되어 있는 항목만 테이블을 표시해주는 필터기능이 있다고 하면、브라우저에서만 구현하려면 storage인데
+그보다는 db에 스테이트 박아놓고 turbo갱신해서 controller경유해서 db갱신시키면 구현이 더 편하다보니 뭐든지 state를 디비에 관리하고 싶은 충동이 듬</p>
+
+<p>굳이 rdb일 필요도 없을것 같긴함 state를 redis에 박아넣어도 괜찮을듯</p>
+
+<p>이러한 충동때문에 퍼포먼스관련 이슈는 언젠가 생길듯,
+반면 뭐든지 스테이트를 디비에 넣어놓기 때문에 강제 영속적인 기능구현을 하게되고 js에 손을 많이 안대다보니 멘테 코스트는 상당히 줄어들걸로 예상(아직 운영은 안해봄)</p>
+
 <hr />
 
 
@@ -305,7 +317,7 @@ link_to로 다른 페이지로 이동시 <code class="language-plaintext highlig
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

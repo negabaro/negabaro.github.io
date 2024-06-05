@@ -135,23 +135,23 @@
 <p>사용방법은 아래와 같이 <code class="language-plaintext highlighter-rouge">interceptors.add</code>해서 LogInterceptor오브젝트를 넘겨주면 된다.</p>
 
 <div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:dio/dio.dart'</span><span class="o">;</span>
-<span class="n">Dio</span> <span class="n">_dio</span><span class="o">;</span>
-<span class="n">_dio</span> <span class="o">=</span> <span class="n">dio</span> <span class="o">??</span> <span class="n">Dio</span><span class="o">();</span>
+<span class="n">Dio</span> <span class="n">_dio</span><span class="p">;</span>
+<span class="n">_dio</span> <span class="o">=</span> <span class="n">dio</span> <span class="o">??</span> <span class="n">Dio</span><span class="p">();</span>
 
-<span class="n">_dio</span><span class="o">.</span><span class="na">interceptors</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">LogInterceptor</span><span class="o">(</span>
-          <span class="nl">responseBody:</span> <span class="kc">true</span><span class="o">,</span>
-          <span class="nl">error:</span> <span class="kc">true</span><span class="o">,</span>
-          <span class="nl">requestHeader:</span> <span class="kc">false</span><span class="o">,</span>
-          <span class="nl">responseHeader:</span> <span class="kc">false</span><span class="o">,</span>
-          <span class="nl">request:</span> <span class="kc">false</span><span class="o">,</span>
-          <span class="nl">requestBody:</span> <span class="kc">false</span><span class="o">));</span>
+<span class="n">_dio</span><span class="o">.</span><span class="na">interceptors</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">LogInterceptor</span><span class="p">(</span>
+          <span class="nl">responseBody:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="nl">error:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="nl">requestHeader:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="nl">responseHeader:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="nl">request:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="nl">requestBody:</span> <span class="kc">false</span><span class="p">));</span>
 </code></pre></div></div>
 
 <h2 id="responsebody-true">responseBody: true</h2>
 
 <p>다른 옵션은 다 필요없고 <code class="language-plaintext highlighter-rouge">responseBody: true</code> 만 기억하자. 이게 없으면 통신에러가 발생해도 레스폰스 결과를 표시해주지 않으므로 디버깅시 매우 귀찮음.</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interceptors</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">LogInterceptor</span><span class="o">(</span><span class="nl">responseBody:</span> <span class="kc">true</span><span class="o">));</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interceptors</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">LogInterceptor</span><span class="p">(</span><span class="nl">responseBody:</span> <span class="kc">true</span><span class="p">));</span>
 </code></pre></div></div>
 <hr />
 
@@ -246,7 +246,7 @@
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

@@ -148,22 +148,22 @@
 
 <div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:collection/collection.dart'</span><span class="o">;</span>
 
-<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">){</span>
-  <span class="n">Function</span> <span class="n">eq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">ListEquality</span><span class="o">().</span><span class="na">equals</span><span class="o">;</span>
-  <span class="n">Function</span> <span class="n">deepEq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">DeepCollectionEquality</span><span class="o">().</span><span class="na">equals</span><span class="o">;</span>
-  <span class="n">List</span> <span class="n">list1</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="o">,</span> <span class="o">[</span><span class="s">'a'</span><span class="o">,[]],</span> <span class="mi">3</span><span class="o">];</span>
-  <span class="n">List</span> <span class="n">list2</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="o">,</span> <span class="o">[</span><span class="s">'a'</span><span class="o">,[]],</span> <span class="mi">3</span><span class="o">];</span>
-  <span class="n">print</span><span class="o">(</span><span class="n">eq</span><span class="o">(</span><span class="n">list1</span><span class="o">,</span> <span class="n">list2</span><span class="o">));</span> <span class="c1">//false</span>
-  <span class="n">print</span><span class="o">(</span><span class="n">deepEq</span><span class="o">(</span><span class="n">list1</span><span class="o">,</span> <span class="n">list2</span><span class="o">));</span> <span class="c1">//true</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+  <span class="kt">Function</span> <span class="n">eq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">ListEquality</span><span class="p">()</span><span class="o">.</span><span class="na">equals</span><span class="p">;</span>
+  <span class="kt">Function</span> <span class="n">deepEq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">DeepCollectionEquality</span><span class="p">()</span><span class="o">.</span><span class="na">equals</span><span class="p">;</span>
+  <span class="kt">List</span> <span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,[]],</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="kt">List</span> <span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,[]],</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">eq</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">));</span> <span class="c1">//false</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">deepEq</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">));</span> <span class="c1">//true</span>
 
 
   <span class="c1">//There are other Equality classes that can be combined in many ways,</span>
   <span class="c1">//including equality for Maps.</span>
   <span class="c1">//You can even perform an unordered (deep) comparison of collections:</span>
-  <span class="n">Function</span> <span class="n">unOrdDeepEq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">DeepCollectionEquality</span><span class="o">.</span><span class="na">unordered</span><span class="o">().</span><span class="na">equals</span><span class="o">;</span>
-  <span class="n">List</span> <span class="n">list3</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="o">[[],</span><span class="s">'a'</span><span class="o">],</span> <span class="mi">1</span><span class="o">];</span>
-  <span class="n">print</span><span class="o">(</span><span class="n">unOrdDeepEq</span><span class="o">(</span><span class="n">list2</span><span class="o">,</span> <span class="n">list3</span><span class="o">));</span>  <span class="c1">//true</span>
-<span class="o">}</span>
+  <span class="kt">Function</span> <span class="n">unOrdDeepEq</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">DeepCollectionEquality</span><span class="o">.</span><span class="na">unordered</span><span class="p">()</span><span class="o">.</span><span class="na">equals</span><span class="p">;</span>
+  <span class="kt">List</span> <span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">[[],</span><span class="s">'a'</span><span class="p">],</span> <span class="mi">1</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">unOrdDeepEq</span><span class="p">(</span><span class="n">list2</span><span class="p">,</span> <span class="n">list3</span><span class="p">));</span>  <span class="c1">//true</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="코드-해석">코드 해석</h2>
@@ -277,7 +277,7 @@
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>

@@ -187,17 +187,17 @@
 
 <p>flutter에서 image파일 업로드시 사용하는 코드를 첨부해둔다.</p>
 
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">uploadImage</span><span class="o">(</span><span class="kt">String</span> <span class="n">url</span><span class="o">,</span> <span class="n">File</span> <span class="n">image</span><span class="o">)</span> <span class="o">{</span>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">uploadImage</span><span class="p">(</span><span class="kt">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">File</span> <span class="n">image</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="kd">final</span> <span class="n">Dio</span> <span class="n">dio</span> <span class="o">=</span> <span class="n">Dio</span><span class="o">()..</span><span class="na">interceptors</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">LogInterceptor</span><span class="o">(</span><span class="nl">responseBody:</span> <span class="kc">true</span><span class="o">));</span>
-    <span class="n">dio</span><span class="o">.</span><span class="na">options</span> <span class="o">=</span> <span class="n">BaseOptions</span><span class="o">(</span><span class="nl">contentType:</span> <span class="s">'image/jpeg'</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">dio</span><span class="o">.</span><span class="na">putUri</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">url</span><span class="o">),</span>
-        <span class="nl">data:</span> <span class="n">image</span><span class="o">.</span><span class="na">openRead</span><span class="o">(),</span>
-        <span class="nl">options:</span> <span class="n">Options</span><span class="o">(</span><span class="nl">headers:</span> <span class="o">&lt;</span><span class="kt">String</span><span class="o">,</span> <span class="kd">dynamic</span><span class="o">&gt;{</span>
-          <span class="n">HttpHeaders</span><span class="o">.</span><span class="na">contentTypeHeader</span><span class="o">:</span> <span class="n">ContentType</span><span class="o">(</span><span class="s">'image'</span><span class="o">,</span> <span class="s">'jpeg'</span><span class="o">),</span>
-          <span class="n">HttpHeaders</span><span class="o">.</span><span class="na">contentLengthHeader</span><span class="o">:</span> <span class="n">image</span><span class="o">.</span><span class="na">lengthSync</span><span class="o">(),</span>
-        <span class="o">}));</span>
-  <span class="o">}</span>
+    <span class="kd">final</span> <span class="n">Dio</span> <span class="n">dio</span> <span class="o">=</span> <span class="n">Dio</span><span class="p">().</span><span class="o">.</span><span class="na">interceptors</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">LogInterceptor</span><span class="p">(</span><span class="nl">responseBody:</span> <span class="kc">true</span><span class="p">));</span>
+    <span class="n">dio</span><span class="o">.</span><span class="na">options</span> <span class="o">=</span> <span class="n">BaseOptions</span><span class="p">(</span><span class="nl">contentType:</span> <span class="s">'image/jpeg'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">dio</span><span class="o">.</span><span class="na">putUri</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;(</span><span class="kt">Uri</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="n">url</span><span class="p">),</span>
+        <span class="nl">data:</span> <span class="n">image</span><span class="o">.</span><span class="na">openRead</span><span class="p">(),</span>
+        <span class="nl">options:</span> <span class="n">Options</span><span class="p">(</span><span class="nl">headers:</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;{</span>
+          <span class="n">HttpHeaders</span><span class="o">.</span><span class="na">contentTypeHeader</span><span class="o">:</span> <span class="n">ContentType</span><span class="p">(</span><span class="s">'image'</span><span class="p">,</span> <span class="s">'jpeg'</span><span class="p">),</span>
+          <span class="n">HttpHeaders</span><span class="o">.</span><span class="na">contentLengthHeader</span><span class="o">:</span> <span class="n">image</span><span class="o">.</span><span class="na">lengthSync</span><span class="p">(),</span>
+        <span class="p">}));</span>
+  <span class="p">}</span>
 </code></pre></div></div>
 
 <p>클라이언트에서 작업할때 알고 있으면 좋을 포인트로는 아래와 같은것이 있다.</p>
@@ -307,7 +307,7 @@
                 <p class="copyright text-muted">
                 
                 
-                    <br><br> Copyright &copy; negabaro 2023</p>
+                    <br><br> Copyright &copy; negabaro 2024</p>
                 
             </div>
         </div>
