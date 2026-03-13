@@ -1,128 +1,1751 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-   __ ___   __  __               __
-  / // (_) / /_/ /  ___ _______ / /
- / _  / / / __/ _ \/ -_) __/ -_)_/ 
-/_//_/_/  \__/_//_/\__/_/  \__(_)  
-
-  _      ____        __                                              __     ___ 
- | | /| / / /  ___ _/ /_  ___ ________   __ _____  __ __  __ _____  / /____/__ \
- | |/ |/ / _ \/ _ `/ __/ / _ `/ __/ -_) / // / _ \/ // / / // / _ \/ __/ _ \/__/
- |__/|__/_//_/\_,_/\__/  \_,_/_/  \__/  \_, /\___/\_,_/  \_,_/ .__/\__/\___(_)  
-                                       /___/                /_/                 
--->
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hello World">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Hello World">
+  <meta property="og:title" content="[주식용어정리] 공매도란?" />
+  <meta property="og:description" content="Hello World" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="https://negabaro.github.io/archive/kabu-short-sell" />
+  <meta property="og:site_name" content="Negabaro`s Blog" />
+  <meta property="og:image" content="https://negabaro.github.io" />
 
-    <meta property="og:title" content="[주식용어정리] 공매도란?" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content="https://negabaro.github.io/archive/kabu-short-sell" />
-    <meta property="og:site_name" content="Negabaro`s Blog" />
-    <meta property="og:image" content="https://negabaro.github.io" />
+  <title>[주식용어정리] 공매도란? - Negabaro`s Blog</title>
 
-    <title>[주식용어정리] 공매도란? - Negabaro`s Blog</title>
+  <link rel="canonical" href="https://negabaro.github.io/archive/kabu-short-sell">
 
-    <link rel="canonical" href="https://negabaro.github.io/archive/kabu-short-sell">
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1773385064">
 
-    <!-- Bootstrap Core CSS (absolute URL for reverse proxy compatibility) -->
-    <link rel="stylesheet" href="https://negabaro.github.io/css/bootstrap.min.css">
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/syntax.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://negabaro.github.io/css/clean-blog.css">
+  <!-- Font Awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="https://negabaro.github.io/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
-
+  <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
 </head>
+<body class="nb-layout">
+
+  <!-- Top Navigation -->
+  <nav class="nb-nav">
+    <a class="nb-nav-brand" href="/">Negabaro`s Blog</a>
+    <ul class="nb-nav-links">
+      <li><a href="/archive/">Archive</a></li>
+      <li><a href="/category/">Category</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/search/"><i class="fa fa-search"></i></a></li>
+    </ul>
+  </nav>
+
+  <div class="nb-wrapper">
+    <!-- Left Sidebar -->
+<aside class="nb-sidebar" id="nb-sidebar">
+  <div class="nb-sidebar-header">
+    <h3>Categories</h3>
+  </div>
+
+  <div class="nb-sidebar-search">
+    <input type="text" id="nb-sidebar-filter" placeholder="Filter categories...">
+  </div>
+
+  <div id="nb-sidebar-tree"></div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="nb-sidebar-overlay" id="nb-sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Mobile toggle -->
+<button class="nb-sidebar-toggle" id="nb-sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  &#9776;
+</button>
+
+<!-- Tag data from Jekyll -->
+<script id="nb-tag-data" type="application/json">
+{
+  "currentUrl": "/archive/kabu-short-sell",
+  "tags": {
+    
+      "rails/active_record/association": [
+        
+          { "title": "rails has_one,has_many에서 dynamic하게 class_name을 지정하는 방법", "url": "/archive/how-to-dynamic-class-name-has-one" },
+        
+          { "title": "rails6 has_many를 has_one처럼 사용하는 방법", "url": "/archive/rails-association-how-to-use-has-many-like-has-one" },
+        
+          { "title": "rails6 has_one belongs_to관계에 대해  여러가지 실험", "url": "/archive/rails-has-one__belongs_to" },
+        
+          { "title": "rails6 has_many,has_one에서 바로 select컬럼 지정하는 법", "url": "/archive/rails-association-select-name" },
+        
+          { "title": "rails5.1에서 polymorphic관계형 모델 만들기", "url": "/archive/rails-relation-polymorphic" },
+        
+          { "title": "rails5.1에서 N:N 관계형 모델 만들기", "url": "/archive/rails-relation-N-N" },
+        
+          { "title": "rails5.1에서 1:N 관계형 모델 만들기", "url": "/archive/rails-relation-1-N" },
+        
+          { "title": "rails5.1에서 1:1 관계형 모델 만들기", "url": "/archive/rails-relation-1-1" }
+        
+      ],
+    
+      "rails/routing": [
+        
+          { "title": "Rails routing constraints란", "url": "/archive/rails-routes-constraints" },
+        
+          { "title": "Rails의 scope,scope module,namespace의 차이", "url": "/archive/scope-module-namespace" },
+        
+          { "title": "Rails resource vs resources 차이", "url": "/archive/rails-routes-resources" }
+        
+      ],
+    
+      "rails": [
+        
+          { "title": "Rails7에서 tailwind-css인스톨 방법", "url": "/archive/how-to-install-tailwindcss" },
+        
+          { "title": "Rails6.0 devise login/logout header페이지 만들기", "url": "/archive/rails-devise-login-header" },
+        
+          { "title": "alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러", "url": "/archive/google-protobuf-error" },
+        
+          { "title": "rails grape-entity(Grape::Entity)에 대해알아보자", "url": "/archive/rails-grape-entity" },
+        
+          { "title": "rails model에서의 scope이란", "url": "/archive/rails-scope" },
+        
+          { "title": "ruby aws-sdk-s3를 이용해 S3 Presgined URL발행하는 방법에 대해 알아보자", "url": "/archive/aws-sdk-s3-presigned_url" },
+        
+          { "title": "S3 Presigned URL을 이용해 클라이언트에서 직접 컨텐츠 업로드 구현방법(feat. ruby && aws-sdk-s3)", "url": "/archive/s3-direct-upload-using-presigned-url" },
+        
+          { "title": "Rails delegate사용시 validation설정", "url": "/archive/rails-validation-with-delegate" },
+        
+          { "title": "Rails,ruby에서 delegate를 사용하는 이유", "url": "/archive/ruby-module-delegate" },
+        
+          { "title": "Rails 상태관리 gem StatefulEnum 소개", "url": "/archive/rails-gem-stateful_enum" },
+        
+          { "title": "Finite Automaton(유한 상태 기계)란?(with. Rails)", "url": "/archive/term-finite-automaton" },
+        
+          { "title": "ruby merge merge!메소드에 대해 알아보자", "url": "/archive/ruby-merge" },
+        
+          { "title": "rails autoload_paths와 eager_load_paths의 차이", "url": "/archive/autoload_paths__eager_load_paths" },
+        
+          { "title": "rails incompatible character encodings: Windows-31J and UTF-8에러", "url": "/archive/error-incompatible-Windows-31J" },
+        
+          { "title": "rails uniq와 distinct의 차이", "url": "/archive/rails-uniq_vs_distinct" },
+        
+          { "title": "Rails Time.current와 Time.now의 차이", "url": "/archive/rails-time_current_vs_time_now" },
+        
+          { "title": "Rails6 google-oauth2 && google-api-client를 이용해서 YouTube Data API에 억세스 하는 방법", "url": "/archive/rails-google-api-client" },
+        
+          { "title": "Rails6 devise && omniauth && google-oauth2를 이용해 인증로직을 구현해보자", "url": "/archive/rails-devise-with-google-oauth2" },
+        
+          { "title": "rails turbolinks란?", "url": "/archive/rails-turbolinks" },
+        
+          { "title": "rails update_all이란?", "url": "/archive/rails-update_all" },
+        
+          { "title": "rails 특정 컨트롤러에서만 before_action skip하는 방법(skip_before_action)", "url": "/archive/rails-skip_before_action" },
+        
+          { "title": "rails before_action이란", "url": "/archive/rails-before_action" },
+        
+          { "title": "rails6 references 컬럼에 null허용 하는법", "url": "/archive/rails-model-references-null-true" },
+        
+          { "title": "rails update_all 사용시 ActiveRecord::StatementInvalid: Mysql2::Error: You can't specify target table 'xx' for update in FROM clause 에러", "url": "/archive/rails-understand-update_all" },
+        
+          { "title": "rails escape_javascript란?", "url": "/archive/rails-escape_javascript" },
+        
+          { "title": "ruby,rails에서 추상클래스 만드는 법", "url": "/archive/rails-abstract_class" },
+        
+          { "title": "rails6 STI(단일 테이블 상속)에 대해서 알아보자", "url": "/archive/rails-sti" },
+        
+          { "title": "rails okcomputer를 이용한 healthcheck url만들기", "url": "/archive/rails-healthcheck-using-okcomputer" },
+        
+          { "title": "Rails6 healthcheck url을 로그에서 제외하는 방법", "url": "/archive/rails-how-to-silence-healthcheck-log" },
+        
+          { "title": "RSPEC실행시 DB에 데이터가 저장되지 않는 이유(feat. use_transactional_fixtures)", "url": "/archive/rails-use_transactional_fixtures" },
+        
+          { "title": "rails6.0 mysql db백업후 restore하는법", "url": "/archive/rails-db-reset-restore" },
+        
+          { "title": "rails6 before_type_cast를 이용해서 존재하지 않는 날짜를 입력시 validation error를 발생시켜보자", "url": "/archive/rails-date-before_type_cast" },
+        
+          { "title": "rails6.0 console에서 자주사용할만한 tip", "url": "/archive/rails-console-tip" },
+        
+          { "title": "rails6.0에서 refinements 활용법", "url": "/archive/rails-refinements" },
+        
+          { "title": "Rails6.0 present? any? exits?차이", "url": "/archive/rails-present_any_exists" },
+        
+          { "title": "rails pluck이란?pluck을 써야하는 이유", "url": "/archive/rails-pluck" },
+        
+          { "title": "Rails presence vs present?의 차이", "url": "/archive/rails-presence_vs_present" },
+        
+          { "title": "rails select_tag form을 알아보자", "url": "/archive/rails-select-tag-form" },
+        
+          { "title": "Rails6.0 presenters영역이 필요한 이유", "url": "/archive/rails-presenter" },
+        
+          { "title": "Rails6.0 active decorator 설정방법", "url": "/archive/rails-active-decorator" },
+        
+          { "title": "Rails try try! &. 에대해 알아보자", "url": "/archive/rails-try" },
+        
+          { "title": "rails select form을 알아보자", "url": "/archive/rails-select-form" },
+        
+          { "title": "rails6 EachValidator을 이용해서 validators 커스텀 하는법", "url": "/archive/rails-validators" },
+        
+          { "title": "Rails6.0 Action Text를 사용해보자", "url": "/archive/rails-actiontext" },
+        
+          { "title": "rails form_with에서 nested form구현(accepts_nested_attributes_for)", "url": "/archive/rails-nested-form" },
+        
+          { "title": "rails6.0 erb->slim으로 변경", "url": "/archive/rails-change-view-template-slim" },
+        
+          { "title": "Rails active storage란", "url": "/archive/create-profile-using-activestorage" },
+        
+          { "title": "Rails decorator란", "url": "/archive/rails-decorator" },
+        
+          { "title": "rails6.0 console에 하이라이트 설정(pry+hirb)", "url": "/archive/rails-console-hilight" },
+        
+          { "title": "rails6.0 uikit 설정방법", "url": "/archive/rails-add-uikit-using-webpacker" },
+        
+          { "title": "react-rails와 webpacker를 사용해서 Rails어플리케이션에서 React실행", "url": "/archive/rails-react-webpacker" },
+        
+          { "title": "hypernova를 사용한rails,react환경 구축", "url": "/archive/rails-react-hypernova-webpacker" },
+        
+          { "title": "rails undefined method `xx' for nil:NilClass에러", "url": "/archive/error-undefined-method-for-nilclass" },
+        
+          { "title": "Rails5.2 carrieerwave에서Shrine으로 마이그레이트 하는 방법", "url": "/archive/rails-migrate-carrierwave-to-shrine" },
+        
+          { "title": "Rails5.2 Shrine이란?CarrierWave,PapperClip,ActiveStorage와의 비교", "url": "/archive/rails-compare-shrine-and-etc" },
+        
+          { "title": "Rails5.2 Shrine을 이용한 S3 파일 업로드", "url": "/archive/rails-shrine-s3" },
+        
+          { "title": "Shrine에서 사용하는 플러그인을 알아보자", "url": "/archive/rails-shrine-plugin" },
+        
+          { "title": "Rails5.2 Shrine을 이용한 로컬 파일 업로드", "url": "/archive/rails-shrine-local" },
+        
+          { "title": "Rails5.2 Shrine 파일업로드시 백그라운드에서 썸네일 이미지 생성", "url": "/archive/rails-shrine-backgrounding" },
+        
+          { "title": "rails new후에 프로젝트명 바꾸는 방법", "url": "/archive/rails-change-project" },
+        
+          { "title": "rails simple_format이란", "url": "/archive/simple_format" },
+        
+          { "title": "ruby2.3의 신기능 Safe Navigation Operator(&.)과 Rails의 try,try!메소드에 대해서", "url": "/archive/ruby-safe-navigation-operator" },
+        
+          { "title": "Rails 좋아요 기능 만들기", "url": "/archive/rails-like" },
+        
+          { "title": "Rails flash오브젝트에 대해서", "url": "/archive/rails-flash-notice-alert" },
+        
+          { "title": "Rails User패스워드 변경,탈퇴 기능 만들기", "url": "/archive/profile.change-pw-resign" },
+        
+          { "title": "Rails devise,paperclip을 이용해서 프로필 이미지 업로드하기", "url": "/archive/paperclip-devise-profiles" },
+        
+          { "title": "Rails devise custom 설정", "url": "/archive/login-register-custom" },
+        
+          { "title": "Rails devise인스톨 방법", "url": "/archive/devise-install" },
+        
+          { "title": "rails config/routes.rb설정 리팩토링", "url": "/archive/refactoring-routes" },
+        
+          { "title": "rails에서switch_point를 이용한 모델별 복수 DB접근방법", "url": "/archive/rails-switch-point" },
+        
+          { "title": "rails로 퀴즈어플 만들어보기(CRUD편)", "url": "/archive/quiz-crud" },
+        
+          { "title": "rails config/database.yml설정과 direnv를 이용한 환경변수관리", "url": "/archive/config_database" },
+        
+          { "title": "rails form_for이용해서 MVC모델 이해하기", "url": "/archive/rails-form-for-mvc-easy" }
+        
+      ],
+    
+      "handson": [
+        
+          { "title": "Rails7에서 tailwind-css인스톨 방법", "url": "/archive/how-to-install-tailwindcss" },
+        
+          { "title": "Rails6.0 devise login/logout header페이지 만들기", "url": "/archive/rails-devise-login-header" },
+        
+          { "title": "Rails 팔로우(Follow) 기능 만들기", "url": "/archive/rails-follow" },
+        
+          { "title": "Rails 좋아요 기능 만들기", "url": "/archive/rails-like" },
+        
+          { "title": "Rails flash오브젝트에 대해서", "url": "/archive/rails-flash-notice-alert" },
+        
+          { "title": "Rails devise custom 설정", "url": "/archive/login-register-custom" },
+        
+          { "title": "Rails devise인스톨 방법", "url": "/archive/devise-install" },
+        
+          { "title": "rails config/routes.rb설정 리팩토링", "url": "/archive/refactoring-routes" },
+        
+          { "title": "rails로 퀴즈어플 만들어보기(CRUD편)", "url": "/archive/quiz-crud" },
+        
+          { "title": "rails config/database.yml설정과 direnv를 이용한 환경변수관리", "url": "/archive/config_database" },
+        
+          { "title": "circleCI2.0 persist_to_workspace를 이용한 workflow job간 파일공유", "url": "/archive/circleci_persist_to_workspace" },
+        
+          { "title": "rails form_for이용해서 MVC모델 이해하기", "url": "/archive/rails-form-for-mvc-easy" }
+        
+      ],
+    
+      "ruby": [
+        
+          { "title": "rails constantize메소드란", "url": "/archive/rails-constantize" },
+        
+          { "title": "ruby module_function이란", "url": "/archive/ruby-module-function" },
+        
+          { "title": "Rails,ruby에서 delegate를 사용하는 이유", "url": "/archive/ruby-module-delegate" },
+        
+          { "title": "ruby 콜론2개(::)로 시작하는 모듈의 의미", "url": "/archive/ruby-double-colon" },
+        
+          { "title": "ruby merge merge!메소드에 대해 알아보자", "url": "/archive/ruby-merge" },
+        
+          { "title": "ruby ENV[]보다 ENV.fetch가 좋은 이유", "url": "/archive/ruby-env-fetch" },
+        
+          { "title": "ruby 메소드 인자 넘겨줘서 호출시 괄호생략하는 문법", "url": "/archive/ruby-method-arg-kakko" },
+        
+          { "title": "ruby Proc에 대해 알아보자", "url": "/archive/ruby-proc" },
+        
+          { "title": "ruby Lambda 대해 알아보자", "url": "/archive/ruby-lambda" },
+        
+          { "title": "ruby block이란", "url": "/archive/ruby-block" },
+        
+          { "title": "ruby 절차오브젝트 proc,lambda의 차이에 대해 알아보자", "url": "/archive/ruby-difference_between_proc_lambda" },
+        
+          { "title": "ruby block,proc,lambda에 대해 개념정리", "url": "/archive/ruby-block_proc_lambda" },
+        
+          { "title": "ruby 문자열을 심볼로 변환하는 방법(with intern)", "url": "/archive/ruby-intern" },
+        
+          { "title": "ruby map메소드 한줄로 축약해서 사용하는 방법(with. &:)", "url": "/archive/rails-map-one-line" },
+        
+          { "title": "ruby Base64URL encoding이란?", "url": "/archive/ruby-base64url" },
+        
+          { "title": "ruby URI.parse메소드에 대해서", "url": "/archive/ruby-URI_parse" },
+        
+          { "title": "ruby positive? negative? 메소드는?", "url": "/archive/ruby-positive-__-negative" },
+        
+          { "title": "ruby 로컬변수가 정의되어 있는지 확인하는 방법(defined?)", "url": "/archive/ruby-defined" },
+        
+          { "title": "ruby에서 array인지 체크하는 방법(instance_of?)", "url": "/archive/ruby-checking-array" },
+        
+          { "title": "ruby에서 array안에 특정 array값이 포함되어 있는지 체크하는 방법", "url": "/archive/ruby-array-include-array" },
+        
+          { "title": "ruby send 커맨드란", "url": "/archive/ruby-send-method" },
+        
+          { "title": "ruby capitalize메소드", "url": "/archive/ruby-capitalize" },
+        
+          { "title": "ruby 문자열에 해당하는 문자코드값 얻는방법(ord,chr,codepoints)", "url": "/archive/ruby-chr_ord" },
+        
+          { "title": "ruby count vs size,length 메소드의 차이는?", "url": "/archive/ruby-count-size-length" },
+        
+          { "title": "ruby,rails에서 추상클래스 만드는 법", "url": "/archive/rails-abstract_class" },
+        
+          { "title": "ruby include,extend,prepend메소드에 대해서", "url": "/archive/include-extend-prepend" },
+        
+          { "title": "rails6.0에서 refinements 활용법", "url": "/archive/rails-refinements" },
+        
+          { "title": "ruby each_with_index와each.with_index", "url": "/archive/rails-each_with_index__each_with_index" },
+        
+          { "title": "Rails presence vs present?의 차이", "url": "/archive/rails-presence_vs_present" },
+        
+          { "title": "Rails try try! &. 에대해 알아보자", "url": "/archive/rails-try" },
+        
+          { "title": "ruby symbol 관련 여러가지 실험", "url": "/archive/ruby-detail-symbol" },
+        
+          { "title": "ruby &&,||과 and,or의 차이", "url": "/archive/ruby-compare-and-or" },
+        
+          { "title": "ruby ||= 이디엄 소개", "url": "/archive/ruby-11-syntax" },
+        
+          { "title": "ruby 모듈 시스템이란?require과 주변 메소드들 소개", "url": "/archive/ruby-module-system-require-etc" },
+        
+          { "title": "ruby LOAD_PATH", "url": "/archive/ruby-load-path" },
+        
+          { "title": "ruby2.3의 신기능 Safe Navigation Operator(&.)과 Rails의 try,try!메소드에 대해서", "url": "/archive/ruby-safe-navigation-operator" },
+        
+          { "title": "ruby capitalize메소드", "url": "/archive/ruby-capitalize" }
+        
+      ],
+    
+      "tip": [
+        
+          { "title": "ruby module_function이란", "url": "/archive/ruby-module-function" },
+        
+          { "title": "ruby merge merge!메소드에 대해 알아보자", "url": "/archive/ruby-merge" },
+        
+          { "title": "ruby capitalize메소드", "url": "/archive/ruby-capitalize" },
+        
+          { "title": "rails6.0 mysql db백업후 restore하는법", "url": "/archive/rails-db-reset-restore" },
+        
+          { "title": "rails6.0 console에서 자주사용할만한 tip", "url": "/archive/rails-console-tip" },
+        
+          { "title": "rails form_with에서 nested form구현(accepts_nested_attributes_for)", "url": "/archive/rails-nested-form" },
+        
+          { "title": "rails6.0 console에 하이라이트 설정(pry+hirb)", "url": "/archive/rails-console-hilight" },
+        
+          { "title": "rails new후에 프로젝트명 바꾸는 방법", "url": "/archive/rails-change-project" },
+        
+          { "title": "ruby2.3의 신기능 Safe Navigation Operator(&.)과 Rails의 try,try!메소드에 대해서", "url": "/archive/ruby-safe-navigation-operator" },
+        
+          { "title": "ruby capitalize메소드", "url": "/archive/ruby-capitalize" }
+        
+      ],
+    
+      "ci/cd": [
+        
+          { "title": "circleCI2.0 persist_to_workspace를 이용한 workflow job간 파일공유", "url": "/archive/circleci_persist_to_workspace" }
+        
+      ],
+    
+      "gem": [
+        
+          { "title": "alpine에서 google-protobuf사용시 grpc BUG Segmentation fault at에러", "url": "/archive/google-protobuf-error" },
+        
+          { "title": "rails model에서의 scope이란", "url": "/archive/rails-scope" },
+        
+          { "title": "rails6 references 컬럼에 null허용 하는법", "url": "/archive/rails-model-references-null-true" },
+        
+          { "title": "Rails5.2 carrieerwave에서Shrine으로 마이그레이트 하는 방법", "url": "/archive/rails-migrate-carrierwave-to-shrine" },
+        
+          { "title": "Rails5.2 Shrine이란?CarrierWave,PapperClip,ActiveStorage와의 비교", "url": "/archive/rails-compare-shrine-and-etc" },
+        
+          { "title": "Rails5.2 Shrine을 이용한 S3 파일 업로드", "url": "/archive/rails-shrine-s3" },
+        
+          { "title": "Shrine에서 사용하는 플러그인을 알아보자", "url": "/archive/rails-shrine-plugin" },
+        
+          { "title": "Rails5.2 Shrine을 이용한 로컬 파일 업로드", "url": "/archive/rails-shrine-local" },
+        
+          { "title": "Rails5.2 Shrine 파일업로드시 백그라운드에서 썸네일 이미지 생성", "url": "/archive/rails-shrine-backgrounding" },
+        
+          { "title": "rails에서switch_point를 이용한 모델별 복수 DB접근방법", "url": "/archive/rails-switch-point" }
+        
+      ],
+    
+      "css": [
+        
+          { "title": "rails에서 material-icon추가", "url": "/archive/how-to-add-material-icons" },
+        
+          { "title": "CSS Framework Bulma사용시 자주사용하는 설정 모음", "url": "/archive/css-framework-bulma" },
+        
+          { "title": "css Media-query에 대해서", "url": "/archive/css-media-quries" },
+        
+          { "title": "CSS vw,vh단위에 대해", "url": "/archive/css-unit-vw-vh" },
+        
+          { "title": "css em,rem단위에 대해", "url": "/archive/css-unit-em-rem" },
+        
+          { "title": "css button태그를 a태그처럼 사용할때 커서 변경방법", "url": "/archive/css-how-to-add-cursor-pointer-in-button" },
+        
+          { "title": "css 버튼 클릭시 생기는 파란색 테두리 없애는 법", "url": "/archive/css-how-to-remove-blue-border" },
+        
+          { "title": "css padding 프로터디에 대해 알아보자", "url": "/archive/css-padding-option" },
+        
+          { "title": "css box-sizing에 대해 알아보자", "url": "/archive/css-box-sizing" },
+        
+          { "title": "css viewport에 대해 알아보자.", "url": "/archive/css-viewport" },
+        
+          { "title": "webpack4 + extract-text-webpack-plugin로 css파일 분리", "url": "/archive/webpack-extract-text-webpack-plugin" },
+        
+          { "title": "webpack4 + css-loader,style-loader를 사용해서 css를 loader해보자", "url": "/archive/webpack-css-loader-style-loader" },
+        
+          { "title": "css pseudo-selector(가상셀렉터)에 대해서", "url": "/archive/pseudo-selector" },
+        
+          { "title": "css state에 대해서", "url": "/archive/css-state" },
+        
+          { "title": "css transtion에 대해서", "url": "/archive/css-transitions" },
+        
+          { "title": "css transformation에 대해서", "url": "/archive/css-transformations" },
+        
+          { "title": "css animation기능", "url": "/archive/css-animations" },
+        
+          { "title": "css기본문법", "url": "/archive/css-syntax" },
+        
+          { "title": "css box-model에 대해서", "url": "/archive/css-box" },
+        
+          { "title": "css position에 대해서", "url": "/archive/css-position" },
+        
+          { "title": "css inline,inline-block,block에 대해 알아보자", "url": "/archive/css-inline-block-inlineblock" },
+        
+          { "title": "css flex에 대해서", "url": "/archive/css-flex" },
+        
+          { "title": "Rails AASM로 상태 관리기능 만들기", "url": "/archive/aasm" },
+        
+          { "title": "Autoprefixer Rails로CSS의 벤더프리픽스를 자동생성하기", "url": "/archive/vendor-prefix" },
+        
+          { "title": "Rails assets:pipeline에대해서", "url": "/archive/rails-assets-pipeline" },
+        
+          { "title": "css의 전처리 도구SASS,SCSS,Less의 차이", "url": "/archive/sass_scss_less" }
+        
+      ],
+    
+      "devise": [
+        
+          { "title": "Rails6 google-oauth2 && google-api-client를 이용해서 YouTube Data API에 억세스 하는 방법", "url": "/archive/rails-google-api-client" },
+        
+          { "title": "Rails6 devise && omniauth && google-oauth2를 이용해 인증로직을 구현해보자", "url": "/archive/rails-devise-with-google-oauth2" },
+        
+          { "title": "Rails User패스워드 변경,탈퇴 기능 만들기", "url": "/archive/profile.change-pw-resign" },
+        
+          { "title": "Rails devise,paperclip을 이용해서 프로필 이미지 업로드하기", "url": "/archive/paperclip-devise-profiles" }
+        
+      ],
+    
+      "webdriverio": [
+        
+          { "title": "webdriverio element접근 방법", "url": "/archive/webdriverio-element" },
+        
+          { "title": "WebdriverIO란", "url": "/archive/webdriverIO" },
+        
+          { "title": "webdriverIO 에서의 파일업로드 방법", "url": "/archive/webdriverio-fileupload" }
+        
+      ],
+    
+      "e2e": [
+        
+          { "title": "webdriverio element접근 방법", "url": "/archive/webdriverio-element" },
+        
+          { "title": "WebdriverIO란", "url": "/archive/webdriverIO" },
+        
+          { "title": "webdriverIO 에서의 파일업로드 방법", "url": "/archive/webdriverio-fileupload" }
+        
+      ],
+    
+      "ceph": [
+        
+          { "title": "ceph scalable한 디스크 추가/삭제 방법", "url": "/archive/add-ceph-osd" }
+        
+      ],
+    
+      "rails/i18n": [
+        
+          { "title": "Rails rails-i18n gem이 필요한 이유", "url": "/archive/rails-i18n" },
+        
+          { "title": "Rails에서 서브 디렉토리를 트리거로 다국어 기반 서비스 만드는 방법", "url": "/archive/rails-multi-language-with-i18n" },
+        
+          { "title": "Rails enum_help gem을 이용해 enum 설정에 다국어 기능을 대응하는 방법", "url": "/archive/rails-enum-help" },
+        
+          { "title": "Rails I18n에 대해서", "url": "/archive/i18n" }
+        
+      ],
+    
+      "js": [
+        
+          { "title": "Javascript에서 query parameter값 가져오는 방법", "url": "/archive/js-how-to-get-query-parameter" },
+        
+          { "title": "javascript UMD란?", "url": "/archive/js-module-umd" },
+        
+          { "title": "javascript 모듈의 역사", "url": "/archive/js-history-of-module" },
+        
+          { "title": "javascript에서 object안에 특정 key가 존재하는지 확인하는 방법", "url": "/archive/js-exists_keys_in_object" },
+        
+          { "title": "javascript에서 if문  한줄로 쓰는법", "url": "/archive/js-if-one-line" },
+        
+          { "title": "rails6.0 uikit 설정방법", "url": "/archive/rails-add-uikit-using-webpacker" },
+        
+          { "title": "javascript의 null,undefined,empty 체크시 좋은 코딩방법", "url": "/archive/js-isEmpty" },
+        
+          { "title": "javascript shallow copy와 deep copy에 대해서", "url": "/archive/shallow_copy_vs_deep_copy" },
+        
+          { "title": "script의 async와 defer 속성", "url": "/archive/js-defer_vs_async" },
+        
+          { "title": "webpack4에서 splitChunks 사용해서 중복된 모듈 없애기", "url": "/archive/webpack-splitChunks" },
+        
+          { "title": "webpack4 manifest plugin도입", "url": "/archive/webpack-ManifastPlugin" },
+        
+          { "title": "webpack4 install 방법", "url": "/archive/webpack4-install" },
+        
+          { "title": "webpack4 + extract-text-webpack-plugin로 css파일 분리", "url": "/archive/webpack-extract-text-webpack-plugin" },
+        
+          { "title": "webpack4 + css-loader,style-loader를 사용해서 css를 loader해보자", "url": "/archive/webpack-css-loader-style-loader" },
+        
+          { "title": "이벤트 버블링과 캡쳐링", "url": "/archive/js-EventBubbling_vs_Capturing" },
+        
+          { "title": "react-rails와 webpacker를 사용해서 Rails어플리케이션에서 React실행", "url": "/archive/rails-react-webpacker" },
+        
+          { "title": "addEventListener와onClick의 차이", "url": "/archive/js-addEventLister_vs_onClick" },
+        
+          { "title": "JS 배열도 오브젝트이다.", "url": "/archive/js-%EB%B0%B0%EC%97%B4%EB%8F%84%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8%EB%8B%A4" },
+        
+          { "title": "JS array length 프로퍼티에 대해서", "url": "/archive/js-array-length" },
+        
+          { "title": "ECMA?ES?ES2015?ES6 이해를 위한 용어정리 ", "url": "/archive/es6-es2015" },
+        
+          { "title": "Javascript scope chain이란", "url": "/archive/js-scope-chain" },
+        
+          { "title": "JavaScript의Scope과 타언어 scope 와의 차이", "url": "/archive/js-scope_vs_other_lang_scope" },
+        
+          { "title": "Javascript생성자 함수란?", "url": "/archive/js-%EC%83%9D%EC%84%B1%EC%9E%90%ED%95%A8%EC%88%98" },
+        
+          { "title": "Javascript Prototype Chain 이해하기", "url": "/archive/js-prototype-chain" },
+        
+          { "title": "Javascript literal(리터럴)이란?", "url": "/archive/js-literal" },
+        
+          { "title": "javascript Object.create와{}의 차이는?", "url": "/archive/js-literal_vs_object.create()" },
+        
+          { "title": "js 객체(Object)생성 방법에 대해서", "url": "/archive/js-%EA%B0%9D%EC%B2%B4%EC%83%9D%EC%84%B1%EB%B0%A9%EB%B2%95" },
+        
+          { "title": "JS in과 hasOwnProperty()의 차이", "url": "/archive/js-hasOwnProperty()_vs_in" },
+        
+          { "title": "JS Function 함수 선언식(Function Declarations)과 함수 표현식(Function Expressions)", "url": "/archive/js-function-Declarations_Expressions" },
+        
+          { "title": "javascript　Prototype이란?", "url": "/archive/js-prototype" },
+        
+          { "title": "콜스택 용어 정리", "url": "/archive/js-callstack" },
+        
+          { "title": "js 비동기처리의  동작구조에 대해서", "url": "/archive/js-async-detail" },
+        
+          { "title": "react lifescyle정리", "url": "/archive/react-lifecycle" },
+        
+          { "title": "Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method에러", "url": "/archive/React-state-update-on-an-unmounted-component" },
+        
+          { "title": "javascript　클로저(Closure)란?", "url": "/archive/js-closure" },
+        
+          { "title": "Javascript scope이해", "url": "/archive/js-scope" },
+        
+          { "title": "javascript Property란?", "url": "/archive/js-property" },
+        
+          { "title": "javascript　IIFE란?", "url": "/archive/js-IIFE" },
+        
+          { "title": "js Function 특징과 관련 용어정리", "url": "/archive/js-function" },
+        
+          { "title": "JS Function 함수 표현식 기명함수,익명함수,무명함수에 대해서", "url": "/archive/js-function-sort-of-function-expressions" },
+        
+          { "title": "javascript　Object란?", "url": "/archive/js-object" },
+        
+          { "title": "javascript　Hoisting이란?", "url": "/archive/js-Hoisting" },
+        
+          { "title": "javascript　TDZ란?", "url": "/archive/js-tdz" },
+        
+          { "title": "javascript　선언과 정의란?", "url": "/archive/js-declaration_definition" },
+        
+          { "title": "react HOC란?", "url": "/archive/react-Higher-Order-Components" },
+        
+          { "title": "react에서 파일업로드|image preview만들기|기존에 등록된 이미지 우선표시", "url": "/archive/react-file-upload" },
+        
+          { "title": "react ref란", "url": "/archive/react-ref" },
+        
+          { "title": "react ref", "url": "/archive/react-pointer-events" },
+        
+          { "title": "babel 기초", "url": "/archive/babel-handson" }
+        
+      ],
+    
+      "babel": [
+        
+          { "title": "babel 기초", "url": "/archive/babel-handson" }
+        
+      ],
+    
+      "jquery": [
+        
+          { "title": "jquery기초 문법", "url": "/archive/jquery-syntax1" }
+        
+      ],
+    
+      "react": [
+        
+          { "title": "react lifescyle정리", "url": "/archive/react-lifecycle" },
+        
+          { "title": "Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method에러", "url": "/archive/React-state-update-on-an-unmounted-component" },
+        
+          { "title": "react HOC란?", "url": "/archive/react-Higher-Order-Components" },
+        
+          { "title": "react에서 파일업로드|image preview만들기|기존에 등록된 이미지 우선표시", "url": "/archive/react-file-upload" },
+        
+          { "title": "react ref란", "url": "/archive/react-ref" },
+        
+          { "title": "react ref", "url": "/archive/react-pointer-events" }
+        
+      ],
+    
+      "front": [
+        
+          { "title": "webpack이란", "url": "/archive/webpack" }
+        
+      ],
+    
+      "concept": [
+        
+          { "title": "javascript의 null,undefined,empty 체크시 좋은 코딩방법", "url": "/archive/js-isEmpty" },
+        
+          { "title": "JS Function 함수 선언식(Function Declarations)과 함수 표현식(Function Expressions)", "url": "/archive/js-function-Declarations_Expressions" },
+        
+          { "title": "javascript　Prototype이란?", "url": "/archive/js-prototype" },
+        
+          { "title": "javascript　클로저(Closure)란?", "url": "/archive/js-closure" },
+        
+          { "title": "javascript Property란?", "url": "/archive/js-property" },
+        
+          { "title": "javascript　IIFE란?", "url": "/archive/js-IIFE" },
+        
+          { "title": "js Function 특징과 관련 용어정리", "url": "/archive/js-function" },
+        
+          { "title": "JS Function 함수 표현식 기명함수,익명함수,무명함수에 대해서", "url": "/archive/js-function-sort-of-function-expressions" },
+        
+          { "title": "javascript　Object란?", "url": "/archive/js-object" },
+        
+          { "title": "javascript　Hoisting이란?", "url": "/archive/js-Hoisting" },
+        
+          { "title": "javascript　TDZ란?", "url": "/archive/js-tdz" },
+        
+          { "title": "javascript　선언과 정의란?", "url": "/archive/js-declaration_definition" }
+        
+      ],
+    
+      "http": [
+        
+          { "title": "rails에서 jbuilder사용시 http 406에러", "url": "/archive/http-406-error" }
+        
+      ],
+    
+      "programing": [
+        
+          { "title": "js 동기 처리,비동기 처리", "url": "/archive/js-sync-async" }
+        
+      ],
+    
+      "xx": [
+        
+          { "title": "xx", "url": "/archive/js-Excution-Context" }
+        
+      ],
+    
+      "javascript": [
+        
+          { "title": "Javascript 함수의 메소드 call,apply", "url": "/archive/js-call_apply" },
+        
+          { "title": "Javascript 함수의 메소드 bind", "url": "/archive/js-bind" }
+        
+      ],
+    
+      "Javascript": [
+        
+          { "title": "Javascript에서의 클로저를 이용해서 완벽한 싱글톤만들기 ", "url": "/archive/js-perfect-singleton" },
+        
+          { "title": "Javascript에서의 싱글톤이란?", "url": "/archive/js-singleton" }
+        
+      ],
+    
+      "docker,rails": [
+        
+          { "title": "docker alpine rails환경에서 발생하는 less: unrecognized option: R 에러", "url": "/archive/less-unrecognized-option-R" }
+        
+      ],
+    
+      "webpack": [
+        
+          { "title": "webpack4에서 yml,yaml파일 읽어오는 방법", "url": "/archive/how-to-import-yml-using-webpack" },
+        
+          { "title": "vue-cli webpack 빌드디렉토리 변경하는 방법", "url": "/archive/change-outputdir-webpack" },
+        
+          { "title": "webpack4에서 splitChunks 사용해서 중복된 모듈 없애기", "url": "/archive/webpack-splitChunks" },
+        
+          { "title": "webpack4 manifest plugin도입", "url": "/archive/webpack-ManifastPlugin" },
+        
+          { "title": "webpack4 install 방법", "url": "/archive/webpack4-install" },
+        
+          { "title": "webpack4 + extract-text-webpack-plugin로 css파일 분리", "url": "/archive/webpack-extract-text-webpack-plugin" },
+        
+          { "title": "webpack4 + css-loader,style-loader를 사용해서 css를 loader해보자", "url": "/archive/webpack-css-loader-style-loader" }
+        
+      ],
+    
+      "electron": [
+        
+          { "title": "electron hello world", "url": "/archive/electrn-hello-world" }
+        
+      ],
+    
+      "sass": [
+        
+          { "title": "REST api를 정기적으로 실행 가능한 Sass형 스케줄러(cron)에 대해 조사", "url": "/archive/sass-scheduler-list" },
+        
+          { "title": "Sass에서 배열에 어떤 값이 포함되어있는지 판별하는 방법", "url": "/archive/existing-in-array" }
+        
+      ],
+    
+      "vscode": [
+        
+          { "title": "vscode에서 작업중인 파일을 커맨드로 크롬 브라우저에서 열기", "url": "/archive/how-to-open-browser-with-cmd" }
+        
+      ],
+    
+      "vue.js": [
+        
+          { "title": "vue.js로 작성한 SPA에 head설정(메타태그등) 해주는 법(using vue-head)", "url": "/archive/how-to-set-head-in-vue-spa" },
+        
+          { "title": "Vue Slider Component에 시간(HH:MM:SS)을 설정하는 방법", "url": "/archive/vue-how-to-set-range-without-max" },
+        
+          { "title": "vue-awesome-swiper를 이용해 vue에서 swiper(Carousel)를 사용해보자", "url": "/archive/vue-awesome-swiper" },
+        
+          { "title": "vue-awesome-swiper의 옵션에 대해 알아보자", "url": "/archive/vue-awesome-swiper-option" },
+        
+          { "title": "vue.js event핸들러 함수에 매개변수 넘기는 방법", "url": "/archive/vue-how-to-add-param-except-event" },
+        
+          { "title": "vuex의 단일 상태 트리란?", "url": "/archive/vuex-single-state-tree" },
+        
+          { "title": "vue.js Vuex에 대해서 알아보자", "url": "/archive/vuex-basic" },
+        
+          { "title": "vue.js props에 대해 알아보자", "url": "/archive/vuejs-props" },
+        
+          { "title": "vue.js computed,methods,watch의 차이에 대해 알아보자", "url": "/archive/vuejs-computed__watch__methods" },
+        
+          { "title": "vue.js watch에 대해 알아보자", "url": "/archive/vuejs-watch" },
+        
+          { "title": "vue.js 라이프사이클 created mounted의 차이", "url": "/archive/vuejs-created_mounted" },
+        
+          { "title": "vue.js에서 json파일을 읽어오는 방법", "url": "/archive/vuejs-emit" },
+        
+          { "title": "rails6 + typescript + vue.js 2.6.1 설치방법", "url": "/archive/how-to-install-vue-ts-in-rails6" },
+        
+          { "title": "rails && vue.js 무한스크롤 vs 버튼클릭시 아이템을 로드", "url": "/archive/vuejs-infinite-scroll__add_load_item_button" },
+        
+          { "title": "vue.js에서 json파일을 읽어오는 방법", "url": "/archive/how-to-import-json-directly" }
+        
+      ],
+    
+      "scss": [
+        
+          { "title": "rails6.0 uikit 설정방법", "url": "/archive/rails-add-uikit-using-webpacker" }
+        
+      ],
+    
+      "uikit": [
+        
+          { "title": "rails6.0 uikit 설정방법", "url": "/archive/rails-add-uikit-using-webpacker" }
+        
+      ],
+    
+      "template": [
+        
+          { "title": "rails6.0 erb->slim으로 변경", "url": "/archive/rails-change-view-template-slim" }
+        
+      ],
+    
+      "software": [
+        
+          { "title": "OOP 추상클래스와 인터페이스의 차이는?", "url": "/archive/oop-abstract_class_vs_interface" },
+        
+          { "title": "OOP 인터페이스란?", "url": "/archive/oop-interface" },
+        
+          { "title": "OOP 추상화 클래스와 구상클래스의 차이", "url": "/archive/concreate__abstract_class" },
+        
+          { "title": "ORM(Object relational Mapping)이란?", "url": "/archive/orm" },
+        
+          { "title": "OOP concreate class란?", "url": "/archive/oop-concreate_class" },
+        
+          { "title": "OOP 추상화 클래스란?", "url": "/archive/oop-abstract_class" },
+        
+          { "title": "다형성(polymorphism)을 이해해보자", "url": "/archive/software-polymorphism" },
+        
+          { "title": "컴파일언어와 인터프리터언어의 차이", "url": "/archive/compile_lang__interpreter_lang" },
+        
+          { "title": "정적타입언어와 동적타입언어에 대해서", "url": "/archive/statically_type_lang__dynamically_type_lang" },
+        
+          { "title": "ruby로 배우는 duck typing개념", "url": "/archive/duck-typing" },
+        
+          { "title": "12-Factors란?", "url": "/archive/factors" }
+        
+      ],
+    
+      "ruby/design-pattern": [
+        
+          { "title": "ruby로 배우는 디자인패턴3 【Template Method】", "url": "/archive/ruby-design-pattern-3-template_method" }
+        
+      ],
+    
+      "rails/view": [
+        
+          { "title": "Rails tagHelper에 대해 알아보자.", "url": "/archive/rails-view-helper-tag-helper" },
+        
+          { "title": "Rails simple_format에 대해 알아보자", "url": "/archive/rails-view-simple_format" },
+        
+          { "title": "Rails safe_join에 대해 알아보자", "url": "/archive/rails-view-safe_join" },
+        
+          { "title": "Rails text_area에서 개행과 링크주소(a태그,a href)를 html코드로 만들기(with. Rinku)", "url": "/archive/rails-view-how-to-use-a-br-in-text-area" },
+        
+          { "title": "Rails의 escape(이스케이프)에 대해 알아보자", "url": "/archive/rails-view-escape" },
+        
+          { "title": "Rails 이스케이프 취소시 사용하는 html_safe, raw, == 메소드의 차이에 대해", "url": "/archive/rails-raw_html_safe_etc" },
+        
+          { "title": "Rails html_escape에 대해서 알아보자", "url": "/archive/rails-html_escape" },
+        
+          { "title": "Rails link_to에 대해", "url": "/archive/rails-link_to" },
+        
+          { "title": "rails에서 첨부파일 구현시 생각해볼것들", "url": "/archive/input-file-with-bulma-and-js" },
+        
+          { "title": "rails6 collection_radio_buttons 사용시 디폴트 값 설정하는 방법", "url": "/archive/rails-collection_radio_button_default" },
+        
+          { "title": "rails6 collection_radio_buttons에서 enum값을 사용하는 방법", "url": "/archive/rails-collection_radio_buttons-using-enum-help" },
+        
+          { "title": "rails validation에러 발생시 폼에 에러 메시지를 표시해주는 부분을 커스텀해보자", "url": "/archive/rails-view-error-field_with_errors" },
+        
+          { "title": "rails select선택시 form submit실행시키는 법", "url": "/archive/rails-submit-when-change-select" },
+        
+          { "title": "rails6 validation error시 raidio_button위에 field_with_errors class가 추가되는 문제", "url": "/archive/rails-problem-radio_button-when-validation-error" },
+        
+          { "title": "Rails6.0 collection_check_box란?", "url": "/archive/rails-collection_check_box" }
+        
+      ],
+    
+      "view": [
+        
+          { "title": "Rails6.0 label_tag에 대해서", "url": "/archive/rails-view-form-label_tag" }
+        
+      ],
+    
+      "terraform": [
+        
+          { "title": "Terraform의join,split메소드에 대해서", "url": "/archive/terraform-split-joinr" },
+        
+          { "title": "Terraform IF문안에 IF문 넣기", "url": "/archive/terraform-multi-if" },
+        
+          { "title": "Terraform실행한 환경의 public ip를 변수화 시켜서 세큐리티그룹에 설정하는 방법", "url": "/archive/terraform-get-public-ip" }
+        
+      ],
+    
+      "node": [
+        
+          { "title": "WebdriverIO란", "url": "/archive/webdriverIO" }
+        
+      ],
+    
+      "rails/debug": [
+        
+          { "title": "RSPEC실행시 DB에 데이터가 저장되지 않는 이유(feat. use_transactional_fixtures)", "url": "/archive/rails-use_transactional_fixtures" }
+        
+      ],
+    
+      "rails/log": [
+        
+          { "title": "Rails6 healthcheck url을 로그에서 제외하는 방법", "url": "/archive/rails-how-to-silence-healthcheck-log" }
+        
+      ],
+    
+      "rails/tip": [
+        
+          { "title": "rails I18n으로 yaml사용시 여러가지 팁", "url": "/archive/rails-i18n-yml-tip" },
+        
+          { "title": "rails I18n으로 yaml사용시 개행하는 방법", "url": "/archive/rails-i18n-how-to-add-new-line-in-yml" },
+        
+          { "title": "Rails에서 modal띄우는 방법", "url": "/archive/whats-the-best-practive-to-create-modal-in-rails" },
+        
+          { "title": "rails에서 뒤로가기 버튼 무효화 하는방법", "url": "/archive/how-to-disable-back-button-in-rails" },
+        
+          { "title": "rails escape_javascript란?", "url": "/archive/rails-escape_javascript" },
+        
+          { "title": "rails okcomputer를 이용한 healthcheck url만들기", "url": "/archive/rails-healthcheck-using-okcomputer" }
+        
+      ],
+    
+      "rails/active_record/model": [
+        
+          { "title": "rails6 STI(단일 테이블 상속)에 대해서 알아보자", "url": "/archive/rails-sti" }
+        
+      ],
+    
+      "rails/active_record/polymorphic": [
+        
+          { "title": "rails6 polymorphic association(다형성 관계)이란?", "url": "/archive/rails-polymorphic-association" }
+        
+      ],
+    
+      "oop": [
+        
+          { "title": "OOP 추상클래스와 인터페이스의 차이는?", "url": "/archive/oop-abstract_class_vs_interface" },
+        
+          { "title": "OOP 인터페이스란?", "url": "/archive/oop-interface" },
+        
+          { "title": "OOP 추상화 클래스와 구상클래스의 차이", "url": "/archive/concreate__abstract_class" },
+        
+          { "title": "OOP concreate class란?", "url": "/archive/oop-concreate_class" },
+        
+          { "title": "OOP 추상화 클래스란?", "url": "/archive/oop-abstract_class" }
+        
+      ],
+    
+      "term": [
+        
+          { "title": "카디널리티란?", "url": "/archive/db-term-cardinality" },
+        
+          { "title": "Sparse하다의 의미는?", "url": "/archive/db-term-Sparse" }
+        
+      ],
+    
+      "english": [
+        
+          { "title": "영어 Pros and Cons", "url": "/archive/eng-pros_cons" }
+        
+      ],
+    
+      "html": [
+        
+          { "title": "html form바깥에서 submit하는 방법", "url": "/archive/how-to-post-button-out-to-form" }
+        
+      ],
+    
+      "rails/model": [
+        
+          { "title": "rails joins 메소드의 특징에 대해 알아보자", "url": "/archive/rails-join-query-detail" },
+        
+          { "title": "rails default scope은 웬만하면 쓰지말자", "url": "/archive/rails-default-scope" },
+        
+          { "title": "rails 논리삭제와 물리삭제에 대해", "url": "/archive/rails-soft-delete-physical-delete" },
+        
+          { "title": "rails includes에 대해 알아보자(with N+1문제)", "url": "/archive/rails-includes-query" },
+        
+          { "title": "rails includes 메소드에 대해 자세히 알아보자", "url": "/archive/rails-includes-query-detail" },
+        
+          { "title": "rails save메소드와 create메소드의 차이에 대해", "url": "/archive/rails-save_and_create" },
+        
+          { "title": "rails new메소드와 build메소드의 차이에 대해", "url": "/archive/rails-new_vs_build" },
+        
+          { "title": "rails create_or_update메소드에 대해", "url": "/archive/rails-create_or_update-in-save-method" },
+        
+          { "title": "rails 레코드가 존재하면 update 존재하지 않으면 create하는 방법", "url": "/archive/rails-create_if_exists_and_update_if_not_exists" },
+        
+          { "title": "rails uniq와 distinct의 차이", "url": "/archive/rails-uniq_vs_distinct" },
+        
+          { "title": "rails update_all이란?", "url": "/archive/rails-update_all" },
+        
+          { "title": "rails joins 메소드 사용시 자동으로 select 지정하는 방법", "url": "/archive/rails-join-select-query-tip" },
+        
+          { "title": "rails6 has_one belongs_to관계에 대해  여러가지 실험", "url": "/archive/rails-has-one__belongs_to" },
+        
+          { "title": "rails update_all 사용시 ActiveRecord::StatementInvalid: Mysql2::Error: You can't specify target table 'xx' for update in FROM clause 에러", "url": "/archive/rails-understand-update_all" }
+        
+      ],
+    
+      "rails/front": [
+        
+          { "title": "rails6 + typescript + vue.js 2.6.1 설치방법", "url": "/archive/how-to-install-vue-ts-in-rails6" }
+        
+      ],
+    
+      "philosophy": [
+        
+          { "title": "리플리 증후군?? 꿈에서 본 내용을 실제라고 믿어버린 에피소드 두가지", "url": "/archive/Ripley-Syndrome-and-nightmare" },
+        
+          { "title": "시간에 따른 정의와 도덕의 기준", "url": "/archive/Justice_and_moral_standards_over_time" },
+        
+          { "title": "인간 존엄성과 저출산 문제", "url": "/archive/problem_low_birth_rate_human_dignity" }
+        
+      ],
+    
+      "rails/factorybot": [
+        
+          { "title": "Flutter Dio의 LogInterceptor란?(Flutter에서 서버 통신 디버깅시 사용) ", "url": "/archive/flutter-dio-LogInterceptor" },
+        
+          { "title": "Rails FactoryBot에서 관계된 모델 데이터를 동시에 생성하는 방법", "url": "/archive/factory-bot-relation-model" },
+        
+          { "title": "Rails FactoryBot에서 initialize_with을 이용해 생성된 데이터를 재사용하는 방법", "url": "/archive/factory-bot-initialize_with" },
+        
+          { "title": "Rails FactoryBot이란? 설치부터 사용방법까지 알아보자.", "url": "/archive/factory-bot-basic" },
+        
+          { "title": "rails factoryBot create_list", "url": "/archive/rails-factorybot-create-list" }
+        
+      ],
+    
+      "ruby/parse": [
+        
+          { "title": "ruby URI.parse메소드에 대해서", "url": "/archive/ruby-URI_parse" }
+        
+      ],
+    
+      "security": [
+        
+          { "title": "세큐리티 시점에서의 stateless,stateful에 대해서 알아보자.", "url": "/archive/security-stateless-stateful" },
+        
+          { "title": "cookie란 무엇인가?", "url": "/archive/security-cookie" },
+        
+          { "title": "ruby Base64URL encoding이란?", "url": "/archive/ruby-base64url" }
+        
+      ],
+    
+      "rails/gem": [
+        
+          { "title": "rails rspec사용시 테스트의 coverage를 측정해주는 gem인 simplecov와 simplecov-rcov에 대해 알아보자.", "url": "/archive/gem-simplecov" },
+        
+          { "title": "Rails6 ancestry gem을 이용해 tree구조의 관계를 만들어보자", "url": "/archive/rails-gem-ancestry" },
+        
+          { "title": "Rails6 bullet으로 N+1쿼리문제 체크해보자", "url": "/archive/gem-bullet" }
+        
+      ],
+    
+      "mac": [
+        
+          { "title": "mac에서 SSH Forwarding하는 방법", "url": "/archive/ssh-forwarding-in-mac" }
+        
+      ],
+    
+      "linux": [
+        
+          { "title": "mac에서 SSH Forwarding하는 방법", "url": "/archive/ssh-forwarding-in-mac" }
+        
+      ],
+    
+      "vuex": [
+        
+          { "title": "vuex에서 state변경을 감시하는 방법", "url": "/archive/vue-how-to-watch-store" },
+        
+          { "title": "vuex의 단일 상태 트리란?", "url": "/archive/vuex-single-state-tree" },
+        
+          { "title": "vue.js Vuex에 대해서 알아보자", "url": "/archive/vuex-basic" }
+        
+      ],
+    
+      "rails/security": [
+        
+          { "title": "rails6 cookie_store를 이용한 session관리시 유효기간에 대해", "url": "/archive/rails-default-session-expire" },
+        
+          { "title": "rails6에서 웹 어플리케이션 구축시 cookie를 이용한 인증패턴에 대해", "url": "/archive/rails-architecture-auth-using-cookie" }
+        
+      ],
+    
+      "db": [
+        
+          { "title": "데이터 웨어하우스(dhw)란?", "url": "/archive/db-dwh" }
+        
+      ],
+    
+      "rails/vue": [
+        
+          { "title": "rails template에서 일부분만 vue사용시 발생하는 에러 Failed to execute 'setAttribute' on 'Element': ','에 대해", "url": "/archive/error-msg-Failed_to_execute_setAttribute_on_element_" },
+        
+          { "title": "rails & vue사용시 발생하는 에러 Templates should only be responsible for mapping the state to the UI. Avoid placing tags with side-effects in your templates, such as script, as they will not be parsed.", "url": "/archive/error-msg-Avoid_placing_tags_with_side-effects_in_your_templates" },
+        
+          { "title": "rails template안에서 vue component에 props넘길시 코딩 컨벤션에 주의", "url": "/archive/rails-passing-props-to-vue-component" }
+        
+      ],
+    
+      "rails/model/validation": [
+        
+          { "title": "rails6 validation설정으로 레코드 숫자를 제한하는 방법", "url": "/archive/rails-how-to-limit-record-validation" }
+        
+      ],
+    
+      "rails/enum": [
+        
+          { "title": "rails enum value값으로 key값 알아내는 법", "url": "/archive/how-to-get-enum-key-from-value" },
+        
+          { "title": "rails enum사용시 실제 DB에 저장되는 값 가져오는 방법", "url": "/archive/rails-how-to-get-origin-value-in-enum" }
+        
+      ],
+    
+      "chrome-extension": [
+        
+          { "title": "TypeScript && Chrome Extension 개발환경 간단히 만드는 방법", "url": "/archive/generator-chrome-extension-kickstart-typescript" }
+        
+      ],
+    
+      "life": [
+        
+          { "title": "2022년 지름신강림 회고", "url": "/archive/2022zirumshin" },
+        
+          { "title": "개발자로 보는 인간의 사고회로", "url": "/archive/depends-on-the-personality" }
+        
+      ],
+    
+      "web": [
+        
+          { "title": "short url생성원리", "url": "/archive/how-to-create-short-url" }
+        
+      ],
+    
+      "tools/github": [
+        
+          { "title": "vue-cli를 이용한 github pages 공개방법", "url": "/archive/how-to-deploy-github-page-using-vue-cli" },
+        
+          { "title": "project별 github pages 공개하는 방법", "url": "/archive/how-to-create-github-page-project" }
+        
+      ],
+    
+      "web/ogp": [
+        
+          { "title": "Facebook,Twitter,Slack,KakaoTalk,Line에서 영상링크를 인라인으로 재생시키는방법", "url": "/archive/set-og-video-on-twitter-facebook-slack" },
+        
+          { "title": "SPA에서 open graph(og)설정하는 방법", "url": "/archive/how-to-set-og-in-spa" }
+        
+      ],
+    
+      "mysql": [
+        
+          { "title": "Mysql 셀렉트시 개행검색하는 방법", "url": "/archive/mysql-how-to-select-newline-using-like" }
+        
+      ],
+    
+      "devops/netlify": [
+        
+          { "title": "Netlify functions에서 querystring값 가져오는 방법", "url": "/archive/netlify-functions-how-to-get-querystring" },
+        
+          { "title": "Netlify에서 node-fetch 사용시 주의사항", "url": "/archive/netlify-node-fetch" },
+        
+          { "title": "Netlify에서 vue-router사용하는 방법", "url": "/archive/netlify-router" },
+        
+          { "title": "Netlify Google Analytics 설정하는 방법", "url": "/archive/netlify-ga" },
+        
+          { "title": "정적 컨텐츠 호스팅 서비스 Netlify에 대해 알아보자.", "url": "/archive/netlify-introducing" },
+        
+          { "title": "Netlify Functions에 대해 알아보자", "url": "/archive/netlify-functions" },
+        
+          { "title": "vue-cli를 사용해 Netlify에 정적페이지를 디플로이하는 방법", "url": "/archive/netlify-deploy-using-vue-cli" }
+        
+      ],
+    
+      "js/youtube": [
+        
+          { "title": "Youtube IFrame Player API란?", "url": "/archive/what-is-youtube-iframe-player-api" },
+        
+          { "title": "모바일 브라우저에서 인라인으로 비디오 재생하는 방법은?", "url": "/archive/how-to-inline-play-youtube" },
+        
+          { "title": "Youtube Iframe에서 유투브 무한 반복재생 구현하는 방법", "url": "/archive/how-to-create-infinity-looping-using-youtube-iframe" },
+        
+          { "title": "Youtube iframe에서 사용하는 옵션에 대해", "url": "/archive/youtube-iframe-options" },
+        
+          { "title": "Youtube iframe 자동재생(autoplay)옵션에 대해서", "url": "/archive/why-does-not-working-autoplay" }
+        
+      ],
+    
+      "node.js": [
+        
+          { "title": "Node.js에서 binding.pry같이 디버깅하는 방법", "url": "/archive/nodejs-debugger" }
+        
+      ],
+    
+      "js/webapi": [
+        
+          { "title": "Javascript setInterval이란?", "url": "/archive/what-is-setInterval" }
+        
+      ],
+    
+      "kabu": [
+        
+          { "title": "성장주와 가치주의 차이", "url": "/archive/growth-stock__vs__value-stock" },
+        
+          { "title": "[주식용어정리] hedge란?", "url": "/archive/kabu-hedge" },
+        
+          { "title": "[주식용어정리] 공매도란?", "url": "/archive/kabu-short-sell" },
+        
+          { "title": "주식용어정리 - 액면분할이란?", "url": "/archive/kabu-stock-split" },
+        
+          { "title": "주식용어정리 - 액면병합이란?", "url": "/archive/kabu-reverse-stock-split" },
+        
+          { "title": "주식용어정리 - 액면가란?", "url": "/archive/kabu-par-value" },
+        
+          { "title": "주식용어정리 - 자본금이란?", "url": "/archive/kabu-capital-stock" },
+        
+          { "title": "주식용어정리 - 부채란?", "url": "/archive/kabu-liabilities" },
+        
+          { "title": "주식용어정리 - 자본이란?", "url": "/archive/kabu-capital" },
+        
+          { "title": "주식용어정리 - 자산이란?", "url": "/archive/kabu-assets" },
+        
+          { "title": "주식용어 P/E Ratio(PER)이란?", "url": "/archive/kabu-per" },
+        
+          { "title": "nasdaq주식 정보를 가져올 수 있는 API들 조사", "url": "/archive/kabu-api" }
+        
+      ],
+    
+      "nginx": [
+        
+          { "title": "nginx upstream sent too big header while reading response header from upstream에러 해결방법", "url": "/archive/nginx-proxy_buffers" }
+        
+      ],
+    
+      "aws": [
+        
+          { "title": "mac에서 aws-cli커맨드 버전확인 & 버전 업그레이드 방법", "url": "/archive/aws-cli-update" }
+        
+      ],
+    
+      "youtube": [
+        
+          { "title": "Youtube get_video_info로 유투브 자막 정보가져오기", "url": "/archive/how-to-get-youtube-caption" }
+        
+      ],
+    
+      "openapi/alphavantage": [
+        
+          { "title": "[미국주식 REST API] ALPHA VANTAGE에 대해서", "url": "/archive/what-is-alphavantage" }
+        
+      ],
+    
+      "ci_cd/github-action": [
+        
+          { "title": "Github Action,jekyll을 이용해 다른 리포지토리에 Push하기", "url": "/archive/github-action-draft-blogging-with-jekyll" },
+        
+          { "title": "Github Action의 step을 반복해서 실행하는 방법", "url": "/archive/github-action-how-to-repeat-steps" },
+        
+          { "title": "act를 이용해 Github Action의 Workflow를 로컬환경에서 실행해보자", "url": "/archive/github-action-act" },
+        
+          { "title": "Github Action에서 node.js로 Hello World Action 만들기", "url": "/archive/action-of-github-action-hello-world" },
+        
+          { "title": "Github Action이란", "url": "/archive/github-action" }
+        
+      ],
+    
+      "infra/command/curl": [
+        
+          { "title": "curl사용시 팁", "url": "/archive/curl-tip" }
+        
+      ],
+    
+      "js/vuepress": [
+        
+          { "title": "Vuepress란?", "url": "/archive/what-is-vuepress" },
+        
+          { "title": "Vuepress 관련 tip", "url": "/archive/vuepress-tip" }
+        
+      ],
+    
+      "math": [
+        
+          { "title": "수학 - 곱셈기호생략", "url": "/archive/math-implied-multiplication" },
+        
+          { "title": "수학 - 소수란?", "url": "/archive/math-prime-numbers" },
+        
+          { "title": "수학 - 인수란?", "url": "/archive/math-factor" },
+        
+          { "title": "수학 - 약수란?", "url": "/archive/math-divisor" },
+        
+          { "title": "수학 여집합이란?", "url": "/archive/math-complement-set" }
+        
+      ],
+    
+      "slack": [
+        
+          { "title": "slack에서 markdown table 그리는 방법", "url": "/archive/how-to-draw-mrkdown-table" },
+        
+          { "title": "slack slash command의 인자를 lambda에 넘겨주는 방법", "url": "/archive/slack-how-to-pass-args-slash-command" }
+        
+      ],
+    
+      "infra": [
+        
+          { "title": "SRE관련 기술문제", "url": "/archive/sre-test" }
+        
+      ],
+    
+      "css/flex": [
+        
+          { "title": "css flex의 flex-wrap옵션에 대해", "url": "/archive/css-flex-wrap" },
+        
+          { "title": "css flex의 flex-direction옵션에 대해", "url": "/archive/css-flex-direction" }
+        
+      ],
+    
+      "git": [
+        
+          { "title": "git 삭제된 파일만 일괄 git add하는 방법 ", "url": "/archive/how-to-only-git-add-deleted-file" },
+        
+          { "title": "git rm실패시 강제삭제 해주는 방법", "url": "/archive/git-ignore-unmatch" }
+        
+      ],
+    
+      "rails/active_support": [
+        
+          { "title": "Rails의 html_safe 대해 알아보자", "url": "/archive/rails-html_safe" }
+        
+      ],
+    
+      "swift": [
+        
+          { "title": "swift 다른 뷰 컨트롤러를 호출해서 화면이동하는 방법(using ViewController,modalTransitionStyle)", "url": "/archive/swift-moving-UIModalTransitionStyle" },
+        
+          { "title": "swift navigationContoller을 이용한 화면전이", "url": "/archive/swift-moving-UINavigationController" }
+        
+      ],
+    
+      "flutter/error": [
+        
+          { "title": "Flutter android 빌드시 --stacktrace옵션을 실행하는 방법", "url": "/archive/flutter-How-to-Run-with-stacktrace-option-to-get-the-stack-trace" },
+        
+          { "title": "Flutter에서 svg파일 로드하는방법(with. flutter_svg)", "url": "/archive/what-is-flutter_svg" },
+        
+          { "title": "Flutter Another exception was thrown: Unable to load asset 에러", "url": "/archive/flutter-error-Unable-to-load-asset" },
+        
+          { "title": "flutter build ios실행시 error: 'Runner' requires a provisioning profile with the Push Notifications feature 에러", "url": "/archive/flutter-requires-a-requires-a-provisioning-profile-with-the-Push-Notifications-feature" },
+        
+          { "title": "flutter Debug adapter process has terminated unexpectedly (exit code: 1)　에러", "url": "/archive/flutter-Debug-adapter-process-has-terminated-unexpectedly" },
+        
+          { "title": "Flutter doctor실행시 [!] Connected device ! No devices available메시지는 에러가 아니다.", "url": "/archive/flutter-Connected-device-No-devices-available" },
+        
+          { "title": "Flutter plugin not installed; this adds Flutter specific functionality. 에러", "url": "/archive/Flutter-plugin-not-installed-error" },
+        
+          { "title": "flutter [dart] Target of URI doesn't exist: 'package:xx/main.dart'. [uri_does_not_exist] 에러", "url": "/archive/flutter-uri_does_not_exist-error" },
+        
+          { "title": "flutter pub command not found 에러", "url": "/archive/flutter-pub-command-not-found" }
+        
+      ],
+    
+      "infra/firebase/authentication": [
+        
+          { "title": "Firebase Custom Token이란?", "url": "/archive/firebase-custom-token" },
+        
+          { "title": "firebase_id_token gem에 대해 알아보자.", "url": "/archive/ruby-gems-firebase_id_token" },
+        
+          { "title": "FirebaseIdToken::Exceptions::NoCertificatesError: There's no certificates in Redis database. 에러", "url": "/archive/firebase_id_token-Theres-no-certificates-in-Redis-database" },
+        
+          { "title": "Firebase Web API Key란?", "url": "/archive/firebase-web-api-key" },
+        
+          { "title": "Token used too early, 1617364257 < 1617364284 에러", "url": "/archive/firebase-error-Token-used-too-early" },
+        
+          { "title": "firebase_admin유용한 명령어 모음", "url": "/archive/useful-firebase_admin-command" },
+        
+          { "title": "firebase_admin._auth_utils.ConfigurationNotFoundError: No auth provider found for the given identifier (CONFIGURATION_NOT_FOUND)에러 해결방법", "url": "/archive/firebase-No-auth-provider-found-for-the-given-identifier" }
+        
+      ],
+    
+      "rails/bundle": [
+        
+          { "title": "Gemfile의 require => false는 무슨의미일까", "url": "/archive/bundle-what-does-mean-require-false-gem" }
+        
+      ],
+    
+      "rails/config": [
+        
+          { "title": "Rails dry-configurable gem에 대해", "url": "/archive/rails-dry-configurable" },
+        
+          { "title": "Rails Rails.application.config.filter_parameters설정에 대해", "url": "/archive/rails-config-filter_parameters" }
+        
+      ],
+    
+      "flutter": [
+        
+          { "title": "flutter state_notifier란?", "url": "/archive/flutter-state_notifier" },
+        
+          { "title": "Flutter버전관리툴 fvm에 대해 알아보자.", "url": "/archive/flutter-fvm" }
+        
+      ],
+    
+      "ios": [
+        
+          { "title": "IOS 시뮬레이터(에뮬레이터)만 기동하는 방법", "url": "/archive/how-to-open-only-ios-simulator" }
+        
+      ],
+    
+      "rails/gem/cancancan": [
+        
+          { "title": "rails annotate gem 사용방법", "url": "/archive/rails-annotate" }
+        
+      ],
+    
+      "mental-training": [
+        
+          { "title": "공부는 방법이 7~8 노력이 2~3이다.", "url": "/archive/mental-training-1" }
+        
+      ],
+    
+      "flutter/painting": [
+        
+          { "title": "Flutter EdgeInsets란?", "url": "/archive/flutter-painting-EdgeInsets" }
+        
+      ],
+    
+      "flutter/widgets": [
+        
+          { "title": "Flutter TextOverflow란?", "url": "/archive/flutter-widgets-TextOverflow" },
+        
+          { "title": "Flutter LayoutBuilder란?", "url": "/archive/flutter-widgets-LayoutBuilder" }
+        
+      ],
+    
+      "linux/makefile": [
+        
+          { "title": "Makefile 작성팁", "url": "/archive/makefile-tip" },
+        
+          { "title": "자주 쓰는 heroku 커맨드 Makefile에 정리", "url": "/archive/makefile-heroku-command" }
+        
+      ],
+    
+      "flutter/dart": [
+        
+          { "title": "Dart final과 const의 차이에 대해 알아보자.", "url": "/archive/flutter-dart-final__vs__const" }
+        
+      ],
+    
+      "infra/aws/s3": [
+        
+          { "title": "AWS S3 Presigned URL이란?", "url": "/archive/S3-Presigned-URL" },
+        
+          { "title": "AWS S3 Bucket Policy 예제", "url": "/archive/aws-s3-bucket-policy-example" },
+        
+          { "title": "s3api를 이용해서 여러가지 실험", "url": "/archive/aws-s3-s3api-test" }
+        
+      ],
+    
+      "rails/doorkeeper": [
+        
+          { "title": "DoorKeeper사용시 invalid_grant에러(The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client)", "url": "/archive/doorkeeper-invalid_grant-error" }
+        
+      ],
+    
+      "dart": [
+        
+          { "title": "Dart collection패키지란?", "url": "/archive/flutter-dart-collection" }
+        
+      ],
+    
+      "ruby/comparable": [
+        
+          { "title": "ruby 우주선 연산자(<=>)란?", "url": "/archive/ruby-three-way-comparison" }
+        
+      ],
+    
+      "language/korea": [
+        
+          { "title": "[사투리]저가베,주그메라는 말의 정체", "url": "/archive/saturi-juabe-juemi" }
+        
+      ],
+    
+      "business": [
+        
+          { "title": "일본의 풋살매칭 시스템", "url": "/archive/footsal-matching-in-japan" }
+        
+      ],
+    
+      "rails/active_job": [
+        
+          { "title": "rails ActiveJob::SerializationError - Unsupported argument type에러", "url": "/archive/active-job-serialization-error" }
+        
+      ],
+    
+      "rails/hotwire": [
+        
+          { "title": "Rails7 hotwire Turbo Native란?", "url": "/archive/turbo-native-hotwire-rails7" },
+        
+          { "title": "rails7 turbo란?(Rails7 hotwire turbo란?)", "url": "/archive/turbo-hotwire-rails7" },
+        
+          { "title": "strada란?(Rails7 hotwire strada란?)", "url": "/archive/strada-hotwire-rails7" },
+        
+          { "title": "rails7 Hotwire Stimulus란?", "url": "/archive/stimulus-hotwire-rails7" },
+        
+          { "title": "rails7 Hotwire로 자동완성 셀렉트폼 구현하는 방법", "url": "/archive/turbo-autocomplete-select-box" },
+        
+          { "title": "rails7 hotwire이란?", "url": "/archive/hotwire-rails7" },
+        
+          { "title": "Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기", "url": "/archive/how-to-install-ransack" }
+        
+      ],
+    
+      "rails/kaminari": [
+        
+          { "title": "Rails7 kaminari를 이용한 Pagination기능 추가", "url": "/archive/kaminari" },
+        
+          { "title": "Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기", "url": "/archive/kaminari-custom-tailwindcss" }
+        
+      ]
+    
+  }
+}
+</script>
+
+<script>
+(function() {
+  var data = JSON.parse(document.getElementById('nb-tag-data').textContent);
+  var currentUrl = data.currentUrl;
+  var tags = data.tags;
+
+  // Build tree from slash-separated tag names
+  // e.g. "rails/hotwire" => { rails: { _children: { hotwire: { _posts: [...] } }, _posts: [...] } }
+  var tree = {};
+
+  Object.keys(tags).sort(function(a, b) {
+    return a.toLowerCase().localeCompare(b.toLowerCase());
+  }).forEach(function(tagName) {
+    var parts = tagName.split('/');
+    var node = tree;
+    for (var i = 0; i < parts.length; i++) {
+      var part = parts[i];
+      if (!node[part]) {
+        node[part] = { _posts: [], _children: {}, _fullTag: parts.slice(0, i + 1).join('/') };
+      }
+      if (i === parts.length - 1) {
+        node[part]._posts = tags[tagName];
+        node[part]._fullTag = tagName;
+      }
+      node = node[part]._children;
+    }
+  });
+
+  // Check if any post in a subtree is active
+  function hasActivePost(node) {
+    for (var i = 0; i < node._posts.length; i++) {
+      if (node._posts[i].url === currentUrl) return true;
+    }
+    var children = node._children;
+    var keys = Object.keys(children);
+    for (var j = 0; j < keys.length; j++) {
+      if (hasActivePost(children[keys[j]])) return true;
+    }
+    return false;
+  }
+
+  // Count all posts in subtree
+  function countPosts(node) {
+    var c = node._posts.length;
+    var keys = Object.keys(node._children);
+    for (var i = 0; i < keys.length; i++) {
+      c += countPosts(node._children[keys[i]]);
+    }
+    return c;
+  }
+
+  // Render tree recursively
+  function renderNode(name, node, depth) {
+    var childKeys = Object.keys(node._children);
+    var hasPosts = node._posts.length > 0;
+    var hasChildren = childKeys.length > 0;
+    var isActive = hasActivePost(node);
+    var total = countPosts(node);
+
+    var li = document.createElement('li');
+    li.className = 'nb-cat-group';
+    li.setAttribute('data-category', (node._fullTag || name).toLowerCase());
+
+    // Toggle button — collapsed by default, open only if active post is inside
+    var btn = document.createElement('button');
+    btn.className = 'nb-cat-toggle' + (isActive ? ' active open' : '');
+    btn.style.paddingLeft = (20 + depth * 16) + 'px';
+    btn.setAttribute('data-tip', node._fullTag || name);
+    btn.innerHTML =
+      '<span class="nb-cat-icon">' + (hasChildren || hasPosts ? '&#9654;' : '&#8226;') + '</span>' +
+      '<span class="nb-cat-name">' + name + '</span>' +
+      '<span class="nb-cat-count">' + total + '</span>';
+    btn.onclick = function() {
+      this.classList.toggle('open');
+      var sub = this.nextElementSibling;
+      if (sub) sub.classList.toggle('open');
+    };
+    li.appendChild(btn);
+
+    // Sub container — only open if contains active post
+    if (hasPosts || hasChildren) {
+      var sub = document.createElement('ul');
+      sub.className = 'nb-cat-sub' + (isActive ? ' open' : '');
+      // NOT open by default — only isActive opens it
+
+      // Render child nodes first
+      childKeys.sort(function(a, b) {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      });
+      for (var i = 0; i < childKeys.length; i++) {
+        sub.appendChild(renderNode(childKeys[i], node._children[childKeys[i]], depth + 1));
+      }
+
+      // Render posts
+      var posts = node._posts;
+      var limit = Math.min(posts.length, 15);
+      for (var j = 0; j < limit; j++) {
+        var pli = document.createElement('li');
+        pli.className = 'nb-tree-post';
+        var a = document.createElement('a');
+        a.href = posts[j].url;
+        a.textContent = posts[j].title;
+        a.setAttribute('data-tip', posts[j].title);
+        a.style.paddingLeft = (20 + (depth + 1) * 16) + 'px';
+        if (posts[j].url === currentUrl) {
+          a.className = 'active';
+        }
+        pli.appendChild(a);
+        sub.appendChild(pli);
+      }
+      if (posts.length > 15) {
+        var moreLi = document.createElement('li');
+        moreLi.className = 'nb-tree-post';
+        var moreA = document.createElement('a');
+        moreA.href = '/archive/tags/' + (node._fullTag || name);
+        moreA.textContent = '... ' + (posts.length - 15) + ' more';
+        moreA.style.paddingLeft = (20 + (depth + 1) * 16) + 'px';
+        moreA.style.fontStyle = 'italic';
+        moreA.style.color = 'var(--gray-400)';
+        moreLi.appendChild(moreA);
+        sub.appendChild(moreLi);
+      }
+
+      li.appendChild(sub);
+    }
+
+    return li;
+  }
+
+  // Build the sidebar
+  var container = document.getElementById('nb-sidebar-tree');
+  var ul = document.createElement('ul');
+  ul.className = 'nb-sidebar-nav';
+  ul.id = 'nb-sidebar-nav';
+
+  var rootKeys = Object.keys(tree).sort(function(a, b) {
+    return a.toLowerCase().localeCompare(b.toLowerCase());
+  });
+
+  for (var i = 0; i < rootKeys.length; i++) {
+    ul.appendChild(renderNode(rootKeys[i], tree[rootKeys[i]], 0));
+  }
+  container.appendChild(ul);
+
+  // Filter
+  var filterInput = document.getElementById('nb-sidebar-filter');
+  if (filterInput) {
+    filterInput.addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      var groups = ul.querySelectorAll('.nb-cat-group');
+      groups.forEach(function(g) {
+        var cat = g.getAttribute('data-category');
+        if (!q || cat.indexOf(q) !== -1) {
+          g.style.display = '';
+        } else {
+          // Also check if any child matches
+          var childCats = g.querySelectorAll('.nb-cat-group');
+          var anyChildMatch = false;
+          childCats.forEach(function(cg) {
+            if (cg.getAttribute('data-category').indexOf(q) !== -1) anyChildMatch = true;
+          });
+          g.style.display = anyChildMatch ? '' : 'none';
+        }
+      });
+    });
+  }
+
+  // Scroll active into view
+  setTimeout(function() {
+    var active = container.querySelector('a.active');
+    if (active) active.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, 150);
+})();
+
+function toggleSidebar() {
+  document.getElementById('nb-sidebar').classList.toggle('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.toggle('active');
+}
+
+function closeSidebar() {
+  document.getElementById('nb-sidebar').classList.remove('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.remove('active');
+}
+</script>
 
 
-<body>
-
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Negabaro`s Blog</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/archive/">archive</a>
-                </li>
-                <li>
-                    <a href="/category/">category</a>
-                </li>
-                <li>
-                    <a href="/about/">about</a>
-                </li>
-                <li>
-                    <a href="/search/" class="nav-search-link" title="SEARCH">
-                        <span class="fa fa-search nav-search-icon"></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/feed.xml" class="nav-rss-link" title="RSS">
-                        <span class="fa fa-rss nav-rss-icon"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+    <main class="nb-main">
+      <div class="nb-article-card">
+  <!-- Article Header -->
+  <header class="nb-article-header">
+    <div class="nb-breadcrumb">
+      <a href="/">Home</a>
+      <span class="nb-sep">/</span>
+      
+        <a href="/archive/tags/kabu">kabu</a>
+        <span class="nb-sep">/</span>
+      
+      <span>[주식용어정리] 공매도란?</span>
     </div>
-    <!-- /.container -->
-</nav>
 
+    <h1>[주식용어정리] 공매도란?</h1>
+    
 
-    <!-- Post Header -->
-<header class="intro-header" style="background-image: url('https://negabaro.github.io/')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <h1>[주식용어정리] 공매도란?</h1>
-                    
-                    <span class="meta" style='margin-top:0.5em;'>Posted by negabaro kim on Thursday, January 28, 2021
-                    </span>
-                    <span class="meta" style='margin-top:0.5em;'> Tags: <a href="/archive/tags/kabu"><i class="fa fa-tag"></i> kabu</a>  </span>
-                    <span class="meta" style='margin-top:0.5em;'>
-                        
-                        <i class="fa fa-clock-o"></i>&nbsp;
-                        3 minute read
-                    </span>
-                </div>
-            </div>
-        </div>
+    <div class="nb-meta">
+      <span>January 28, 2021</span>
+      <span>&middot;</span>
+      
+      
+      <span>3 min read</span>
+      
+        <span class="nb-badge">kabu</span>
+      
     </div>
-</header>
+  </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2 id="공매도">공매도</h2>
+  <!-- Article Body -->
+  <article class="nb-article-body">
+    <h2 id="공매도">공매도</h2>
 
 <p>주가가 떨어질것 같은 종목의 주식을 빌려서 일단 팔아 놓고 예상대로 주가가 내려가면 싼값에 
 다시 사서 빌린 주식을 갚아 차익을 남기는 투자기법</p>
@@ -240,8 +1863,27 @@
 <hr />
 
 
-                <br>
-                <!-- _includes/utterances-comment.html -->
+  </article>
+
+  <!-- Post Navigation -->
+  <nav class="nb-post-nav">
+    
+      <a href="/archive/math-implied-multiplication">
+        <span class="nb-nav-label">&larr; Previous</span>
+        <span class="nb-nav-title">수학 - 곱셈기호생략</span>
+      </a>
+    
+    
+      <a href="/archive/kabu-hedge" class="nb-next">
+        <span class="nb-nav-label">Next &rarr;</span>
+        <span class="nb-nav-title">[주식용어정리] hedge란?</span>
+      </a>
+    
+  </nav>
+</div>
+
+<!-- Comments -->
+<!-- _includes/utterances-comment.html -->
 
 
 <script src="https://utteranc.es/client.js"
@@ -254,102 +1896,18 @@
 </script>
 
 
-                
-                <br>
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/archive/math-implied-multiplication" data-toggle="tooltip" data-placement="top" title="수학 - 곱셈기호생략">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/archive/kabu-hedge" data-toggle="tooltip" data-placement="top" title="[주식용어정리] hedge란?">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            </div>
-        </div>
-    </div>
-</article>
-<hr>
 
 
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                    
-                    <li>
-                        <a href="/feed.xml">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    <li>
-                        <a href="https://www.facebook.com/negabaro">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li>
-                        <a href="https://github.com/negabaro">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    <li>
-                        <a href="mailto:negabaro@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-                </ul>
-                <p class="copyright text-muted">
-                
-                
-                    <br><br> Copyright &copy; negabaro 2026</p>
-                
-            </div>
-        </div>
-    </div>
-</footer>
+    </main>
+  </div>
 
-<!-- jQuery (absolute URL for reverse proxy compatibility) -->
-<script src="https://negabaro.github.io/js/jquery.min.js"></script>
+  <!-- Footer -->
+  <footer class="nb-footer">
+    <p>Copyright &copy; negabaro 2026</p>
+  </footer>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="https://negabaro.github.io/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="https://negabaro.github.io/js/clean-blog.min.js"></script>
-
-
-</body>
-    
-        <!-- Global site tag (gtag.js) - Google Analytics -->
+  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -359,5 +1917,6 @@
   gtag('config', 'UA-57217281-1');
 </script>
 
-    
+  
+</body>
 </html>
