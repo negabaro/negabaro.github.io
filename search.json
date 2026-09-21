@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리",
+      "category" : "",
+      "tags"     : "rails/model",
+      "url"      : "//archive/rails-joins-preload-eager_load-includes",
+      "date"     : "Tuesday, September 22, 2026",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Rails7 kaminari를 이용한 Pagination기능 추가",
       "category" : "",
       "tags"     : "rails/kaminari",

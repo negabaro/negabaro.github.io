@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hello World">
+  <meta name="description" content="5개 메소드가 실제로 어떤 SQL을 만드는지 비교하고 상황별로 무엇을 쓰면 되는지 정리">
 
-  <meta property="og:title" content="vue.js에서 json파일을 읽어오는 방법" />
-  <meta property="og:description" content="Hello World" />
+  <meta property="og:title" content="rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리" />
+  <meta property="og:description" content="5개 메소드가 실제로 어떤 SQL을 만드는지 비교하고 상황별로 무엇을 쓰면 되는지 정리" />
   <meta property="og:type" content="" />
-  <meta property="og:url" content="https://negabaro.github.io/archive/vuejs-emit" />
+  <meta property="og:url" content="https://negabaro.github.io/archive/rails-joins-preload-eager_load-includes" />
   <meta property="og:site_name" content="Negabaro`s Blog" />
   <meta property="og:image" content="https://negabaro.github.io" />
 
-  <title>vue.js에서 json파일을 읽어오는 방법 - Negabaro`s Blog</title>
+  <title>rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리 - Negabaro`s Blog</title>
 
-  <link rel="canonical" href="https://negabaro.github.io/archive/vuejs-emit">
+  <link rel="canonical" href="https://negabaro.github.io/archive/rails-joins-preload-eager_load-includes">
 
   <!-- Design System CSS -->
   <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1790014096">
@@ -68,7 +68,7 @@
 <!-- Tag data from Jekyll -->
 <script id="nb-tag-data" type="application/json">
 {
-  "currentUrl": "/archive/vuejs-emit",
+  "currentUrl": "/archive/rails-joins-preload-eager_load-includes",
   "tags": {
     
       "rails/active_record/association": [
@@ -1727,75 +1727,341 @@ function closeSidebar() {
       <a href="/">Home</a>
       <span class="nb-sep">/</span>
       
-        <a href="/archive/tags/vue.js">vue.js</a>
+        <a href="/archive/tags/rails/model">rails/model</a>
         <span class="nb-sep">/</span>
       
-      <span>vue.js에서 json파일을 읽어오는 방법</span>
+      <span>rails joins, left_joins, preload, eag...</span>
     </div>
 
-    <h1>vue.js에서 json파일을 읽어오는 방법</h1>
+    <h1>rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리</h1>
     
 
     <div class="nb-meta">
-      <span>July 22, 2020</span>
+      <span>September 22, 2026</span>
       <span>&middot;</span>
       
       
-      <span>1 min read</span>
+      <span>11 min read</span>
       
-        <span class="nb-badge">vue.js</span>
+        <span class="nb-badge">rails/model</span>
       
     </div>
   </header>
 
   <!-- Article Body -->
   <article class="nb-article-body">
-    <h1 id="송신emit">송신(emit)</h1>
+    <p>연관 모델을 다룰 때 쓰는 메소드가 5개나 있어서 헷갈리기 쉽다.</p>
 
-<p>특정 범위를 이벤트로 부모에게 전달할때 사용</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">joins</code></li>
+  <li><code class="language-plaintext highlighter-rouge">left_joins</code></li>
+  <li><code class="language-plaintext highlighter-rouge">preload</code></li>
+  <li><code class="language-plaintext highlighter-rouge">eager_load</code></li>
+  <li><code class="language-plaintext highlighter-rouge">includes</code></li>
+</ul>
 
-<p>컴퍼넌트간 통신시 공통의 부모를 경유해 통신을 하므로 이 emit을 자주 사용한다.</p>
+<p>결국 이 메소드들은 두 가지 질문으로 구분된다.</p>
 
-<p>http통신의 request와 역할이 비슷</p>
+<ol>
+  <li><strong>JOIN을 하는가?</strong> → 연관 테이블 컬럼으로 <code class="language-plaintext highlighter-rouge">where</code> / <code class="language-plaintext highlighter-rouge">order</code> 를 걸 수 있는지가 결정된다</li>
+  <li><strong>연관 레코드를 메모리에 올려두는가?</strong> → <code class="language-plaintext highlighter-rouge">owner.cats</code> 를 호출할 때 N+1이 생기는지가 결정된다</li>
+</ol>
 
-<h1 id="통신-방법">통신 방법</h1>
+<p>이 글의 SQL은 전부 ActiveRecord 7.1 + SQLite에서 실제로 실행해서 얻은 로그다.</p>
 
-<p>공통의 부모에게 가상의 event를 생성해 해당 event를 경유해서 통신한다.</p>
+<h2 id="예제-모델">예제 모델</h2>
 
-<p>즉 공통의 부모를 가지 않으면 통신이 불가능(물론 부모 자식간의 통신은 가능)</p>
+<p>기존 글과 같이 집사(Owner)와 고양이(Cat)로 설명한다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  C   D
-A   B
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Owner</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:cats</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Cat</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:owner</span>
+<span class="k">end</span>
 </code></pre></div></div>
 
-<p>A와B 컴퍼넌트간 통신을 하고 싶을때 공통의 C라는 부모 컴퍼넌트를 가지고 있으므로 통신이 가능하나</p>
+<p>데이터는 아래와 같다.</p>
 
-<p>A,D는 공통의 부모 컴퍼넌트가 없으므로 통신이 불가능</p>
+<table>
+  <thead>
+    <tr>
+      <th>owner</th>
+      <th>cats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>kim</td>
+      <td>nabi, tora</td>
+    </tr>
+    <tr>
+      <td>lee</td>
+      <td>mimi</td>
+    </tr>
+    <tr>
+      <td>park</td>
+      <td>(없음)</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>부모 자식관계인 A,C A,B도 통신가능</p>
+<h2 id="한눈에-비교">한눈에 비교</h2>
 
-<h1 id="수신on-v-on-">수신($on, v-on, @)</h1>
+<table>
+  <thead>
+    <tr>
+      <th>메소드</th>
+      <th>JOIN</th>
+      <th>연관 레코드 로드</th>
+      <th>연관 테이블로 where</th>
+      <th>쿼리 수</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">joins</code></td>
+      <td>INNER JOIN</td>
+      <td>X</td>
+      <td>O</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">left_joins</code></td>
+      <td>LEFT OUTER JOIN</td>
+      <td>X</td>
+      <td>O</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preload</code></td>
+      <td>안 함</td>
+      <td>O</td>
+      <td><strong>X (에러)</strong></td>
+      <td>연관마다 +1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">eager_load</code></td>
+      <td>LEFT OUTER JOIN</td>
+      <td>O</td>
+      <td>O</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">includes</code></td>
+      <td>상황에 따라</td>
+      <td>O</td>
+      <td>O</td>
+      <td>1 또는 연관마다 +1</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>위에서 설명한 emit을 이용해 만들어진 가상 이벤트(?)를 가져오기 위해서는 해당 이벤트를 수신하고 있어야한다.
-수신을 하기위한 문법으로 <code class="language-plaintext highlighter-rouge">$on,v-on,@</code>등 이 있다.</p>
+<p><code class="language-plaintext highlighter-rouge">includes</code> 는 평소에는 <code class="language-plaintext highlighter-rouge">preload</code> 처럼 움직이다가, 연관 테이블을 참조하는 순간 <code class="language-plaintext highlighter-rouge">eager_load</code> 로 바뀐다.</p>
 
-<p>부모 컴퍼넌트에 emit으로 만들어진 가상 이벤트(?)가 있는지 확인하고 있으면 이벤트(메소드)를 가져와
-이벤트에 넘겨진 값이 있다면 그것을 받아서 binding 시켜주는식으로 통신을 한다.</p>
+<h2 id="joins--걸러내기만-하고-가져오지는-않는다">joins : 걸러내기만 하고 가져오지는 않는다</h2>
 
-<p>emit과 같이 부모 컴퍼넌트를 경유한다는것이 포인트이다.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>http통신의 response와 비슷한 역할을 한다.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span>
+<span class="c1">-- =&gt; ["kim", "kim", "lee"]</span>
+</code></pre></div></div>
 
-<p>수신하는 방법에는 <code class="language-plaintext highlighter-rouge">$on,v-on,@</code>등 이 있는데 이들에 대해 각각 아래에서 설명하겠다.</p>
+<p>주의할 점이 두 가지 있다.</p>
 
-<h2 id="emit---thisparenton">emit -&gt; this.$parent.$on</h2>
+<p><strong>1. has_many를 joins하면 부모가 중복된다</strong></p>
 
-<p>고양이(Cat)가 새끼고양이에</p>
+<p>kim은 고양이가 2마리라서 2번 나온다. 고양이가 없는 park은 INNER JOIN이라 빠진다. 중복을 없애려면 <code class="language-plaintext highlighter-rouge">distinct</code> 를 붙인다.</p>
 
-<h2 id="emit---v-onxxyy">emit -&gt; v-on:xx=”yy”</h2>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">distinct</span>
+</code></pre></div></div>
 
-<h2 id="emit---xxyy">emit -&gt; @:xx=”yy”</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span>
+<span class="c1">-- =&gt; ["kim", "lee"]</span>
+</code></pre></div></div>
 
+<p><strong>2. cats는 로드되지 않는다</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">SELECT "owners".*</code> 만 가져오기 때문에 <code class="language-plaintext highlighter-rouge">owner.cats</code> 를 호출하면 그때마다 쿼리가 나간다. 즉 N+1이 된다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">cats</span><span class="p">.</span><span class="nf">size</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"cats"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="o">?</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"cats"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="o">?</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"cats"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="o">?</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">joins</code> 는 <strong>연관 테이블 조건으로 부모를 걸러낼 때만</strong> 쓴다고 생각하면 된다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span> <span class="ss">name: </span><span class="s2">"nabi"</span> <span class="p">})</span>
+<span class="c1"># =&gt; kim</span>
+</code></pre></div></div>
+
+<p>joins의 세부 동작은 <a href="/archive/rails-join-query-detail">rails joins 메소드의 특징에 대해 알아보자</a>에 정리해 두었다.</p>
+
+<h2 id="left_joins--연관이-없는-부모도-남긴다">left_joins : 연관이 없는 부모도 남긴다</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">left_joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span>
+<span class="c1">-- =&gt; ["kim", "kim", "lee", "park"]</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">joins</code> 와 같지만 LEFT OUTER JOIN이라 고양이가 없는 park도 남는다. <code class="language-plaintext highlighter-rouge">left_outer_joins</code> 와 같은 메소드다.</p>
+
+<p>“고양이가 없는 집사” 를 찾을 때 자주 쓴다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">left_joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span> <span class="ss">id: </span><span class="kp">nil</span> <span class="p">})</span>
+<span class="c1"># =&gt; park</span>
+</code></pre></div></div>
+
+<h2 id="preload--쿼리를-나눠서-가져온다">preload : 쿼리를 나눠서 가져온다</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">preload</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">cats</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span>
+<span class="k">SELECT</span> <span class="nv">"cats"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"cats"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="k">IN</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="c1">-- =&gt; [["nabi", "tora"], ["mimi"], []]</span>
+</code></pre></div></div>
+
+<p>부모를 먼저 가져오고, 그 id로 연관 테이블을 <code class="language-plaintext highlighter-rouge">IN</code> 으로 한 번에 가져온다. JOIN을 하지 않기 때문에 연관 테이블 조건으로 걸러낼 수 없다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">preload</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span> <span class="ss">name: </span><span class="s2">"nabi"</span> <span class="p">}).</span><span class="nf">to_a</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"name"</span> <span class="o">=</span> <span class="o">?</span>
+<span class="c1">-- ActiveRecord::StatementInvalid: no such column: cats.name</span>
+</code></pre></div></div>
+
+<p>대신 JOIN으로 행이 불어나지 않으니 연관 테이블이 크거나, 여러 연관을 한꺼번에 가져올 때 유리하다.</p>
+
+<h2 id="eager_load--join해서-한-번에-가져온다">eager_load : JOIN해서 한 번에 가져온다</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">eager_load</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">cats</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span> <span class="k">AS</span> <span class="n">t0_r0</span><span class="p">,</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"name"</span> <span class="k">AS</span> <span class="n">t0_r1</span><span class="p">,</span>
+       <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"id"</span> <span class="k">AS</span> <span class="n">t1_r0</span><span class="p">,</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"name"</span> <span class="k">AS</span> <span class="n">t1_r1</span><span class="p">,</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="k">AS</span> <span class="n">t1_r2</span>
+<span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span>
+<span class="c1">-- =&gt; [["nabi", "tora"], ["mimi"], []]</span>
+</code></pre></div></div>
+
+<p>LEFT OUTER JOIN 한 방으로 부모와 연관을 모두 가져온다. <code class="language-plaintext highlighter-rouge">t0_r0</code> 같은 별칭은 Rails가 결과를 각 모델로 다시 나누기 위해 붙이는 것이다. <code class="language-plaintext highlighter-rouge">joins</code> 와 달리 부모 중복은 Rails가 알아서 합쳐준다.</p>
+
+<h3 id="함정--where를-걸면-연관-레코드까지-걸러진다">함정 : where를 걸면 연관 레코드까지 걸러진다</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">eager_load</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span> <span class="ss">name: </span><span class="s2">"nabi"</span> <span class="p">})</span>
+     <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="p">[</span><span class="n">o</span><span class="p">.</span><span class="nf">name</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="nf">cats</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)]</span> <span class="p">}</span>
+<span class="c1"># =&gt; [["kim", ["nabi"]]]</span>
+</code></pre></div></div>
+
+<p>kim의 고양이는 nabi, tora 2마리인데 <code class="language-plaintext highlighter-rouge">o.cats</code> 에 nabi만 들어 있다. WHERE로 걸러진 JOIN 결과를 그대로 캐시하기 때문이다.</p>
+
+<p>“nabi를 키우는 집사의 <strong>모든</strong> 고양이” 가 필요하다면 거르는 쿼리와 가져오는 쿼리를 나눈다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">id: </span><span class="no">Cat</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"nabi"</span><span class="p">).</span><span class="nf">select</span><span class="p">(</span><span class="ss">:owner_id</span><span class="p">)).</span><span class="nf">preload</span><span class="p">(</span><span class="ss">:cats</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="includes--알아서-preload와-eager_load-중-고른다">includes : 알아서 preload와 eager_load 중 고른다</h2>
+
+<p>아무 조건이 없으면 <code class="language-plaintext highlighter-rouge">preload</code> 와 같은 SQL이 나간다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">to_a</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"owners"</span>
+<span class="k">SELECT</span> <span class="nv">"cats"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"cats"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="k">IN</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>연관 테이블을 <strong>해시 조건</strong>으로 참조하면 <code class="language-plaintext highlighter-rouge">eager_load</code> 로 바뀐다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="ss">cats: </span><span class="p">{</span> <span class="ss">name: </span><span class="s2">"nabi"</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span> <span class="k">AS</span> <span class="n">t0_r0</span><span class="p">,</span> <span class="p">...</span> <span class="k">FROM</span> <span class="nv">"owners"</span>
+<span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"owner_id"</span> <span class="o">=</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span> <span class="k">WHERE</span> <span class="nv">"cats"</span><span class="p">.</span><span class="nv">"name"</span> <span class="o">=</span> <span class="o">?</span>
+</code></pre></div></div>
+
+<p>주의할 점은 <strong>문자열 조건은 Rails가 감지하지 못한다</strong>는 것이다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="s2">"cats.name = ?"</span><span class="p">,</span> <span class="s2">"nabi"</span><span class="p">).</span><span class="nf">to_a</span>
+<span class="c1"># ActiveRecord::StatementInvalid: no such column: cats.name</span>
+</code></pre></div></div>
+
+<p>이때는 <code class="language-plaintext highlighter-rouge">references</code> 로 어떤 테이블을 참조하는지 알려줘야 <code class="language-plaintext highlighter-rouge">eager_load</code> 로 바뀐다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="s2">"cats.name = ?"</span><span class="p">,</span> <span class="s2">"nabi"</span><span class="p">).</span><span class="nf">references</span><span class="p">(</span><span class="ss">:cats</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">references</code> 는 <code class="language-plaintext highlighter-rouge">includes</code> 와 같이 쓸 때만 의미가 있다.</p>
+
+<p>includes의 자세한 동작은 <a href="/archive/rails-includes-query-detail">rails includes 메소드에 대해 자세히 알아보자</a>를 참고.</p>
+
+<h2 id="count도-결과가-다르다">count도 결과가 다르다</h2>
+
+<p>같은 데이터에 <code class="language-plaintext highlighter-rouge">count</code> 를 호출하면 메소드마다 결과가 달라진다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Owner</span><span class="p">.</span><span class="nf">joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">count</span>       <span class="c1"># =&gt; 3  (kim이 2번 세어짐)</span>
+<span class="no">Owner</span><span class="p">.</span><span class="nf">left_joins</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">count</span>  <span class="c1"># =&gt; 4  (park까지 포함, kim 2번)</span>
+<span class="no">Owner</span><span class="p">.</span><span class="nf">preload</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">count</span>     <span class="c1"># =&gt; 3</span>
+<span class="no">Owner</span><span class="p">.</span><span class="nf">eager_load</span><span class="p">(</span><span class="ss">:cats</span><span class="p">).</span><span class="nf">count</span>  <span class="c1"># =&gt; 3</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="p">...</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="p">...</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"owners"</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="nv">"owners"</span><span class="p">.</span><span class="nv">"id"</span><span class="p">)</span> <span class="k">FROM</span> <span class="nv">"owners"</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="nv">"cats"</span> <span class="k">ON</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">joins</code> 로 집계할 때는 <code class="language-plaintext highlighter-rouge">distinct.count</code> 를 쓰는 습관을 들이자.</p>
+
+<h2 id="어떤-걸-쓰면-되나">어떤 걸 쓰면 되나</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>하고 싶은 것</th>
+      <th>메소드</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>연관 조건으로 부모만 걸러내고 싶다 (연관 데이터는 안 씀)</td>
+      <td><code class="language-plaintext highlighter-rouge">joins</code> (+ 필요하면 <code class="language-plaintext highlighter-rouge">distinct</code>)</td>
+    </tr>
+    <tr>
+      <td>연관이 없는 부모도 포함 / 연관이 없는 것만 찾고 싶다</td>
+      <td><code class="language-plaintext highlighter-rouge">left_joins</code></td>
+    </tr>
+    <tr>
+      <td>목록 화면에서 N+1만 없애고 싶다</td>
+      <td><code class="language-plaintext highlighter-rouge">preload</code> 또는 <code class="language-plaintext highlighter-rouge">includes</code></td>
+    </tr>
+    <tr>
+      <td>연관 조건으로 거르면서 연관 데이터도 쓰고 싶다</td>
+      <td><code class="language-plaintext highlighter-rouge">eager_load</code> (걸러진 연관만 남는 점 주의)</td>
+    </tr>
+    <tr>
+      <td>연관 테이블이 크거나 여러 연관을 한꺼번에 가져온다</td>
+      <td><code class="language-plaintext highlighter-rouge">preload</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>개인적으로는 동작이 예측 가능한 쪽을 선호해서 <code class="language-plaintext highlighter-rouge">includes</code> 보다 <code class="language-plaintext highlighter-rouge">preload</code> / <code class="language-plaintext highlighter-rouge">eager_load</code> 를 명시적으로 쓰는 편이다. <code class="language-plaintext highlighter-rouge">includes</code> 는 조건 하나 추가했을 뿐인데 SQL이 통째로 바뀌기 때문에, 성능 문제를 추적할 때 헷갈리기 쉽다.</p>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="https://railsguides.jp/active_record_querying.html">Active Record クエリインターフェイス - Railsガイド</a></li>
+  <li><a href="https://qiita.com/k0kubun/items/80c5a5494f53bb88dc58">ActiveRecordのjoinsとpreloadとincludesとeager_loadの違い</a></li>
+</ul>
 
   </article>
 
@@ -1808,8 +2074,8 @@ A   B
     <p class="nb-cta-text">Ruby on Rails・AI 活用・新規サービスの 0→1 開発のご相談を受け付けています。技術的な質問や開発のお見積もりもお気軽にどうぞ。</p>
   </div>
   <div class="nb-cta-actions">
-    <a class="nb-cta-primary" href="https://www.negabaro.com/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/vuejs-emit" target="_blank" rel="noopener">お問い合わせ</a>
-    <a class="nb-cta-secondary" href="https://www.negabaro.com/service?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/vuejs-emit" target="_blank" rel="noopener">サービスを見る</a>
+    <a class="nb-cta-primary" href="https://www.negabaro.com/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/rails-joins-preload-eager_load-includes" target="_blank" rel="noopener">お問い合わせ</a>
+    <a class="nb-cta-secondary" href="https://www.negabaro.com/service?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/rails-joins-preload-eager_load-includes" target="_blank" rel="noopener">サービスを見る</a>
   </div>
 </aside>
 
@@ -1817,16 +2083,11 @@ A   B
   <!-- Post Navigation -->
   <nav class="nb-post-nav">
     
-      <a href="/archive/gem-bullet">
+      <a href="/archive/kaminari">
         <span class="nb-nav-label">&larr; Previous</span>
-        <span class="nb-nav-title">Rails6 bullet으로 N+1쿼리문제 체크해보자</span>
+        <span class="nb-nav-title">Rails7 kaminari를 이용한 Pagination기능 추가</span>
       </a>
     
-    
-      <a href="/archive/vuejs-created_mounted" class="nb-next">
-        <span class="nb-nav-label">Next &rarr;</span>
-        <span class="nb-nav-title">vue.js 라이프사이클 created mounted의 차이</span>
-      </a>
     
   </nav>
 </div>
@@ -1839,7 +2100,7 @@ A   B
         repo="negabaro/blog-comments"
         issue-term="title"
         theme="github-light"
-        label="/archive/vuejs-emit"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        label="/archive/rails-joins-preload-eager_load-includes"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
         crossorigin="anonymous"
         async>
 </script>

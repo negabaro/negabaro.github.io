@@ -5,7 +5,20 @@
         <description>Hello World</description>      
         <link>https://negabaro.github.io</link>
         <atom:link href="https://negabaro.github.io/feed.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sat, 09 Dec 2023 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 22 Sep 2026 00:00:00 +0900</lastBuildDate>
+        
+            <item>
+                <title>rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리</title>
+                        
+                
+                    <description>&lt;p&gt;연관 모델을 다룰 때 쓰는 메소드가 5개나 있어서 헷갈리기 쉽다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Tue, 22 Sep 2026 00:00:00 +0900</pubDate>
+                <link>https://negabaro.github.io/archive/rails-joins-preload-eager_load-includes</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/rails-joins-preload-eager_load-includes</guid>
+            </item>
         
             <item>
                 <title>Rails7 kaminari를 이용한 Pagination기능 추가</title>
@@ -15,7 +28,7 @@
 
 </description>
                 
-                <pubDate>Sat, 09 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sat, 09 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/kaminari</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/kaminari</guid>
             </item>
@@ -28,7 +41,7 @@
 
 </description>
                 
-                <pubDate>Sat, 09 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sat, 09 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/kaminari-custom-tailwindcss</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/kaminari-custom-tailwindcss</guid>
             </item>
@@ -41,7 +54,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/turbo-native-hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/turbo-native-hotwire-rails7</guid>
             </item>
@@ -54,7 +67,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/turbo-hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/turbo-hotwire-rails7</guid>
             </item>
@@ -67,7 +80,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/strada-hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/strada-hotwire-rails7</guid>
             </item>
@@ -80,7 +93,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/stimulus-hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/stimulus-hotwire-rails7</guid>
             </item>
@@ -93,7 +106,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/turbo-autocomplete-select-box</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/turbo-autocomplete-select-box</guid>
             </item>
@@ -106,7 +119,7 @@
 
 </description>
                 
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/hotwire-rails7</guid>
             </item>
@@ -119,22 +132,9 @@
 
 </description>
                 
-                <pubDate>Wed, 24 May 2023 00:00:00 +0000</pubDate>
+                <pubDate>Wed, 24 May 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/how-to-install-tailwindcss</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-install-tailwindcss</guid>
-            </item>
-        
-            <item>
-                <title>Rails7 ransack,hotwire(turbo_frame,stimulus)을 이용해 검색기능 구현하기</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;ransack&quot;&gt;ransack&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Wed, 24 May 2023 00:00:00 +0000</pubDate>
-                <link>https://negabaro.github.io/archive/how-to-install-ransack</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-install-ransack</guid>
             </item>
         
     </channel>
