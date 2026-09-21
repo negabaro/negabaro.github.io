@@ -615,3 +615,95 @@
     padding: 24px 16px;
   }
 }
+
+/* ── negabaro inc. 導線 (CTA) ── */
+.nb-nav .nb-nav-links a.nb-nav-cta {
+  color: #fff;
+  background: var(--brand);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+}
+.nb-nav .nb-nav-links a.nb-nav-cta:hover {
+  color: #fff;
+  background: var(--brand-hover);
+}
+.nb-cta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, var(--brand-light), #fff);
+  border: 1px solid rgba(5, 150, 105, 0.15);
+  border-radius: var(--radius-2xl);
+}
+.nb-cta-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
+  border-radius: var(--radius-xl);
+  color: #fff;
+  font-size: 20px;
+}
+.nb-cta-body {
+  flex: 1 1 280px;
+}
+.nb-cta-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gray-900);
+}
+.nb-cta-text {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--gray-600);
+}
+.nb-cta-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.nb-cta-actions a {
+  padding: 10px 18px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nb-layout .nb-cta a.nb-cta-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.nb-layout .nb-cta a.nb-cta-primary:hover {
+  background: var(--brand-hover);
+  color: #fff;
+}
+.nb-layout .nb-cta a.nb-cta-secondary {
+  background: #fff;
+  color: var(--brand);
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+@media (max-width: 768px) {
+  .nb-nav .nb-nav-brand {
+    margin-right: 12px;
+    font-size: 16px;
+  }
+  .nb-nav .nb-nav-links {
+    gap: 12px;
+  }
+  .nb-nav .nb-nav-links a.nb-nav-cta {
+    padding: 5px 10px;
+  }
+}
+.nb-footer a {
+  color: var(--gray-500);
+}
+.nb-footer a:hover {
+  color: var(--brand);
+}

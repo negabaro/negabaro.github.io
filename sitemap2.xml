@@ -2226,14 +2226,6 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/about/</loc>
-    </url>
-    
-    
-    
-    
-    
-    <url>
         <loc>https://negabaro.github.io/search/</loc>
     </url>
     
@@ -2242,7 +2234,15 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/</loc>
+        <loc>https://negabaro.github.io/category/</loc>
+    </url>
+    
+    
+    
+    
+    
+    <url>
+        <loc>https://negabaro.github.io/about/</loc>
     </url>
     
     
@@ -2258,7 +2258,7 @@
     
     
     <url>
-        <loc>https://negabaro.github.io/category/</loc>
+        <loc>https://negabaro.github.io/</loc>
     </url>
     
     

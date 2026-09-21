@@ -18,7 +18,7 @@
   <link rel="canonical" href="https://negabaro.github.io/archive/s3-direct-upload-using-presigned-url">
 
   <!-- Design System CSS -->
-  <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1773385064">
+  <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1790013678">
 
   <!-- Syntax highlighting -->
   <link rel="stylesheet" href="https://negabaro.github.io/css/syntax.css">
@@ -39,6 +39,7 @@
       <li><a href="/category/">Category</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/search/"><i class="fa fa-search"></i></a></li>
+      <li><a class="nb-nav-cta" href="https://www.negabaro.com/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_nav" target="_blank" rel="noopener">Contact</a></li>
     </ul>
   </nav>
 
@@ -101,8 +102,6 @@
       ],
     
       "rails": [
-        
-          { "title": "Rails7에서 tailwind-css인스톨 방법", "url": "/archive/how-to-install-tailwindcss" },
         
           { "title": "Rails6.0 devise login/logout header페이지 만들기", "url": "/archive/rails-devise-login-header" },
         
@@ -251,8 +250,6 @@
       ],
     
       "handson": [
-        
-          { "title": "Rails7에서 tailwind-css인스톨 방법", "url": "/archive/how-to-install-tailwindcss" },
         
           { "title": "Rails6.0 devise login/logout header페이지 만들기", "url": "/archive/rails-devise-login-header" },
         
@@ -1516,6 +1513,12 @@
         
       ],
     
+      "tailwindcss": [
+        
+          { "title": "Rails7에서 tailwind-css인스톨 방법", "url": "/archive/how-to-install-tailwindcss" }
+        
+      ],
+    
       "rails/kaminari": [
         
           { "title": "Rails7 kaminari를 이용한 Pagination기능 추가", "url": "/archive/kaminari" },
@@ -1795,7 +1798,7 @@ function closeSidebar() {
 
 <p>아래와 같은 presigned url이 발행된다. 해당 URL은 디폴트 유효기간이 15분이고(최대 7일까지 가능) 그 시간이 지나면 사용이 불가능하다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://xxx.s3.amazonaws.com/images/xx.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAVZH4SBSY4EO3QIWS%2F20210428%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20210428T112140Z&amp;X-Amz-Expires=900&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=20e494910e73bde0404aa4ccaf6b10a8690a3ceff16489e2e72a82b879a4d39f
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://xxx.s3.amazonaws.com/images/xx.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAXXXXXXXXXXXXXXXX%2F20210428%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20210428T112140Z&amp;X-Amz-Expires=900&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=20e494910e73bde0404aa4ccaf6b10a8690a3ceff16489e2e72a82b879a4d39f
 </code></pre></div></div>
 
 <h3 id="4">4.</h3>
@@ -1842,6 +1845,21 @@ function closeSidebar() {
 
   </article>
 
+  <!-- negabaro inc. お問い合わせ導線 (utm で流入元の記事を計測) -->
+
+<aside class="nb-cta">
+  <div class="nb-cta-icon"><i class="fa fa-building"></i></div>
+  <div class="nb-cta-body">
+    <div class="nb-cta-title">この記事を書いた negabaro inc. に相談する</div>
+    <p class="nb-cta-text">Ruby on Rails・AI 活用・新規サービスの 0→1 開発のご相談を受け付けています。技術的な質問や開発のお見積もりもお気軽にどうぞ。</p>
+  </div>
+  <div class="nb-cta-actions">
+    <a class="nb-cta-primary" href="https://www.negabaro.com/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/s3-direct-upload-using-presigned-url" target="_blank" rel="noopener">お問い合わせ</a>
+    <a class="nb-cta-secondary" href="https://www.negabaro.com/service?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/s3-direct-upload-using-presigned-url" target="_blank" rel="noopener">サービスを見る</a>
+  </div>
+</aside>
+
+
   <!-- Post Navigation -->
   <nav class="nb-post-nav">
     
@@ -1880,6 +1898,7 @@ function closeSidebar() {
 
   <!-- Footer -->
   <footer class="nb-footer">
+    <p>Operated by <a href="https://www.negabaro.com?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">negabaro inc.</a> &middot; <a href="https://www.negabaro.com/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">お問い合わせ</a></p>
     <p>Copyright &copy; negabaro 2026</p>
   </footer>
 
