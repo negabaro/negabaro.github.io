@@ -19,6 +19,15 @@
     } ,
   
     {
+      "title"    : "SDK 없이 stdio MCP 서버를 직접 만들며 배운 것",
+      "category" : "",
+      "tags"     : "AI/MCP",
+      "url"      : "//archive/mcp-stdio-server-from-scratch",
+      "date"     : "Tuesday, September 22, 2026",
+      "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date | date: \"%A, %B %-d, %Y\" }}\",\n      \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
       "title"    : "Rails7 kaminari를 이용한 Pagination기능 추가",
       "category" : "",
       "tags"     : "rails/kaminari",

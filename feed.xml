@@ -34,6 +34,19 @@
             </item>
         
             <item>
+                <title>SDK 없이 stdio MCP 서버를 직접 만들며 배운 것</title>
+                        
+                
+                    <description>&lt;p&gt;YouTube 댓글을 가져오는 MCP 서버를 만들어 Claude Desktop에 붙이려고 했을 때, 처음에는 SDK를 쓰지 않고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;process.stdin&lt;/code&gt; 으로 직접 구현했다. 결과는 연결하자마자 끊기기의 반복이었다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Tue, 22 Sep 2026 00:00:00 +0900</pubDate>
+                <link>https://negabaro.github.io/archive/mcp-stdio-server-from-scratch</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/mcp-stdio-server-from-scratch</guid>
+            </item>
+        
+            <item>
                 <title>Rails7 kaminari를 이용한 Pagination기능 추가</title>
                         
                 
@@ -122,19 +135,6 @@
                 <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/turbo-autocomplete-select-box</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/turbo-autocomplete-select-box</guid>
-            </item>
-        
-            <item>
-                <title>rails7 hotwire이란?</title>
-                        
-                
-                    <description>&lt;h2 id=&quot;hotwire이란rails7-hotwire이란&quot;&gt;hotwire이란?(rails7 hotwire이란?)&lt;/h2&gt;
-
-</description>
-                
-                <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
-                <link>https://negabaro.github.io/archive/hotwire-rails7</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/hotwire-rails7</guid>
             </item>
         
     </channel>

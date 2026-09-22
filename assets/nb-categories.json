@@ -1,9 +1,10 @@
 
 {
-  "order": ["Backend","Frontend","Mobile","Infra","Tools","Investing","Study","Life","Etc"],
+  "order": ["Backend","Frontend","AI","Mobile","Infra","Tools","Investing","Study","Life","Etc"],
   "posts": [
     { "c": "Backend/Security/jwt", "t": "JWT를 편지에 비유해서 이해하기", "u": "/archive/jwt-explained-with-letter" },
     { "c": "Backend/Rails/model/query", "t": "rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리", "u": "/archive/rails-joins-preload-eager_load-includes" },
+    { "c": "AI/LLM/MCP", "t": "SDK 없이 stdio MCP 서버를 직접 만들며 배운 것", "u": "/archive/mcp-stdio-server-from-scratch" },
     { "c": "Backend/Rails/gems/kaminari", "t": "Rails7 kaminari를 이용한 Pagination기능 추가", "u": "/archive/kaminari" },
     { "c": "Backend/Rails/gems/kaminari", "t": "Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기", "u": "/archive/kaminari-custom-tailwindcss" },
     { "c": "Backend/Rails/pattern/hotwire", "t": "Rails7 hotwire Turbo Native란?", "u": "/archive/turbo-native-hotwire-rails7" },

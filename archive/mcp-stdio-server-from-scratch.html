@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="initialize, notification, stdout 규칙까지. MCP 서버가 연결 직후 끊기는 이유를 직접 구현하며 정리">
+
+  <meta property="og:title" content="SDK 없이 stdio MCP 서버를 직접 만들며 배운 것" />
+  <meta property="og:description" content="initialize, notification, stdout 규칙까지. MCP 서버가 연결 직후 끊기는 이유를 직접 구현하며 정리" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="https://negabaro.github.io/archive/mcp-stdio-server-from-scratch" />
+  <meta property="og:site_name" content="Negabaro`s Blog" />
+  <meta property="og:image" content="https://negabaro.github.io" />
+
+  <title>SDK 없이 stdio MCP 서버를 직접 만들며 배운 것 - Negabaro`s Blog</title>
+
+  <link rel="canonical" href="https://negabaro.github.io/archive/mcp-stdio-server-from-scratch">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1790076518">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/syntax.css">
+
+  <!-- Font Awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+</head>
+<body class="nb-layout">
+
+  <!-- Top Navigation -->
+  <nav class="nb-nav">
+    <a class="nb-nav-brand" href="/">Negabaro`s Blog</a>
+    <ul class="nb-nav-links">
+      <li><a href="/archive/">Archive</a></li>
+      <li><a href="/category/">Category</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/search/"><i class="fa fa-search"></i></a></li>
+      <li><a class="nb-nav-cta" href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_nav" target="_blank" rel="noopener">문의하기</a></li>
+    </ul>
+  </nav>
+
+  <div class="nb-wrapper">
+    <!-- Left Sidebar -->
+<aside class="nb-sidebar" id="nb-sidebar">
+  <div class="nb-sidebar-header">
+    <h3>Categories</h3>
+  </div>
+
+  <div class="nb-sidebar-search">
+    <input type="text" id="nb-sidebar-filter" placeholder="Filter categories...">
+  </div>
+
+  <div id="nb-sidebar-tree"></div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="nb-sidebar-overlay" id="nb-sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Mobile toggle -->
+<button class="nb-sidebar-toggle" id="nb-sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  &#9776;
+</button>
+
+<!-- Category tree: 폴더 경로 기반 (_data/categories.yml, js/nb-categories.js) -->
+<script src="/js/nb-categories.js"></script>
+<script>
+NbCategories.renderSidebar(document.getElementById('nb-sidebar-tree'), "/archive/mcp-stdio-server-from-scratch");
+
+function toggleSidebar() {
+  document.getElementById('nb-sidebar').classList.toggle('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.toggle('active');
+}
+
+function closeSidebar() {
+  document.getElementById('nb-sidebar').classList.remove('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.remove('active');
+}
+</script>
+
+
+    <main class="nb-main">
+      <div class="nb-article-card">
+  <!-- Article Header -->
+  <header class="nb-article-header">
+    <div class="nb-breadcrumb">
+      <a href="/">Home</a>
+      <span class="nb-sep">/</span>
+      
+      
+      
+        
+        <a href="/category/#ai">AI</a>
+        <span class="nb-sep">/</span>
+      
+        
+        <a href="/category/#ai-llm">LLM</a>
+        <span class="nb-sep">/</span>
+      
+        
+        <a href="/category/#ai-llm-mcp">MCP</a>
+        <span class="nb-sep">/</span>
+      
+      <span>SDK 없이 stdio MCP 서버를 직접 만들며 배운 것</span>
+    </div>
+
+    <h1>SDK 없이 stdio MCP 서버를 직접 만들며 배운 것</h1>
+    
+
+    <div class="nb-meta">
+      <span>September 22, 2026</span>
+      <span>&middot;</span>
+      
+      
+      <span>13 min read</span>
+      
+        <span class="nb-badge">AI/MCP</span>
+      
+    </div>
+  </header>
+
+  <!-- Article Body -->
+  <article class="nb-article-body">
+    <p>YouTube 댓글을 가져오는 MCP 서버를 만들어 Claude Desktop에 붙이려고 했을 때, 처음에는 SDK를 쓰지 않고 <code class="language-plaintext highlighter-rouge">process.stdin</code> 으로 직접 구현했다. 결과는 연결하자마자 끊기기의 반복이었다.</p>
+
+<p>원인은 전부 <strong>프로토콜을 제대로 모르고 있었던 것</strong>이었다. 이 글에서는 SDK 없이 최소한의 stdio MCP 서버를 만들어 보면서, 그때 부딪힌 함정을 하나씩 정리한다.</p>
+
+<ul>
+  <li>글의 코드는 모두 공식 TypeScript SDK(<code class="language-plaintext highlighter-rouge">@modelcontextprotocol/sdk</code> 1.30.0)의 클라이언트로 실제 연결해서 확인했다</li>
+  <li>프로토콜 버전은 <code class="language-plaintext highlighter-rouge">2025-11-25</code> 기준이다. 2026-07-28판에서 크게 바뀐 점은 마지막에 따로 정리했다</li>
+</ul>
+
+<h2 id="mcp를-한-줄로">MCP를 한 줄로</h2>
+
+<p>MCP(Model Context Protocol)는 LLM 애플리케이션이 외부 도구·데이터에 접근하는 방법을 정한 프로토콜이다.</p>
+
+<ul>
+  <li><strong>호스트</strong>: Claude Desktop, Cursor 같은 LLM 애플리케이션</li>
+  <li><strong>클라이언트</strong>: 호스트 안에서 서버 하나와 연결을 담당하는 부분</li>
+  <li><strong>서버</strong>: 도구(tool), 리소스, 프롬프트를 제공하는 프로그램. 우리가 만드는 쪽</li>
+</ul>
+
+<p>메시지는 전부 <strong>JSON-RPC 2.0</strong> 이고, 이를 실어 나르는 방식(transport)은 두 가지가 표준이다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>transport</th>
+      <th>방식</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>stdio</td>
+      <td>클라이언트가 서버를 <strong>자식 프로세스로 실행</strong>하고 stdin/stdout으로 주고받는다</td>
+    </tr>
+    <tr>
+      <td>Streamable HTTP</td>
+      <td>하나의 HTTP 엔드포인트에 POST로 주고받는다 (예전 HTTP+SSE 방식을 대체)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>로컬에서 도는 서버는 대부분 stdio다. 이 글도 stdio만 다룬다.</p>
+
+<h2 id="stdio의-규칙은-세-줄이다">stdio의 규칙은 세 줄이다</h2>
+
+<p>사양에 적힌 핵심은 이것뿐이다.</p>
+
+<ol>
+  <li>메시지는 <strong>한 줄에 JSON 하나</strong>. 줄바꿈으로 구분하고, 메시지 안에 줄바꿈이 있으면 안 된다</li>
+  <li>서버는 stdout에 <strong>MCP 메시지 말고는 아무것도 쓰면 안 된다</strong></li>
+  <li>로그는 stderr에 쓴다</li>
+</ol>
+
+<p>2번이 생각보다 자주 발목을 잡는다. 뒤에서 다시 보자.</p>
+
+<h2 id="연결부터-도구-실행까지의-흐름">연결부터 도구 실행까지의 흐름</h2>
+
+<p>클라이언트가 서버를 실행하면 아래 순서로 메시지가 오간다. 실제로 만든 서버에 손으로 메시지를 흘려 넣은 결과다(→ 는 클라이언트가 보낸 것, ← 는 서버 응답).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>→ {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"cli","version":"0"}}}
+← {"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-11-25","capabilities":{"tools":{}},"serverInfo":{"name":"hand-made-server","version":"0.1.0"}}}
+→ {"jsonrpc":"2.0","method":"notifications/initialized"}
+→ {"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"add","arguments":{"a":2,"b":3}}}
+← {"jsonrpc":"2.0","id":2,"result":{"content":[{"type":"text","text":"5"}]}}
+</code></pre></div></div>
+
+<ol>
+  <li><strong>initialize</strong>: 클라이언트가 “이 버전으로 말할게, 나는 이런 기능이 있어” 라고 보낸다</li>
+  <li>서버는 사용할 프로토콜 버전, 자기가 제공하는 기능(<code class="language-plaintext highlighter-rouge">capabilities</code>), 서버 정보를 돌려준다</li>
+  <li>클라이언트가 <strong>notifications/initialized</strong> 를 보내면 준비 완료. <code class="language-plaintext highlighter-rouge">id</code> 가 없는 메시지는 notification이라서 응답하지 않는다</li>
+  <li>이후 <code class="language-plaintext highlighter-rouge">tools/list</code> 로 도구 목록을 받고, <code class="language-plaintext highlighter-rouge">tools/call</code> 로 실행한다</li>
+</ol>
+
+<h2 id="최소-서버-코드">최소 서버 코드</h2>
+
+<p>의존성 없이 Node.js만으로 만든 서버다. 두 숫자를 더하는 <code class="language-plaintext highlighter-rouge">add</code> 도구 하나를 제공한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// server.mjs</span>
+<span class="k">import</span> <span class="nx">readline</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">node:readline</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">SUPPORTED</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">2025-11-25</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">2025-06-18</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">2025-03-26</span><span class="dl">"</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">log</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">[server]</span><span class="dl">"</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">);</span> <span class="c1">// 로그는 stderr 로</span>
+
+<span class="kd">const</span> <span class="nx">tools</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">add</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">description</span><span class="p">:</span> <span class="dl">"</span><span class="s2">두 숫자를 더한다</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">inputSchema</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">object</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">properties</span><span class="p">:</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span> <span class="p">},</span> <span class="na">b</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span> <span class="p">}</span> <span class="p">},</span>
+      <span class="na">required</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">],</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">];</span>
+
+<span class="kd">function</span> <span class="nx">handle</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">initialize</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">requested</span> <span class="o">=</span> <span class="nx">params</span><span class="p">.</span><span class="nx">protocolVersion</span><span class="p">;</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">protocolVersion</span><span class="p">:</span> <span class="nx">SUPPORTED</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">requested</span><span class="p">)</span> <span class="p">?</span> <span class="nx">requested</span> <span class="p">:</span> <span class="nx">SUPPORTED</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="na">capabilities</span><span class="p">:</span> <span class="p">{</span> <span class="na">tools</span><span class="p">:</span> <span class="p">{}</span> <span class="p">},</span>
+        <span class="na">serverInfo</span><span class="p">:</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hand-made-server</span><span class="dl">"</span><span class="p">,</span> <span class="na">version</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.1.0</span><span class="dl">"</span> <span class="p">},</span>
+      <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">ping</span><span class="dl">"</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{};</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">tools/list</span><span class="dl">"</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="nx">tools</span> <span class="p">};</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">tools/call</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="p">{</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">params</span><span class="p">.</span><span class="nx">arguments</span><span class="p">;</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">content</span><span class="p">:</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span> <span class="na">text</span><span class="p">:</span> <span class="nb">String</span><span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="p">}]</span> <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="nl">default</span><span class="p">:</span>
+      <span class="k">throw</span> <span class="p">{</span> <span class="na">code</span><span class="p">:</span> <span class="o">-</span><span class="mi">32601</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="s2">`Method not found: </span><span class="p">${</span><span class="nx">method</span><span class="p">}</span><span class="s2">`</span> <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">send</span> <span class="o">=</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">readline</span><span class="p">.</span><span class="nx">createInterface</span><span class="p">({</span> <span class="na">input</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">stdin</span> <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">line</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">line</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">notification:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">method</span><span class="p">);</span> <span class="c1">// notification 에는 응답하지 않는다</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">send</span><span class="p">({</span> <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">result</span><span class="p">:</span> <span class="nx">handle</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">method</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">params</span> <span class="o">??</span> <span class="p">{})</span> <span class="p">});</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">send</span><span class="p">({</span> <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="p">{</span> <span class="na">code</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">code</span> <span class="o">??</span> <span class="o">-</span><span class="mi">32603</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">message</span> <span class="o">??</span> <span class="nb">String</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">process</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">end</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span> <span class="c1">// stdin 이 닫히면 종료</span>
+</code></pre></div></div>
+
+<p>공식 SDK의 클라이언트로 붙여 보면 정상적으로 동작한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// client.mjs</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Client</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@modelcontextprotocol/sdk/client/index.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">StdioClientTransport</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@modelcontextprotocol/sdk/client/stdio.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">transport</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StdioClientTransport</span><span class="p">({</span> <span class="na">command</span><span class="p">:</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="na">args</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">server.mjs</span><span class="dl">"</span><span class="p">]</span> <span class="p">});</span>
+<span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Client</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test-client</span><span class="dl">"</span><span class="p">,</span> <span class="na">version</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.0.1</span><span class="dl">"</span> <span class="p">});</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">ONERROR:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">transport</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">tools:</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">listTools</span><span class="p">()).</span><span class="nx">tools</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">t</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">.</span><span class="nx">name</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">call:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">((</span><span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">callTool</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">add</span><span class="dl">"</span><span class="p">,</span> <span class="na">arguments</span><span class="p">:</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">})).</span><span class="nx">content</span><span class="p">));</span>
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[server] notification: notifications/initialized
+tools: [ 'add' ]
+call: [{"type":"text","text":"5"}]
+</code></pre></div></div>
+
+<p>GUI로 확인하고 싶다면 공식 MCP Inspector(<code class="language-plaintext highlighter-rouge">npx @modelcontextprotocol/inspector node server.mjs</code>)를 써도 된다.</p>
+
+<h2 id="내가-밟은-함정들">내가 밟은 함정들</h2>
+
+<p>위 코드에서 한 줄씩 빼거나 바꿔서 그때의 에러를 재현해 봤다.</p>
+
+<h3 id="1-initialize를-처리하지-않았다">1. initialize를 처리하지 않았다</h3>
+
+<p>처음 코드는 <code class="language-plaintext highlighter-rouge">tools/call</code> 만 처리하고 있었다. 클라이언트는 연결하자마자 <code class="language-plaintext highlighter-rouge">initialize</code> 를 보내는데, 서버가 모르는 메소드라고 답하니 그대로 연결이 끝난다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: MCP error -32601: Method not found: initialize
+</code></pre></div></div>
+
+<p><strong>서버가 가장 먼저 받는 메시지는 항상 initialize</strong> 다. 응답에는 <code class="language-plaintext highlighter-rouge">protocolVersion</code>, <code class="language-plaintext highlighter-rouge">capabilities</code>, <code class="language-plaintext highlighter-rouge">serverInfo</code> 를 넣는다. 사양상 도구를 제공하는 서버는 <code class="language-plaintext highlighter-rouge">capabilities</code> 에 <code class="language-plaintext highlighter-rouge">tools</code> 를 선언해야 한다(<code class="language-plaintext highlighter-rouge">tools: {}</code>).</p>
+
+<p><code class="language-plaintext highlighter-rouge">protocolVersion</code> 은 클라이언트가 요청한 버전을 지원하면 그대로, 지원하지 않으면 서버가 지원하는 최신 버전을 돌려준다. 클라이언트가 그 버전을 모르면 클라이언트 쪽에서 연결을 끊는다.</p>
+
+<h3 id="2-consolelog로-디버그-로그를-찍었다">2. console.log로 디버그 로그를 찍었다</h3>
+
+<p>stdout은 MCP 메시지 전용 통로다. 디버그용으로 <code class="language-plaintext highlighter-rouge">console.log("Starting ...")</code> 를 한 줄 넣는 순간 클라이언트는 그 줄을 JSON으로 읽으려다 실패한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ONERROR: Unexpected token 's', "[server] no"... is not valid JSON
+</code></pre></div></div>
+
+<p>Claude Desktop 로그에서 <code class="language-plaintext highlighter-rouge">Unexpected token 'S', "Starting Y"... is not valid JSON</code> 을 봤던 게 바로 이것이었다. <strong>로그는 전부 <code class="language-plaintext highlighter-rouge">console.error</code> (stderr)로</strong> 보낸다. 사용하는 라이브러리가 stdout에 무언가를 출력하지 않는지도 확인해야 한다.</p>
+
+<h3 id="3-notification에도-응답했다">3. notification에도 응답했다</h3>
+
+<p>“받은 메시지에는 다 답해야지” 하고 <code class="language-plaintext highlighter-rouge">notifications/initialized</code> 에도 응답을 보냈더니, 클라이언트 쪽에서 메시지 형식 검증 에러가 났다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ONERROR: [ { "code": "invalid_union", ... } ]
+</code></pre></div></div>
+
+<p>JSON-RPC에서 <strong><code class="language-plaintext highlighter-rouge">id</code> 가 없는 메시지는 notification이고, 응답을 보내면 안 된다</strong>. 요청(<code class="language-plaintext highlighter-rouge">id</code> 있음)과 notification(<code class="language-plaintext highlighter-rouge">id</code> 없음)을 구분하는 게 서버의 첫 번째 분기다. SDK 클라이언트는 에러만 내고 넘어갔지만, 클라이언트에 따라서는 이런 이상한 메시지를 받으면 연결을 끊는다.</p>
+
+<h3 id="4-프로세스가-금방-끝나-버렸다">4. 프로세스가 금방 끝나 버렸다</h3>
+
+<p>stdin을 한 번만 읽고 끝나는 구조로 만들면, 첫 요청을 처리한 뒤 프로세스가 종료되어 다음 요청을 받지 못한다. 서버는 <strong>stdin이 열려 있는 동안 계속 살아 있어야 하고</strong>, 반대로 stdin이 닫히면 스스로 종료하는 게 좋다. 위 코드는 <code class="language-plaintext highlighter-rouge">readline</code> 으로 계속 읽다가 <code class="language-plaintext highlighter-rouge">end</code> 이벤트에서 종료한다.</p>
+
+<h2 id="결국은-sdk를-쓰자">결국은 SDK를 쓰자</h2>
+
+<p>여기까지 알고 나면 SDK가 무엇을 대신해 주는지 보인다. 같은 서버를 SDK로 쓰면 이렇게 된다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">McpServer</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@modelcontextprotocol/sdk/server/mcp.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">StdioServerTransport</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@modelcontextprotocol/sdk/server/stdio.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">z</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">zod</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">McpServer</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sdk-server</span><span class="dl">"</span><span class="p">,</span> <span class="na">version</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.1.0</span><span class="dl">"</span> <span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">registerTool</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">add</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">description</span><span class="p">:</span> <span class="dl">"</span><span class="s2">두 숫자를 더한다</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">inputSchema</span><span class="p">:</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">number</span><span class="p">(),</span> <span class="na">b</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">number</span><span class="p">()</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="k">async</span> <span class="p">({</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="na">content</span><span class="p">:</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span> <span class="na">text</span><span class="p">:</span> <span class="nb">String</span><span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="p">}]</span> <span class="p">})</span>
+<span class="p">);</span>
+
+<span class="k">await</span> <span class="nx">server</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="k">new</span> <span class="nx">StdioServerTransport</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>initialize와 버전 협상, notification 구분, ping, 입력값 검증까지 SDK가 처리한다. 실제 서비스용 서버는 SDK로 만드는 게 맞다.</p>
+
+<p>그래도 한 번 직접 만들어 본 의미는 있었다. 연결이 끊겼을 때 로그의 <code class="language-plaintext highlighter-rouge">-32601</code> 이나 <code class="language-plaintext highlighter-rouge">is not valid JSON</code> 을 보고 원인을 바로 짐작할 수 있게 됐다.</p>
+
+<h2 id="2026-07-28판-사양에서-바뀌는-것">2026-07-28판 사양에서 바뀌는 것</h2>
+
+<p>이 글을 쓰는 시점에 MCP 사양의 최신판은 2026-07-28이다. 이 판에서는 위에서 설명한 연결 방식이 크게 바뀌었다.</p>
+
+<ul>
+  <li><strong>initialize 핸드셰이크가 없어졌다.</strong> 연결 단위의 세션 대신, 모든 요청의 <code class="language-plaintext highlighter-rouge">_meta</code> 에 프로토콜 버전(<code class="language-plaintext highlighter-rouge">io.modelcontextprotocol/protocolVersion</code>)과 클라이언트 기능(<code class="language-plaintext highlighter-rouge">io.modelcontextprotocol/clientCapabilities</code>)을 싣는 stateless 방식이 됐다</li>
+  <li>서버는 지원 버전을 알려주는 <code class="language-plaintext highlighter-rouge">server/discover</code> 를 반드시 구현해야 한다</li>
+  <li>결과(<code class="language-plaintext highlighter-rouge">result</code>)에 <code class="language-plaintext highlighter-rouge">resultType</code> 필드가 붙는다</li>
+  <li>서버가 클라이언트에게 요청을 보내는 방식이 없어지고, 응답 안에서 추가 입력을 요구하는 방식(MRTR)으로 바뀌었다</li>
+</ul>
+
+<p>사양에서는 initialize를 쓰는 2025-11-25 이전 버전을 <strong>legacy</strong>, 새 방식을 <strong>modern</strong> 이라고 부른다. 둘 다 지원하는 서버도 만들 수 있다.</p>
+
+<p>다만 2026년 9월 현재 공식 TypeScript SDK 최신판(1.30.0)도 아직 <code class="language-plaintext highlighter-rouge">2025-11-25</code> 까지만 지원한다. 당분간 실제 클라이언트와 연결할 때는 이 글의 initialize 흐름이 그대로 쓰인다. stdio의 세 가지 규칙(한 줄에 JSON 하나, stdout은 MCP 메시지 전용, 로그는 stderr)은 새 판에서도 똑같다.</p>
+
+<h2 id="정리">정리</h2>
+
+<ul>
+  <li>stdio MCP는 <strong>한 줄에 JSON-RPC 메시지 하나</strong>를 stdin/stdout으로 주고받는 구조다</li>
+  <li>서버가 처음 받는 메시지는 <code class="language-plaintext highlighter-rouge">initialize</code>. 버전·기능·서버 정보를 돌려줘야 연결이 시작된다</li>
+  <li><code class="language-plaintext highlighter-rouge">id</code> 없는 메시지(notification)에는 응답하지 않는다</li>
+  <li>stdout에는 MCP 메시지만. 로그는 반드시 stderr로</li>
+  <li>원리를 한 번 이해했다면 실제 서버는 SDK로 만든다</li>
+</ul>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="https://modelcontextprotocol.io/specification/latest">Model Context Protocol Specification</a></li>
+  <li><a href="https://modelcontextprotocol.io/specification/latest/basic/transports">Transports - stdio</a></li>
+  <li><a href="https://github.com/modelcontextprotocol/typescript-sdk">modelcontextprotocol/typescript-sdk</a></li>
+  <li><a href="https://github.com/modelcontextprotocol/inspector">MCP Inspector</a></li>
+</ul>
+
+  </article>
+
+  <!-- negabaro inc. 문의 동선 (utm 으로 유입된 글을 측정) -->
+
+<aside class="nb-cta">
+  <div class="nb-cta-icon"><i class="fa fa-building"></i></div>
+  <div class="nb-cta-body">
+    <div class="nb-cta-title">이 글을 쓴 negabaro inc.에 상담하기</div>
+    <p class="nb-cta-text">Ruby on Rails, AI 활용, 신규 서비스 0→1 개발 상담을 받고 있습니다. 기술적인 질문이나 개발 견적도 편하게 문의해 주세요.</p>
+  </div>
+  <div class="nb-cta-actions">
+    <a class="nb-cta-primary" href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/mcp-stdio-server-from-scratch" target="_blank" rel="noopener">문의하기</a>
+    <a class="nb-cta-secondary" href="https://www.negabaro.com/ko/service?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/mcp-stdio-server-from-scratch" target="_blank" rel="noopener">서비스 보기</a>
+  </div>
+</aside>
+
+
+  <!-- Post Navigation -->
+  <nav class="nb-post-nav">
+    
+      <a href="/archive/kaminari">
+        <span class="nb-nav-label">&larr; Previous</span>
+        <span class="nb-nav-title">Rails7 kaminari를 이용한 Pagination기능 추가</span>
+      </a>
+    
+    
+      <a href="/archive/rails-joins-preload-eager_load-includes" class="nb-next">
+        <span class="nb-nav-label">Next &rarr;</span>
+        <span class="nb-nav-title">rails joins, left_joins, preload, eager_load, i...</span>
+      </a>
+    
+  </nav>
+</div>
+
+<!-- Comments -->
+<!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/mcp-stdio-server-from-scratch"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="nb-footer">
+    <p>Operated by <a href="https://www.negabaro.com/ko?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">negabaro inc.</a> &middot; <a href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">문의하기</a></p>
+    <p>Copyright &copy; negabaro 2026</p>
+  </footer>
+
+  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+  
+</body>
+</html>
