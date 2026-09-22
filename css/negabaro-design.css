@@ -707,3 +707,54 @@
 .nb-footer a:hover {
   color: var(--brand);
 }
+
+/* ── Category page ── */
+.nb-catpage-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.nb-layout .nb-catpage-toc a {
+  padding: 6px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  text-decoration: none;
+}
+.nb-layout .nb-catpage-toc a:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.nb-catpage-toc span,
+.nb-catpage-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-400);
+}
+.nb-catpage-section {
+  scroll-margin-top: 72px;
+}
+.nb-catpage-depth-0 h2 {
+  margin: 40px 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--brand);
+}
+.nb-catpage-depth-1 h3,
+.nb-catpage-depth-2 h3 {
+  margin: 24px 0 8px;
+  font-size: 1.05rem;
+}
+.nb-catpage-depth-2 {
+  padding-left: 16px;
+}
+.nb-catpage-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.nb-catpage-section li {
+  margin: 4px 0;
+  font-size: 15px;
+}
