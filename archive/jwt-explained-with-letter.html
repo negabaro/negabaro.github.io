@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="누구나 읽을 수 있지만 아무도 위조할 수 없는 편지. JWT의 구조와 주의점을 편지 비유로 정리">
+
+  <meta property="og:title" content="JWT를 편지에 비유해서 이해하기" />
+  <meta property="og:description" content="누구나 읽을 수 있지만 아무도 위조할 수 없는 편지. JWT의 구조와 주의점을 편지 비유로 정리" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="https://negabaro.github.io/archive/jwt-explained-with-letter" />
+  <meta property="og:site_name" content="Negabaro`s Blog" />
+  <meta property="og:image" content="https://negabaro.github.io" />
+
+  <title>JWT를 편지에 비유해서 이해하기 - Negabaro`s Blog</title>
+
+  <link rel="canonical" href="https://negabaro.github.io/archive/jwt-explained-with-letter">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/negabaro-design.css?v=1790072110">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://negabaro.github.io/css/syntax.css">
+
+  <!-- Font Awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <script data-ad-client="ca-pub-1735566306774859" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link type="application/atom+xml" rel="alternate" href="https://negabaro.github.io/feed.xml" title="Negabaro`s Blog" />
+</head>
+<body class="nb-layout">
+
+  <!-- Top Navigation -->
+  <nav class="nb-nav">
+    <a class="nb-nav-brand" href="/">Negabaro`s Blog</a>
+    <ul class="nb-nav-links">
+      <li><a href="/archive/">Archive</a></li>
+      <li><a href="/category/">Category</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/search/"><i class="fa fa-search"></i></a></li>
+      <li><a class="nb-nav-cta" href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_nav" target="_blank" rel="noopener">문의하기</a></li>
+    </ul>
+  </nav>
+
+  <div class="nb-wrapper">
+    <!-- Left Sidebar -->
+<aside class="nb-sidebar" id="nb-sidebar">
+  <div class="nb-sidebar-header">
+    <h3>Categories</h3>
+  </div>
+
+  <div class="nb-sidebar-search">
+    <input type="text" id="nb-sidebar-filter" placeholder="Filter categories...">
+  </div>
+
+  <div id="nb-sidebar-tree"></div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="nb-sidebar-overlay" id="nb-sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Mobile toggle -->
+<button class="nb-sidebar-toggle" id="nb-sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  &#9776;
+</button>
+
+<!-- Category tree: 폴더 경로 기반 (_data/categories.yml, js/nb-categories.js) -->
+<script src="/js/nb-categories.js"></script>
+<script>
+NbCategories.renderSidebar(document.getElementById('nb-sidebar-tree'), "/archive/jwt-explained-with-letter");
+
+function toggleSidebar() {
+  document.getElementById('nb-sidebar').classList.toggle('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.toggle('active');
+}
+
+function closeSidebar() {
+  document.getElementById('nb-sidebar').classList.remove('mobile-open');
+  document.getElementById('nb-sidebar-overlay').classList.remove('active');
+}
+</script>
+
+
+    <main class="nb-main">
+      <div class="nb-article-card">
+  <!-- Article Header -->
+  <header class="nb-article-header">
+    <div class="nb-breadcrumb">
+      <a href="/">Home</a>
+      <span class="nb-sep">/</span>
+      
+      
+      
+        
+        <a href="/category/#backend">Backend</a>
+        <span class="nb-sep">/</span>
+      
+        
+        <a href="/category/#backend-security">Security</a>
+        <span class="nb-sep">/</span>
+      
+        
+        <a href="/category/#backend-security-jwt">jwt</a>
+        <span class="nb-sep">/</span>
+      
+      <span>JWT를 편지에 비유해서 이해하기</span>
+    </div>
+
+    <h1>JWT를 편지에 비유해서 이해하기</h1>
+    
+
+    <div class="nb-meta">
+      <span>September 22, 2026</span>
+      <span>&middot;</span>
+      
+      
+      <span>8 min read</span>
+      
+        <span class="nb-badge">security</span>
+      
+    </div>
+  </header>
+
+  <!-- Article Body -->
+  <article class="nb-article-body">
+    <p>JWT를 검색하면 “Claim 기반”, “Self-Contained”, “RFC 7519” 같은 단어가 먼저 나온다. 틀린 말은 아니지만 처음 보면 머리에 잘 안 들어온다.</p>
+
+<p>이 글에서는 세부 스펙보다 <strong>큰 그림</strong>을 잡는 데 집중한다. JWT를 현실의 편지에 비유해서 설명하고, 마지막에 실제 코드로 확인한다.</p>
+
+<h2 id="jwt는-누구나-읽을-수-있지만-위조할-수-없는-편지다">JWT는 “누구나 읽을 수 있지만 위조할 수 없는 편지”다</h2>
+
+<p>JWT를 한 문장으로 줄이면 이렇다.</p>
+
+<blockquote>
+  <p>봉투 없이 보내는 편지. 누구나 읽을 수 있지만, 편지 끝에 찍힌 <strong>도장</strong> 덕분에 내용을 고치면 바로 들킨다.</p>
+</blockquote>
+
+<p>등장인물을 정리하면 아래와 같다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>편지</th>
+      <th>JWT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>편지</td>
+      <td>JWT 토큰</td>
+    </tr>
+    <tr>
+      <td>발신인</td>
+      <td>토큰을 발급하는 서버 (로그인 처리하는 쪽)</td>
+    </tr>
+    <tr>
+      <td>수신인</td>
+      <td>토큰을 받아 검증하는 서버 (API 서버)</td>
+    </tr>
+    <tr>
+      <td>우체부</td>
+      <td>브라우저, 앱, 네트워크 등 토큰을 운반하는 모든 것</td>
+    </tr>
+    <tr>
+      <td>편지 끝의 도장</td>
+      <td>서명 (Signature)</td>
+    </tr>
+    <tr>
+      <td>도장을 찍는 인장</td>
+      <td>시크릿 키</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="편지가-오가는-과정">편지가 오가는 과정</h2>
+
+<ol>
+  <li>발신인은 편지를 쓰고, 끝에 자기 인장으로 도장을 찍는다.</li>
+  <li>우체부는 편지를 옮기면서 몰래 읽을 수 있다. 봉투가 없기 때문이다. 하지만 인장이 없으니 내용을 고치고 도장을 다시 찍을 수는 없다.</li>
+  <li>수신인은 편지를 받아 <strong>도장이 진짜인지</strong> 확인하고, 진짜라면 내용을 믿는다.</li>
+  <li>우체부가 실수로 제3자에게 편지를 넘겨도, 그 사람 역시 읽을 수만 있고 고칠 수는 없다.</li>
+</ol>
+
+<p>실제 웹 서비스에 대입하면 이렇게 된다.</p>
+
+<ol>
+  <li>로그인에 성공하면 서버가 “이 사람은 user_1이고 일반 회원이다” 라는 편지(JWT)를 써서 도장을 찍어 준다.</li>
+  <li>클라이언트는 API를 호출할 때마다 이 편지를 <code class="language-plaintext highlighter-rouge">Authorization: Bearer &lt;JWT&gt;</code> 헤더에 실어 보낸다.</li>
+  <li>API 서버는 도장만 확인하면 되기 때문에 DB나 세션 저장소를 조회하지 않고도 “user_1의 요청” 임을 믿을 수 있다.</li>
+</ol>
+
+<p>3번이 JWT의 가장 큰 장점이다. 편지 자체에 필요한 정보가 다 들어 있어서(이걸 <strong>Self-Contained</strong> 라고 부른다) 서버가 상태를 들고 있을 필요가 없다. 세션 방식과의 차이는 <a href="/archive/security-stateless-stateful">stateless와 stateful의 차이</a>에 정리해 두었다.</p>
+
+<h2 id="편지의-구조--headerpayloadsignature">편지의 구조 : header.payload.signature</h2>
+
+<p>JWT는 점(<code class="language-plaintext highlighter-rouge">.</code>)으로 구분된 세 부분으로 이루어진다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzEiLCJyb2xlIjoibWVtYmVyIiwiZXhwIjoxNzkwMDc1NjA3fQ.U8IN8TtmUI1Y17n7mq1X8Gb2CXkkYLN04BIJdQUWYw8
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>부분</th>
+      <th>편지로 치면</th>
+      <th>내용</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>header</td>
+      <td>편지 형식 안내</td>
+      <td>어떤 방식으로 도장을 찍었는지 (<code class="language-plaintext highlighter-rouge">{"alg":"HS256"}</code>)</td>
+    </tr>
+    <tr>
+      <td>payload</td>
+      <td>본문</td>
+      <td>전달하려는 정보. 하나하나를 <strong>클레임(claim)</strong> 이라고 부른다</td>
+    </tr>
+    <tr>
+      <td>signature</td>
+      <td>도장</td>
+      <td>header와 payload를 시크릿 키로 서명한 값</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>header와 payload는 <strong>암호화가 아니라 Base64URL 인코딩</strong>일 뿐이다. 그래서 키가 없어도 누구나 원래 내용을 볼 수 있다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+
+<span class="no">Base64</span><span class="p">.</span><span class="nf">urlsafe_decode64</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<span class="c1"># =&gt; {"alg":"HS256"}</span>
+<span class="no">Base64</span><span class="p">.</span><span class="nf">urlsafe_decode64</span><span class="p">(</span><span class="n">payload</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="n">payload</span><span class="p">.</span><span class="nf">size</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">))</span>
+<span class="c1"># =&gt; {"sub":"user_1","role":"member","exp":1790075607}</span>
+</code></pre></div></div>
+
+<p>payload에 자주 쓰는 클레임은 이미 이름이 정해져 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>클레임</th>
+      <th>의미</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sub</code></td>
+      <td>누구에 대한 토큰인지 (보통 유저 ID)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">exp</code></td>
+      <td>만료 시각 (UNIX time)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">iat</code></td>
+      <td>발급 시각</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">iss</code></td>
+      <td>발급자</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">aud</code></td>
+      <td>이 토큰을 받을 대상</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="직접-위조해-보기">직접 위조해 보기</h2>
+
+<p>편지 내용을 고치면 정말 들키는지 ruby-jwt로 확인해 보자.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s2">"jwt"</span>
+
+<span class="n">secret</span>  <span class="o">=</span> <span class="s2">"my-secret-key"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">sub: </span><span class="s2">"user_1"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"member"</span><span class="p">,</span> <span class="ss">exp: </span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">.</span><span class="nf">to_i</span> <span class="o">+</span> <span class="mi">3600</span> <span class="p">}</span>
+<span class="n">token</span>   <span class="o">=</span> <span class="no">JWT</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="s2">"HS256"</span><span class="p">)</span>
+
+<span class="no">JWT</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">algorithm: </span><span class="s2">"HS256"</span><span class="p">)</span>
+<span class="c1"># =&gt; [{"sub"=&gt;"user_1", "role"=&gt;"member", "exp"=&gt;1790075607}, {"alg"=&gt;"HS256"}]</span>
+</code></pre></div></div>
+
+<p>이제 우체부가 몰래 <code class="language-plaintext highlighter-rouge">role</code> 을 <code class="language-plaintext highlighter-rouge">admin</code> 으로 바꿔 보았다고 하자. payload만 새로 만들고 도장(signature)은 원래 것을 그대로 붙인다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fake_payload</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">urlsafe_encode64</span><span class="p">(</span>
+  <span class="p">{</span> <span class="ss">sub: </span><span class="s2">"user_1"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">,</span> <span class="ss">exp: </span><span class="n">payload</span><span class="p">[</span><span class="ss">:exp</span><span class="p">]</span> <span class="p">}.</span><span class="nf">to_json</span><span class="p">,</span> <span class="ss">padding: </span><span class="kp">false</span>
+<span class="p">)</span>
+<span class="n">fake</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">,</span> <span class="n">fake_payload</span><span class="p">,</span> <span class="n">signature</span><span class="p">].</span><span class="nf">join</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+
+<span class="no">JWT</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">fake</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">algorithm: </span><span class="s2">"HS256"</span><span class="p">)</span>
+<span class="c1"># =&gt; JWT::VerificationError: Signature verification failed</span>
+</code></pre></div></div>
+
+<p>본문이 바뀌었는데 도장은 옛날 본문 기준이라 검증에 실패한다. 인장(시크릿 키)이 없으면 새 본문에 맞는 도장을 찍을 방법이 없다.</p>
+
+<h2 id="인장을-누가-가지고-있나--hs256과-rs256">인장을 누가 가지고 있나 : HS256과 RS256</h2>
+
+<p>여기서 한 가지 짚고 넘어가야 할 점이 있다. 도장을 <strong>확인</strong>하려면 무엇이 필요할까?</p>
+
+<p><strong>HS256 (대칭키)</strong></p>
+
+<p>도장을 찍는 인장과 확인하는 도구가 같다. 즉 수신인도 같은 인장을 가지고 있어야 한다.</p>
+
+<ul>
+  <li>발신인과 수신인이 같은 서버이거나, 서로 완전히 믿는 관계일 때 쓴다</li>
+  <li>수신인도 인장을 가지고 있으니 <strong>수신인은 편지를 위조할 수 있다</strong></li>
+</ul>
+
+<p><strong>RS256 (비대칭키)</strong></p>
+
+<p>인장(비밀키)은 발신인만 가지고, 수신인에게는 “이 도장이 진짜인지 대조해 보는 견본”(공개키)만 나눠 준다.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rsa</span>   <span class="o">=</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">PKey</span><span class="o">::</span><span class="no">RSA</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+<span class="n">token</span> <span class="o">=</span> <span class="no">JWT</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">rsa</span><span class="p">,</span> <span class="s2">"RS256"</span><span class="p">)</span>            <span class="c1"># 비밀키로 도장</span>
+
+<span class="no">JWT</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">rsa</span><span class="p">.</span><span class="nf">public_key</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">algorithm: </span><span class="s2">"RS256"</span><span class="p">)</span>
+<span class="c1"># =&gt; 공개키로 검증 성공</span>
+
+<span class="no">JWT</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">rsa</span><span class="p">.</span><span class="nf">public_key</span><span class="p">,</span> <span class="s2">"RS256"</span><span class="p">)</span>
+<span class="c1"># =&gt; ArgumentError: private key is needed           # 공개키로는 도장을 못 찍는다</span>
+</code></pre></div></div>
+
+<ul>
+  <li>여러 서비스가 같은 토큰을 검증해야 할 때 쓴다 (Google, Firebase 등의 ID 토큰이 이 방식)</li>
+  <li>수신인은 확인만 할 수 있고 <strong>위조는 할 수 없다</strong></li>
+</ul>
+
+<p>“수신인도 위조할 수 없다” 는 RS256일 때만 성립한다는 점을 기억해 두자.</p>
+
+<h2 id="편지-비유로-보는-주의점">편지 비유로 보는 주의점</h2>
+
+<h3 id="1-본문에-비밀을-쓰면-안-된다">1. 본문에 비밀을 쓰면 안 된다</h3>
+
+<p>봉투가 없는 편지라서 우체부도 읽는다. 비밀번호, 개인정보 같은 값은 payload에 넣지 않는다. 내용 자체를 숨겨야 한다면 JWE(암호화된 JWT)를 따로 써야 한다.</p>
+
+<h3 id="2-한-번-보낸-편지는-회수할-수-없다">2. 한 번 보낸 편지는 회수할 수 없다</h3>
+
+<p>서버가 상태를 들고 있지 않다는 장점은 반대로 <strong>이미 발급한 토큰을 무효로 만들기 어렵다</strong>는 단점이 된다. 세션이라면 서버에서 세션을 지우면 끝이지만, JWT는 만료될 때까지 계속 유효하다.</p>
+
+<p>그래서 보통 이렇게 한다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">exp</code> 를 반드시 넣고, Access Token의 유효기간을 짧게(수 분 ~ 수십 분) 잡는다</li>
+  <li>오래 쓰는 Refresh Token을 따로 발급해서 Access Token을 재발급한다</li>
+  <li>강제 로그아웃이 필요하면 무효화 목록(블랙리스트)을 두는데, 이 순간 stateless의 장점은 일부 포기하게 된다</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">old</span> <span class="o">=</span> <span class="no">JWT</span><span class="p">.</span><span class="nf">encode</span><span class="p">({</span> <span class="ss">sub: </span><span class="s2">"user_1"</span><span class="p">,</span> <span class="ss">exp: </span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">.</span><span class="nf">to_i</span> <span class="o">-</span> <span class="mi">10</span> <span class="p">},</span> <span class="n">secret</span><span class="p">,</span> <span class="s2">"HS256"</span><span class="p">)</span>
+<span class="no">JWT</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">algorithm: </span><span class="s2">"HS256"</span><span class="p">)</span>
+<span class="c1"># =&gt; JWT::ExpiredSignature: Signature has expired</span>
+</code></pre></div></div>
+
+<h3 id="3-편지를-주운-사람도-쓸-수-있다">3. 편지를 주운 사람도 쓸 수 있다</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Bearer</code> 는 “소지자” 라는 뜻이다. 편지를 가진 사람이 곧 주인으로 취급된다. 도장이 진짜인 이상, 훔친 편지도 서버는 받아들인다.</p>
+
+<ul>
+  <li>반드시 HTTPS로만 주고받는다</li>
+  <li>브라우저에서는 저장 위치를 신중하게 고른다. <code class="language-plaintext highlighter-rouge">localStorage</code> 는 XSS에 약하고, 쿠키에 넣는다면 <code class="language-plaintext highlighter-rouge">HttpOnly</code>, <code class="language-plaintext highlighter-rouge">Secure</code>, <code class="language-plaintext highlighter-rouge">SameSite</code> 를 설정한다 (<a href="/archive/security-cookie">쿠키에 대해</a>)</li>
+</ul>
+
+<h3 id="4-편지-형식-안내를-그대로-믿으면-안-된다">4. 편지 형식 안내를 그대로 믿으면 안 된다</h3>
+
+<p>header의 <code class="language-plaintext highlighter-rouge">alg</code> 는 편지를 보낸 쪽이 적는 값이다. 여기에 <code class="language-plaintext highlighter-rouge">none</code>(도장 없음)을 적어 보내는 공격이 실제로 있었다. 검증할 때는 위 예제처럼 <strong>허용할 알고리즘을 서버 쪽에서 명시</strong>한다 (<code class="language-plaintext highlighter-rouge">algorithm: "HS256"</code>).</p>
+
+<h2 id="정리">정리</h2>
+
+<ul>
+  <li>JWT는 <strong>누구나 읽을 수 있지만 위조할 수 없는 편지</strong>다</li>
+  <li>본문(payload)은 인코딩일 뿐 암호화가 아니다. 비밀은 넣지 않는다</li>
+  <li>위조를 막는 건 서명(도장)이고, HS256은 수신인도 인장을 가지며 RS256은 발신인만 인장을 가진다</li>
+  <li>서버가 상태를 들고 있지 않아도 되는 대신, 보낸 편지를 회수하기 어렵다. 짧은 만료 시간 + Refresh Token으로 보완한다</li>
+</ul>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="https://datatracker.ietf.org/doc/html/rfc7519">RFC 7519 - JSON Web Token (JWT)</a></li>
+  <li><a href="https://github.com/jwt/ruby-jwt">jwt/ruby-jwt</a></li>
+  <li><a href="https://velopert.com/2350">JWT 토큰(Token) 기반 인증에 대한 소개 - VELOPERT.LOG</a></li>
+</ul>
+
+  </article>
+
+  <!-- negabaro inc. 문의 동선 (utm 으로 유입된 글을 측정) -->
+
+<aside class="nb-cta">
+  <div class="nb-cta-icon"><i class="fa fa-building"></i></div>
+  <div class="nb-cta-body">
+    <div class="nb-cta-title">이 글을 쓴 negabaro inc.에 상담하기</div>
+    <p class="nb-cta-text">Ruby on Rails, AI 활용, 신규 서비스 0→1 개발 상담을 받고 있습니다. 기술적인 질문이나 개발 견적도 편하게 문의해 주세요.</p>
+  </div>
+  <div class="nb-cta-actions">
+    <a class="nb-cta-primary" href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/jwt-explained-with-letter" target="_blank" rel="noopener">문의하기</a>
+    <a class="nb-cta-secondary" href="https://www.negabaro.com/ko/service?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_post_cta&utm_content=/archive/jwt-explained-with-letter" target="_blank" rel="noopener">서비스 보기</a>
+  </div>
+</aside>
+
+
+  <!-- Post Navigation -->
+  <nav class="nb-post-nav">
+    
+      <a href="/archive/rails-joins-preload-eager_load-includes">
+        <span class="nb-nav-label">&larr; Previous</span>
+        <span class="nb-nav-title">rails joins, left_joins, preload, eager_load, i...</span>
+      </a>
+    
+    
+  </nav>
+</div>
+
+<!-- Comments -->
+<!-- _includes/utterances-comment.html -->
+
+
+<script src="https://utteranc.es/client.js"
+        repo="negabaro/blog-comments"
+        issue-term="title"
+        theme="github-light"
+        label="/archive/jwt-explained-with-letter"  # you can going to https://jekyllrb.com/docs/variables/#page-variables find more page variables as a label.
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="nb-footer">
+    <p>Operated by <a href="https://www.negabaro.com/ko?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">negabaro inc.</a> &middot; <a href="https://www.negabaro.com/ko/contact?utm_source=negabaro.github.io&utm_medium=referral&utm_campaign=blog_footer" target="_blank" rel="noopener">문의하기</a></p>
+    <p>Copyright &copy; negabaro 2026</p>
+  </footer>
+
+  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57217281-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57217281-1');
+</script>
+
+  
+</body>
+</html>

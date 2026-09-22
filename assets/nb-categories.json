@@ -2,6 +2,7 @@
 {
   "order": ["Backend","Frontend","Mobile","Infra","Tools","Investing","Study","Life","Etc"],
   "posts": [
+    { "c": "Backend/Security/jwt", "t": "JWT를 편지에 비유해서 이해하기", "u": "/archive/jwt-explained-with-letter" },
     { "c": "Backend/Rails/model/query", "t": "rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리", "u": "/archive/rails-joins-preload-eager_load-includes" },
     { "c": "Backend/Rails/gems/kaminari", "t": "Rails7 kaminari를 이용한 Pagination기능 추가", "u": "/archive/kaminari" },
     { "c": "Backend/Rails/gems/kaminari", "t": "Rails7 kaminari 디자인에 tailwindcss daisyUI 적용하기", "u": "/archive/kaminari-custom-tailwindcss" },

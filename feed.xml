@@ -8,6 +8,19 @@
         <lastBuildDate>Tue, 22 Sep 2026 00:00:00 +0900</lastBuildDate>
         
             <item>
+                <title>JWT를 편지에 비유해서 이해하기</title>
+                        
+                
+                    <description>&lt;p&gt;JWT를 검색하면 “Claim 기반”, “Self-Contained”, “RFC 7519” 같은 단어가 먼저 나온다. 틀린 말은 아니지만 처음 보면 머리에 잘 안 들어온다.&lt;/p&gt;
+
+</description>
+                
+                <pubDate>Tue, 22 Sep 2026 00:00:00 +0900</pubDate>
+                <link>https://negabaro.github.io/archive/jwt-explained-with-letter</link>
+                <guid isPermaLink="true">https://negabaro.github.io/archive/jwt-explained-with-letter</guid>
+            </item>
+        
+            <item>
                 <title>rails joins, left_joins, preload, eager_load, includes 차이 한눈에 정리</title>
                         
                 
@@ -122,19 +135,6 @@
                 <pubDate>Sun, 03 Dec 2023 00:00:00 +0900</pubDate>
                 <link>https://negabaro.github.io/archive/hotwire-rails7</link>
                 <guid isPermaLink="true">https://negabaro.github.io/archive/hotwire-rails7</guid>
-            </item>
-        
-            <item>
-                <title>Rails7에서 tailwind-css인스톨 방법</title>
-                        
-                
-                    <description>&lt;p&gt;rails7에서 css템플릿인 tailwind-css를 추가하는 방법에 대해 정리해봤다.&lt;/p&gt;
-
-</description>
-                
-                <pubDate>Wed, 24 May 2023 00:00:00 +0900</pubDate>
-                <link>https://negabaro.github.io/archive/how-to-install-tailwindcss</link>
-                <guid isPermaLink="true">https://negabaro.github.io/archive/how-to-install-tailwindcss</guid>
             </item>
         
     </channel>
