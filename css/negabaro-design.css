@@ -395,9 +395,11 @@
 .nb-article-body blockquote p {
   margin: 0;
 }
+/* syntax.css(rouge 라이트 테마)가 배경을 밝게 덮어쓰므로 글자도 어두운 색으로 맞춘다 */
 .nb-article-body pre {
-  background: var(--gray-900);
-  color: #e5e7eb;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  color: var(--gray-800);
   padding: 1.25rem;
   border-radius: var(--radius-lg);
   overflow-x: auto;
